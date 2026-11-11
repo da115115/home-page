@@ -42,3 +42,9 @@ Archives et publications de mes travaux académiques, mémoires de recherche et 
 - **Auteur** : Denis Arnaud (Promotion X1993)
 - **Domaine** : Sécurité des systèmes d'information, protocoles de chiffrement et émergence du commerce électronique sur Internet.
 - [Dossier de présentation](/zds/) • [The White Paper (Web)](/zds/report/index.html) • [The Appendices (Web)](/zds/appendix/appendix.html) • [Page historique (1995)](/zds/white.html) • [PostScript](/zds/report.ps.gz)
+
+---
+
+### Institutions de rattachement
+- [**École Polytechnique (l'X)**]({{< relref "institutions/polytechnique" >}}) — Présentation historique (1995), histoire, campus et liens officiels (Wikipédia, LinkedIn).
+

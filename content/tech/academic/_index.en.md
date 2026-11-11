@@ -42,3 +42,9 @@ Academic publications, master's theses, and project research reports:
 - **Author**: Denis Arnaud (Class X1993)
 - **Scope**: Computer and network security, cryptography, and the emergence of electronic commerce on the Internet.
 - [Presentation & Archive](/zds/) • [The White Paper (Web)](/zds/report/index.html) • [The Appendices (Web)](/zds/appendix/appendix.html) • [Original 1995 Page](/zds/white.html) • [PostScript](/zds/report.ps.gz)
+
+---
+
+### Academic Institutions
+- [**École Polytechnique (l'X)**]({{< relref "institutions/polytechnique" >}}) — Historical presentation (1995), campus heritage, and public profiles (Wikipedia, LinkedIn).
+
