@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.5 What would it take to break RSA?</TITLE>
+<META NAME="description" CONTENT="3.2.5 What would it take to break RSA?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node17.html">
+<LINK REL="previous" HREF="node15.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node17.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html416"
+ HREF="node17.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html414"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html408"
+ HREF="node15.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html417"
+ HREF="node17.html">3.2.6 Are strong primes</A>
+<B> Up:</B> <A NAME="tex2html415"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html409"
+ HREF="node15.html">3.2.4 How much extra</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00325000000000000000">
+3.2.5 What would it take to break RSA?</A>
+</H2>
+<A NAME="what_break_rsa">&#160;</A>
+There are a few possible interpretations of ``breaking RSA''. The most
+damaging would be for an attacker to discover the private key corresponding
+to a given public key; this would enable the attacker both to read all
+messages encrypted with the public key and to forge signatures. The obvious
+way to do this attack is to factor the public modulus, <I>n</I>, into its two
+prime factors, <I>p</I> and <I>q</I>. From <I>p</I>, <I>q</I>, and <I>e</I>, the public exponent,
+the attacker can easily get <I>d</I>, the private key. The hard part is
+factoring <I>n</I>; the security of RSA depends of factoring being difficult. In
+fact, the task of recovering the private key is equivalent to the task of
+factoring the modulus: you can use <I>d</I> to factor <I>n</I>, as well as use the
+factorization of <I>n</I> to find <I>d</I>. See Questions <A HREF="node56.html#has_fac_eas">3.4.5</A> and
+<A HREF="node57.html#what_fac_use">3.4.6</A> regarding the state of the art in factoring. It should
+be noted that hardware improvements alone will not weaken RSA, as long as
+appropriate key lengths are used; in fact, hardware improvements should
+increase the security of RSA (see Question&nbsp;<A HREF="node56.html#has_fac_eas">3.4.5</A>).
+<BR>
+<P>
+Another way to break RSA is to find a technique to compute <I>e</I><SUP><I>th</I></SUP> roots
+<I>mod n</I>. Since <I>c</I>=<I>m</I><SUP><I>e</I></SUP>, the <I>e</I><SUP><I>th</I></SUP> root of <I>c</I> is the message <I>m</I>. This
+attack would allow someone to recover encrypted messages and forge
+signatures even without knowing the private key. This attack is not known
+to be equivalent to factoring. No methods are currently known that attempt
+to break RSA in this way.
+<BR>
+<P>
+The attacks just mentioned are the only ways to break RSA in such a way
+as to be able to recover all messages encrypted under a given key.
+There are other methods, however, which aim to recover single messages;
+success would not enable the attacker to recover other messages
+encrypted with the same key.
+<BR>
+<P>
+The simplest single-message attack is the guessed plaintext attack. An
+attacker sees a ciphertext, guesses that the message might be ``Attack
+at dawn'', and encrypts this guess with the public key of the
+recipient; by comparison with the actual ciphertext, the attacker knows
+whether or not the guess was correct. This attack can be thwarted by
+appending some random bits to the message. Another single-message
+attack can occur if someone sends the same message m to three others,
+who each have public exponent <I>e</I>=3. An attacker who knows this and sees
+the three messages will be able to recover the message m. There are
+also some ``chosen ciphertext'' attacks, in which the attacker creates
+some ciphertext and gets to see the corresponding plaintext, perhaps by
+tricking a legitimate user into decrypting a fake message.
+<BR>
+<P>
+Of course, there are also attacks that aim not at RSA itself but at a
+given insecure implementation of RSA; these do not count as ``breaking
+RSA'' because it is not any weakness in the RSA algorithm that is
+exploited, but rather a weakness in a specific implementation. For
+example, if someone stores his private key insecurely, an attacker may
+discover it. One cannot emphasize strongly enough that to be truly
+secure RSA requires a secure implementation; mathematical security
+measures, such as choosing a long key size, are not enough. In
+practice, most successful attacks will likely be aimed at insecure
+implementations and at the key management stages of an RSA system. See
+Section&nbsp;<A HREF="node32.html#sec:keymgt">3.3</A> for discussion of secure key management in an RSA
+system.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html416"
+ HREF="node17.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html414"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html408"
+ HREF="node15.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html417"
+ HREF="node17.html">3.2.6 Are strong primes</A>
+<B> Up:</B> <A NAME="tex2html415"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html409"
+ HREF="node15.html">3.2.4 How much extra</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

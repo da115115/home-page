@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>7.3.3 Logical Characteristics</TITLE>
+<META NAME="description" CONTENT="7.3.3 Logical Characteristics">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node119.html">
+<LINK REL="previous" HREF="node117.html">
+<LINK REL="up" HREF="node115.html">
+<LINK REL="next" HREF="node119.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1505"
+ HREF="node119.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1503"
+ HREF="node115.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1497"
+ HREF="node117.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1506"
+ HREF="node119.html">7.3.4 Life Cycle</A>
+<B> Up:</B> <A NAME="tex2html1504"
+ HREF="node115.html">7.3 Smart Card Technology</A>
+<B> Previous:</B> <A NAME="tex2html1498"
+ HREF="node117.html">7.3.2 Physical Characteristics</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00733000000000000000">
+7.3.3 Logical Characteristics</A>
+</H2>
+<P>
+The smart card processing unit executes a chip operating system that
+implements a hierarchical file system on the non-volatile memory of the
+card, and a set of access and control operations both for the card
+itself and for the file system.
+<BR>
+<P>
+The following descriptions of card data structures, card operations,
+and card security architecture are taken from ISO 7816-4. This
+document, although still a draft, is currently undergoing balloting
+through ISO. It is complete enough to indicate the general types of
+structures and operations that cards should be expected to support.
+<P><DL>
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Data structures</B>
+<DD>
+<P>
+The file system supports a special root directory file (``master
+    file''), optional sub-directory files (``dedicated files''), and data
+    files (``elementary files''). The identifiers of all files along the
+    path from the master file down to a specific file unambiguously
+    identify the specific file. All three categories of files contain
+    control information, such as a file identifier, file name,
+    specifications of record or data lengths in the file, etc. The draft
+    standards specify various types of elementary file structures: a
+    sequence of records of identical length, a sequence of records of
+    variable length, a sequence of records with identical length organized
+    as a ring, and a ``transparent structure'' that is seen at the
+    interface as a sequence of data units.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Operations</B>
+<DD>
+<P>
+The following commands are a subset of those specified in ISO 7816-4,
+    and are included here merely to give a basic understanding of the types
+    of operations supported on smart cards.
+<P>  <DL>
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>READ BINARY</B>
+<DD> Return all or part
+        of the contents of an elementary file.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>WRITE BINARY</B>
+<DD> Write binary
+    values into an elementary file.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>ERASE BINARY</B>
+<DD> Erase all or part of
+      the contents an elementary file.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>SELECT FILE</B>
+<DD> Set a ``current file''
+      that may be referred to implicitly in subsequent commands.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>VERIFY</B>
+<DD> Compare verification data sent
+      from the host system with reference data stored in the card (e.g., a
+      password).
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>INTERNAL AUTHENTICATE</B>
+<DD>
+      Compute authentication data using challenge data sent from the host
+      system and a relevant secret (e.g., a key) stored in the card.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>EXTERNAL AUTHENTICATE</B>
+<DD> 
+      Conditionally update the security status of the card based on the
+      result of a computation based on a challenge previously issued by the
+      card, a key stored in the card, and authentication data sent from the
+      host system.
+  </DL></UL>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Security Architecture</B>
+<DD>
+<P>
+Smart cards implement three levels of logical access control. The first
+  is the association of a set of privileges with a user's password, and the
+  ability to control access to files on the card based on those privileges.
+  The second level of logical access control is the ability to detect and
+  respond to a sequence of invalid access attempts. The third level is the
+  ``logical channel'' - a logical link between the host system and a file
+  on the smart card.
+<P>  <DL>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Privileges and
+    access control</B>
+<DD>
+<P>
+Two categories of access control mechanisms are promoted today in the
+  smart card market. Both mechanisms are built-in characteristics of the
+  relation between privileges and users for given objects.
+<P>  <UL>
+<LI> One system is the combinational system, where privileges are a
+    first order logic function between authorization variables (v[i]). For
+    example f(v[1], v[2], ..., v[n], p1) will be TRUE for a user/subject
+    for a READ access, if and only if the user/subject knows the values of
+    every authorization variable v[i] AND knows the password p1. The
+    function f is combinational, e.g., (v[1] AND v[2] OR v[3] XOR v[4]) AND
+    value_in_pwd_filex_of(p1).
+<LI> The second system is a sequential system where privileges are the
+    result of a sequential function between authorization variables (v[i]).
+    For example, f(v[1], v[2], ..., v[n], p1) gives READ access for an
+    object to a user/subject, if and only if the user/subject knows which
+    values (v[i]) have to be presented in state s[k], where k identifies a
+    sequential file selection and key presentation step.s[k] is determined
+    by the current selected file and the current keys activated.
+  </UL>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Invalid access attempts</B>
+<DD>
+<P>
+Most, but not all, smart cards keep a record of sequential invalid access
+  attempts (a supplied set of parameters for a function that fail to
+  evaluate to TRUE), and deny further access to the card (or to the
+  targetted file) once the count reaches a certain limit. In some cards the
+  limit is configurable, while in others it is fixed at a small number such
+  as 3 or 7. The count is reset to 0 when a valid access is made. Exceeding
+  the limit either invalidates the card entirely, or puts it in a state
+  where only a limited set of operations is available.  These limited
+  operations may be sufficient for an administrator to restore access.
+<BR>
+<P>
+Denial of access after a small number of invalid attempts prevents
+  ``password guessing'' attacks on the card.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Logical channels</B>
+<DD>
+<P>
+A ``logical channel'' is a logical link between the host system and a
+  file on the smart card, either the Master File, a Dedicated File, or an
+  Elementary File. When logical channels are in use, the selection of a
+  file associates the file and its security status with the logical channel
+  encoded in a reserved field of the selection command header.
+<BR>
+<P>
+Logical channels provide a mechanism for allowing multiple, independent
+  applications to use the storage capabilities of the card. The card
+  interface software on the host system must manage the mapping between
+  processes and logical channels; the channel numbers are either assigned
+  by the external world or by the card itself.
+  </DL></UL>
+<P>
+The logical channel portion of ISO 7816-4 conveys 2 concepts. The first one
+deals with a logical link to files and requires the outside world to manage
+the channel numbers. In the second concept, the card allocates the logical
+channel number and supports a mechanism similar to swapping with a stack
+number. In both situations, cards implementing these standards grant
+applications the same control of access to files and data structures
+(without losing the security status) as if only one application had access.
+</DL><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1505"
+ HREF="node119.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1503"
+ HREF="node115.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1497"
+ HREF="node117.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1506"
+ HREF="node119.html">7.3.4 Life Cycle</A>
+<B> Up:</B> <A NAME="tex2html1504"
+ HREF="node115.html">7.3 Smart Card Technology</A>
+<B> Previous:</B> <A NAME="tex2html1498"
+ HREF="node117.html">7.3.2 Physical Characteristics</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

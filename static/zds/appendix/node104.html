@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.2.2 Security Service Requirements</TITLE>
+<META NAME="description" CONTENT="4.2.2 Security Service Requirements">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node105.html">
+<LINK REL="previous" HREF="node103.html">
+<LINK REL="up" HREF="node102.html">
+<LINK REL="next" HREF="node105.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1352"
+ HREF="node105.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1350"
+ HREF="node102.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1344"
+ HREF="node103.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1353"
+ HREF="node105.html">4.2.3 Other Factors</A>
+<B> Up:</B> <A NAME="tex2html1351"
+ HREF="node102.html">4.2 Security Assessment of</A>
+<B> Previous:</B> <A NAME="tex2html1345"
+ HREF="node103.html">4.2.1 Introduction</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00422000000000000000">
+4.2.2 Security Service Requirements</A>
+</H2>
+<P><DL>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Transaction
+    confidentiality</B>
+<DD>
+<P>
+SHTTP provides confidentiality for the encapsulated data exchanged
+  between parties. Sufficient (S)HTTP header information to allow
+  processing of the SHTTP transaction is sent in the clear.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Selective field
+    confidentiality</B>
+<DD>
+<P>
+While SHTTP supports recursive encapsulation of transaction data, this is
+  expected to be applied to complete HTTP (or SHTTP) transactions.
+  Consequently, the granularity of protection remains a complete HTTP
+  transaction. This facility could be used to support prior generation of
+  signed information objects (contained in minimal HTTP response
+  transactions) which would then be returned when requested (possibly with
+  additional security encapsulation).
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Privacy/anonymity</B>
+<DD>
+<P>
+The degree to which anonymity is supported depends upon the security
+  services selected. If any authentication or non-repudiation services are
+  applied, then an identity of the parties will be disclosed.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Server authentication</B>
+<DD>
+<P>
+Server authentication may be applied as part of any transaction.
+  Authentication may be based on a digital signature applied to the
+  transaction as well as based on the key management approach applied to
+  encryption keys or based on the keyed MAC calculations. Certain of these
+  approaches rely on the validation of certificates.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Client authentication</B>
+<DD>
+<P>
+Client authentication may be applied as part of any transaction.
+  Authentication may be based on a digital signature applied to the
+  transaction as well as based on the key management approach applied to
+  encryption keys or based on the keyed MAC calculations. Certain of these
+  approaches rely on the validation of certificates.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Data integrity</B>
+<DD>
+<P>
+Data integrity may be applied to any transaction and is based on a
+  message integrity check or message authentication code included in the
+  protected transaction. Integrity may also be provided by a digital
+  signature. If the timestamp based MAC is used, then pre-generation of the
+  SHTTP transaction is not possible.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Data origin
+    authentication</B>
+<DD>
+<P>
+For SHTTP, data origin authentication is equivalent to the server or
+  client authentication service since all SHTTP services are applied to an
+  individual transaction.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Non-repudiation</B>
+<DD>
+<P>
+SHTTP supports non-repudiation with proof of origin through the
+  application of digital signatures to the encapsulated transaction.  SHTTP
+  does not directly support non-repudiation with proof of receipt or any
+  other explicit proof of delivery/receipt mechanism.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Message Stream
+    integrity</B>
+<DD>
+<P>
+SHTTP itself applies services to individual transactions and so does not
+  explicitly address message stream issues. SHTTP provides a facility to
+  allow an application to perform weak sequence related checks through the
+  inclusion of a timestamp in MAC check values or strong freshness checks
+  through a nonce-based challenge response facility.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Denial of Service</B>
+<DD>
+<P>
+Denial of service concerns are limited to the destruction of transactions
+  in flight and consumption of resources. The ability of an attacker to
+  destroy messages on a channel cannot be addressed by an application
+  solution. The consumption of resource issue is based on the ability of an
+  attacker to overwhelm a server (or client) which transaction requiring
+  extensive processing resources.
+</DL></UL>
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1352"
+ HREF="node105.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1350"
+ HREF="node102.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1344"
+ HREF="node103.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1353"
+ HREF="node105.html">4.2.3 Other Factors</A>
+<B> Up:</B> <A NAME="tex2html1351"
+ HREF="node102.html">4.2 Security Assessment of</A>
+<B> Previous:</B> <A NAME="tex2html1345"
+ HREF="node103.html">4.2.1 Introduction</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

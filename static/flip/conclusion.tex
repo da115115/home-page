@@ -1,0 +1,67 @@
+\section{Conclusion}
+
+Ce projet est, pour nous, le dernier effectué dans le cadre ``académique''
+de notre formation d'ingénieur. Il était donc important qu'il nous
+permette, non seulement d'acquérir de nouvelles connaissances, mais surtout
+d'effectuer un projet dans des conditions proches de celles existantes dans
+le monde professionnel. Or, de ces deux points de vue, ce projet a été très
+enrichissant.\\
+
+Sur le plan technique d'abord, nous avons pu accroître considérablement nos
+connaissances du langage Java. En effet, l'ensemble {\it Java Native
+  Interface}, la construction d'interfaces Graphiques, d'appelettes à
+plusieurs panneaux, la gestion des {\it Threads} et des événements, les
+appels système auront été parmis les principaux domaines de Java sur
+lesquels nous avons travaillé.\\
+
+De plus nous avons pu découvrir le protocole AMP et en comprendre bien ses
+principes fondamentaux (diffusion IP-Multicast sur plusieurs canaux
+alloués dynamiquement afin d'augmenter de manière sûre l'efficacité de la
+transmission; correction d'erreur grâce aux paquets F.E.C. ({\it Forward
+  Error Control}).\\
+
+Et du point de vue de la formation de l'Ingénieur en général, nous avons
+été confrontés lors de ce projet à plusieurs problèmes assez classiques.
+En premier lieu, nous avons eu à utiliser un produit (l'implémentation du
+protocole AMP) créé par une personne extérieure au projet, pour des besoins
+différents des nôtres. Il nous a donc fallu nous mettre en relation avec
+cette personne, Stephan Kraus, afin qu'il nous aide à utiliser AMP, et par
+la suite à adapter et interfacer ce module pour son utilisation dans le
+cadre de notre projet.\\
+En second lieu, nous avons eu à définir une architecture en couches, avec
+des interfaces claires et des blocs développables indépendamment.\\
+Aussi, nous avons eu à rechercher des solutions techniques nouvelles, par
+exemple lorsque nous ne savions pas comment résoudre un problème avec les
+solutions habituelles (interfa\c cage Java -- C++ par exemple).\\
+
+Enfin, comme cela avait été mentionné dans le descriptif du projet, nous
+avons eu à faire montre d'une grande autonomie, et ce dans toutes
+les phases: de la conception à la réalisation.\\
+
+Considérant toutes ces difficultés, nous avons atteint les objectifs qui
+nous avaient été fixés au départ, même si notre travail pourrait encore
+être amélioré. En effet, il serait intéressant:
+\begin{itemize}
+  \item qu'en mode automatique, l'émetteur transmette pendant toute la
+    durée d'affichage du transparent, et non pas seulement une fois;
+  \item d'avoir une méthode {\tt stop()} pour l'émetteur afin que nous
+    puissions l'arrêter proprement, sans avoir à tuer le {\it Thread} qui
+    l'appelle. Actuellement, en relan\c cant à chaque nouvelle transmission
+    un nouveau {\it Thread}, l'on perd toute la bande passante acquise lors
+    de la précédente transmission (voir spécification du protocole AMP pour
+    plus de détails sur le déroulement d'une transmission/réception);
+  \item que le récepteur puisse faire la différence entre une congestion
+    sur le réseau et l'arrêt de l'émetteur (pour éviter d'avoir à
+    réinitialiser le récepteur manuellement lorsqu'une transmission a été
+    stoppée avant sa fin du côté émetteur).
+\end{itemize}
+
+Mais pour réaliser ces transformations, il est nécessaire de modifier
+l'implémentation du protocole AMP, ce qui représente un travail au moins
+équivalent à celui que nous avons déjà effectué. Car en fait AMP a été
+implémenté ici pour fonctionner de manière autonome et non pas pour
+présenter d'interface avec des couches supérieures.\\
+
+Il reste donc du travail pour un futur projet de second semestre...
+
+

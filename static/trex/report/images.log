@@ -1,0 +1,135 @@
+This is MlTeX (2.01), C Version 3.1415 (C version 6.1) (format=latex 96.5.9)  21 NOV 1997 14:14
+**./images.tex
+(images.tex
+LaTeX2e <1995/12/01> patch level 2
+
+(/usr/local/lib/texmf/tex/latex2e/base/report.cls
+Document Class: report 1995/12/20 v1.3q Standard LaTeX document class
+(/usr/local/lib/texmf/tex/latex2e/base/size12.clo
+File: size12.clo 1995/11/30 v1.3p Standard LaTeX file (size option)
+)
+\c@part=\count82
+\c@chapter=\count83
+\c@section=\count84
+\c@subsection=\count85
+\c@subsubsection=\count86
+\c@paragraph=\count87
+\c@subparagraph=\count88
+\c@figure=\count89
+\c@table=\count90
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (/usr/local/lib/texmf/tex/latex2e/ams/amssymb.sty
+Package: amssymb 1995/02/01 v2.2a
+(/usr/local/lib/texmf/tex/latex2e/ams/amsfonts.sty
+Package: amsfonts 1995/02/01 v2.2b
+\@emptytoks=\toks14
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 128.
+)) (/usr/local/lib/texmf/tex/latex2e/graphics/graphicx.sty
+Package: graphicx 1995/12/06 v0.6h Enhanced LaTeX Graphics (DPC,SPQR)
+(/usr/local/lib/texmf/tex/latex2e/graphics/keyval.sty
+Package: keyval 1995/09/21 v1.09 key=value parser (DPC)
+) (/usr/local/lib/texmf/tex/latex2e/graphics/graphics.sty
+Package: graphics 1996/02/20 v0.7h Standard LaTeX Graphics (DPC,SPQR)
+(/usr/local/lib/texmf/tex/latex2e/graphics/trig.sty
+Package: trig 1994/10/16 v1.08 sin cos tan (DPC)
+) (/usr/local/lib/texmf/tex/latex2e/graphics/graphics.cfg)
+Package graphics Info: Driver file: dvips.def on input line 82.
+(/usr/local/lib/texmf/tex/latex2e/graphics/dvips.def
+File: dvips.def 1995/12/04 v2.14 Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+) (/usr/local/lib/texmf/tex/dvips/psfig.tex
+\@unused=\write4
+\ps@stream=\read1
+\p@intvaluex=\dimen105
+\p@intvaluey=\dimen106
+psfig/tex 1.10-dvips
+) (/homes/arnaud/htdocs/latex2html/texinputs/html.sty
+
+LaTeX Warning: You have requested package `',
+               but the package provides `html'.
+
+Package: html 1996/12/22 v1.1 hypertext commands for latex2html (nd, hws, rrm)
+\c@lpart=\count91
+\c@lchapter=\count92
+\c@lsection=\count93
+\c@lsubsection=\count94
+\c@lsubsubsection=\count95
+\c@lparagraph=\count96
+\c@lsubparagraph=\count97
+\c@lequation=\count98
+\c@lsubsubparagraph=\count99
+\ptrfile=\write5
+) (/homes/arnaud/htdocs/latex2html/texinputs/htmllist.sty)
+\sizebox=\box26
+\lthtmlwrite=\write6
+(images.aux)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+latex2htmlLength hsize=349.0pt
+latex2htmlLength vsize=729.93796pt
+latex2htmlLength hoffset=0.0pt
+latex2htmlLength voffset=0.0pt
+latex2htmlLength topmargin=0.0pt
+latex2htmlLength topskip=0.00002pt
+latex2htmlLength headheight=0.0pt
+latex2htmlLength headsep=0.0pt
+latex2htmlLength parskip=0.0pt plus 1.0pt
+latex2htmlLength oddsidemargin=0.0pt
+latex2htmlLength evensidemargin=0.0pt
+l2hSize :figure199:224.7766pt::0.0pt::0.0pt.
+[1
+
+
+]
+l2hSize :figure321:113.81102pt::0.0pt::0.0pt.
+[2
+
+
+]
+l2hSize :figure346:273.14662pt::0.0pt::0.0pt.
+[3
+
+
+]
+l2hSize :figure356:364.19536pt::0.0pt::0.0pt.
+[4
+
+
+]
+l2hSize :figure367:677.17567pt::0.0pt::0.0pt.
+[5
+
+
+]
+l2hSize :figure375:190.63338pt::0.0pt::0.0pt.
+[6
+
+
+] (images.aux) ) 
+Here is how much of TeX's memory you used:
+ 1270 strings out of 10708
+ 13692 string characters out of 71759
+ 58623 words of memory out of 262141
+ 4324 multiletter control sequences out of 9500
+ 3938 words of font info for 15 fonts, out of 100000 for 255
+ 15 hyphenation exceptions out of 607
+ 25i,4n,24p,282b,187s stack positions out of 300i,100n,60p,3000b,4000s
+
+Output written on images.dvi (6 pages, 500 bytes).

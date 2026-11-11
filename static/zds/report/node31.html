@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.3 Levels of threat</TITLE>
+<META NAME="description" CONTENT="3.2.3 Levels of threat">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node32.html">
+<LINK REL="previous" HREF="node30.html">
+<LINK REL="up" HREF="node28.html">
+<LINK REL="next" HREF="node32.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html476"
+ HREF="node32.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html474"
+ HREF="node28.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html468"
+ HREF="node30.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html477"
+ HREF="node32.html">3.2.4 Firewalls and their</A>
+<B> Up:</B> <A NAME="tex2html475"
+ HREF="node28.html">3.2 Access Security: Firewalls</A>
+<B> Previous:</B> <A NAME="tex2html469"
+ HREF="node30.html">3.2.2 Design decisions</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00423000000000000000">
+3.2.3 Levels of threat</A>
+</H2>
+There are several ways in which a firewall can fail or be compromised.
+While none of them are good, some are decidedly worse than others.
+Since the purpose of many firewalls is to block access, it is a clear
+failure if someone finds a loophole through it which permits them to
+probe systems in the private network. An even more severe situation
+would result if someone managed to break into the firewall and
+reconfigure it such that the entire private network is reachable by
+anyone. For the sake of terminology, this type of attack will be
+referred to as ``destroying'' a firewall, as opposed to a mere
+``break-in.'' It is extremely difficult to quantify the damage that
+might result from a firewall's destruction. An important measure of how
+well a firewall resists threat is the information it gathers to help
+determine the course of an attack. The absolute worst thing that could
+happen is for a firewall to be completely compromised without any trace
+of how the attack took place. The best thing that can happen is for a
+firewall to detect an attack, and inform the administrator politely
+that it is undergoing attack, but that the attack is going to fail.
+<BR>
+<P>
+One way to view the result of a firewall being compromised is to look
+at things in terms of what can be roughly termed as ``zones of risk.''
+In the case of a network that is directly connected to the Internet
+without any firewall, the entire network is subject to attack. This
+does not imply that the network is vulnerable to attack, but in a
+situation where an entire network is within reach of an untrusted
+network, it is necessary to ensure the security of every single host on
+that network. Practical experience shows that this is difficult, since
+tools like rlogin that permit user-customizable access control are
+often exploited by vandals to gain access to multiple hosts, in a form
+of ``island hopping'' attack. In the case of any typical firewall, the
+zone of risk is often reduced to the firewall itself, or a selected
+subset of hosts on the network, significantly reducing the network
+manager's concerns with respect to direct attack. If a firewall is
+broken into, the zone of risk often expands again, to include the
+entire protected network. A vandal gaining access to a login on the
+firewall can begin an island hopping attack into the private network,
+using it as a base. In this situation, there is still some hope, since
+the vandal may leave traces on the firewall, and may be detected. If
+the firewall is completely destroyed the private network can undergo
+attack from any external system and reconstructing the course of an
+attack becomes nearly impossible.
+<BR>
+<P>
+In general, firewalls can be viewed in terms of reducing the zone of
+risk to a single point of failure. In a sense, this seems like a bad
+idea, since it amounts to putting all of one's eggs in a single basket,
+but practical experience implies that at any given time, for a network
+of non-trivial size, there are at least a few hosts that are vulnerable
+to break-in by even an unskilled attacker. Many corporations have
+formal host security policies that are designed to address these
+weaknesses, but it is sheer foolishness to assume that publishing
+policies will suffice. A firewall enhances host security by funneling
+attackers through a narrow gap where there is a chance of catching or
+detecting them first. The well-constructed medieval castle had multiple
+walls and interlocking defense points for exactly the same reason.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html476"
+ HREF="node32.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html474"
+ HREF="node28.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html468"
+ HREF="node30.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html477"
+ HREF="node32.html">3.2.4 Firewalls and their</A>
+<B> Up:</B> <A NAME="tex2html475"
+ HREF="node28.html">3.2 Access Security: Firewalls</A>
+<B> Previous:</B> <A NAME="tex2html469"
+ HREF="node30.html">3.2.2 Design decisions</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//FR">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.2 Couches de contrle et d'interface graphique: dtail</TITLE>
+<META NAME="description" CONTENT="4.2 Couches de contrle et d'interface graphique: dtail">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node16.html">
+<LINK REL="previous" HREF="node14.html">
+<LINK REL="up" HREF="node13.html">
+<LINK REL="next" HREF="node16.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html203"
+ HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html201"
+ HREF="node13.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html195"
+ HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html204"
+ HREF="node16.html">4.3 Relation entre ControlLayer</A>
+<B> Up:</B> <A NAME="tex2html202"
+ HREF="node13.html">4 Composition - Structure</A>
+<B> Previous:</B> <A NAME="tex2html196"
+ HREF="node14.html">4.1 Prsentation</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00052000000000000000">
+4.2 Couches de contrle et d'interface graphique: dtail</A>
+</H2>
+Lorsqu'on lance l'application, on lance en fait la mthode <TT>main()</TT> de
+l'objet implmentant la couche de contrle,  savoir <I>ControlLayer</I> pour
+le ct metteur et <I>NetworkLayer</I> pour le ct rcepteur.
+<BR>
+<P><PRE>
+public class ControlLayer implements Runnable {
+  private SenderGUI window;
+  public FileList fileList;
+
+  public ControlLayer () {
+    dbg.setLevel (10);
+     // tells the fileList who controls it
+    fileList = new FileList(10, false, this, 20, 10);
+    window = new SenderGUI (this);  // tells the GUI who controls it
+    window.preparation();  // defines the GUI
+    window.pack();
+    window.show();         // shows the GUI that waits for its related events
+  }
+
+  // Implements the call-back of the SenderGUI's sendButton
+  public void sendAction () {
+    fileList.sendItem ();
+  }
+
+  public static void main (String argv[]) {
+    ControlLayer controlLayer = new ControlLayer ();
+  }
+}
+</PRE>
+<P>
+Comme on le voie ci-dessus, la mthode <TT>main()</TT> instancie l'objet dans
+lequel elle est implmente (<I>ControlLayer</I> ou <I>NetworkLayer</I>,
+donc), et s'arrte. Et c'est le constructeur qui instancie  son
+tour un objet de la classe GUI,  savoir <I>SenderGUI</I> pour le ct
+metteur et <I>ReceiverGUI</I> pour le ct rcepteur, en lui passant une
+rfrence sur lui-mme (le <TT>this</TT> de <TT>window = new SenderGUI
+  (this);</TT>) afin de pouvoir tre rappel par l'interface utilisateur.
+<BR>
+<P>
+Dans ce schma, la mthode <TT>main()</TT> de l'objet implmentant la couche
+contrle ``rend la main'' tout de suite. C'est l'objet implmentant
+l'interface graphique qui ``garde la main'' pour scruter les vnements
+dclenchs par l'utilisateur.
+<BR>
+<P>
+Dans le nouveau modle de <I>Java 1.1</I> grant les vnements, il faut
+enregistrer les mthodes  appeler, lors d'un vnement particulier, auprs
+des objets dclenchant ces vnements. Par exemple, un bouton dclenche un
+vnement lorsque l'utilisateur appuie dessus, et l'on doit donc
+enregistrer auprs de ce bouton la mthode  invoquer lorsque l'utilisateur
+agira dessus.
+<BR>
+<P><PRE>
+public class SenderGUI extends Frame {
+  private ControlLayer controlLayer;
+  
+  public SenderGUI (ControlLayer c) {
+    super(&quot;The Sender Window&quot;);
+    controlLayer = c;
+  }
+
+  public void preparation () {
+    Button sendButton;
+    sendButton = new Button (&quot;Send&quot;);
+
+    // Registers the actionPerformed method to the sendButton
+    sendButton.addActionListener ( new ActionListener () {
+      public void actionPerformed (ActionEvent e) {
+        // Calls the corresponding method within controlLayer
+        controlLayer.sendAction ();
+      }
+    });
+  }
+}
+</PRE>
+<P>
+La mthode de rappel, le <I>call-back</I> (ci-dessus,
+<TT>actionPerformed()</TT>), est encapsule dans un objet scruteur d'vnements
+(ci-dessus, <I>ActionListener</I>) de type correspondant  celui des
+vnements dclenchs (voir l'API Java 1.1 de gestion des vnements pour
+plus de prcisions).  Dans notre cas, la mthode de rappel, encapsule dans
+l'objet d'interface utilisateur (<I>SenderGUI</I> ou <I>ReceiverGUI</I>,
+donc), appelle  son tour la mthode correspondante implmente dans
+l'objet de la couche contrle ayant lanc l'interface graphique.
+<BR>
+<P>
+<BR>
+<DIV ALIGN="CENTER"><A NAME="fig:servevt">&#160;</A><A NAME="213">&#160;</A>
+<TABLE>
+<CAPTION><STRONG>Figure 9:</STRONG>
+Gestion des vnements du ct metteur</CAPTION>
+<TR><TD><IMG WIDTH="451" HEIGHT="386"
+ SRC="img10.gif"
+ ALT="\begin{figure}
+ \centering
+\includegraphics [width=10cm]{serverEvent.ps}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+<BR>
+<P>
+Ainsi, l'objet interface utilisateur n'est ni plus ni moins qu'un relais
+entre l'utilisateur et la couche de contrle, qui affiche des fentres et
+des dialogues, et qui relaie les vnements gnrs par l'utilisateur. Tout
+cela est rcapitul sur la figure&nbsp;<A HREF="node15.html#fig:servevt">9</A>.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html203"
+ HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html201"
+ HREF="node13.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html195"
+ HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html204"
+ HREF="node16.html">4.3 Relation entre ControlLayer</A>
+<B> Up:</B> <A NAME="tex2html202"
+ HREF="node13.html">4 Composition - Structure</A>
+<B> Previous:</B> <A NAME="tex2html196"
+ HREF="node14.html">4.1 Prsentation</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

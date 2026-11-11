@@ -1,0 +1,78 @@
+\documentclass[12p]{article}
+
+\begin{document}
+\title{FLIP: Pr\'esentation de transparents par IP Multicast\\(Technologie Push)}
+\author{Responsable: J\"org Nonnenmacher\\Etudiants: Denis Arnaud (Casier 6) et S\'ebastien Fabre (Casier 30)}
+\maketitle
+
+\section{Introduction}
+Une nouvelle technologie appara\^{\i}t prometteuse pour Internet. Elle est
+d\'enomm\'ee {\it Push} et correspond \`a l'utilisation de son terminal
+comme d'un r\'ecepteur, en continu, d'un flux d'information provenant de
+diff\'erents serveurs. On ne va plus chercher l'information sur le serveur:
+cette derni\`ere est directement d\'elivr\'ee sur la console du
+r\'ecepteur. Cette technologie peut par exemple permettre de recevoir chez
+soi les cours de la bourse, des d\'ep\^eches AFP, ou encore le bulletin
+m\'et\'eo du lendemain.
+
+Actuellement, l'on trouve sur Internet des techniques permettant ce type
+d'applications, mais cela oblige les navigateurs \`a aller chercher, en
+permanence, l'information sur les serveurs, et \`a la rapatrier. Il s'agit
+donc en fait, \`a proprement parler, de {\it Pull} et non de {\it Push}.
+
+L'on se propose, dans ce projet, d'utiliser le r\'eseau Multicast afin de
+diffuser un flux d'information (en l'occurence, ici, une pr\'esentation de
+transparents) d'un \'emetteur vers plusieurs r\'ecepteurs. Et cette
+mani\`ere de proc\'eder correspond donc bien \`a la technologie {\it Push}.
+
+\section{Description}
+L'\'emetteur poss\`ede le contr\^ole du flux d'information, c'est-\`a-dire
+qu'il s'abonne \`a un canal Multicast. L'\'emetteur choisit les
+transparents et les diffuse sur le canal IP Multicast dans l'ordre qui lui
+convient, avec le rythme qu'il d\'esire (possibilit\'e d'aller en avant ou
+en arri\`ere, et de rendre la s\'equence automatique).
+
+Le r\'ecepteur, lui, ne peut que s'abonner \`a un canal Multicast, sur
+lequel il recevra le flux d'information. Il ne peut pas exercer de
+contr\^ole sur la r\'eception des transparents.
+
+Les transparents se pr\'esentent sous la forme de pages HTML
+classiques. Aussi, \'emetteur comme r\'ecepteur doivent disposer d'un
+navigateur pour les visualiser. Le transfert sur le canal Multicast, par
+contre, s'effectue sous la forme de blocs d'octets. Il y a donc conversion
+des donn\'ees, entre leur utilisation et leur transport.
+
+Le projet sera r\'ealis\'e dans le langage de programmation Java. De plus,
+il devra comporter plusieurs parties, correspondant aux deux couches
+logiques suivantes:
+\begin{itemize}
+  \item une couche de contr\^ole (d\'efilement de la s\'equence des
+    transparents, et abonnement \`a Multicast),
+  \item une couche de conversion des donn\'ees (HTML $\rightarrow$ Blocs
+    d'octets, et Blocs d'octet $\rightarrow$ HTML) pour les rendre
+    transportables sur Multicast,
+  \item une interface graphique:
+    \begin{itemize}
+      \item Pour l'\'emetteur: panel de contr\^ole de d\'efilement, gestion
+        du nom de canal Multicast,
+      \item pour le r\'ecepteur: afficher les transparents, les enregistrer
+        et les repasser ult\'erieurement.
+    \end{itemize}
+\end{itemize}
+  
+\section{Cheminement}
+La partie correspondant au transport de blocs d'octets sur le canal
+Multicast a d\'ej\`a \'et\'e programm\'ee.
+
+Aussi, dans un premier temps, on essaiera d'effectuer le simple transfert
+de pages HTML texte, puis d'inclure dans ces derni\`eres des images et,
+\'eventuellement, des applets Java. Ce module n\'ecessite donc de
+programmer la conversion des donn\'ees HTML/blocs d'octets.
+
+Puis, ou parall\`element, on d\'eveloppera l'interface graphique et la
+partie de contr\^ole de diffusion.
+
+Le travail sera d\'ecompos\'e en modules, s'articulant les uns par rapport
+aux autres gr\^ace \`a des interfaces claires. La programmation des modules
+se verra donc r\'epartie entre les deux \'el\`eves du bin\^ome.
+\end{document}

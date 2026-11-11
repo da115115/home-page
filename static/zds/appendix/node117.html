@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>7.3.2 Physical Characteristics</TITLE>
+<META NAME="description" CONTENT="7.3.2 Physical Characteristics">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node118.html">
+<LINK REL="previous" HREF="node116.html">
+<LINK REL="up" HREF="node115.html">
+<LINK REL="next" HREF="node118.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1495"
+ HREF="node118.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1493"
+ HREF="node115.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1487"
+ HREF="node116.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1496"
+ HREF="node118.html">7.3.3 Logical Characteristics</A>
+<B> Up:</B> <A NAME="tex2html1494"
+ HREF="node115.html">7.3 Smart Card Technology</A>
+<B> Previous:</B> <A NAME="tex2html1488"
+ HREF="node116.html">7.3.1 Basic Concepts</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00732000000000000000">
+7.3.2 Physical Characteristics</A>
+</H2>
+<P><DL>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Card types</B>
+<DD>
+<P>
+Within the family of smart cards, there are two general categories: cards
+  with contacts and cards without contacts. Contact cards contain physical
+  contact points on the surface of the card that allow transmission of
+  commands, data, and status information between the card and a card
+  reader. Contactless cards also require physical contact with a reader,
+  but get their power via induction rather than through one of the
+  contacts. This difference affects only the very lowest level (physical
+  level) of the protocols used with smart cards.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Physical
+  specifications</B>
+<DD>
+<P>
+Focusing now on contact smart cards, potential uses depend on card
+  specifications. Microprocessor and memory technology have steep
+  technology curves, but the following specifications of typical available
+  contact smart cards can serve as a current baseline (March 1994):
+<P>  <DL>
+<P>      <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Clock rate</B>
+<DD> 3.5-8 MHZ.
+<P>      <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Non-volatile memory</B>
+<DD> 8-16
+      Kbytes (for data storage).
+<P>      <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>ROM</B>
+<DD> 8-16 Kbytes (for the card operating
+      system).
+<P>      <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>RAM</B>
+<DD> Around 256-500 bytes of RAM (for
+      operating systemcomputation).
+<P>      <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>EEPROM</B>
+<DD> 2-8 Kbytes
+      (externally-accessible, non-volatile).
+<P>      <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Write cycles</B>
+<DD> Approximately
+      104-105.
+<P>      <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Processing time</B>
+<DD> Average of
+      about 60 milliseconds (including transmission time) to retrieve a
+      56-bit number from a protected elementary file on the card. Depends
+      primarily on transmission time between the host system and the card
+      reader, so varies depending on capacity of that line.
+<P>      <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Cost</B>
+<DD> On the order of $7-$12/card in
+      quantities of 1000-5000; card reader cost is on the order of
+      $150-200 each in quantities of 100-500.
+  </DL></UL>
+<P>
+In the next few years, 16-32 bit RISC processors running at 20 MHz are
+  likely to become available on smart cards. This will define a new
+  generation of smart cards, as the power requirements and frequency
+  radiation of these processors can not be handled within the current ISO
+  7816-1,2 standard format. By 1995, it is expected that FRAM technology
+  will be available, supporting more write cycles (108). This technology
+  may also be incorporated into the new generation, although currently it
+  is too expensive.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Physical
+    security characteristics</B>
+<DD>
+<P>
+Smart cards incorporate physical tamper-resistance circuitry that
+  responds to tampering by inhibiting the output function. There is a
+  dielectric ``passivation layer'' covering the chip. The passivation layer
+  protects the chip from impurities and dust, and prevents passage of
+  radiation associated with probes, including electron-beam microscopy. The
+  circuitry is capable of reacting to light (indicating the passivation
+  layer has been broken); temperature, voltage, and frequency fluctuations
+  outside the specified operating range. There are physical memory
+  protection mechanisms, including memory scrambling, which make reverse
+  engineering more difficult and hinders an attack trying to erase a
+  selected data item in memory. Fuses are used during the manufacturing
+  cycle to permanently disable ``test'' mode(s) once tests have been passed
+  and the card is ready for distribution to issuers.
+<BR>
+<P>
+Smart cards can be manufactured with varying levels of physical security
+  features, with higher costs associated with higher levels of security.
+  Purchasers must evaluate with the vendor the level of physical security
+  appropriate to their application.
+</DL><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1495"
+ HREF="node118.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1493"
+ HREF="node115.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1487"
+ HREF="node116.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1496"
+ HREF="node118.html">7.3.3 Logical Characteristics</A>
+<B> Up:</B> <A NAME="tex2html1494"
+ HREF="node115.html">7.3 Smart Card Technology</A>
+<B> Previous:</B> <A NAME="tex2html1488"
+ HREF="node116.html">7.3.1 Basic Concepts</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

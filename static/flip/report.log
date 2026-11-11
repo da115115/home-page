@@ -1,0 +1,742 @@
+This is MlTeX (2.01), C Version 3.1415 (C version 6.1) (format=latex 96.5.9)  19 DEC 1997 16:29
+**report.tex
+(report.tex
+LaTeX2e <1995/12/01> patch level 2
+(/usr/local/lib/texmf/tex/latex2e/base/article.cls
+Document Class: article 1995/12/20 v1.3q Standard LaTeX document class
+(/usr/local/lib/texmf/tex/latex2e/base/size12.clo
+File: size12.clo 1995/11/30 v1.3p Standard LaTeX file (size option)
+)
+\c@part=\count82
+\c@section=\count83
+\c@subsection=\count84
+\c@subsubsection=\count85
+\c@paragraph=\count86
+\c@subparagraph=\count87
+\c@figure=\count88
+\c@table=\count89
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/local/lib/texmf/tex/latex2e/french/french.sty
+Package: french 1996/04/10 French package /V3,45/ (2e and 2.09 compatible)
+
+
+ Extension : style french V3,45 -- 10 avril 1996 -- (B.Gaulle, GUTenberg)
+(/usr/local/lib/texmf/tex/latex2e/base/latexsym.sty
+Package: latexsym 1995/11/28 v2.2c Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 85.
+)
+(/usr/local/lib/texmf/tex/latex2e/base/Ulasy.fd
+File: Ulasy.fd 1995/11/28 v2.2c LaTeX symbol font definitions
+)
+
+ french.sty utilise dans ce document le codage de fonte OT1.
+(/usr/local/lib/texmf/tex/latex2e/french/fenglish.sty)
+\@FrDimen=\dimen103
+)
+(/homes/arnaud/htdocs/latex2html/texinputs/fancyhdr.sty
+\headwidth=\dimen104
+)
+(/usr/local/lib/texmf/tex/latex2e/graphics/graphicx.sty
+Package: graphicx 1995/12/06 v0.6h Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/lib/texmf/tex/latex2e/graphics/keyval.sty
+Package: keyval 1995/09/21 v1.09 key=value parser (DPC)
+)
+(/usr/local/lib/texmf/tex/latex2e/graphics/graphics.sty
+Package: graphics 1996/02/20 v0.7h Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/lib/texmf/tex/latex2e/graphics/trig.sty
+Package: trig 1994/10/16 v1.08 sin cos tan (DPC)
+)
+(/usr/local/lib/texmf/tex/latex2e/graphics/graphics.cfg)
+Package graphics Info: Driver file: dvips.def on input line 82.
+
+(/usr/local/lib/texmf/tex/latex2e/graphics/dvips.def
+File: dvips.def 1995/12/04 v2.14 Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen105
+\Gin@req@width=\dimen106
+)
+(/usr/local/lib/texmf/tex/dvips/psfig.tex
+\@unused=\write4
+\ps@stream=\read1
+\p@intvaluex=\dimen107
+\p@intvaluey=\dimen108
+
+psfig/tex 1.10-dvips
+) (/homes/arnaud/htdocs/latex2html/texinputs/html.sty
+
+LaTeX Warning: You have requested package `',
+               but the package provides `html'.
+
+Package: html 1996/12/22 v1.1 hypertext commands for latex2html (nd, hws, rrm)
+\c@lpart=\count90
+\c@lchapter=\count91
+\c@lsection=\count92
+\c@lsubsection=\count93
+\c@lsubsubsection=\count94
+\c@lparagraph=\count95
+\c@lsubparagraph=\count96
+\c@lequation=\count97
+\c@lsubsubparagraph=\count98
+\ptrfile=\write5
+) (/homes/arnaud/htdocs/latex2html/texinputs/htmllist.sty) (report.aux
+(objectif.aux) (demarche.aux) (fonction.aux) (composition.aux) (conclusion.aux)
+(remerciements.aux) (guide.aux) (killer.aux) (doit.aux) (panel.aux)
+(listing.aux))
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+\c@chapter=\count99
+\@FrCount=\count100
+ [1
+
+] (report.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 2.
+)
+\tf@toc=\write6
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[1] (report.lof)
+\tf@lof=\write7
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[2] (objectif.tex
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <14.4> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 2.
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--11
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 12--16
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 17--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 30--35
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 36--40
+
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[1
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 55--59
+
+ []
+
+
+Overfull \hbox (6.44269pt too wide) in paragraph at lines 72--74
+[][]\OT1/cmr/m/n/12 panel de contrôle de dé-fi-le-ment,
+ []
+
+)
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[2] (demarche.tex
+Underfull \hbox (badness 10000) in paragraph at lines 3--11
+
+ []
+
+File: generalStruct.ps Graphic file (type eps)
+<generalStruct.ps>
+Overfull \hbox (65.24408pt too wide) in paragraph at lines 13--14
+ [][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--23
+
+ []
+
+
+Overfull \hbox (2.70699pt too wide) in paragraph at lines 25--30
+[][]\OT1/cmr/m/n/12 notre tra-vail sur cette par-tie a consisté tout d'abord
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 40--43
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 44--54
+
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[3
+
+
+]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 67--71
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--81
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 82--88
+
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 97--104
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 111--113
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 123--132
+
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[6])
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[7] (fonction.tex
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 8.
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--13
+
+ []
+
+File: serverSenderWindow.ps Graphic file (type eps)
+<serverSenderWindow.ps>
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[8
+
+
+]
+Overfull \hbox (26.81244pt too wide) in paragraph at lines 42--44
+[][]\OT1/cmr/m/n/12 permet de mo-di-fier les pa-ra-mètres de la trans-mis-sion 
+(\OT1/cmtt/m/n/12 Transmission
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[9]
+File: serverPreferences.ps Graphic file (type eps)
+ <serverPreferences.ps>
+Overfull \hbox (65.24408pt too wide) in paragraph at lines 79--80
+ [][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 86--87
+
+ []
+
+File: clientReceiverWindow.ps Graphic file (type eps)
+<clientReceiverWindow.ps>)
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[10] (composition.tex
+Underfull \hbox (badness 10000) in paragraph at lines 24--28
+
+ []
+
+File: serverClass.ps Graphic file (type eps)
+<serverClass.ps>
+File: clientClass.ps Graphic file (type eps)
+ <clientClass.ps>
+Underfull \hbox (badness 10000) in paragraph at lines 41--44
+
+ []
+
+File: threadserver.ps Graphic file (type eps)
+<threadserver.ps>
+Overfull \hbox (65.24408pt too wide) in paragraph at lines 46--47
+ [][] 
+ []
+
+File: threadclient.ps Graphic file (type eps)
+<threadclient.ps>
+Overfull \hbox (65.24408pt too wide) in paragraph at lines 52--53
+ [][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 58--61
+
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[11
+
+
+]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[12]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[13]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[14]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[15]
+Overfull \hbox (29.9002pt too wide) in paragraph at lines 86--86
+[]    \OT1/cmtt/m/n/12 window = new SenderGUI (this);  // tells the GUI who con
+trols it[] 
+ []
+
+
+Overfull \hbox (85.47523pt too wide) in paragraph at lines 86--86
+[]    \OT1/cmtt/m/n/12 window.show();         // shows the GUI that waits for i
+ts related events[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 88--95
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 96--100
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--107
+
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 132--140
+
+ []
+
+File: serverEvent.ps Graphic file (type eps)
+<serverEvent.ps>
+Underfull \hbox (badness 10000) in paragraph at lines 153--158
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 159--165
+
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[17]
+Overfull \hbox (13.7805pt too wide) in paragraph at lines 166--171
+[]\OT1/cmr/m/n/12 D'autre part, \OT1/cmr/m/it/12 Fi-le-List \OT1/cmr/m/n/12 con
+tient trois ré-fé-rences à des ob-jets de type \OT1/cmtt/m/n/12 Vector()\OT1/cm
+r/m/n/12 ,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 166--171
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 172--175
+
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[18]
+Underfull \hbox (badness 10000) in paragraph at lines 188--191
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 192--204
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 205--208
+
+ []
+
+
+Overfull \hbox (42.25021pt too wide) in paragraph at lines 220--220
+[]    \OT1/cmtt/m/n/12 String[] beginDelim = {"directory=", "filename=", "displ
+ayTime="};[] 
+ []
+
+
+Overfull \hbox (5.2002pt too wide) in paragraph at lines 220--220
+[]    \OT1/cmtt/m/n/12 Vector[] vects = adapt.fileSearch (3, beginDelim, endDel
+im);[] 
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[19]
+Overfull \hbox (110.4348pt too wide) in paragraph at lines 233--238
+\OT1/cmr/m/n/12 tour des mé-thodes de \OT1/cmr/m/it/12 Fi-le-List\OT1/cmr/m/n/1
+2 . C'est no-tam-ment le cas de la mé-thode \OT1/cmtt/m/n/12 controlLayer.sendA
+ction()
+ []
+
+
+Overfull \hbox (23.7252pt too wide) in paragraph at lines 267--267
+[]    \OT1/cmtt/m/n/12 AMPThreadCarrier ampThreadCarrier = new AMPThreadCarrier
+ (dbg);[] 
+ []
+
+
+Overfull \hbox (97.82524pt too wide) in paragraph at lines 267--267
+[]    \OT1/cmtt/m/n/12 // Kill all previously running AMP process (stop the pre
+vious transmission)[] 
+ []
+
+
+Overfull \hbox (54.60022pt too wide) in paragraph at lines 267--267
+[]    \OT1/cmtt/m/n/12 // Create the Unix tar file to store all the inlined fil
+es contained[] 
+ []
+
+
+Overfull \hbox (73.12523pt too wide) in paragraph at lines 267--267
+[]    \OT1/cmtt/m/n/12 // Send the Html page alltogether with its inlined files
+ (images, etc.)[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 269--275
+
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[20]
+Underfull \hbox (badness 10000) in paragraph at lines 276--286
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 307--312
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 313--322
+
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[21])
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[22] (conclusion.tex
+Underfull \hbox (badness 10000) in paragraph at lines 3--9
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 10--16
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 17--22
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 23--36
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 37--40
+
+ []
+
+
+Underfull \vbox (badness 1436) has occurred while \output is active []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[23
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 59--64
+
+ []
+
+)
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[24] (remerciements.tex)
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[25
+
+
+]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[26
+
+
+] [1] (guide.tex
+Underfull \hbox (badness 10000) in paragraph at lines 3--5
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6--7
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 8--12
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--22
+
+ []
+
+)
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[2
+
+] (killer.tex)
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[3
+
+
+] (doit.tex
+Overfull \hbox (104.00024pt too wide) in paragraph at lines 45--45
+[]\OT1/cmtt/m/n/12 # Step 2.  Generate a keypair for Duke, and store the public
+ key in a file named[] 
+ []
+
+
+Overfull \hbox (66.95023pt too wide) in paragraph at lines 45--45
+[]\OT1/cmtt/m/n/12 # Step 3.  Generate an x509 certificate for Duke, and store 
+it in the file[] 
+ []
+
+
+Overfull \hbox (60.77522pt too wide) in paragraph at lines 45--45
+[]\OT1/cmtt/m/n/12 # named Duke.x509.   This output file name is given in the d
+irective file[] 
+ []
+
+
+Overfull \hbox (104.00024pt too wide) in paragraph at lines 45--45
+[]\OT1/cmtt/m/n/12 # Step 5.   Sign the archive, using the parameters given in 
+sign_directive_Duke.[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (15.05003pt too high) has occurred while \output is active []
+
+
+[4
+
+
+])
+Overfull \vbox (15.05003pt too high) has occurred while \output is active []
+
+
+[5] (panel.tex
+Underfull \hbox (badness 10000) in paragraph at lines 4--6
+
+ []
+
+
+Overfull \hbox (23.7252pt too wide) in paragraph at lines 173--173
+[]    \OT1/cmtt/m/n/12 System.out.println("Controler visible: " +control.isVisi
+ble());[] 
+ []
+
+
+Overfull \hbox (23.7252pt too wide) in paragraph at lines 173--173
+[]    \OT1/cmtt/m/n/12 System.out.println("Displayer visible: " +display.isVisi
+ble());[] 
+ []
+
+
+Overfull \hbox (5.2002pt too wide) in paragraph at lines 173--173
+[]    \OT1/cmtt/m/n/12 System.out.println("Controler valide: " +control.isValid
+());[] 
+ []
+
+
+Overfull \hbox (5.2002pt too wide) in paragraph at lines 173--173
+[]    \OT1/cmtt/m/n/12 System.out.println("Displayer valide: " +display.isValid
+());[] 
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[6
+
+
+]
+Overfull \hbox (54.60022pt too wide) in paragraph at lines 173--173
+[]  \OT1/cmtt/m/n/12 /* Insert a little breathing space between the panel and i
+ts contents,[] 
+ []
+
+
+Overfull \hbox (5.2002pt too wide) in paragraph at lines 173--173
+[]    \OT1/cmtt/m/n/12 MainFrame f = new MainFrame("Converter Applet/Applicatio
+n");[] 
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[7]
+Overfull \hbox (60.77522pt too wide) in paragraph at lines 173--173
+[]  \OT1/cmtt/m/n/12 Label readerLabel = new Label("Entrer une nom d'image :", 
+Label.RIGHT);[] 
+ []
+
+
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[8]
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[9])
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[10] (listing.tex)
+Overfull \vbox (2.49998pt too high) has occurred while \output is active []
+
+
+[11
+
+
+] (report.aux (objectif.aux) (demarche.aux) (fonction.aux) (composition.aux) (c
+onclusion.aux) (remerciements.aux) (guide.aux) (killer.aux) (doit.aux)
+(panel.aux) (listing.aux)) ) 
+Here is how much of TeX's memory you used:
+ 1986 strings out of 10708
+ 19134 string characters out of 71759
+ 77906 words of memory out of 262141
+ 4773 multiletter control sequences out of 9500
+ 11712 words of font info for 45 fonts, out of 100000 for 255
+ 15 hyphenation exceptions out of 607
+ 30i,10n,40p,227b,448s stack positions out of 300i,100n,60p,3000b,4000s
+
+Output written on report.dvi (40 pages, 72592 bytes).

@@ -1,0 +1,1684 @@
+\documentclass[a4paper,12pt]{report}
+
+\usepackage{french}
+\usepackage{amssymb}
+
+\usepackage[dvips]{graphicx}
+\input{/usr/local/lib/texmf/tex/dvips/psfig}
+\input{/homes/arnaud/htdocs/latex2html/texinputs/html.sty}
+\input{/homes/arnaud/htdocs/latex2html/texinputs/htmllist.sty}
+
+% \htmlbase{http://studwww.eurecom.fr/~arnaud/zds/report}
+
+\oddsidemargin=0cm
+\evensidemargin=0cm
+\textwidth=16cm
+\topmargin=0cm
+\textheight=24.6cm
+\headheight=0pt
+\headsep=0pt
+%\def\chaptername{}
+\newcommand{\Z}{{\mathbb{Z}}}
+
+\begin{document}
+
+%\bodytext{BACKGROUND=../../background/grey.gif}
+\bodytext{BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9"}
+
+\begin{titlepage}
+\begin{center}
+. \\
+\vspace{4cm}
+{\Huge Comment réaliser son propre\\}
+\vspace{2cm}
+{\Huge radiotéléphone numérique\\}
+\vspace{4cm}
+{\Large Denis Arnaud  \&  Eric Roussel\\}
+\vspace{2cm}
+{\large Decembre 1995}
+\end{center}
+\end{titlepage}         
+
+\normalsize
+\begin{latexonly}
+  \tableofcontents
+  \listoffigures
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdnormallink{Une version Postscript est aussi disponible
+      ici.}{http://studwww.eurecom.fr/\~{}arnaud/trex/report.ps.gz}}
+\end{htmlonly}
+
+\chapter{Introduction}
+
+\section{Général}
+
+Ce travail expérimental a pour but la réalisation d'une liaison
+radiotéléphonique numéri\-que entre deux postes standards, afin de
+comprendre quels sont les éléments et les processus fondamentaux
+intervenant dans la mise en oeuvre de systèmes tels que le GSM.\\
+
+L'étude comporte plusieurs étapes, chacune apportant un étage
+supplémentaire de sophistication à la liaison initiale relativement simple
+entre les deux postes qu'est la liaison analogique par fils qu'ont connue
+nos aînés. Aussi, le plan de ce rapport retrace-t-il celui des séances de
+manipulation que nous avons suivies, et nous donnons ici, d'une part les
+notions de bases nécessaires à la compréhension des systèmes mis en jeu, et
+d'autre part le cheminement que nous avons suivi, égrené des montages
+effectivement réalisés, des difficultés rencontrées et des alternatives
+éventuellement envisagées.\\
+
+En fait, ce travail ne s'attarde que peu sur la liaison analogique
+bi-directionnelle initiale, afin de mettre essentiellement l'accent sur une
+solution de transmission numérique en simplifiant notamment l'étude à une
+transmission unidirectionnelle.\\
+
+\section{Présentation du matériel}
+
+Le matériel dont nous disposons est le suivant:
+\begin{itemize}
+  \item Deux postes téléphoniques de type "S63",
+    
+  \item Deux transformateurs d'isolement pour séparer les circuits
+    électroniques des deux lignes, permettant à ces derniers d'avoir une
+    référence (masse) propre indépendante des deux masses {\em a priori}
+    différentes des deux postes,
+    
+  \item Des boîtiers réalisant les opérations de conversion
+    analogi\-que/nu\-mé\-ri\-que et numéri\-que/analogique (permettant
+    aussi d'effectuer une correction d'erreur selon le programme de Hamming
+    après avoir récupéré les informations contenues dans un signal
+    numérique brut),
+    
+  \item Des amplificateurs opérationnels et des circuits logiques
+    permettant d'assurer toutes les opérations pour la transmission du
+    signal numérique.
+\end{itemize}
+
+Nous disposons aussi d'un générateur de tension continue de $35V$ afin
+d'alimenter les postes télépho\-ni\-ques, des diverses alimentations en
+tensions continues nécessaires, ainsi que d'un oscilloscope et d'un
+analyseur en fréquences.
+
+\section{Schéma synoptique}
+
+Les figures \ref{fig:principe_emission} et \ref{fig:principe_reception}
+résument sous forme de schémas la cascade finale d'opérations correspondant
+aux étapes successives de la manipulation.
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{11cm}
+    \caption{Schéma de principe du circuit d'émission}
+    \label{fig:principe_emission}
+  \end{figure}
+  
+  \begin{figure}[htbp]
+      \vspace{15.3cm}
+      \caption{Schéma de principe du circuit de réception}
+      \label{fig:principe_reception}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../emissio2.gif}}\\
+  \centerline{\Large Figure \ref{fig:principe_emission}: Schéma de principe
+    du circuit d'émission}\\
+  \label{fig:principe_emission}
+
+  \centerline{\htmladdimg[CENTER]{../recepti2.gif}}\\
+  \centerline{\Large Figure \ref{fig:principe_reception}: Schéma de
+    principe du circuit de réception}\\
+  \label{fig:principe_reception}
+\end{htmlonly}
+
+\chapter{La transmission analogique}
+
+Tout d'abord, il est nécessaire d'alimenter les postes téléphoniques, et
+cela s'effectue au moyen d'un générateur de tension continue de
+$35V$\footnote{En fait, il faudrait un générateur de tension continue de
+$48V$}. Du poste ne sortent que deux fils électriques, entre lesquels
+s'établit une ddp\footnote{différence de potentiel} variable (signal de
+"parole" dont les fréquences varient entre $300Hz$ et $3400Hz$, domaine de
+fréquences normalisé pour la téléphonie) se superposant à la ddp continue
+d'alimentation de $35V$.  Sans entrer dans les détails, la ddp variable
+recueillie entre les deux fils est proportionnelle à la différence de
+pressions atmosphériques, générée par la propagation d'un son dans l'air,
+et convertie en signal électrique grâce au microphone; en d'autres termes,
+le microphone transforme l'onde sonore en onde électrique, et l'écouteur,
+techniquement équivalent au microphone, permet l'opération inverse.\\
+
+Les deux postes sont dits à batterie centrale (par opposition à batterie
+locale), c'est-à-dire que l'alimentation en tension continue se fait au
+centre de rattachement, et non à proximité immédiate de chacun des postes
+(tous les postes actuellement en service dans la plupart des réseaux
+publics et privés sont des postes à batterie centrale, ce qui permet la
+suppression des sources individuelles et donc un entretien moins coûteux,
+ainsi que de récupérer l'information sur le décrochage ou le raccrochage de
+l'appareil).\\
+
+Afin que le signal de "parole" puisse être transmis entre les deux postes
+alimentés en tension continue, il est nécessaire d'ajouter une inductance
+qui permet à la tension régnant entre les paires de fils de varier autour
+de la valeur moyenne de $35V$, et non pas de rester égale à cette dernière.
+A l'aide du schéma de principe (figure \ref{fig:analogique}), l'on voit que
+la ddp entre les deux fils d'un poste vaut: $U = 35V + u(t)$, où $u(t)$, à
+valeur moyenne nulle et de fréquence comprise dans l'intervalle
+$300-3400Hz$, représente le signal de parole.
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{4.3cm}
+    \caption{Schéma de principe de la transmission deux fils}
+    \label{fig:analogique}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../analogiq.gif}}\\
+  \centerline{\Large Figure \ref{fig:analogique}: Schéma de principe de la
+    transmission deux fils}\\
+  \label{fig:analogique}
+\end{htmlonly}
+
+Comme les montages électroniques, tels les amplificateurs (servant à
+relayer l'information, lorsque les pertes dues à l'imperfection des
+conducteurs atténuent trop les signaux utiles), ne transmettent l'énergie
+que dans un seul sens, et comme une conversation téléphonique est
+bilatérale, des dispositions spéciales sont à prendre pour que les signaux
+vocaux puissent être amplifiés dans les deux sens, sans réaction de l'un
+sur l'autre.
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{10cm}
+    \caption{Schéma de principe de la transformation 2 fils-4 fils}
+    \label{fig:Principe_blocT}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../analogiq.gif}}\\
+  \centerline{\Large Figure \ref{fig:Principe_blocT}: Schéma de principe de
+    la transformation 2 fils-4 fils}\\
+  \label{fig:Principe_blocT}
+\end{htmlonly}
+
+Un tel résultat peut être obtenu en constituant à partir des deux fils un
+circuit à quatre fils (cf figure \ref{fig:Principe_blocT}), notamment grâce
+à un montage électronique à amplificateur opérationnel (cf figure
+\ref{fig:blocT}), ce qui confère à ce dispositif le nom de bloc "T". Il est
+à noter que nous aurions pu utiliser, aussi, un transformateur spécial pour
+réaliser cette fonction. D'autre part, il faut remarquer que lors de
+l'insertion de montages électroniques entre les deux postes, il est
+nécessaire d'isoler le référentiel de tension de ces derniers, cela afin
+qu'ils n'interfèrent pas avec l'alimentation centrale des postes
+téléphoniques; cette fonction est naturellement réalisée par les
+transformateurs d'isolement.
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{7.9cm}
+    \caption{Schéma électronique de la transformation 2 fils-4 fils}
+    \label{fig:blocT}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../bloct.gif}}\\
+  \centerline{\Large Figure \ref{fig:blocT}: Schéma électronique de la
+    transformation 2 fils-4 fils}\\
+  \label{fig:blocT}
+\end{htmlonly}
+
+L'intérêt de laisser une impédance "$Z$" variable (qui n'est, en pratique,
+qu'une résistan\-ce variable) est de pouvoir ajuster cette dernière afin
+qu'elle égale l'impédance vue par la ligne, et cela permet au dispositif de
+fonctionner correctement: le signal sur la branche "$d$" (départ) est
+proportionnel à celui de la branche "$l$" (ligne, et donc, dans ce cas, le
+signal provenant du microphone) lorsque la personne parle dans le poste, et
+le signal sur la branche "$a$" (arrivée) est proportionnel à celui de la
+branche "$l$" (ligne, et donc, dans ce cas, le signal allant sur
+l'écouteur) lorsque la personne écoute (pour le détail des calculs, voir
+l'annexe \ref{annexe:blocT}).\\
+
+Le système étant ainsi prêt à recevoir des montages électroniques entre les
+postes, on peut installer des amplificateurs afin d'amplifier les signaux
+émis par chacun des deux postes.  L'amplification est réalisée grâce à des
+montages classiques à amplificateur opérationnel (cf figure
+\ref{fig:amplis}). L'intérêt du condensateur est de limiter la bande
+passante du montage à la bande utile de la téléphonie (ce qui donne une
+fréquence maximale $Fmax=3400Hz$), et $C$ est alors donné par la relation:
+$C = 1 / (2\, \pi\, R_1\, Fmax)$.
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{5.7cm}
+    \caption{Schéma des amplificateurs AO}
+    \label{fig:amplis}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../amplisao.gif}}\\
+  \centerline{\Large Figure \ref{fig:amplis}: Schéma des amplificateurs
+    AO}\\
+  \label{fig:amplis}
+\end{htmlonly}
+
+Toutefois, lors du test de ce montage, nous n'avons pas réussi à nous
+parler par l'intermédiaire des postes téléphoniques, alors que le
+dispositif sans les amplificateurs (mais avec les blocs en "T") permettait
+tout de même la transmission de la voix, même si celle-ci parvenait à nos
+oreilles très affaiblie, à la limite de l'audible. En fait, les
+amplificateurs constituent, avec les deux blocs en "T", une boucle de gain
+global supérieur à 1, due notamment à l'imperfection du bloc en "T" qui ne
+supprime pas complètement le passage direct de la branche "$a$" sur la
+branche "$d$": le système est entraîné dans un régime d'oscillations
+entretenues superposant tous les signaux entre les deux blocs en "T", et
+rendant donc méconnaissable les signaux initiaux des voix. Il est à noter,
+cependant, qu'il aurait fallu, pour remédier à ce problème, mettre en série
+avec la résistance variable du bloc en "T" une inductance variable, car
+l'impédance de la branche "$l$" (et notamment du microphone) comporte non
+seulement une résistance, mais bien aussi une inductance: ainsi, on
+pourrait égaler plus correctement l'impédance variable avec celle vue par
+la ligne. Nous n'avons pas remédié à ce défaut, essentiellement parce que
+ce n'était pas là le but de cette étude, et nous avons donc procédé à
+l'étape suivante.
+
+\chapter{La numérisation du signal}
+
+\section{Introduction}
+
+Jusqu'à récemment, et encore actuellement dans quelques pays, les procédés
+de transmission télépho\-ni\-que consistaient à émettre, transmettre et
+recevoir un signal électrique qui, à tout instant, correspondait à
+l'amplitude du courant téléphonique; c'est la transmission dite analogique,
+selon le principe même des premiers téléphones. Des techniques nouvelles
+sont apparues; déjà très employées, elles reposent sur des principes
+entièrement différents constituant la transmission dite numérique.\\
+
+Ce type de procédés, tout en se montrant moins sensible aux divers bruits,
+permet de plus de corriger les erreurs de transmission. Mais, outre le
+bénéfice de cette protection contre les perturbations, l'essor des
+composants électroniques rapides et fiables utilisés en informatique a
+permis d'accélérer notablement les cadences de codage et de décodage des
+informations numériques, apportant ainsi un avantage considérable (sur
+lequel nous ne reviendrons toutefois malheureusement pas): le multiplexage
+par partage dans le temps.\\
+
+En pratique, pour transformer la transmission analogique en une liaison
+numérique, l'on garde les blocs en "T" et l'on insère une chaîne de
+transmission numérique.  Cette dernière comprend deux parties: l'ensemble
+"émetteur" et l'ensemble "récepteur" qui, dans un dispositif réel, peuvent
+être très éloignés l'un de l'autre, mais qui sont proches dans notre
+montage pour des raisons de commodité évidentes.\\
+
+\section{L'ensemble "émetteur"}
+
+Il comprend un convertisseur analogique/numérique, un dispositif de codage
+contre les erreurs (codage de Hamming) commutable sur demande, un circuit
+de mise en série de 8 bits (le bit, abréviation de binary digit, est un
+élément binaire, {\em i.e.} un signal représentant un 1 ou un 0), un
+dispositif d'insertion de synchronisation par mot de 24 bits, et enfin un
+codeur numérique.
+
+\subsection{Le convertisseur numérique}
+
+La théorie (théorème de Shannon) et l'expérience montrent que pour
+reconstituer correctement un signal formé de fréquences inférieures à $f$,
+il suffit de disposer de la valeur de ce signal à des instants suffisamment
+rapprochés (ces instants sont appelés instants d'échantillonnage), écartés
+au plus d'un temps $T = 1/(2f)$, T étant la période d'échantillonnage
+exprimée en secondes. Si donc $f_0$ est la fréquence d'échantillonnage
+($f_0 =1/T$), il nous faut avoir dans notre cas $f_0 > 2\, F_{max}$, où
+$F_{max}$ est comme précédem\-ment la fréquence maximale normalisée du
+signal de parole, à savoir $F_{max} = 3400Hz$.
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{9.4cm}
+    \caption{Quantification sur un arc}
+    \label{fig:quantification}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../quantifi.gif}}\\
+  \centerline{\Large Figure \ref{fig:quantification}: Quantification sur un
+    arc}\\
+  \label{fig:quantification}
+\end{htmlonly}
+    
+Les boîtiers dont nous disposons ici échantillonnent en fait à $f_0 =
+10kHz$, ce qui signifie que le signal analogique de parole est sondé tous
+les $1/10000$ de seconde, soit toutes les $100\mu s$.  La valeur du
+résultat de la mesure est ensuite traduite en informations susceptibles
+d'être transmises en ligne et convenablement détectées à l'arrivée. Le
+procédé utilisé dans notre cas, dénommé M.I.C.  (modulation par impulsions
+codées), consiste à traduire le résultat de la mesure en numération binaire
+(cf figure \ref{fig:quantification}).  Avec, ici, une suite de 8 bits (donc
+0 ou 1), on dispose de $2^8= 256$ valeurs possibles d'amplitudes étalons
+dont on retient celle qui se rapproche le plus possible de la valeur exacte
+mesurée; une telle opération est ainsi appelée quantification.\\
+
+En résumé, le signal téléphonique analogique d'une voie fait l'objet, à la
+cadence de 10000 fois par seconde, de trois opérations: échantillonnage,
+quantification et codage, dont une est susceptible d'apporter une
+altération (bruit de quantification) du fait de l'approximation de la
+valeur réelle par la valeur étalon retenue pour l'amplitude (c'est
+d'ailleurs pour réduire cet inconvénient que le système M.I.C. européen a
+été normalisé avec 256 niveaux étalons de quantification grâce à 8 bits de
+codage). La fréquence de passage d'un mot de 8 bits à un autre étant de
+$10kHz$ (fréquence d'échantillonnage), celle de passage d'un bit à un autre
+est: $8\times 10000 = 80kHz$, qui est donc la fréquence d'horloge des
+boîtiers utilisés pour la maquette.\\
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{11.1cm}
+    \caption{Numérisation d'un signal analogique: 1-Signal analogique;
+      2-Échantillonage; 3-Quantification; 4-Mise en série}
+    \label{fig:echantillonage}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../numrisat.gif}}\\
+  \centerline{\Large Figure \ref{fig:echantillonage}: Numérisation d'un
+    signal analogique: 1-Signal analogique; 2-Échantillonage;
+    3-Quantification; 4-Mise en série}\\
+  \label{fig:echantillonage}
+\end{htmlonly}
+    
+L'avantage de ce procédé réside d'abord dans l'insensibilité du signal
+numérique aux bruits et aux distorsions puisqu'il suffit de détecter
+correctement l'information numérique pour reconstituer le signal analogique
+dans son état d'origine (un bruit de transmission modifiera légèrement
+l'amplitude du signal numérique, {\em i.e.} la succession de paliers hauts
+et bas correspondant à la suite de 0 et de 1, ce qui, si les amplitudes de
+ces paliers sont suffisamment écartées, ne modifiera pas l'état des bits,
+donc aussi les valeurs correspondant à la succession de bits, et donc
+finalement l'amplitude du signal recueilli correspondant à la valeur
+quantifiée). D'autre part, afin de bénéficier d'une protection contre des
+perturbations plus importantes, on peut utiliser un système permettant de
+corriger les erreurs de transmission; c'est l'objet du dispositif suivant.
+
+\subsection{Le codage protecteur}
+
+Tout d'abord, il est à noter que les boîtiers proposent en option d'opérer
+une vérification de transmission par ajout d'un bit de parité. En fait,
+lorsque cette option est enclenchée, un bit est supprimé, celui de poids
+binaire le plus faible (c'est-à-dire correspondant à des valeurs modulo 2),
+et remplacé par le bit dit de parité, obtenu par la somme binaire des 7
+bits précédents. Cette opération divise donc par deux la précision de
+quantification du signal analogique (puisque l'on passe de $2^8 = 256$ à
+$2^7 = 128$ valeurs possibles) et ne permet, de plus, qu'une vérification
+d'erreur de transmission, et non pas sa correction, puisque ce dispositif
+est incapable de situer, sur les 8 bits (les 7 bits utiles, ou le bit de
+parité lui-même), l'erreur de transmission. Il est à remarquer, aussi, que
+ce dispositif n'est valable que pour des erreurs n'affectant qu'un seul des
+8 bits transmis.\\
+
+Aussi, il est apparu nécessaire de se protéger des erreurs de transmission,
+c'est-à-dire de les corriger lorsqu'elles occurrent: c'est tout l'intérêt
+du codage protecteur, que l'on peut mettre en fonction sur les boîtiers
+grâce à un commutateur trois positions (message de 8 bits seul; ajout de la
+parité; ajout du dispositif correcteur).\\
+
+Normalement, le dispositif de codage protecteur contre les erreurs
+introduit une certaine redondance dans le message. En effet, il faut
+adjoindre une séquence de contrôle au mot initial, séquence obtenue par
+combinaison linéaire binaire des bits du message, et donc non indépendante
+de ces derniers. Il existe plusieurs algorithmes de codage protecteur, et
+dans notre cas, celui retenu est le codage de Hamming, imposé par le
+boîtier utilisé. Le principe est de se servir de bits dits de correction
+pour localiser une erreur de transmission sur les bits utiles, {\em i.e.}
+ceux qui émanent de la quantification du message initial. Le code de
+Hamming utilisé ne permet toutefois de corriger des erreurs que sur un seul
+bit (mais il faut bien arrêter la sophistication quelque part!).\\
+
+En fait, la théorie (cf Annexe \ref{annexe:hamming}) montre qu'il serait
+nécessaire d'ajouter 7 bits de correction à chacun des mots de 8 bits du
+message initial, mais cela impose quasiment le doublement du débit
+d'information, et donc le doublement de la fréquence de transmission des
+bits: il faudrait, pour le même débit d'information utile, passer d'une
+fréquence d'horloge à $80kHz$ à une fréquence de $(8+7+1)\times10000 =
+160kHz$. Or, les boîtiers utilisés dans la maquette ne permettent pas de
+construire des mots binaires de plus de 8 bits, aussi la solution retenue
+lorsqu'il y a codage de Hamming est-elle de non plus quantifier le signal
+analogique sur 8 bits, mais sur 4 seulement, auxquels seront ajoutés les 3
+bits de correction et le bit de parité, dans notre cas.\\
+
+En résumé, l'on aura toujours la transmission de mots binaires de 8 bits à
+la fréquence de $80kHz/bit$ ($10kHz$ par mot de 8 bits) mais, suivant la
+position du commutateur trois positions du boîtier "émetteur", l'on
+transmettra soit 8 bits utiles, soit 7, soit seulement 4. Cela donnera donc
+une quantification apparente du signal analogique initial, respectivement
+sur 256, 128 ou 16 valeurs. En fait, l'intérêt du codage de Hamming sur ce
+boîtier est surtout pédagogique car, même si ce dispositif corrige les
+erreurs de transmission numérique, il introduit un bruit de quantification
+(c'est-à-dire le passage d'une quantification sur 256 valeurs à une de 16
+valeurs seulement) assez important qui, en pratique, gêne plus qu'il
+n'arrange: alors que la voix, sans correction d'erreurs, bénéficie d'une
+réception correcte, avec protection elle devient quasiment inaudible, tant
+le bruit de fond reste présent. Pour palier cet inconvénient, il suffirait
+donc de garder une quantification sur 8 bits, tout en doublant la fréquence
+d'émission des bits. C'est probablement le type de solution que nous
+adopterons pour la construction de nos propres GSM...
+
+\subsection{Mise en série des bits}
+
+Ce circuit permet de n'avoir qu'une seule information élémentaire (0 ou 1)
+à chaque instant.  Cela est indispensable pour la transmission, puisque
+l'on ne sait transmettre sur une liaison série qu'une valeur, et non un
+vecteur (pour transmettre un vecteur, il faut passer à une liaison dite
+parallèle, constituée d'au moins autant de fils que de bits à transmettre
+simultanément; or, en téléphonie, on cherche justement à minimiser le
+nombre de fils de transmission...).
+
+\subsection{La synchronisation}
+
+Le dispositif d'insertion de synchronisation, dès lors, devient nécessaire,
+puisque l'on ne sait pas reconnaître, {\em a priori}, le début de chacun
+des mots 8 bits transmis. Une solution consisterait à ajouter, entre chacun
+des mots utiles, des séparateurs de composition connue.  Le problème serait
+évidemment l'augmentation du nombre de bits transmis, pour un même nombre
+de bits utiles (provenant de la quantification du signal analogique
+initial), et donc l'augmentation dans le même rapport du débit de
+transmission de ces bits (tous les $1/10000$ de seconde, il ne faut plus
+transmettre 8 bits, mais 8 bits plus le nombre de bits nécessaires à la
+constitution du séparateur). La solution retenue est bien d'insérer des
+mots de reconnaissance, non pas entre tous les mots utiles, mais seulement
+périodiquement (ici, tous les 10000 mots de 8 bits ou, éventuellement, tous
+les 100 mots, ce qui donne des fréquences d'émission de ces mots de
+reconnaissance, respectivement de $1Hz$ et de $100Hz$).  Afin d'éviter
+d'éventuelles coïncidences, les mots de synchronisation ont une longueur de
+24 ($3\times 8$) bits, ce qui diminue notoirement la probabilité de fausse
+reconnaissance.  Lorsqu'effectué à la fréquence de $1Hz$, l'ajout du mot de
+reconnaissance est audible mais tout à fait tolérable; par contre, à
+$100Hz$, l'on a impression de ne plus recevoir que les tops de
+synchronisation!
+
+\subsection{Le codage}
+
+Le codeur numérique fabrique un signal électrique représentant chacun des
+bits. Aussi, comme le récepteur doit pouvoir retrouver dans le signal
+numérique la cadence d'émission des bits et s'accorder dessus, c'est
+précisément le rôle du codeur de faire apparaître cette fréquence dite
+d'horloge (qui vaut bien entendu $80kHz$ dans notre cas).\\
+
+Sur le boîtier, différents codes sont proposés, parmi lesquels le NRZ (Non
+Return to Zero), le RZ (Return to Zero) et le Bi$\Phi$ (Biphase).\\
+
+Pour le NRZ, on transmet un palier de hauteur nulle pendant une période
+d'horloge (donc pendant $12,5\mu s$) pour signifier le bit 0; le palier de
+hauteur $+V$ (par exemple $V=5 V$) correspond, lui, au bit 1.\\
+
+Au niveau du RZ, la correspondance est juste modifiée pour le bit 1: on
+transmet, pour signifier ce bit, le signal d'horloge H (en fait, $+V$
+pendant $6,25\mu s$ puis 0 pendant les $6,25\mu s$ restantes).\\
+
+Enfin, pour le Bi$\Phi$, pour signifier le bit 1 on transmet le signal
+d'horloge H, et pour le bit 0 le com\-plé\-men\-taire de H ($+V$ pendant
+$6,25\mu s$ puis 0 pendant les $6,25\mu s$ restantes).\\
+
+En résumé, cela donne:
+
+$$
+\begin{array}{ll}
+NRZ: & \left\{  \begin{array}{rcl}
+                                0 & \rightarrow & 0\\
+                                1 & \rightarrow & +V
+                        \end{array}
+\right.\\
+&\\
+RZ: & \left\{  \begin{array}{rcl}
+                                0 & \rightarrow & 0\\
+                                1 & \rightarrow & H\mbox{ (+V puis 0)}
+                        \end{array}
+\right.\\
+&\\
+Bi\Phi: & \left\{ \begin{array}{rcl}
+                                0 & \rightarrow & H\\
+                                1 & \rightarrow & \overline{H}
+                        \end{array}
+\right.
+\end{array}
+$$
+
+En clair, puisqu'un schéma vaut toujours mieux qu'un long discours, la
+figure \ref{fig:codages} résume ces différents codages.
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{7.8cm}
+    \caption{Les différents codages}
+    \label{fig:codages}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../nrz_rz_b.gif}}\\
+  \centerline{\Large Figure \ref{fig:codages}: Les différents codages}\\
+  \label{fig:codages}
+\end{htmlonly}
+
+Il est à noter que le signal d'horloge H est implicite dans les signaux RZ
+et Bi$\Phi$, par contre il l'est beaucoup moins avec le codage NRZ. Aussi,
+c'est du codage Bi$\Phi$ dont on se sert pour la transmission.
+
+\section{L'ensemble "récepteur"}
+
+Ce dispositif réalise les opérations inverses de celles effectuées par les
+systèmes utilisés dans l'ensemble "émetteur", et nous ne donnerons donc pas
+à nouveau tous les détails de tous ces systèmes. Il comprend les systèmes
+de restitution d'horloge, de reconnaissance du mot de synchronisation et
+d'accord sur la fréquence d'horloge, de régénération du message binaire
+indépendamment du code numérique utilisé, de mise en parallèle des bits
+reçus, de détection et correction d'erreurs et, enfin, de conversion
+numérique/analogique restituant le signal de parole.
+
+\subsection{La restitution d'horloge}
+
+Ce dispositif est notable car il est basé sur l'utilisation d'une boucle de
+phase (en Anglais: {\em PLL}, pour {\em Phase Locked Loop}): un mélangeur
+(et, donc, un comparateur de phases) asservit un oscillateur ({\em VCO},
+pour {\em Voltage Controlled Oscillator}) en tension, cette tension ayant
+une fréquence proportionnelle à la différence des fréquences du signal
+numérique transmis (et contenant implicitement le signal d'horloge) et du
+signal émanant de l'oscillateur lui-même; le système atteint l'équilibre
+lorsque la fréquence du signal de sortie du VCO égale celle du signal
+numérique transmis, c'est-à-dire la fréquence d'horloge (cf Annexe
+\ref{annexe:boucle_phase}).\\
+
+Il est à noter que le signal numérique transmis doit être du type Bi$\Phi$.
+
+\subsection{La reconnaissance du mot de synchronisation}
+
+La maquette possède en mémoire les codages binaires du mot de
+synchronisation de 24 bits A, et de son complémentaire $B = \overline{A}$.
+Les bits qui arrivent sont copiés dans un registre tournant de 24 bits, les
+uns après les autres, et ce registre est comparé à chaque réception de
+nouveau bit au mot A puis au mot B. Si le mot A est reconnu, le prochain
+bit qui arrivera correspondra au début d'un mot, et le dispositif se recale
+donc en conséquence afin de lire correctement les prochains mots de 8 bits.
+Il se peut, aussi, que le mot B soit reconnu, ce qui signifie que le signal
+effectivement reçu est le complémentaire de celui initialement transmis, et
+le dispositif transforme alors le signal reçu en son complémentaire afin de
+rétablir le signal numérique initial.
+
+\subsection{La détection et correction d'erreurs}
+
+Après reconstitution du signal numérique NRZ et récupération des cadences
+d'horloge ({\em Clock}) et des mots 8 bits ({\em Word Clock}), les bits
+sont mis en parallèle pour reconstituer les mots de 8 bits résultant de la
+quantification du signal analogique initial. Comme il se peut qu'il y ait
+eu des erreurs de transmission, il y a un dispositif "détecteur et
+correcteur", chargé d'abord de tester la véracité du message reçu (qui est
+une vérification de la règle établie lors du codage de Hamming) et ensuite,
+éventuellement, de localiser le bit erroné. Comme il suffit de connaître la
+position du bit erroné pour le corriger (puisque, si un bit est faux, son
+complémentaire est correct, le bit ne pouvant prendre que deux valeurs!),
+l'on obtient ainsi facilement des messages correctement transmis (bien
+entendu, cela n'est valable que s'il n'y a qu'une seule erreur, et non
+plusieurs...).\\
+
+Enfin, l'on notera que ce dispositif est facultatif sur la maquette et
+qu'il peut être mis en fonctionnement simplement grâce à un commutateur
+trois positions. Aussi, pour que le signal initial soit correctement
+transmis en final, il est bon que les deux commutateurs trois positions des
+ensembles "émetteur" et "récepteur" occupent la même position, cela,
+notamment, afin de ne corriger le message que s'il y a eu effectivement
+codage de Hamming auparavant, ou de ne vérifier la parité que si celle-ci a
+été insérée au préalable...
+
+\subsection{La conversion numérique/analogique}
+
+Cette opération consiste, à partir des informations reçues en numération
+binaire, à produire une impulsion d'amplitude correspondant à la valeur
+quantifiée. Par ailleurs, il n'existe pas à proprement parler d'opération
+inverse de la quantification, car ce dernier procédé induit une perte
+d'information (toutes les valeurs que prend le signal analogique entre les
+instants de quantification sont perdues). Aussi, le signal analogique
+restitué est-il un signal en "marches d'escalier". Toutefois, l'on peut
+approcher le signal analogique initial en "lissant" le signal restitué,
+{\em i.e.} en le filtrant au moyen d'un filtre passe-bas (dont la fréquence
+de coupure sera bien entendue de $3400Hz$). Dès lors, l'on peut utiliser un
+montage à amplificateur opérationnel (cellule de Sallen-Kay) dont le schéma
+et la courbe de gain sont donnés sur la figure \ref{fig:lissage}.
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{23,8cm}
+    \caption{Filtrage passe-bas}
+    \label{fig:lissage}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../lissage.gif}}\\
+  \centerline{\Large Figure \ref{fig:lissage}: Filtrage passe-bas}\\
+  \label{fig:lissage}
+\end{htmlonly}
+
+Avec les essais que nous avons effectués, la présence de ce filtre améliore
+substantiellement la qualité du signal transmis, même lorsque nous avons
+ajouté tous les autres étages menant à la transmission hertzienne
+numérique. Aussi, cela ne vaudrait pas la peine de s'en priver!
+
+\chapter{La transmission hertzienne}
+
+\section{Introduction}
+
+Théoriquement, et même en pratique dans le cadre des essais en laboratoire,
+le signal obtenu dans les étapes précédentes pourrait être transmis tel
+quel par la voie des airs.  Cependant, si l'on analyse le spectre (par
+transformation de Fourier) de ce signal numérisé "brut", on obtient, pour
+le module, une courbe en sinus cardinal au carré (cf figure
+\ref{fig:fourier}) qui montre notamment que 90\% de la puissance du signal
+se concentre dans des composantes dont les fréquences s'étalent entre 0 et
+$F_{max}=80kHz$ (en fait, de $-F_{max}$ à $+F_{max}$, mais les fréquences
+négatives n'ont pas de signification physique).
+
+\begin{latexonly}
+  \begin{figure}
+    \vspace{8.8cm}
+    \caption{Transformée de Fourier du signal}
+    \label{fig:fourier}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../transf-f.gif}}\\
+  \centerline{\Large Figure \ref{fig:fourier}: Transformée de Fourier du
+    signal}\\
+  \label{fig:fourier}
+\end{htmlonly}
+
+
+Autrement dit, la bande defréquences occupée par ce signal est très large
+(puisque $(F_{max}- F_{min})/F_{min}$ est infini...), et ne laisse donc pas
+de place pour la transmission simultanée d'autres signaux, ce qui peut
+s'avérer bien entendu gênant pour des applications comme la téléphonie, où
+de nombreuses conversations doivent pouvoir avoir lieu en même temps!\\
+
+Aussi, il devient nécessaire de déplacer la zone occupée par les fréquences
+du signal transmis, et si possible de réduire au minimum la largeur de
+cette zone. Lorsque l'on transmet un signal analogique, une des solutions
+consiste à moduler le signal initial avec un signal porteur, soit en
+amplitude, soit en fréquence (soit, aussi, par codage d'impulsions). Dans
+notre cas, le signal à transmettre étant numérique, il n'est constitué que
+d'une série de 0 et de 1, et l'on utilise alors une modulation de fréquence
+adaptée, la {\em F.S.K.} ({\em Frequency Shift Keying}).\\
+
+Dans notre cas, cette méthode, que nous allons ci-après expliciter plus en
+détails, requiert que nous utilisions des signaux, une fois modulés,
+possédant des fréquences de l'ordre de $1MHz$. Or, la théorie (cf Annexe
+\ref{annexe:antenne}) nous dit que l'émission à travers les airs d'un tel
+signal nécessite une antenne d'une hauteur L donnée par la relation $2L = c
+/ (2f)$, où $c$ exprime la vitesse de la lumière ($c=3\cdot 10^8 m/s$) et
+$f$ la fréquence du signal à transmettre. On voit donc qu'une hauteur de
+$75cm$ serait suffisante pour transmettre un signal de fréquence $100MHz$,
+alors que pour une fréquence de $1MHz$, il faudrait une antenne de $75m$ de
+haut, ce qui est un peu gênant pour un radiotéléphone!  Aussi, il devient
+nécessaire de décaler les fréquences du signal à transmettre, et c'est
+justement le rôle de la transposition.
+
+\section{La modulation numérique}
+
+Cette méthode consiste à émettre un signal sinusoïdal, soit de fréquence
+$f_0$ lorsque le bit du signal numérique à transmettre vaut 0, soit de
+fréquence $f_1$ dans le cas contraire. Afin que la largeur de la bande de
+fréquences soit aussi faible que possible, il faut que $f_0$ et $f_1$
+soient proches l'une de l'autre. Typiquement, l'on retient que
+$(f_1-f_0)/2$ doit être de l'ordre de 10\% de $(f_0+f_1)/2$.\\
+
+D'autre part, afin que le signal de fréquence $f_0$ ou $f_1$ soit défini
+sans ambiguïté ({\em i.e.} que ce signal soit émis suffisamment longtemps à
+cette fréquence pour que le récepteur puisse sans ambiguïté récupérer un
+signal à cette fréquence), il est nécessaire que la période correspondant à
+$f_0$ ou $f_1$ soit nettement plus petite que la durée d'un état électrique
+stable du signal numérique initial (cf figure \ref{fig:modulation}). Si
+$f_H$ représente la fréquence du signal numérique initial (ici,
+$f_H=80kHz$), on prendra donc $f_0\gg 2\, f_H$, ce qui nous amène à prendre
+$f_0$ et $f_1$ de l'ordre de $1MHz$.
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{21.3cm}
+    \caption{Modulation en fréquence du signal}
+    \label{fig:modulation}
+  \end{figure}
+
+  \begin{figure}[htbp]
+    \vspace{8.7cm}
+    \caption{Portrait de phase d'une modulation en fréquence par FSK; Le 1
+      représente le portrait de phase d'un signal "porte", et le 2
+      représente le signal binaire après la modulation}
+    \label{fig:modul}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../modulati.gif}}\\
+  \centerline{\Large Figure \ref{fig:modulation}: Modulation en fréquence
+    du signal}\\
+  \label{fig:modulation}
+
+  \centerline{\htmladdimg[CENTER]{../fourier.gif}}\\
+  \centerline{\Large Figure \ref{fig:modul}: Portrait de phase d'une
+    modulation en fréquence par FSK; Le 1 représente le portrait de phase
+    d'un signal "porte", et le 2 représente le signal binaire après la
+    modulation}\\
+  \label{fig:modul}
+\end{htmlonly}
+
+En pratique, pour ne pas saturer les composants mis à notre disposition, et
+en tenant compte des deux remarques précédentes, cela nous a amené à régler
+notre montage sur les fréquences $f_0 = 810kHz$ et $f_1 = 890kHz$. La
+figure \ref{fig:modul} nous montre le portrait de phase du signal modulé.\\
+
+Bien sûr, si l'émetteur module de la sorte le signal qu'il transmet, le
+récepteur doit pouvoir effectuer l'opération inverse, c'est-à-dire la
+démodulation. Mais cette opération n'est pas, {\em a priori}, évidente!
+Aussi une astuce permet-elle de s'en sortir très avantageusement: il s'agit
+d'employer, là encore, une boucle de phase (cf figure \ref{fig:mod_demod}).
+Le principe de ce montage est de prendre le même circuit pour la
+démodulation que celui qui a été employé pour la modulation (circuit à base
+de V.C.O.), puis d'asservir le circuit de démodulation de telle sorte que
+sa sortie égale celle du circuit de modulation. Dès lors, puisque les
+circuits sont les mêmes, on peut inférer que si leur sortie sont égales,
+leur entrée le sont aussi: on retrouve ainsi à l'entrée du circuit
+récepteur le signal qui était à l'entrée du circuit émetteur, c'est-à-dire
+le signal numérique, qui se retrouve ainsi démodulé!
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{9.6cm}
+    \caption{Schéma de principe du modulateur/démodulateur}
+    \label{fig:mod_demod}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../moddmod.gif}}\\
+  \centerline{\Large Figure \ref{fig:mod_demod}: Schéma de principe du
+    modulateur/démodulateur}\\
+  \label{fig:mod_demod}
+\end{htmlonly}
+
+
+Le montage démodulateur comporte un oscillateur, réglable au moyen d'une
+inductance variable, donnant la fréquence de référence à partir de laquelle
+il essaie d'égaler celle du signal qu'il a à démoduler. Ainsi, il faut que
+cette fréquence de référence soit assez proche de $f_0$ et $f_1$, {\em i.e.}
+environ $850kHz$. En fait, cette valeur doit être ajustée avec précision,
+et on la règle, dans la pratique, avec l'aide d'un oscilloscope affichant
+d'une part le signal numérique avant transmission, et d'autre part le
+signal recueilli à la sortie du démodulateur. Lorsque la fréquence de
+référence est correctement réglée, on dit qu'il y a accrochage de la boucle
+de phase sur le signal transmis.\\
+
+A ce stade du montage, nous avons rencontré un petit problème qui, bien que
+n'ayant aucun rapport avec la théorie et les principes de fonctionnement,
+mérite toutefois quelque attention... En effet, une fois l'oscillateur du
+démodulateur réglé, nous avons câblé la sortie de ce dernier circuit sur la
+maquette de conversion numérique/analogique.  Les résultats étaient
+probants pour les signaux analogiques (la voix passait correctement d'un
+poste téléphonique à l'autre), et pour tous les signaux numériques
+constitués de mots 8 bits (composés à l'aide des 8 touches de la maquette
+"émettrice") sauf ceux qui correspondaient à une suite de huit 1. En fait,
+la maquette, en présence de tels signaux, consommait une puissance
+importante et, comme tous les boîtiers étaient reliés à la même
+alimentation, elle "décrochait"... Dès lors, la solution a consisté à
+soulager le travail de l'alimentation commune à tous les boîtiers en en
+mettant une autre en parallèle; le résultat ne s'est alors plus fait
+attendre; la communication était pleinement rétablie!
+
+\section{La transposition en fréquence et la transmission hertzienne}
+
+Puisque, dans la quasi-totalité des cas réels, la fréquence d'émission
+optimale pour une longueur d'antenne donnée ne correspond pas au domaine de
+fréquences du signal à émettre, on utilise l'opération de transposition,
+{\em i.e.} un décalage (une translation) en fréquences. Cette opération se
+réalise grâce à une simple multiplication du signal (de fréquence moyenne
+$f$) sortant de l'opération de FSK, par un signal sinusoïdal de fréquence
+$F$. On obtient ainsi un signal dont les composantes ont pour fréquences
+$F-f$ et $F+f$ \footnote{Si on veut comprendre d'où vient la composante en
+$F-f$ à partir du spectre en fréquences, il faut remarquer que le spectre
+de tout signal réel est symétrique par rapport à l'origine, et donc que
+le signal modulé par FSK possède un spectre comportant deux composantes
+de fréquences $-f$ et $+f$, ce qui, après translation de $+F$, donne en
+fait quatre composantes de fréquence: $-F-f$, $-F+f$, $F-f$ et $F+f$,
+dont seules les deux dernières sont positives et correspondent aux
+fréquences effectives d'un signal réel.\\
+
+Plus simplement, il suffit de considérer ce que fait effectivement un
+circuit de transposition, c'est-à-dire une multiplication par un signal
+sinusoïdal. Si le signal de départ est aussi sinusoïdal, grâce à la
+relation bien connue $\cos (Wt)\cdot\cos (wt)=\frac{1}{2}\cdot \left[ \cos
+  \left( (W-w)\cdot t\right) + \cos \left( (W+w)\cdot t\right) \right] $,
+on obtient tout de suite le résultat.}. Pour prendre une place moins
+importante sur la bande de fréquences, on filtre une de ces deux
+composantes. Dans notre cas, l'opération de filtrage est effectuée grâce à
+un circuit passe-bande LC en sortie du transposeur, et la fréquence retenue
+est ici de $F-f$. Afin d'obtenir finement l'atténuation de l'autre
+composante, on utilise un analyseur de spectre, et l'on règlel'inductance
+variable du circuit de filtrage LC jusqu'à ce qu'une composante domine
+nettement l'autre (rapport entre les deux de l'ordre de $10db$).
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{23,8cm}
+    \caption{Transformation des spectres par transposition}
+    \label{fig:transposition}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../transpos.gif}}\\
+  \centerline{\Large Figure \ref{fig:transposition}: Transformation des
+    spectres par transposition}\\
+  \label{fig:transposition}
+\end{htmlonly}
+
+L'opération de transposition étant réalisée par des circuits spécialisés à
+base d'amplificateurs opéra\-tion\-nels, la fréquence de transposition
+maximale que nous pouvons obtenir est de l'ordre de $10MHz$. Au-delà, il
+faudrait changer de technologie et adopter des circuits beaucoup plus
+coûteux. L'intérêt de cette étude n'étant pas de reproduire exactement les
+caractéristiques d'un radiotéléphone commercial, mais d'en comprendre les
+éléments principaux, notre choix s'est porté sur une fréquence de
+transposition de $8MHz$ environ.\\
+
+Aussi, il est à noter que les antennes dont nous disposions étaient d'une
+hauteur d'environ $30cm$, ce qui, comparée à la hauteur théorique idéale
+pour un signal à transmettre d'une fréquence de $10MHz$, {\em i.e.} $7,5m$,
+est assez peu. En fait, cela n'a pas été très gênant, si ce ne sont les
+quelques bruits supplémentaires ajoutés au signal transmis, et qui ont été
+plus ou moins éliminés avec le filtre LC du circuit de transposition du
+côté récepteur.\\
+
+L'opération de transposition est tout à fait inversible, puisque cette
+opération est son propre inverse! En fait, en multipliant le signal de
+composante $F-f$ par un signal de fréquence $F$, on obtient un signal de
+deux composantes réelles: $f$ et $2F-f$. Il suffit donc, pour récupérer le
+signal initial de fréquence $f$, de filtrer la composante indésirable à
+l'aide d'un filtre passe-bande LC, filtre qui est situé à la sortie du
+circuit de transposition du récepteur.\\
+
+Enfin, pour compléter la maquette, il ne manque plus que l'ajout des
+antennes (ce qui, il faut bien en convenir, n'a pas vraiment constitué la
+partie la plus difficile de toute l'étude!) et, puisque les signaux
+traversent l'atmosphère, un circuit d'amplification du côté du récepteur
+\footnote{Cette opération d'amplification ne peut se faire que
+  difficilement du côté de l'émetteur, car il faudrait pour cela amplifier
+  des signaux de fréquences de l'ordre de $10MHz$, ce qui, pour des
+  amplificateurs opérationnels classiques, est déjà trop. Et amplifier le
+  signal avant son entrée dans le circuit de transposition ne ferait que
+  risquer de saturer ce dernier, son niveau de sortie restant, de plus,
+  toujours à peu près le même.}.
+L'amplification se fait après transposition, donc sur un signal de
+fréquence de l'ordre de $1MHz$, avec un montage classique à amplificateurs
+opérationnels.
+
+A la sortie de l'amplificateur, situé après la transposition donc, le
+signal passe dans le circuit de démodulation FSK puis dans les boîtiers de
+conversion numérique/analogique. Aussi, afin de régler finement la
+fréquence de transposition inverse (qui est, rappelons-le, à peu près la
+même que la fréquence de transposition, c'est-à-dire $8MHz$ dans notre cas)
+sur le montage récepteur, on observe avec un oscilloscope à la fois le
+signal provenant du circuit émetteur, avant transposition, et celui sur le
+circuit récepteur, après transposition, et l'on règle la fréquence du
+transposeur côté récepteur (grâce à une inductance variable) jusqu'à égaler
+les fréquences de ces deux signaux. Puis, l'on règle enfin, si nécessaire,
+la fréquence de référence du circuit démodulateur FSK (grâce, cette fois, à
+une résistance variable), jusqu'à ce que la fréquence du signal modulé soit
+accrochée, et que le circuit régénère donc un signal démodulé proche de
+celui qui avait été transmis initialement (ce dernier réglage, celui du
+démodulateur FSK, a normalement déjà été effectué lors de l'étape
+précédente, c'est-à-dire au moment où la maquette ne comportait pas encore
+de transposition).\\
+
+Le signal numérique régénéré est quasiment comme celui initialement
+transmis, sauf que les angles des "marches d'escalier" sont beaucoup plus
+arrondis. Pour palier cette caractéristique pouvant devenir gênante, le
+boîtier dispose d'un circuit spécialisé dénommé "squarer" que nous avons
+utilisé.\\
+
+Il reste encore un élément que nous pensons bon de relater ici. En effet,
+après avoir effectué tous les réglages et avoir posé les deux sondes de
+l'oscilloscope sur les deux signaux numériques, celui du circuit émetteur
+avant modulation d'une part, et celui récupéré par le circuit récepteur
+après démodulation d'autre part, nous avons vu que la restitution du signal
+numérique semblait tout à fait correcte, alors que le reste du circuit
+récepteur ne semblait pas vouloir "accrocher" sur ce signal (et par exemple
+reconnaître les mots de synchronisation).  Toutefois, en y regardant de
+plus près, l'on voyait clairement que le signal numérique restitué
+"tremblait" horizontalement, {\em i.e.} que sa fréquence oscillait, même si
+ce phénomène ne se montrait pas d'une grande amplitude. Le problème venait,
+en fait, de ce que la boucle de phase du démodulateur FSK n'accrochait pas
+assez vite sur les fréquences successives que prenait le signal modulé.
+Pour remédier à cela, il suffisait donc d'augmenter le gain du mélangeur du
+démodulateur ou, aussi, d'augmenter l'écart entre les deux fréquences $f_0$
+et $f_1$ du signal modulé, et c'est cette dernière solution que nous avons
+retenue (nous sommes passé d'un écart de $f_1-f_0 = 50 kHz$ à $80 kHz$). Il
+faut cependant prendre garde à ne pas écarter trop ces fréquences, sinon le
+démodulateur n'accrochera plus du tout! Dès lors, notre montage a
+fonctionné "merveilleusement bien", c'est-à-dire que les signaux
+demeuraient correctement transmis et interprétés, même lorsque nous avons
+écarté l'émetteur du récepteur d'environ $1m$ (le GSM n'a qu'à bien se
+tenir!)...
+
+\chapter{Le cryptage de la liaison}
+
+Maintenant que la transmission est établie, l'on peut se pencher sur un
+point optionnel, à savoir le cryptage des données. L'intérêt de cette
+dernière étape consiste en la sécurisation de la liaison, en rendant
+illisibles les données à quiconque ne possédant pas une clé de
+déchiffrement.\\
+
+Lorsque l'information se voit transmise par voie analogique, l'on peut bien
+sûr la brouiller à l'aide de signaux ayant l'apparence de bruit. Mais ces
+techniques de brouillage se montrent rapidement limitées, aussi apparaît là
+un autre avantage de la conversion numérique, à savoir celui de pouvoir
+appliquer de puissants algorithmes de cryptage, celui de pouvoir
+relativement facilement manipuler les messages numériques.\\
+
+Il a été retenu pour cette étude un principe de cryptage assez simple, du
+moins dans sa mise en oeuvre, puisqu'il suffit de modifier
+pseudo-aléatoirement un à un les bits que l'on transmet, et de modifier en
+sens inverse les bits que l'on reçoit à l'aide de la même séquence
+pseudo-aléatoire: si $\oplus$ désigne l'addition binaire (addition modulo 2
+ou, ce qui est équivalent, le "ou exclusif") et si $M_i$, $S_i$ et $C_i$
+représentent respectivement les bits à l'instant $t=i$ du message en clair,
+de la séquence pseudo-aléatoire et du message crypté, on a $C_i = M_i
+\oplus S_i$ et, bien sûr, on récupère $M_i$ par l'opération $M_i = C_i
+\oplus S_i$.\\
+
+La séquence selon laquelle les bits sont modifiés est pseudo-aléatoire, et
+non complète\-ment aléatoire, justement parce que l'on connaît à l'avance
+par calcul cette séquence, mais qu'elle "paraît" aléatoire à tous ceux qui
+ne connaissent pas la manière de la générer. Elle est réalisée à l'aide
+d'un système de registre binaire à décalage (de $n$ bits, contenant les
+bits $S_{t,i}$ pour $1\leq i\leq n$ et $t$ quelconque) bouclé sur lui-même
+et de "ou exclusif" (cf figure \ref{fig:cryptage}), montage qui réalise
+l'opération $P_t(S)=S_{t,n}\oplus a_{n-1}\cdot S_{t,n-1}\oplus\cdots\oplus
+a_1\cdot S_{t,1} \oplus a_0$ à chaque instant $t$ (le registre doit être à
+décalage car à $(t+1)$, l'on doit avoir: $S_{t+1,n}=P_t(S)$).\\
+
+En effet, l'on peut montrer que ce polynôme, s'il est primitif\footnote{La
+  théorie de cette pratique repose sur les corps de Galois, corps finis à
+  $p$ éléments, isomorphes à $\Z/p\Z$. Un élément primitif de ce corps est
+  un élément générateur (dont les puissances successives décrivent le
+  corps) d'ordre égal à $(p-1)$. Un polynôme primitif est un polynôme
+  irréductible dans \{0,1\}\ ayant une racine étant élément primitif dans
+  le corps d'extension de \{0,1\}\ obtenu en ajoutant à \{0,1\}\ une racine
+  d'un polynôme irréductible.},
+génère une suite ($A_t$) de séquences de $n$ bits (les séquences $(A_t) =
+\left(S_{t,n}, S_{t,n-1}, \cdots, S_{t,1}\right)$, à chaque instant $t$)
+dont la période de réapparition est maximale et égale à $2^n-1$.
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{9cm}
+    \caption{Schéma de principe de l'obtention des séquences et du cryptage}
+    \label{fig:cryptage}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../cryptag1.gif}}\\
+  \centerline{\Large Figure \ref{fig:cryptage}: Schéma de principe de
+    l'obtention des séquences et du cryptage}\\
+  \label{fig:cryptage}
+\end{htmlonly}
+
+Dans notre cas, nous avons pris autant de bits pour la séquence de cryptage
+qu'il y en avait pour le codage des données, et le polynôme primitif que
+nous avons utilisé est donc: $P_t(S)=S_{t,8}\oplus S_{t,6}\oplus
+S_{t,5}\oplus S_{t,1}$ (ce qui donne une période de $2^8-1=255$ itérations
+avant de retrouver la même séquence), mais nous aurions pu utiliser
+d'autres polynômes afin d'augmenter ou de diminuer la période de retour à
+une valeur donnée de la suite des séquences $(A_t)$.\\
+
+Ce mode de cryptage est parfaitement inversible, mais un problème se pose
+toutefois pour décrypter un message: la nécessité d'une synchronisation
+entre les bits $S_i$ de l'émetteur qui cryptent les bits du message, et les
+bits $S_i$ du récepteur qui le décryptent. S'il y a le moindre décalage, le
+message crypté ne pourra plus être lu, et le possesseur de la clé de
+cryptage (la clé est le polynôme $P_t(S)$) n'aura alors plus aucun avantage
+sur ceux qui ne la connaissent pas...  Aussi, pour palier ce problème, il
+suffit de modifier légèrement l'installation précédente afin de rendre le
+circuit du côté récepteur "auto-synchronisable", {\em i.e.}  dont les
+séquences $A_t$ deviennent identiques au bout d'un certain temps (dont le
+maximum correspond à un passage de $n$ bits, ce qui est très faible en
+général, $n$ étant le nombre de bits dans une séquence $A_t$) à celles du
+circuit côté émetteur (cf figure \ref{fig:autosynchro}).
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{14.2cm}
+    \caption{Schéma de principe du cryptage avec auto-synchronisation}
+    \label{fig:autosynchro}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../cryptage.gif}}\\
+  \centerline{\Large Figure \ref{fig:autosynchro}: Schéma de principe du
+    cryptage avec auto-synchronisation}\\
+  \label{fig:autosynchro}
+\end{htmlonly}
+
+Pour le montage électrique des circuits permettant le cryptage et le
+décryptage, nous renvoyons à l'annexe \ref{annexe:cryptage}.\\
+
+L'inconvénient, certes majeur, de cette solution, est qu'il devient facile
+de décrypter les messages dès lors que l'on connaît le nombre de bits d'une
+séquence et que l'on sait que la méthode de cryptage employée est celle-là.
+En effet, pour un nombre donné de bits dans une séquence, il n'y a qu'un
+polynôme irréductible, bien connu, et comme le système récepteur est
+auto-synchronisable, il se configurera tout seul sans besoin d'une
+quelconque autre clé inconnue. Le système de cryptage devient donc, dans
+cette configuration, plutôt un système de brouillage...\\
+
+Le circuit crypteur doit se placer en amont de la phase de
+codage-modulation-transposi\-tion, là où le signal demeure sous forme
+numérique NRZ (0 ou 1 pendant toute la période d'horloge). Ainsi, même les
+mots de synchronisation seront cryptés! Mais tels que se présentent les
+boîtiers de traitement numérique, il n'y a pas d'autre solution. D'autre
+part, le circuit décrypteur devrait normalement se placer en aval de la
+partie traitant la récupération du signal numérique (récupération du signal
+d'horloge) et en amont de la synchronisation par mots de 24 bits (pour que
+ces derniers soient en clair, sans quoi le boîtier, ne "connaissant" pas la
+clé de cryptage, ne pourra jamais les reconnaître). Mais, à cet endroit, le
+signal est sous forme Bi$\Phi$, ce qui le rend inexploitable par le circuit
+de décryptage.  Pour ce problème, on n'a trouvé qu'une solution: monter en
+série, l'un derrière l'autre, les deux circuits de cryptage et de
+décryptage, au niveau du dispositif émetteur, juste avant l'opération de
+codage numérique (passage de la forme NRZ à la forme Bi$\Phi$). Évidemment,
+l'intérêt pratique de cette solution s'avère limité, si ce n'est qu'elle
+nous a permis de nous familiariser avec les techniques de cryptage, et d'en
+mettre une complètementen oeuvre, ce qui n'est tout de même déjà pas trop
+mal!\\
+
+Afin d'obtenir un système sans auto-synchronisation, il faudrait pouvoir
+installer le circuit de cryptage en amont du codage de Hamming et donc de
+la synchronisation (sur le dispositif d'émission), et celui de décryptage
+en aval de la synchronisation et de la correction d'erreurs (sur le
+dispositif de réception). Dès lors, l'on pourrait insérer, aux côtés du
+circuit de synchronisation, un système permettant d'émettre des mots
+d'initialisation des séquences de cryptage: à chaque fois que ces mots
+seraient émis, du côté de l'émetteur, la séquence de cryptage serait
+réinitialisée, et à chaque fois qu'ils seraient lus, du côté du récepteur,
+la séquence de décryptage subirait le même sort que sa cons¦ur de cryptage.
+Cette réinitialisation (occurant à une certaine fréquence, par exemple
+$1Hz$) permettrait donc de synchroniser les séquences de cryptage et de
+décryptage, au cas où ces dernières n'agiraient plus de concert, à la suite
+par exemple d'un bit transmis erroné mais non détecté comme tel. Avec une
+fréquence de réinitialisation de $1Hz$, la durée maximale de conversation
+non convenablement décryptée serait de $1s$, ce qui semble honnête.
+Remarquons, enfin, qu'initialiser les séquences de cryptage avec une
+fréquence de $1Hz$ revient à modifier $1$ série de séquences toutes les
+$10000/255 = 39$ (par seconde, il y a transmission de $10000$ bits, et une
+série contient normalement $255$ séquences de cryptage, ce qui correspond
+donc à $255$ décalages de $1$ bit), ce qui est encore assez peu pour que
+les séquences ne puissent plus être considérées comme aléatoires.
+
+\chapter{Conclusion}
+
+\section{Dispositif final}
+
+En résumé, les petits schémas des figures \ref{fig:final_emission} et
+\ref{fig:final_reception} montrent toutes les étapes successives menant un
+signal analogique d'un poste téléphonique à l'autre.
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{9.9cm}
+    \caption{Schéma de principe de la maquette finale: émission}
+    \label{fig:final_emission}
+  \end{figure}
+
+  \begin{figure}[htbp]
+    \vspace{12.9cm}
+    \caption{Schéma de principe de la maquette finale: réception}
+    \label{fig:final_reception}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../emission.gif}}\\
+  \centerline{\Large Figure \ref{fig:final_emission}: Schéma de principe de
+    la maquette finale: émission}\\
+  \label{fig:final_emission}
+
+  \centerline{\htmladdimg[CENTER]{../receptio.gif}}\\
+  \centerline{\Large Figure \ref{fig:final_reception}: Schéma de principe
+    de la maquette finale: réception}\\
+  \label{fig:final_reception}
+\end{htmlonly}
+
+\section{Général}
+
+Voilà donc tous les éléments d'une transmission numérique entre deux postes
+téléphoniques rassemblés... Toute la différence entre les participes
+"rassemblés" et "intégrés" se manifeste d'ailleurs assez clairement au
+niveau de cette étude, car c'est toute la différence entre un petit
+portable GSM commercial et la superficie d'environ $2m^2$ de notre montage!\\
+
+Toutefois, l'objectif de ce travail n'était point de sortir un produit
+commercial, mais bien plutôt d'en identifier les principaux éléments, de
+comprendre leur principe de fonctionnement et de pouvoir les assembler de
+manière cohérente et effective. Nous avons notamment pu appréhender le
+fonctionnement d'appareils téléphoniques et de leur raccordement à des
+centraux, via des relais et des commutateurs, ainsi que de nombreux
+dispositifs électroniques fondamentaux qui servent dans beaucoup d'autres
+applications que la téléphonie: les conversions analogique/numérique et
+numérique/analogique, le codage numérique, la synchronisation, le bouclage
+de phase, le codage de protection (celui de Hamming en particulier), la
+modulation de fréquence, la transposition, la transmission hertzienne et,
+bien sûr, le cryptage.\\
+
+D'autre part, cette étude nous a permis de nous familiariser avec l'aspect
+concret de l'électronique, et notamment avec les montages dont les souvent
+longues mises au point peuvent parfois paraître magiques au néophyte qui,
+seul, ne pourrait sans doute pas les effectuer... La pratique de la traque
+des perfides problèmes nous a par ailleurs donné le goût pour cette
+matière, et nous pensons déjà à "bricoler" d'autres applications, peut-être
+la hi-fi de nos parents ou le lecteur de CD de notre petite s¦ur!\\
+
+Aussi, nous tenons ici encore à remercier M. Fromentel pour ce sujet et sa
+patiente pédagogie, ainsi que le laboratoire pour son accueil, dans lequel
+nous avons passé quelques après-midis fort instructives et dont nous
+garderons assurément un agréable souvenir.
+
+\appendix
+
+\chapter{Le bloc de transformation 2 fils - 4 fils}
+\label{annexe:blocT}
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{7.9cm}
+    \caption{Schéma du bloc T}
+    \label{fig:annexe:blocT}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../bloct_an.gif}}\\
+  \centerline{\Large Figure \ref{fig:annexe:blocT}: Schéma du bloc T}\\
+  \label{fig:annexe:blocT}
+\end{htmlonly}
+
+Avec les notations de la figure \ref{fig:annexe:blocT}, on obtient:
+
+$$
+\left\{
+\begin{array}{lcr}
+2R\cdot i_2+a-d & = & 0\\
+R\cdot i_2-Z\cdot i_1 & = &0\\
+a+Z\cdot i_1+Z_l\cdot i_1-e & = &0\\
+l+Z_l\cdot i_1 & = & 0
+\end{array}
+\right.
+\Longrightarrow
+\left\{
+\begin{array}{lcl}
+i_1 & = & \frac{e-a}{Z+Z_l}\\
+i_2 & = & \frac{Z}{R}\cdot\frac{e-a}{Z+Z_l}
+\end{array}
+\right.
+$$
+
+D'où:
+
+$$
+\left\{
+\begin{array}{lcl}
+d & = & a+2Z\cdot\frac{e-a}{Z+Z_l}\\
+l & = & -Z_l\cdot\frac{e-a}{Z+Z_l}
+\end{array}
+\right.
+$$
+
+Si $Z=Z_l$:
+
+$$
+\left\{
+\begin{array}{lcl}
+d & = & e\\
+l & = & \frac{a-e}{2}
+\end{array}
+\right.
+$$
+
+\chapter{Codage de Hamming}
+\label{annexe:hamming}
+
+Soit le message binaire $S=(s_1,s_2,\cdots ,s_m)$, dit message "source". On
+lui fait correspondre le message codé suivant: $V=(v_1,v_2,\cdots ,v_n)$,
+dit message "voie". $V$ est déterminé par les relations suivantes (les
+sommes sont faites modulo 2 et les $a_i$ valent 0 ou 1):
+
+$$
+\begin{array}{rl}
+\mbox{m équations } &
+\left\{
+\begin{array}{lcl}
+v_1    & = & s_1\\
+v_2    & = & s_2\\
+       &  \vdots\\
+v_m    & = & s_m
+\end{array}
+\right.\\
+\mbox{k équations } &
+\left\{
+\begin{array}{lcl}
+v_{m+1} & = & a_1s_1+a_2s_2+\cdots +a_ms_m\\
+v_{m+2} & = & b_1s_1+b_2s_2+\cdots +b_ms_m\\
+& \vdots\\
+v_n     & = & k_1s_1+k_2s_2+\cdots +k_ms_m
+\end{array}
+\right.
+\end{array}
+$$
+
+On peut aussi écrire matriciellement:
+
+$$
+\left[ {\cal V} \right] = \left( {\cal G} \right) \, \left[ {\cal S} \right]
+$$
+
+avec:
+
+$$
+\left( {\cal G} \right) = \left(
+\begin{array}{cccc}
+1         & 0        & \cdots & 0\\
+0         & \ddots & \ddots & \vdots\\
+\vdots &\ddots & \ddots & 0\\
+0         & \cdots & 0        & 1\\
+a_1     & a_2    & \cdots & a_m\\
+\vdots &            &           & \vdots\\
+k_1    & k_2     & \cdots & k_m
+\end{array}
+\right)
+$$
+
+Après transmission, on reçoit le message binaire $\left[ {\cal V} \right]$,
+auquel on va faire subir les équations de vérification suivantes:
+
+$$
+\begin{array}{rcl}
+a_1v_1+a_2v_2+\cdots +a_mv_m+v_{m+1} & = & z_1\\
+b_1v_1+b_2v_2+\cdots +b_mv_m+v_{m+2} & = & z_2\\
+
+& \vdots\\
+k_1v_1+k_2v_2+\cdots +k_mv_m+v_n & = & z_k
+\end{array}
+$$
+
+Il est clair que si aucune erreur n'est apparue lors de la transmission,
+alors le vecteur $\left[ {\cal Z}
+\right]$ est nul, avec:
+
+$$
+\left[ {\cal Z} \right]=\left(
+\begin{array}{c}
+z_1\\
+\vdots\\
+z_k
+\end{array}
+\right)
+$$
+
+Sinon, en général, il est non nul; en tout cas, pour un nombre limité
+d'erreur ($<k$), il est systématique\-ment non nul. Le principe de la
+correction d'{\em une} erreur est d'établir une bijection entre l'ensemble
+des vecteurs $\left[ {\cal Z} \right]$ non nuls (dits "syndromes
+d'erreurs") et l'ensemble des erreurs possibles sachant qu'il est supposé
+n'y en avoir qu'une.\\
+
+Le vecteur$\left[ {\cal Z} \right]$ ayant $k$ composantes et le vecteur
+$\left[ {\cal V} \right]$ transmis ayant $n$ composantes ($n$ bits, donc
+$n$ erreurs possibles), cela amène à la condition $n=2^k-1$, ce qui
+dimensionne le système d'équations, si l'on se fixe $n$ {\em a priori} (ou
+$m$).  On a par ailleurs évidemment $n=m+k$.\\
+
+Il reste à déterminer les valeurs des coefficients des $k$ équations de
+départ. Pour cela écrivons la relation de vérification sans, puis avec une
+erreur:
+
+\begin{itemize}
+\item sans erreur: $\left[ {\cal Z} \right]=\left( {\cal H} \right)\left[
+    {\cal V} \right]=\left[ 0 \right]$, avec:
+
+$$
+\left( {\cal H} \right)=\left(
+\begin{array}{cccccccc}
+a_1    & a_2      & \cdots & a_m   & 1         & 0         & \cdots & 0\\
+b_1    & b_2     &            & b_m   & 0         & \ddots & \ddots & \vdots\\
+\vdots & \vdots &            & \vdots & \vdots & \ddots & \ddots & 0\\
+k_1    & k_2     & \cdots & k_m    & 0        & \cdots & 0         & 1
+\end{array}
+\right)
+$$
+
+\item avec une erreur: $\left[ {\cal Z} \right]=\left( {\cal H}
+\right)\left[ {\cal V'} \right]
+\neq\left[ 0 \right]$, avec:
+
+$$
+\left[ {\cal V'}\right]=\left[ {\cal V} \right]+\left[
+\begin{array}{c}
+0\\
+\vdots\\
+1\\
+\vdots\\
+0
+\end{array}
+\right]
+\begin{array}{c}
+\\
+\\
+-i\\
+\\
+\\
+\end{array}
+$$
+
+Posons:
+$$
+\left[ \varepsilon_i\right] = \left[
+\begin{array}{c}
+0\\
+\vdots\\
+1\\
+\vdots\\
+0
+\end{array}
+\right]
+\begin{array}{c}
+\\
+\\
+-i\\
+\\
+\\
+\end{array}
+$$
+
+Alors, on a:
+
+$$
+\begin{array}{rcl}
+\left[ {\cal Z}\right] & = & \left( {\cal H} \right)\left[ {\cal
+V}\right]+\left( {\cal H} \right)
+\left[ \varepsilon_i\right]\\
+& = & \left[ 0 \right]+\left( {\cal H} \right)\left[ \varepsilon_i\right]\\
+& = & \left( {\cal H} \right)\left[ \varepsilon_i\right]
+\end{array}
+$$
+
+\end{itemize}
+
+L'opération $\left( {\cal H} \right)\left[ \varepsilon_i\right]$ est
+triviale vu la forme de $\left[ \varepsilon_i\right]$: le résultat est la
+$i^{\grave{e} me}$ colonne de $\left( {\cal H} \right)$.  Ainsi, à chaque
+erreur différente est associée une colonne différente et une seule de
+$\left( {\cal H} \right)$.\\
+
+La bijection est alors réalisée si toutes les colonnes de $\left( {\cal H}
+\right)$ sont différentes entre elles et bien sûr non nulles. D'où la
+construction de $\left( {\cal H} \right)$ et aussi celle de $\left( {\cal
+G} \right)$. Alors, une fois cette construction faite, une erreur sera
+localisée grâce à la valeur du syndrome $\left[ {\cal Z} \right]$ trouvée
+grâce à une simple table de correspondance.\\
+
+Exemple: $k=3\Rightarrow n=2^3-1=7\Rightarrow m=7-3=4$.\\
+
+Construction de $\left( {\cal H} \right)$:
+
+$$
+\left( {\cal H} \right)=\left(
+\begin{array}{ccccccc}
+1&0&1&1&1&0&0\\
+1&1&0&1&0&1&0\\
+0&1&1&1&0&0&1
+\end{array}
+\right)
+$$
+
+D'où:
+
+$$
+\left( {\cal G} \right)=\left(
+\begin{array}{cccc}
+1&0&0&0\\
+0&1&0&0\\
+0&0&1&0\\
+0&0&0&1\\
+1&0&1&1\\
+1&1&0&1\\
+0&1&1&1
+\end{array}
+\right)
+$$
+
+\chapter{Bouclage de phase}
+\label{annexe:boucle_phase}
+
+Dans notre montage, le bouclage de phase intervient deux fois; d'abord pour
+la restitution du signal d'horloge à partir du signal numérique transmis,
+puis pour la démodulation FSK. Nous allons ici en montrer le principe et
+l'illustrer avec l'exemple de la démodulation FSK.
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{4cm}
+    \caption{Schéma de principe du bouclage de phase}
+    \label{fig:annexe:boucle_phase}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../boucle_p.gif}}\\
+  \centerline{\Large Figure \ref{fig:annexe:boucle_phase}: Schéma de
+    principe du bouclage de phase}\\
+  \label{fig:annexe:boucle_phase}
+\end{htmlonly}
+
+A l'entrée du montage de la figure \ref{fig:annexe:boucle_phase} arrive un
+signal sinusoïdal (le signal à démoduler) de pulsation $\omega$. Ce dernier
+est mélangé (multiplié) à celui $s'$ de sortie du VCO (Voltage Controlled
+Oscillator), ce qui donne un signal de deux composantes sinusoïdales dont
+les pulsations sont la somme et la différence des pulsations des signaux
+d'entrée.  A la suite du passage du filtre, seule la composante
+correspondant à la différence des pulsations $\omega - \omega '$ est
+retenue, pour ensuite être réinjectée à l'entrée du VCO. Ainsi, c'est bien
+l'écart en fréquences qui, par rétroaction, conduit le système à un retour
+à l'équilibre, {\em i.e.}, à une égalité entre la fréquence du signal
+transmis $s$ et celle du signal $e'$ à l'entrée du VCO, ce qui détermine
+par conséquent l'amplitude de ce dernier. Dans le cas de la démodulation
+FSK, le signal transmis ne possède que deux fréquences ($f_0$ et $f_1$), ce
+qui détermine donc pour le signal d'entrée du VCO les deux amplitudes
+différentes (l'état haut et l'état bas) correspondant au signal binaire
+d'avant modulation.\\
+
+Avec les notations de la figure \ref{fig:annexe:boucle_phase}, on obtient:
+
+$$
+\begin{array}{c}
+s=s_0\cos \omega t\\
+s'=s_0'\cos (\omega 't+\phi )\mbox{, avec }\omega '=\omega _0'+\alpha e'\\
+e'=K\cos \left[ (\omega -\omega ')t-\phi \right] \mbox{ avec }
+K=\beta\, s_0\, s_0'/2\mbox{, }\beta \mbox{ étant le gain du multiplieur}
+\end{array}
+$$
+
+L'équilibre se traduit par $ \omega=\omega'$, ce qui implique:
+
+$$
+\left\{
+\begin{array}{lcr}
+e' & = & K \cos \phi \\
+\omega - \omega _0' & = & \alpha e'
+\end{array}
+\right.
+\Rightarrow
+\left\{
+\begin{array}{lcr}
+e' & = & \frac{\omega - \omega _0'}{\alpha} \\
+\cos \phi &=& \frac{\omega - \omega _0'}{\alpha K}
+\end{array}
+\right.
+$$
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{9.6cm}
+    \caption{Marche vers l'équilibre de la boucle de phase}
+    \label{annexe:fig:equilibre}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \htmladdimg[CENTER]{../marche_q.gif}\\
+  \centerline{\Large Figure \ref{annexe:fig:equilibre}: Marche vers
+    l'équilibre de la boucle de phase}\\
+  \label{annexe:fig:equilibre}
+\end{htmlonly}
+
+La figure \ref{annexe:fig:equilibre} montre la marche vers l'équilibre de
+la boucle de phase.  Sans entrer dans les détails d'une démonstration
+rigoureuse, on peut toutefois avoir une compréhension intuitive de ce qu'il
+se passe. Sur la figure (dont l'abscisse est le temps et l'ordonnée la
+pulsation $\omega'$, {\em i.e.}, à une affinité près, le signal d'entrée
+$e'$ du VCO) sont montrées, d'une part une droite horizontale correspondant
+à la fréquence constante du signal transmis $s$, d'autre part une sinusoïde
+représentant la pulsation du signal de sortie $s'$ du VCO lorsque le signal
+d'entrée $e'$ de ce dernier est de fréquence constante (et valant, sur le
+schéma, $\omega_0'$, c'est-à-dire la pulsation initiale de la sortie du
+VCO). Enfin, une dernière courbe représente la marche de la pulsation
+$\omega'$ vers sa valeur d'équilibre $\omega$.\\
+
+Partons de l'instant $t=0$ et $\omega'=\omega_0'$. On a donc
+$e'=K\cos\left[ \left(\omega - \omega '(0)\right) t-\phi\right]$. Dès lors,
+comme $\omega '=\omega_0'+\alpha e'$, $\omega'$ va augmenter en suivant la
+sinusoïde. $e'$ vaut donc maintenant $e'=K\cos\left[ \left(\omega - \omega
+'(t)\right) t-\phi\right]$, ce qui correspond à une sinusoïde de
+période plus grande que celle dessinée, et c'est cette dernière sinusoïde
+que $\omega'$ va maintenant suivre. Mais comme $\omega'$ continue
+d'augmenter, la période de la sinusoïde continue elle aussi de croître, ce
+qui fait augmenter $\omega'$ de moins en moins vite jusqu'à sa valeur
+asymptotique, qui est sa valeur d'équilibre $\omega$.\\
+
+Remarquons que nous avons fait partir notre sinusoïde d'une valeur nulle,
+alors que ceci n'est absolument pas obligatoire. Le raisonnement resterait
+toutefois analogue, et l'on montrerait de même qu'il y aurait convergence,
+quitte à passer par une brève phase transitoire de divergence (ce cas se
+présente lorsque, par rapport à $\omega_0'$, la sinusoïde ne part pas du
+côté de $\omega$).
+
+\chapter{Principe de l'antenne}
+\label{annexe:antenne}
+
+Une antenne est un conducteur qui, par excitation par un courant variable,
+induit un champ
+électromagné\-ti\-que. C'est en fait un dispositif résonnant pour le
+domaine de fréquences choisi.
+Il est à noter que l'onde électromagnétique n'est non nulle loin du
+conducteur que si celui-ci est un
+circuit ouvert (et donc ressemble aux antennes que l'on connaît bien!).
+Ainsi, le courant présente,
+dans son mode fondamental,
+deux n¦uds aux extrémités du conducteur, et un ventre au niveau de
+l'alimentation générant le signal
+à transmettre (cf figure \ref{annexe:fig:antenne}).
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{12.8cm}
+    \caption{Principe d'une antenne}
+    \label{annexe:fig:antenne}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../anten_an.gif}}\\
+  \centerline{\Large Figure \ref{annexe:fig:antenne}: Principe d'une
+    antenne}\\
+  \label{annexe:fig:antenne}
+\end{htmlonly}
+  
+Cette condition impose une relation entre la longueur du conducteur et la
+fréquence du signal à émettre: $2L=k\lambda /2$, avec $k$ entier ($k=1$
+pour le mode fondamental que l'on cherche ici à obtenir), ce qui donne
+$L=\frac{c}{4f}=\frac{3\cdot 10^8}{4f}$, sachant que $\lambda= c/f$, avec
+$L$ la longueur de l'antenne, $c$ la vitesse de la lumière, $\lambda$ la
+longueur d'onde du signal de fréquence $f$. On a ainsi pour $f=1MHz$ une
+longueur correspondante d'antenne $L=75m$; de même, pour $f=100 MHz$,
+$L=75cm$.\\
+
+Remarquons que $L$ représente la demi-longueur d'antenne. En effet,
+l'alimentation étant située au milieu du conducteur, l'onde
+électromagnétique qui serait émise par l'antenne complète est identique,
+par symétrie, à celle donnée par la demi-antenne dont l'alimentation est
+reliée à la terre.
+
+\chapter{Montages électriques}
+\label{annexe:cryptage}
+
+\begin{latexonly}
+  \begin{figure}[htbp]
+    \vspace{23,8cm}
+    \caption{Schéma électrique du montage émetteur}
+    \label{fig:an_emet}
+  \end{figure}
+
+  \begin{figure}[htbp]
+    \vspace{23,8cm}
+    \caption{Schéma électrique du montage récepteur}
+    \label{fig:an_recep}
+  \end{figure}
+
+  \begin{figure}[htbp]
+    \vspace{6.7cm}
+    \caption{Schéma électrique du montage crypteur}
+    \label{fig:an_cryp}
+  \end{figure}
+
+  \begin{figure}[htbp]
+    \vspace{6.7cm}
+    \caption{Schéma électrique du montage décrypteur}
+  \end{figure}
+\end{latexonly}
+
+\begin{htmlonly}
+  \centerline{\htmladdimg[CENTER]{../emissio1.gif}}\\
+  \centerline{\Large Figure \ref{fig:an_emet}: Schéma électrique du montage
+    émetteur}\\
+  \label{fig:an_emet}
+
+  \centerline{\htmladdimg[CENTER]{../recepti1.gif}}\\
+  \centerline{\Large Figure \ref{fig:an_recep}: Schéma électrique du montage
+    récepteur}\\
+  \label{fig:an_recep}
+
+  \centerline{\htmladdimg[CENTER]{../cryptag2.gif}}\\
+  \centerline{\Large Figure \ref{fig:an_cryp}: Schémas électriques des montages
+    crypteur et décrypteur}\\
+  \label{fig:an_cryp}
+\end{htmlonly}
+  
+\end{document}
+
+
+
+
+
+

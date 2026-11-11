@@ -1,0 +1,108 @@
+\section{Fonctionnalités}
+\label{sec:fonction}
+Comme expliqué dans la section précédente, nous avons deux applications:
+une pour l'émetteur (le server), et une pour le récepteur (le client).
+Dans ce chapitre nous décrivons les fonctionnalité de ces deux
+applications\footnote{Attention, que ce soit pour le récepteur ou pour
+  l'émetteur, l'utilisateur doit avoir lancé Netscape pour pouvoir
+  visualiser les transparents, comme le montre l'annexe~\ref{ann:guide}.}.
+
+\subsection{L'émetteur}
+Du côté émetteur, l'on à l'écran une fenêtre correspondant au panneau de commande de
+l'émetteur (voir figure~\ref{fig:sendwin}).\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=11cm]{serverSenderWindow.ps}
+  \caption{Fenêtre de l'émetteur}
+  \label{fig:sendwin}
+\end{figure}
+
+Dans la fenêtre ci-dessus, certains fichiers sont disponibles. Cependant,
+au lancement de l'application, il n'y a aucun fichier et les paramètres de
+la transmission sont ceux par défaut ($transmition rate = 65536 bit/s$
+et $TTL = 16$ ({\it TTL = Time To Live}, \ie, la durée de vie du paquet sur
+le réseau)).
+
+\begin{htmllist}
+  \htmlitemmark{RedBall}
+  \item[Add File:] ce bouton permet de faire apparaître le nom d'un nouveau
+    fichier dans la liste. Au moment de l'insertion du fichier, une
+    boîte de dialogue (voir figure~\ref{fig:pref}) apparaît dans laquelle on
+    doit saisir un temps (en secondes), temps correspondant à la durée
+    d'affichage du transparent en mode automatique. Le fichier apparaît
+    ensuite dans la fenêtre de commande avec sa durée d'affichage, et il
+    est édité dans Netscape.
+  \item[Change Time:] permet de changer la valeur de la durée d'affichage
+    d'un transparent (pour le mode automatique).
+  \item[Remove File:] c'est le bouton pendant de {\it Add File}. Il enlève le
+    fichier sélectionné (dont le nom apparaît en vidéo inversée) de la
+    fenêtre des fichiers disponibles.
+  \item[Send:] émet le fichier sélectioné et l'édite avec Netscape.
+  \item[Stop sending:] arrête l'émission en cours.
+  \item[Preference:] permet de modifier les paramètres de la transmission
+    ({\tt Transmission rate} et {\tt TTL}).
+  \item[Save Config:] permet d'enregistrer la configuration actuelle
+    (\ie, les paramètres de transmission ainsi que les fichiers disponibles).
+  \item[ImportConfig:] permet de remplacer la configuration
+    courante par une nouvelle configuration précédemment enregistrée
+    (fichier {\tt .cfg}, en général).
+  \item[Forward:] permet la sélection du fichier suivant de la liste, et
+    l'édition dans Netscape.
+  \item[Backward:] de même, permet la sélection du fichier précedent de la
+    liste, et l'édite dans Netscape.
+  \item[Automatic:] passe en mode automatique. Dans ce mode, les fichiers
+    sont transmis l'un après l'autre, à partir du fichier sélectionné. Par
+    exemple, si un fichier possède un temps transmission de 20 secondes, on
+    démarre un compteur au début de la transmission du fichier: si la
+    transmission se termine avant les 20 secondes, on attend la fin des 20
+    secondes pour passer au fichier suivant; sinon on interrompt la
+    transmission (ce qui ne signifie pas forcément que le fichier n'a pas
+    été correctement re\c cu) et on passe au fichier suivant. Si auncun
+    fichier n'est sélectionné, on démarre par le premier fichier de la liste.
+    \item [Exit:] sort du programme.
+\end{htmllist}
+
+Remarques:
+\begin{itemize}
+  \item dans la fenêtre ne sont affichés que les noms relatifs
+    des fichiers afin d'obtenir une meilleure lisibilité. Toutefois, c'est
+    le nom complet du fichier (avec son chemin d'accès) qui est connu du
+    programme.
+  \item pour visualiser un fichier avec Netscape, il suffit de
+    double-cliquer sur son nom.
+  \item les configurations sont enregistrées dans des fichiers de type texte,
+    d'extension {\tt .cfg}. Ces fichiers sont simples, ce qui permet à
+    l'utilisateur de les réaliser éventuellement lui-même à la main.
+\end{itemize}
+                 
+\begin{figure}[htbp]
+  \centering\includegraphics[width=16cm]{serverPreferences.ps}
+  \caption{Boîte de dialogue}
+  \label{fig:pref}
+\end{figure}                
+
+
+\subsection{Le récepteur}
+On a ici à l'écran, la fenêtre suivante~:\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=8cm]{clientReceiverWindow.ps}
+  \caption{Fenêtre du récepteur}
+\end{figure}
+
+Cette fenêtre ne comporte que trois boutons:
+\begin{htmllist}
+  \htmlitemmark{RedBall}
+  \item [Start:] passe en mode réception. Après chaque réception de
+    transparent le récepteur sort du mode réception.\\
+    Pour des raisons indépendantes de notre volontés (problème d'interfa\c
+    cage avec le protocole AMP), il est nécessaire de réinitialiser
+    manuellement le récepteur après chaque réception en appuyant sur le
+    bouton $START$.
+  \item [Stop:] sort du mode réception.
+  \item [CanalChange:] ce bouton est prévu pour permettre au récepteur
+    de changer de canal de réception. Cette fonction n'est pas
+    implémentée car le canal est actuellement codé en dur dans le
+    protocole AMP.
+\end{htmllist}
+

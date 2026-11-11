@@ -1,0 +1,84 @@
+\documentclass[a4paper,12pt,twoside]{article}
+
+\usepackage{french}
+\usepackage{fancyhdr}
+
+\usepackage[dvips]{graphicx}
+\input{/usr/local/lib/texmf/tex/dvips/psfig}
+\input{/homes/arnaud/htdocs/latex2html/texinputs/html.sty}
+\input{/homes/arnaud/htdocs/latex2html/texinputs/htmllist.sty}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\slshape \leftmark}
+%\fancyhead[LO,RE]{\slshape \rightmark}
+\fancyfoot[C]{\thepage}
+
+% \htmlbase{http://studwww.eurecom.fr/~arnaud/admin/report}
+
+%\oddsidemargin=0cm
+%\evensidemargin=0cm
+%\textwidth=16cm
+%\topmargin=0cm
+%\textheight=24.6cm
+%\headheight=0pt
+%\headsep=0pt
+
+\begin{document}
+
+%\bodytext{BACKGROUND=../../background/grey.gif}
+\bodytext{BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9"}
+
+\pagenumbering{roman}
+
+\begin{titlepage}
+  \begin{center}
+    \begin{latexonly}
+      . \\
+      \vspace{2cm}
+    \end{latexonly}
+    {\Huge Technologie des Réseaux d'Entreprise\\}
+    \vspace{2cm}
+    {\Huge Gestion de Réseaux\\}
+    \vspace{2cm}
+    \begin{latexonly}
+      {\Large K. Marcus, D. Loisel\\}
+      \vspace{2cm}
+      . \\
+      \vspace{2cm}
+    \end{latexonly}
+    {\Large Denis Arnaud, Sébastien Fabre, Gregory Kuhlmey\\}
+    \vspace{2cm}
+    {\Large Institut Eurécom, Décembre 1997}
+  \end{center}
+\end{titlepage}         
+
+\begin{htmlonly}
+  \centerline{\htmladdnormallink{Une version Postscript est aussi
+ disponible ici.}{http://studwww.eurecom.fr/\~{}arnaud/admin/report.ps.gz}}
+\end{htmlonly}
+
+\setcounter{page}{1}
+
+\normalsize
+\begin{latexonly}
+  \tableofcontents
+  \newpage
+\end{latexonly}
+\listoffigures
+\latex{\cleardoublepage}
+
+\pagenumbering{arabic}
+
+\include{existant}
+\include{plates-formes}
+\include{adminMIB}
+\include{conclusion}
+
+\end{document}
+
+
+
+
+
+

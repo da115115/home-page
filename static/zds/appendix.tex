@@ -1,0 +1,56 @@
+\documentclass[10pt,a4paper,twoside]{report}
+
+\usepackage{fancyhdr}
+\usepackage[dvips]{graphics}
+\input{/usr/local/lib/texmf/tex/dvips/psfig}
+\input{/homes/arnaud/htdocs/latex2html/texinputs/html.sty}
+\input{/homes/arnaud/htdocs/latex2html/texinputs/htmllist.sty}
+
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\fancyhf{}
+\fancyhead[LE,RO]{\slshape \leftmark}
+%\fancyhead[LO,RE]{\slshape \rightmark}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+%\bodytext{BACKGROUND=../../background/grey.gif}
+\bodytext{BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9"}
+
+\begin{titlepage}
+  \begin{center}
+    {\Huge Security Status and Issues\\}
+    \vspace{1cm}
+    {\Huge \&\\}
+    \vspace{1cm}
+    {\Huge Electronic Commerce on the Internet\\}
+    \vspace{2cm}
+    {\Huge APPENDICES\\}
+    \vspace{3cm}
+    {\Large Denis Arnaud\\}
+    \vspace{1cm}
+    {\large July 1995}
+  \end{center}
+\end{titlepage}         
+
+\begin{htmlonly}
+  \centerline{\htmladdnormallink{A Postscript version is also available
+      here.}{http://ecwww.eurecom.fr/\~{}arnaud/zds/appendix.ps.gz}}
+\end{htmlonly}
+
+\normalsize
+\begin{latexonly}
+  \tableofcontents
+\end{latexonly}
+
+\include{appendix1}
+\include{appendix2}
+\include{appendix3}
+\include{appendix4}
+\include{appendix5}
+\include{appendix6}
+\include{appendix7}
+\include{appendix8}
+\include{appendix9}
+
+\end{document}

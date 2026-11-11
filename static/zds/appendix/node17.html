@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.6 Are strong primes necessary in RSA?</TITLE>
+<META NAME="description" CONTENT="3.2.6 Are strong primes necessary in RSA?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node18.html">
+<LINK REL="previous" HREF="node16.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node18.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html426"
+ HREF="node18.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html424"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html418"
+ HREF="node16.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html427"
+ HREF="node18.html">3.2.7 How large a</A>
+<B> Up:</B> <A NAME="tex2html425"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html419"
+ HREF="node16.html">3.2.5 What would it</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00326000000000000000">
+3.2.6 Are strong primes necessary in RSA?</A>
+</H2>
+<P>
+In the literature pertaining to RSA, it has often been suggested that
+in choosing a key pair, one should use ``strong'' primes <I>p</I> and <I>q</I> to
+generate the modulus <I>n</I>. Strong primes are those with certain properties
+that make the product <I>n</I> hard to factor by specific factoring methods;
+such properties have included, for example, the existence of a large
+prime factor of <I>p</I>-1 and a large prime factor of <I>p</I>+1. The reason for
+these concerns is that some factoring methods are especially suited to
+primes <I>p</I> such that <I>p</I>-1 or <I>p</I>+1 has only small factors; strong primes
+are resistant to these attacks.
+<BR>
+<P>
+However, recent advances in factoring (see Question&nbsp;<A HREF="node57.html#what_fac_use">3.4.6</A>)
+appear to have obviated the advantage of strong primes; the elliptic curve
+factoring algorithm is one such advance. The new factoring methods have as
+good a chance of success on strong primes as on ``weak'' primes; therefore,
+choosing strong primes does not significantly increase resistance to
+attacks. So for now the answer is negative: strong primes are not necessary
+when using RSA, although there is no danger in using them, except that it
+takes longer to generate a key pair. However, new factoring algorithms may
+be developed in the future which once again target primes with certain
+properties; if so, choosing strong primes may again help to increase
+security.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html426"
+ HREF="node18.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html424"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html418"
+ HREF="node16.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html427"
+ HREF="node18.html">3.2.7 How large a</A>
+<B> Up:</B> <A NAME="tex2html425"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html419"
+ HREF="node16.html">3.2.5 What would it</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

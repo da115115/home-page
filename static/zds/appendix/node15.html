@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.4 How much extra message length is caused by using RSA?</TITLE>
+<META NAME="description" CONTENT="3.2.4 How much extra message length is caused by using RSA?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node16.html">
+<LINK REL="previous" HREF="node14.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node16.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html406"
+ HREF="node16.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html404"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html398"
+ HREF="node14.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html407"
+ HREF="node16.html">3.2.5 What would it</A>
+<B> Up:</B> <A NAME="tex2html405"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html399"
+ HREF="node14.html">3.2.3 How fast is</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00324000000000000000">
+3.2.4 How much extra message length is caused by using RSA?</A>
+</H2>
+<P>
+Only a very small amount of data expansion is involved when using RSA.  For
+encryption, a message may be padded to a length that is a multiple of the
+block length, usually 64 bits, since RSA is usually combined with a
+secret-key block cipher such as DES (see Question&nbsp;<A HREF="node23.html#how_rsa_prac">3.2.12</A>).
+Encrypting the DES key takes as many additional bits as the size of the RSA
+modulus.
+<BR>
+<P>
+For authentication, an RSA digital signature is appended to a document.  An
+RSA signature, including information such as the name of the signer, is
+typically a few hundred bytes long. One or more certificates (see Question
+<A HREF="node37.html#what_cert">3.3.5</A>) may be included as well; certificates can be used in
+conjunction with any digital signature method. A typical RSA certificate is
+a few hundred bytes long.
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

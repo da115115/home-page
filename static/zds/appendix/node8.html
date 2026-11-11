@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.1.4 What are the advantages and disadvantages of public-key
+cryptography over secret-key cryptography?</TITLE>
+<META NAME="description" CONTENT="3.1.4 What are the advantages and disadvantages of public-key
+cryptography over secret-key cryptography?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node9.html">
+<LINK REL="previous" HREF="node7.html">
+<LINK REL="up" HREF="node4.html">
+<LINK REL="next" HREF="node9.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html318"
+ HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html316"
+ HREF="node4.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html310"
+ HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html319"
+ HREF="node9.html">3.1.5 Is cryptography patentable</A>
+<B> Up:</B> <A NAME="tex2html317"
+ HREF="node4.html">3.1 General</A>
+<B> Previous:</B> <A NAME="tex2html311"
+ HREF="node7.html">3.1.3 What is public-key</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00314000000000000000">
+3.1.4 What are the advantages and disadvantages of public-key
+cryptography over secret-key cryptography?</A>
+</H2>
+<A NAME="what_adv_pkc">&#160;</A>
+The primary advantage of public-key cryptography is increased security:
+the private keys do not ever need to be transmitted or revealed to
+anyone. In a secret-key system, by contrast, there is always a chance
+that an enemy could discover the secret key while it is being
+transmitted.
+<BR>
+<P>
+Another major advantage of public-key systems is that they can provide
+a method for digital signatures. Authentication via secret-key systems
+requires the sharing of some secret and sometimes requires trust of a
+third party as well. A sender can then repudiate a previously signed
+message by claiming that the shared secret was somehow compromised by
+one of the parties sharing the secret. For example, the Kerberos
+secret-key authentication system involves a central database that keeps
+copies of the secret keys of all users; a Kerberos-authenticated
+message would most likely not be held legally binding, since an attack
+on the database would allow widespread forgery. Public-key
+authentication, on the other hand, prevents this type of repudiation;
+each user has sole responsibility for protecting his or her private
+key. This property of public-key authentication is often called
+non-repudiation.
+<BR>
+<P>
+Furthermore, digitally signed messages can be proved authentic to a
+third party, such as a judge, thus allowing such messages to be legally
+binding. Secret-key authentication systems such as Kerberos were
+designed to authenticate access to network resources, rather than to
+authenticate documents, a task which is better achieved via digital
+signatures.
+<BR>
+<P>
+A disadvantage of using public-key cryptography for encryption is
+speed: there are popular secret-key encryption methods which are
+significantly faster than any currently available public-key encryption
+method. But public-key cryptography can share the burden with
+secret-key cryptography to get the best of both worlds.
+<BR>
+<P>
+For encryption, the best solution is to combine public- and secret-key
+systems in order to get both the security advantages of public-key systems
+and the speed advantages of secret-key systems. The public-key system can
+be used to encrypt a secret key which is then used to encrypt the bulk of a
+file or message. This is explained in more detail in Question
+<A HREF="node23.html#how_rsa_prac">3.2.12</A> in the case of RSA. Public-key cryptography is not meant
+to replace secret-key cryptography, but rather to supplement it, to make it
+more secure. The first use of public-key techniques was for secure key
+exchange in an otherwise secret-key system; this is still one of its
+primary functions.
+<BR>
+<P>
+Secret-key cryptography remains extremely important and is the subject
+of much ongoing study and research. Some secret-key encryption systems
+are discussed in Questions <A HREF="node63.html#what_des">3.5.1</A> and <A HREF="node67.html#what_alter_des">3.5.5</A>.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html318"
+ HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html316"
+ HREF="node4.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html310"
+ HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html319"
+ HREF="node9.html">3.1.5 Is cryptography patentable</A>
+<B> Up:</B> <A NAME="tex2html317"
+ HREF="node4.html">3.1 General</A>
+<B> Previous:</B> <A NAME="tex2html311"
+ HREF="node7.html">3.1.3 What is public-key</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

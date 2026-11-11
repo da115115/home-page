@@ -1,0 +1,701 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.4.1 What are Kerberos, PGP, PEM, SSL, S-HTTP and IPSEC?</TITLE>
+<META NAME="description" CONTENT="3.4.1 What are Kerberos, PGP, PEM, SSL, S-HTTP and IPSEC?">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node46.html">
+<LINK REL="previous" HREF="node44.html">
+<LINK REL="up" HREF="node44.html">
+<LINK REL="next" HREF="node46.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html630"
+ HREF="node46.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html628"
+ HREF="node44.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html622"
+ HREF="node44.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html631"
+ HREF="node46.html">3.4.2 How can these</A>
+<B> Up:</B> <A NAME="tex2html629"
+ HREF="node44.html">3.4 Transaction Security</A>
+<B> Previous:</B> <A NAME="tex2html623"
+ HREF="node44.html">3.4 Transaction Security</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><strong>Subsections</strong></A>
+<UL>
+<LI><A NAME="tex2html632"
+ HREF="node45.html#SECTION00441100000000000000">
+Kerberos</A>
+<LI><A NAME="tex2html633"
+ HREF="node45.html#SECTION00441200000000000000">
+Pretty Good Privacy (PGP)</A>
+<LI><A NAME="tex2html634"
+ HREF="node45.html#SECTION00441300000000000000">
+Privacy Enhanced Mail (PEM)</A>
+<LI><A NAME="tex2html635"
+ HREF="node45.html#SECTION00441400000000000000">
+Secure Sockets Layer (SSL)</A>
+<LI><A NAME="tex2html636"
+ HREF="node45.html#SECTION00441500000000000000">
+Secure HTTP (S-HTTP)</A>
+<LI><A NAME="tex2html637"
+ HREF="node45.html#SECTION00441600000000000000">
+Comparison between SSL and S-HTTP</A>
+<LI><A NAME="tex2html638"
+ HREF="node45.html#SECTION00441700000000000000">
+Internet Protocol Security (IPSEC)</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+<H2><A NAME="SECTION00441000000000000000">
+3.4.1 What are Kerberos, PGP, PEM, SSL, S-HTTP and IPSEC?</A>
+</H2>
+<P><H3><A NAME="SECTION00441100000000000000">
+Kerberos</A>
+</H3>
+<P><DL>
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>What is Kerberos? What is it good for?</B>
+<DD>
+<P>
+Kerberos is a network authentication system for use on physically
+    insecure networks, based on the key distribution model presented by
+    Needham and Schroeder (in ``Using Encryption for Authentication in
+    Large Networks of Computers'', Communications of the ACM, Vol. 21(12),
+    pp.  993-999, December, 1978). It allows entities communicating over
+    networks to prove their identity to each other while preventing
+    eavesdropping or replay attacks. It also provides for data stream
+    integrity (detection of modification) and secrecy (preventing
+    unauthorized reading) using cryptography systems such as DES.
+<BR>
+<P>
+Kerberos works by providing principals (users or services) with tickets
+    that they can use to identify themselves to other principals and secret
+    cryptographic keys for secure communication with other principals. A
+    ticket is a sequence of a few hundred bytes. These tickets can then be
+    embedded in virtually any other network protocol, thereby allowing the
+    process implementing that protocol to be sure about the identity of the
+    principals involved.
+<BR>
+<P>
+Practically speaking, Kerberos is mostly used in application-level
+    protocols (ISO model level 7), such as Telnet or FTP, to provide user
+    to host security. It is also used, though less frequently, as the
+    implicit authentication system of data stream (such as <TT>
+      SOCK_STREAM</TT>) or RPC mechanisms (ISO model level 6). It could also
+    be used at a lower level for host to host security, in protocols like
+    IP, UDP, or TCP (ISO model levels 3 and 4), although such
+    implementations are currently
+    rare, if they exist at all.
+<BR>
+<P>
+There are several different versions and distributions of Kerberos.
+    Most of them are based on an MIT distributions in one form or another,
+    but the lineage is not always simple. Some of the distributions are
+    freely available, some are stand-alone commercial products, and others
+    are part of a larger free or commercial systems.
+<BR>
+<P>
+Several vendors currently sell relevant Kerberos material, and to name
+    a few: CyberSAFE, Cygnus Support, Digital Equipment Corporation, Emulex
+    Network Systems, OpenVision Technologies, TGV.
+<BR>
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>What is Bones? What is it for?</B>
+<DD>
+<P>
+Bones is a system that provides the Kerberos API without using
+    encryption and without providing any form of security whatsoever. It is
+    a fake that allows the use of software that expects Kerberos to be
+    present when it cannot be.
+<BR>
+<P>
+Why does it exist? Kerberos is a network security system which relies
+    on cryptographic methods for its security. Since Kerberos' encryption
+    system, DES, is not exportable, Kerberos itself cannot be exported or
+    used outside of the United States in its original form.
+<BR>
+<P>
+As a partial solution to this problem, the Kerberos source code was
+    modified by the addition of <TT>#ifdef NOENCRYPTION</TT> around all calls
+    to DES functions. Compiling this version with the symbol NOENCRYPTION
+    defined results in a system that looks like Kerberos from an
+    application's point of view but that does not require DES libraries
+    (and, as a result, does not speak the real Kerberos protocol and does
+    not provide
+    any security).
+<BR>
+<P>
+The final piece in this puzzle is a program called ``piranha'' which
+    takes the Kerberos sources and removes all of the calls to the
+    encryption routines, replacing it with the code which was under <TT>
+      #ifdef NOENCRYPTION</TT>, producing the system known as Bones. Bones has
+    the property that there is absolutely no question about whether or not
+    it is legal to transport its sources across national boundaries, since
+    it neither has any encryption routines nor any calls to encryption
+    routines.
+<BR>
+<P>    <TT>#ifdef NOENCRYPTION</TT> was not documented, and it was only intended
+    to be used in the above manner. Someone who tries compiling Kerberos
+    with that <TT>#define</TT> has in some sense ``voided the warranty'', and
+    will get something which is both not secure and not Kerberos.
+</DL><H3><A NAME="SECTION00441200000000000000">
+Pretty Good Privacy (PGP)</A>
+</H3>
+<DL>
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>A little history</B>
+<DD>
+<P>
+PGP is a remarkable phenomenon. Largely the effort of a single person,
+    Philip Zimmermann, it provides a confidentiality and authentication
+    service that can be used for e-mail and file-storage applications. In
+    essence, what Zimmermann has done is the following:
+<P>    <UL>
+<LI> Selected the best available cryptographic algorithms as building
+        blocks.
+<LI> Integrated the algorithms into a general-purpose application
+        that is independent of operating systems and processors and that is
+        based on a small set of easy-to-use commands.
+<LI> Made the package and its documentation, including the
+        sourcecode, freely available via the Internet, bulletin boards, and
+        commercial networks such as CompuServe.
+<LI> Entered into an agreement with a company (ViaCrypt) to provide
+        a fully compatible, low-cost commercial version of PGP.
+    </UL>
+<P>
+From its beginnings just a few years ago, PGP has grown explosively and is
+    now widely used. A number of reasons can be cited for this growth:
+<P>  <UL>
+<LI> It is available for free worldwide in versions that run on a
+      variety of platforms, including DOS, Windows, Unix, and Macintosh. And
+      the commercial version satisfies users who want a product that comes
+      with vendor support.
+<LI> It is based on algorithms that have survived extensive public
+      review and are considered extremely secure (RSA for public-key
+      encryption, IDEA for conventional encryption, and MD5 for hash, or
+      summary, coding).
+<LI> It has a wide range of applicability and can be used by
+      corporations that want to enforce a standardized scheme for
+      encrypting files and messages as well as by individuals who wish to
+      communicate securely with people worldwide over the Internet and
+      other networks.
+<LI> It was not developed by, nor is it controlled by, any
+      governmental or standards organization. For people with an
+      instinctive distrust of ``the establishment'', this makes PGP
+      attractive.
+  </UL>
+<P>
+Some people have hesitated to use PGP for several reasons. First, the
+  developer lives and works in the United States, and because PGP is a
+  cryptographic product, there is concern about export controls for
+  organizations that wish to interoperate between U.S. and non-U.S.  sites.
+  However, some recent versions of PGP have initially seen the light of day
+  outside the United States, which would seem to make U.S.
+  export controls irrelevant.
+<BR>
+<P>
+Second, the freeware version of PGP was developed and disseminated
+  without a license for the use of RSA, which is required within the United
+  States but not outside. For people concerned with this issue, the
+  commercial version of PGP has an RSA license. In addition, MIT has
+  issued a new freeware version PGP with a licensed version of RSA.
+<BR>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>What PGP does</B>
+<DD>
+<P>
+PGP provides two services: encryption and digital signatures.
+    Encryption allows a user to encode a file for storage locally or for
+    transmission as an e-mail message. The local storage option is handy if
+    you are worried about other people having access to files on your
+    machine. The e-mail option enables PGP to be used for private exchanges
+    over a network. PGP encrypts the entire contents of the message in such
+    a way that only the intended recipient can decode and read the message.
+    Anyone else who attempts to capture or copy the message en route will
+    receive meaningless garble.
+<BR>
+<P>
+The digital signature service allows a user to `sign' a document before
+    transmission in such a way that anyone can verify that the signature is
+    genuine and belongs with a particular document. If someone alters the
+    message or substitutes a different message, the signature will no
+    longer be valid. And any recipient can verify that the message has been
+    signed by its true creator and not an imposter.
+<BR>
+<P>
+PGP's confidentiality and encoding services use the most popular
+    public-key encryption scheme, known as RSA. All public-key encryption
+    systems make use of an encoding and decoding algorithm and a related
+    pair of keys. The input to the encryption algorithm is the text to be
+    encrypted -- known as plaintext -- and a key. The algorithm takes the
+    input and produces scrambled output known as ciphertext. To use the
+    decryption algorithm, you input the ciphertext plus the key that
+    matches the one used for encryption,
+    and the original plaintext is produced as output.
+<BR>
+<P>
+The two keys used in any public-key encryption scheme, including RSA,
+    are called the public key and private key. The public key, as the name
+    suggests, is made public. The idea is to make your public key available
+    to people with whom you correspond. You keep your private key secure,
+    and it should be known only to you. These two keys can be used to
+    provide confidentiality and encryption.
+<BR>
+<P>
+Here's how it works. Suppose Alice wants to correspond with Bob. If
+    Alice prepares a message and encrypts it with Bob's public key, only
+    Bob can decrypt the message using his private key. If Alice prepares a
+    message and encrypts it with her private key, then anyone, including
+    Bob, can decrypt the message. But only Alice could have encrypted the
+    message, therefore the encrypted message is, in effect, signed by Alice.
+<BR>
+<P>
+It turns out that RSA, and all other known public-key algorithms, are
+    time-consuming and inefficient. Therefore PGP, like most other
+    encryption applications, does not use RSA directly to provide
+    confidentiality and digital signatures.
+<BR>
+<P>
+For confidentiality, PGP encrypts messages with an efficient single-key
+    or conventional encryption algorithm known as IDEA. It then uses RSA to
+    encrypt, with the receiver's public key, the IDEA key used to encrypt
+    the message. The receiver can use RSA to recover the IDEA key and use
+    that key to recover the message.
+<BR>
+<P>
+For digital signatures, PGP uses an efficient algorithm known as MD5 to
+    produce a summary code, or hash code, of the message that is, for all
+    practical purposes, unique to that message. PGP then uses RSA to
+    encrypt the hash code with the sender's private key. The receiver can
+    use RSA to recover the hash code and verify that it is the correct hash
+    code for the message. If it is correct, then only the alleged sender
+    could have prepared the encrypted hash code.
+<BR>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Trusting public keys</B>
+<DD>
+<P>
+The most difficult aspect of using PGP, or any public-key application,
+    is getting your hands on the public keys of the people with whom you
+    wish to correspond. You must make sure you have the true public key of
+    each individual in your electronic Rolodex. Suppose I create a linked
+    pair of public and private keys and send you the public key, declaring
+    that I am Elvis. How do you know I am the real Elvis and not an
+    impostor? If I am an impostor, I could send you signed messages and you
+    would be sure they were from Elvis. If you send an encrypted message to
+    Elvis, I can capture the message and recover the plain text.
+<BR>
+<P>
+PGP provides a number of tools and recommended procedures for obtaining
+    public keys in trusted ways. One handy tool is the public-key
+    fingerprint, which is nothing more than a string of printable
+    characters based on the MD5 hash code of the key. For all practical
+    purposes, the fingerprint of a key is unique. So, if Alice knows Bob's
+    voice, Bob could send his public key to Alice via e-mail. Alice then
+    could generate the fingerprint of that key, call Bob, and have Bob read
+    the fingerprint over the phone to make sure there is a match.
+<BR>
+<P>
+Once you have a few trusted keys, you can make use of PGP's signature
+    capability. If you have Bob's public key and you trust Bob to provide
+    you with other public keys of other persons, Bob can send you John's
+    key signed by Bob. That is, Bob takes John's public key and feeds it
+    through the signature mechanism of PGP. Alice can use Bob's public key
+    to ensure that John's key was provided by Bob and that the key has not
+    been altered.
+<BR>
+<P>
+There also are a number of servers on the Internet that are public-key
+    repositories. Most of keys are signed by one or more people. You can
+    obtain someone's public key from the server and if you trust the
+    signatories to the key, you can have faith that it is genuine. These
+    public-key servers do not authenticate the keys; they merely serve as
+    repositories.
+<BR>
+<P>
+One public-key directory that does attempt to provide authenticated PGP
+    keys is SLED (Stable Large E-mail Database). The public keys in the
+    directory are signed by SLED, indicating that the user's authenticity
+    has been verified.
+</DL><H3><A NAME="SECTION00441300000000000000">
+Privacy Enhanced Mail (PEM)</A>
+</H3>
+<P><DL>
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>What is PEM?</B>
+<DD>
+<P>
+PEM is an Internet standard for providing security services to
+    electronic mail. It uses cryptographic techniques to provide message
+    integrity checking, originator authentication, and confidentiality. It
+    lets you know that a message hasn't been changed, who it's from, and,
+    optionally, allows you to keep it secret from all but the intended
+    recipients.
+<BR>
+<P>
+There is a set of Proposed Standard RFCs (Internet standards documents)
+    that specify PEM. The four documents are RFCs 1421 (obsoletes 1113),
+    1422 (obsoletes 1114), 1423 (obsoletes 1115), and 1424 (new). The
+    integration of MIME (Multipurpose Internet Mail Extensions) and PEM
+    will either produce a new RFC for message format or cause RFC 1421 to
+    be updated.
+<BR>
+<P>
+An overview of PEM was presented in the August 1993 issue (Volume 38,
+    Number 8) of ``Communications of the ACM'' in an article entitled
+    ``Internet Privacy Enhanced Mail'' by Stephen T. Kent.
+<BR>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>What is TIS/PEM?</B>
+<DD>
+<P>
+Trusted Information Systems (TIS), under ARPA sponsorship and in
+    cooperation with RSA Data Security Incorporated (RSADSI), has released
+    a reference implementation of Privacy Enhanced Mail (TIS/PEM) to the
+    Internet community.
+<BR>
+<P>
+TIS/PEM is a Unix-based implementation (The authors are currently
+    pursuing porting it to other operating systems) that has been
+    integrated with Rand MH 6.8.3 and is easily integrated into other mail
+    user agents. TIS/PEM is distributed in source form. It is openly
+    available within the United States and Canada for non-commercial use
+    (not for resale), but the export from the United States of the
+    cryptography used in TIS/PEM is controlled by the United States
+    government.
+<BR>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>What is RIPEM?</B>
+<DD>
+<P>
+Riordan's Internet Privacy Enhanced Mail (RIPEM) is an implementation
+    of PEM. RIPEM allows electronic mail to have the four security
+    facilities provided by PEM: disclosure protection (optional),
+    originator authenticity, message integrity measures, and
+    non-repudiation of origin (always). RIPEM is not really a complete
+    implementation of PEM, because PEM specifies certificates for
+    authenticating keys, which RIPEM does not handle at this time (however,
+    their addition is planned). They have already been added to the
+    Macintosh version.
+<BR>
+<P>
+RIPEM was written primarily by Mark Riordan &lt;mrr@scss3.cl.msu.edu&gt;, but
+    most of the code is now in the public domain, except for the RSA
+    routines, which are a library called RSAREF licensed from RSA Data
+    Security Inc. RIPEM has been ported to almost all platforms.
+<BR>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>The certificates issue</B>
+<DD>
+<P>
+PEM users have the choice of using bare public keys or public keys
+    embodied in X.509 certificates. If we use X.509 certificates to bind
+    distinguished names to RSA public keys, it is not necessary to join the
+    Internet certification hierarchy or otherwise pay to use PEM.
+<P>
+TIS/PEM is capable of generating the bare keys and certificates that we
+    may need. Joining the Internet certification hierarchy has the benefit
+    of making it easier to verify others' mail and for them to verify ours.
+    To join the Internet certification hierarchy, we must sign up our
+    Certification Authority (CA) under a Policy-level Certification
+    Authority (PCA).
+<BR>
+<P>
+A distinguished name is a hierarchical, globally unique name used to
+    identify something or someone.
+<BR>
+<P>
+A Certification Authority (CA) vouches for the binding between users'
+    distinguished names and RSA public keys within an organization or
+    organizational unit. The CA's distinguished name is that of the
+    organization or organizational unit and users' distinguished names are
+    created by starting with the CA distinguished name and adding something
+    to uniquely and unambiguously identify the user, like a common name.
+<BR>
+<P>
+Policy-level Certification Authorities (PCAs) vouch for the binding
+    between a CA's distinguished name and RSA public key. By joining a PCA,
+    others can verify our PEM messages by following the certification path
+    to the Internet PCA certificate without having to have retrieved our
+    RSA public key using secure, out of band means. PCAs may also make CA
+    Certificate Revocation Lists (CRLs) and certificates available and
+    provide other services for its members.
+<BR>
+<P>
+PCAs can be differentiated by the policy that they advertise. The
+    policy includes the level of effort -- and associated assurance --
+    that a PCA uses to insure the correctness of the binding and the
+    requirements they place on CAs which issue certificates under them.
+    They can also be differentiated by the other services they offer and
+    their price.
+<BR>
+<P>
+Several PCAs exist as part of the Internet certification hierarchy,
+    including PCAs at RSADSI and TIS, and more may come online in the near
+    future. Individual PCAs will have their own price schedules.
+</DL><H3><A NAME="SECTION00441400000000000000">
+Secure Sockets Layer (SSL)</A>
+</H3>
+<P><DL>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Introduction</B>
+<DD>
+<P>
+Netscape Communications has designed and specified a protocol for
+    providing data security layered between application protocols (such as
+    HTTP, Telnet, NNTP, or FTP) and TCP/IP. This security protocol, called
+    Secure Sockets Layer (SSL), provides data encryption, server
+    authentication, message integrity, and optional client authentication
+    for a TCP/IP connection.
+<BR>
+<P>
+SSL is an open, non-proprietary protocol, and has been submitted to the
+    W3C working group on security for consideration as a standard security
+    approach for World Wide Web browsers and servers on the Internet.
+    Netscape Communications is working with the W3C and W3C members
+    (including EIT) on developing and standardizing common, robust security
+    mechanisms and protocols for the Internet. They will fully support such
+    mechanisms and protocols as they become standardized.
+<BR>
+<P>
+The SSL protocol specification is freely available and Netscape
+    Communications encourage everyone to examine the protocol and/or
+    implement it themselves.
+<BR>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>How SSL works</B>
+<DD>
+<P>
+SSL provides a security ``handshake'' that is used to initiate the
+    TCP/IP connection. This handshake results in the client and server
+    agreeing on the level of security they will use, and fulfills any
+    authentication requirements for the connection. Thereafter, SSL's only
+    role is to encrypt and decrypt the bytestream of the application
+    protocol being used (for example, HTTP, NNTP, or Telnet). This means
+    that all the information in both the HTTP request and the HTTP response
+    are fully encrypted, including the URL the client is requesting, any
+    submitted form contents (including things like credit card numbers),
+    any HTTP access authorization information (usernames and passwords),
+    and all the data returned from the server to the client.
+<BR>
+<P>
+The Netscape Navigator includes embedded Certificate Authority (CA)
+    keys for certain CAs, including Netscape Communications ` test CAs. As
+    new CAs come online, they will embed their keys as well. These embedded
+    keys allow the browser to verify the legitimacy of arbitrary servers.
+    The Document Information dialog allow one to inspect both the identity
+    of a given server as well as the identity of the CA that issued the
+    server its certificate. SSL requires servers to have certificates
+    issued by a Certificate Authority; and the Netscape Commerce Server
+    includes a mechanism to easily acquire such a certificate.
+<BR>
+<P>
+Because HTTP+SSL (or ``https'') and HTTP are different protocols and
+    typically reside on different ports (443 and 80, respectively), the
+    same server system can run both secure and insecure HTTP servers
+    simultaneously. This means a server can provide some information to all
+    users using no security, and other information only securely, if the
+    webmaster so choose. For instance, ``storefront'' and merchandise
+    catalog could be insecure, while ordering and payment documents and
+    forms could be secure.
+</DL><H3><A NAME="SECTION00441500000000000000">
+Secure HTTP (S-HTTP)</A>
+</H3>
+Secure HTTP is an extension of HTTP that provides a variety of security
+enhancements for the Web:
+<P><UL>
+<LI> <B>Authentication</B> lets clients make sure they are communicating
+    with the correct server, and servers make sure they are communicating
+    with the correct client. Authentication is performed using digital
+    certificates issued by Certifying Authorities such as VeriSign.
+<LI> <B>Encryption</B> makes data transferred over the network
+    unintelligible to eavesdroppers.
+<LI> <B>Digital Signatures</B> provide two benefits. First, they verify
+    that data transferred over the network was not changed en route.
+    Second, they provide non-repudiation: The receiver of data can prove to
+    a third party that the sender really sent the data.
+<LI> <B>Secure HTTP</B> is extremely flexible; it allows each application
+    to configure the amount of security required.  A transmission from
+    client to server or server to client can be signed, encrypted, both, or
+    neither.
+</UL>
+<P>
+Secure NCSA Mosaic and Spry SafetyWEB are two browsers that support the
+S-HTTP protocol.
+<P><H3><A NAME="SECTION00441600000000000000">
+Comparison between SSL and S-HTTP</A>
+</H3>
+Two comparisons of the S-HTTP and SSL protocols are possible: inherent
+capabilities and current implementations. Keep in mind that network
+security is a hot topic so developments continue at a rapid pace.
+<BR>
+<P>
+Because S-HTTP is an application-level protocol, it can provide
+non-repudiation of individual requests or responses through digital
+signatures. SSL is a lower-level protocol and does not have this
+capability.
+<BR>
+<P>
+S-HTTP, being an application-level protocol, is able to work with
+firewalls. SSL's transport-level encryption, in contrast, hides the
+application-level protocol from firewalls. A firewall that relays an
+SSL connection has no idea what data is being passed back and forth
+over the connection.
+<BR>
+<P>
+S-HTTP is more flexible than SSL, in that an application can configure
+the level of security it needs. Encryption and digital signatures can
+be expensive to compute, so in principle this flexibility can allow a
+server to handle more connections or respond more quickly. The other
+side of this trade-off is that SSL, a lower-level protocol, may be
+easier to optimize: It encrypts more bytes, but might balance this out
+with a lower cost per byte. Since SSL has fewer options it should be
+easier to set up and administer than S-HTTP.
+<BR>
+<P>
+Current SSL protocols and implementations are limited in a variety of
+ways relating to the handling of digital certificates; S-HTTP
+implementations are considerably more flexible. These SSL limitations
+are not inherent in the nature of SSL and will likely be removed as
+proves necessary.
+<P><H3><A NAME="SECTION00441700000000000000">
+Internet Protocol Security (IPSEC)</A>
+</H3>
+<P><DL>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>The IPSEC working
+  group charter</B>
+<DD>
+<P>
+IPSEC is not a general security architecture for the Internet, but is
+    instead focused on the IP layer. IPSEC working group will develop
+    mechanisms to protect client protocols of IP. A security protocol in
+    the network layer will be developed to provide cryptographic security
+    services that will flexibly support combinations of authentication,
+    integrity, access control, and confidentiality. The protocol formats
+    for the IP Security Protocol (IPSP) will be independent of the
+    cryptographic algorithm. The preliminary goals will specifically pursue
+    host-to-host security followed by subnet-to-subnet and host-to-subnet
+    topologies.
+<BR>
+<P>
+Protocol and cryptographic techniques will also be developed to support
+    the key management requirements of the network layer security. The key
+    management will be specified as an application layer protocol that is
+    independent of the lower layer security protocol. The protocol will
+    initially support public key-based techniques. Flexibility in the
+    protocol will allow eventual support of Key Distribution Center (KDC -
+    such as Kerberos) and manual distribution approaches.
+<BR>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>The IP
+  authentication header (AH)</B>
+<DD>
+<P>
+The IP Authentication Header is designed to provide integrity and
+    authentication without confidentiality to IP datagrams. The lack of
+    confidentiality ensures that implementations of the Authentication
+    Header will be widely available on the Internet, even in locations
+    where the export, import, or use of encryption to provide
+    confidentiality is regulated. The Authentication Header supports
+    security between two or more hosts implementing AH, between two or more
+    gateways implementing AH, and between a host or gateway implementing AH
+    and a set of hosts or gateways. A security gateway is a system which
+    acts as the communications gateway between external untrusted systems
+    and trusted hosts on their own subnetwork. It also provides security
+    services for the trusted hosts when they communicate with the external
+    untrusted systems. A trusted subnetwork contains hosts and routers that
+    trust each other not to engage in active or passive attacks and trust
+    that the underlying communications channel (e.g., an Ethernet) isn't
+    being attacked.
+<BR>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>The
+  IP encapsulating security payload (ESP)</B>
+<DD>
+<P>
+The IP Encapsulating Security Payload (ESP) is designed to provide
+    integrity, authentication, and confidentiality to IP datagrams. The ESP
+    supports security between two or more hosts implementing ESP, between
+    two or more gateways implementing ESP, and between a host or gateway
+    implementing ESP and a set of hosts and/or gateways. A security gateway
+    is a system which acts as the communications gateway between external
+    untrusted systems and trusted hosts on their own subnetwork and
+    provides security services for the trusted hosts when they communicate
+    with external untrusted systems. A trusted subnetwork contains hosts
+    and routers that trust each other not to engage in active or passive
+    attacks and trust that the underlying communications channel (e.g., an
+    Ethernet) isn't being attacked. Trusted systems always should be
+    trustworthy, but in practice they often are not trustworthy.
+<BR>
+<P>
+Gateway-to-gateway encryption is most valuable for building private
+    virtual networks across an untrusted backbone such as the Internet. It
+    does this by excluding outsiders. As such, it is often not a substitute
+    for host-to-host encryption, and indeed the two can be and often should
+    be used together.
+<BR>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>For more information</B>
+<DD>
+<P>
+You can see the IPSEC Working Group Charter at:
+    <A NAME="tex2html1"
+ HREF="ftp://ftp.ripe.net/ietf/ipsec/ipsec-charter.txt">ftp://ftp.ripe.net/ietf/ipsec/ipsec-charter.txt</A>
+with all goals and milestones for this protocol, and/or see the Request
+    For Comments (RFC) on the Security Architecture for the Internet
+    Protocol at:
+    <A NAME="tex2html1"
+ HREF="http://www.cis.ohio-state.edu/htbin/rfc/rfc1825">http://www.cis.ohio-state.edu/htbin/rfc/rfc1825</A>
+.
+</DL><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html630"
+ HREF="node46.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html628"
+ HREF="node44.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html622"
+ HREF="node44.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html631"
+ HREF="node46.html">3.4.2 How can these</A>
+<B> Up:</B> <A NAME="tex2html629"
+ HREF="node44.html">3.4 Transaction Security</A>
+<B> Previous:</B> <A NAME="tex2html623"
+ HREF="node44.html">3.4 Transaction Security</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

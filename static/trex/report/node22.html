@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.3 La transposition en frquence et la transmission hertzienne</TITLE>
+<META NAME="description" CONTENT="4.3 La transposition en frquence et la transmission hertzienne">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="previous" HREF="node21.html">
+<LINK REL="up" HREF="node19.html">
+<LINK REL="next" HREF="node23.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html274"
+ HREF="node23.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html272"
+ HREF="node19.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html268"
+ HREF="node21.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html275"
+ HREF="node23.html">5 Le cryptage de</A>
+<B> Up:</B> <A NAME="tex2html273"
+ HREF="node19.html">4 La transmission hertzienne</A>
+<B> Previous:</B> <A NAME="tex2html269"
+ HREF="node21.html">4.2 La modulation numrique</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION00430000000000000000">
+4.3 La transposition en frquence et la transmission hertzienne</A>
+</H1>
+<P>
+Puisque, dans la quasi-totalit des cas rels, la frquence d'mission
+optimale pour une longueur d'antenne donne ne correspond pas au domaine de
+frquences du signal  mettre, on utilise l'opration de transposition,
+<EM>i.e.</EM> un dcalage (une translation) en frquences. Cette opration se
+ralise grce  une simple multiplication du signal (de frquence moyenne
+<I>f</I>) sortant de l'opration de FSK, par un signal sinusodal de frquence
+<I>F</I>. On obtient ainsi un signal dont les composantes ont pour frquences
+<I>F</I>-<I>f</I> et <I>F</I>+<I>f</I> <A NAME="tex2html3"
+ HREF="footnode.html#398"><SUP><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="/latex2html/icons.gif/foot_motif.gif"></SUP></A>. Pour prendre une place moins
+importante sur la bande de frquences, on filtre une de ces deux
+composantes. Dans notre cas, l'opration de filtrage est effectue grce 
+un circuit passe-bande LC en sortie du transposeur, et la frquence retenue
+est ici de <I>F</I>-<I>f</I>. Afin d'obtenir finement l'attnuation de l'autre
+composante, on utilise un analyseur de spectre, et l'on rglel'inductance
+variable du circuit de filtrage LC jusqu' ce qu'une composante domine
+nettement l'autre (rapport entre les deux de l'ordre de 10<I>db</I>).
+<P>
+<DIV ALIGN="CENTER"><IMG WIDTH="780" HEIGHT="356" ALIGN="BOTTOM" BORDER="0"
+ SRC="../transpos.gif">
+<BR>
+</DIV>
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node22.html#fig:transposition">4.5</A>: Transformation des
+    spectres par transposition</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="fig:transposition">&#160;</A>L'opration de transposition tant ralise par des circuits spcialiss 
+base d'amplificateurs oprationnels, la frquence de transposition
+maximale que nous pouvons obtenir est de l'ordre de 10<I>MHz</I>. Au-del, il
+faudrait changer de technologie et adopter des circuits beaucoup plus
+coteux. L'intrt de cette tude n'tant pas de reproduire exactement les
+caractristiques d'un radiotlphone commercial, mais d'en comprendre les
+lments principaux, notre choix s'est port sur une frquence de
+transposition de 8<I>MHz</I> environ.
+<BR>
+<P>
+Aussi, il est  noter que les antennes dont nous disposions taient d'une
+hauteur d'environ 30<I>cm</I>, ce qui, compare  la hauteur thorique idale
+pour un signal  transmettre d'une frquence de 10<I>MHz</I>, <EM>i.e.</EM> 7,5<I>m</I>,
+est assez peu. En fait, cela n'a pas t trs gnant, si ce ne sont les
+quelques bruits supplmentaires ajouts au signal transmis, et qui ont t
+plus ou moins limins avec le filtre LC du circuit de transposition du
+ct rcepteur.
+<BR>
+<P>
+L'opration de transposition est tout  fait inversible, puisque cette
+opration est son propre inverse! En fait, en multipliant le signal de
+composante <I>F</I>-<I>f</I> par un signal de frquence <I>F</I>, on obtient un signal de
+deux composantes relles: <I>f</I> et 2<I>F</I>-<I>f</I>. Il suffit donc, pour rcuprer le
+signal initial de frquence <I>f</I>, de filtrer la composante indsirable 
+l'aide d'un filtre passe-bande LC, filtre qui est situ  la sortie du
+circuit de transposition du rcepteur.
+<BR>
+<P>
+Enfin, pour complter la maquette, il ne manque plus que l'ajout des
+antennes (ce qui, il faut bien en convenir, n'a pas vraiment constitu la
+partie la plus difficile de toute l'tude!) et, puisque les signaux
+traversent l'atmosphre, un circuit d'amplification du ct du rcepteur
+<A NAME="tex2html4"
+ HREF="footnode.html#158"><SUP><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="/latex2html/icons.gif/foot_motif.gif"></SUP></A>.
+L'amplification se fait aprs transposition, donc sur un signal de
+frquence de l'ordre de 1<I>MHz</I>, avec un montage classique  amplificateurs
+oprationnels.
+<P>
+A la sortie de l'amplificateur, situ aprs la transposition donc, le
+signal passe dans le circuit de dmodulation FSK puis dans les botiers de
+conversion numrique/analogique. Aussi, afin de rgler finement la
+frquence de transposition inverse (qui est, rappelons-le,  peu prs la
+mme que la frquence de transposition, c'est--dire 8<I>MHz</I> dans notre cas)
+sur le montage rcepteur, on observe avec un oscilloscope  la fois le
+signal provenant du circuit metteur, avant transposition, et celui sur le
+circuit rcepteur, aprs transposition, et l'on rgle la frquence du
+transposeur ct rcepteur (grce  une inductance variable) jusqu' galer
+les frquences de ces deux signaux. Puis, l'on rgle enfin, si ncessaire,
+la frquence de rfrence du circuit dmodulateur FSK (grce, cette fois, 
+une rsistance variable), jusqu' ce que la frquence du signal modul soit
+accroche, et que le circuit rgnre donc un signal dmodul proche de
+celui qui avait t transmis initialement (ce dernier rglage, celui du
+dmodulateur FSK, a normalement dj t effectu lors de l'tape
+prcdente, c'est--dire au moment o la maquette ne comportait pas encore
+de transposition).
+<BR>
+<P>
+Le signal numrique rgnr est quasiment comme celui initialement
+transmis, sauf que les angles des &quot;marches d'escalier&quot; sont beaucoup plus
+arrondis. Pour palier cette caractristique pouvant devenir gnante, le
+botier dispose d'un circuit spcialis dnomm &quot;squarer&quot; que nous avons
+utilis.
+<BR>
+<P>
+Il reste encore un lment que nous pensons bon de relater ici. En effet,
+aprs avoir effectu tous les rglages et avoir pos les deux sondes de
+l'oscilloscope sur les deux signaux numriques, celui du circuit metteur
+avant modulation d'une part, et celui rcupr par le circuit rcepteur
+aprs dmodulation d'autre part, nous avons vu que la restitution du signal
+numrique semblait tout  fait correcte, alors que le reste du circuit
+rcepteur ne semblait pas vouloir &quot;accrocher&quot; sur ce signal (et par exemple
+reconnatre les mots de synchronisation).  Toutefois, en y regardant de
+plus prs, l'on voyait clairement que le signal numrique restitu
+&quot;tremblait&quot; horizontalement, <EM>i.e.</EM> que sa frquence oscillait, mme si
+ce phnomne ne se montrait pas d'une grande amplitude. Le problme venait,
+en fait, de ce que la boucle de phase du dmodulateur FSK n'accrochait pas
+assez vite sur les frquences successives que prenait le signal modul.
+Pour remdier  cela, il suffisait donc d'augmenter le gain du mlangeur du
+dmodulateur ou, aussi, d'augmenter l'cart entre les deux frquences <I>f<SUB>0</SUB></I>
+et <I>f<SUB>1</SUB></I> du signal modul, et c'est cette dernire solution que nous avons
+retenue (nous sommes pass d'un cart de <I>f<SUB>1</SUB></I>-<I>f<SUB>0</SUB></I> = 50 <I>kHz</I>  80 <I>kHz</I>). Il
+faut cependant prendre garde  ne pas carter trop ces frquences, sinon le
+dmodulateur n'accrochera plus du tout! Ds lors, notre montage a
+fonctionn &quot;merveilleusement bien&quot;, c'est--dire que les signaux
+demeuraient correctement transmis et interprts, mme lorsque nous avons
+cart l'metteur du rcepteur d'environ 1<I>m</I> (le GSM n'a qu' bien se
+tenir!)...
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html274"
+ HREF="node23.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html272"
+ HREF="node19.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html268"
+ HREF="node21.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html275"
+ HREF="node23.html">5 Le cryptage de</A>
+<B> Up:</B> <A NAME="tex2html273"
+ HREF="node19.html">4 La transmission hertzienne</A>
+<B> Previous:</B> <A NAME="tex2html269"
+ HREF="node21.html">4.2 La modulation numrique</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/25/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

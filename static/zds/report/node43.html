@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.3.9 What about non-repudiatability of receipt?</TITLE>
+<META NAME="description" CONTENT="3.3.9 What about non-repudiatability of receipt?">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="previous" HREF="node42.html">
+<LINK REL="up" HREF="node34.html">
+<LINK REL="next" HREF="node44.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html601"
+ HREF="node44.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html599"
+ HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html595"
+ HREF="node42.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html602"
+ HREF="node44.html">3.4 Transaction Security</A>
+<B> Up:</B> <A NAME="tex2html600"
+ HREF="node34.html">3.3 Data Security: Cryptography</A>
+<B> Previous:</B> <A NAME="tex2html596"
+ HREF="node42.html">3.3.8 What about non-repudiatability</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00439000000000000000">
+3.3.9 What about non-repudiatability of receipt?</A>
+</H2>
+If you and I are representatives of companies conducting business with
+each other, then we would both have PKC pairs that identify us. You
+would have my public key and I would have yours. We might agree that,
+once you receive a digitally signed message from me, you send me a
+receipt. The receipt would be my digital signature from the message I
+sent to you, with your digital signature attached to it. Using your
+public key, I would verify your digital signature. Using my private key
+I would verify my digital signature that you had sent back to me.
+<BR>
+<P>
+How can I tell when a message was originated?
+<BR>
+<P>
+I can attach a ``digital time-stamp'' to my message. First, I would
+have my computer calculate my digital signature and attach it to the
+original message. Next, I would have it calculate a message digest of
+the message plus the signature. Next, I would send the message digest
+(presumably over the Internet) to an external, trusted digital
+time-stamping service (DTS). (Bellcore has created a subsidiary to
+provide such a service.) The DTS would return a digital time-stamp
+consisting of:
+<UL>
+<LI> the message digest that I sent
+<LI> the date and time it was received by the DTS, and
+<LI> the digital signature of the DTS encrypted with the DTS's private
+    key.
+</UL>
+<P>
+The ``message'' that the DTS signs would be the combination of my
+message digest (the digital fingerprint of my original message) and the
+time-stamp. When my computer received the time-stamp from DTS it would
+attach it to my message, add my digital signature and send you the
+whole thing.
+<BR>
+<P>
+When you received my message, your computer would verify the time-stamp
+using the public key of the DTS, and it would verify my signature using
+my public key.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html601"
+ HREF="node44.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html599"
+ HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html595"
+ HREF="node42.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html602"
+ HREF="node44.html">3.4 Transaction Security</A>
+<B> Up:</B> <A NAME="tex2html600"
+ HREF="node34.html">3.3 Data Security: Cryptography</A>
+<B> Previous:</B> <A NAME="tex2html596"
+ HREF="node42.html">3.3.8 What about non-repudiatability</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

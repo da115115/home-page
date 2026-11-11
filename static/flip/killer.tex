@@ -1,0 +1,14 @@
+\section{Source du scripte Unix ``killer''}
+\label{ann:killer}
+\begin{verbatim}
+#!/usr/local/bin/bash
+
+n=`ps -aecdf | grep $1 | grep AMP | cut -c10-15`
+if [$n]; then 
+kill -9 $n
+echo 'AMP died'
+else
+echo "Not find AMP"
+fi
+exit
+\end{verbatim}

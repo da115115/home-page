@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.13 How is RSA used for authentication in practice?</TITLE>
+<META NAME="description" CONTENT="3.2.13 How is RSA used for authentication in practice?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node25.html">
+<LINK REL="previous" HREF="node23.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node25.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html496"
+ HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html494"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html488"
+ HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html497"
+ HREF="node25.html">3.2.14 Does RSA help</A>
+<B> Up:</B> <A NAME="tex2html495"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html489"
+ HREF="node23.html">3.2.12 How is RSA</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION003213000000000000000">
+3.2.13 How is RSA used for authentication in practice?</A>
+</H2>
+<A NAME="how_rsa_auth_prac">&#160;</A>
+Suppose Alice wishes to send a signed message to Bob. She uses a hash
+function on the message (see Question&nbsp;<A HREF="node88.html#what_hash">3.8.2</A>) to create a message
+digest, which serves as a ``digital fingerprint'' of the message. She then
+encrypts the message digest with her RSA private key; this is the digital
+signature, which she sends to Bob along with the message itself. Bob, upon
+receiving the message and signature, decrypts the signature with lice's
+public key to recover the message digest. He then hashes the message with
+the same hash function Alice used and compares the result to the message
+digest decrypted from the signature. If they are exactly equal, the
+signature has been successfully verified and he can be confident that the
+message did indeed come from Alice. If, however, they are not equal, then
+the message either originated elsewhere or was altered after it was signed,
+and he rejects the message. Note that for authentication, the roles of the
+public and private keys are converse to their roles in encryption, where
+the public key is used to encrypt and the private key to decrypt.
+<BR>
+<P>
+In practice, the public exponent is usually much smaller than the
+private exponent; this means that the verification of a signature is
+faster than the signing. This is desirable because a message or
+document will only be signed by an individual once, but the signature
+may be verified many times.
+<BR>
+<P>
+It must be infeasible for anyone to either find a message that hashes to a
+given value or to find two messages that hash to the same value.  If either
+were feasible, an intruder could attach a false message onto Alice's
+signature. Hash functions such as MD4 and MD5 (see Question&nbsp;<A HREF="node89.html#what_mds">3.8.3</A>)
+have been designed specifically to have the property that finding a match
+is infeasible, and are therefore considered suitable for use in
+cryptography.
+<BR>
+<P>
+One or more certificates (see Question&nbsp;<A HREF="node37.html#what_cert">3.3.5</A>) may accompany a
+digital signature. A certificate is a signed document attesting to the
+identity and public key of the person signing the message. Its purpose is
+to prevent someone from impersonating someone else, using a phony key pair.
+If a certificate is present, the recipient (or a third party) can check the
+authenticity of the public key, assuming the certifier's public key is
+itself trusted.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html496"
+ HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html494"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html488"
+ HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html497"
+ HREF="node25.html">3.2.14 Does RSA help</A>
+<B> Up:</B> <A NAME="tex2html495"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html489"
+ HREF="node23.html">3.2.12 How is RSA</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

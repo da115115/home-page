@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.4.2 How can these protocols contribute to transaction security?</TITLE>
+<META NAME="description" CONTENT="3.4.2 How can these protocols contribute to transaction security?">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="previous" HREF="node45.html">
+<LINK REL="up" HREF="node44.html">
+<LINK REL="next" HREF="node47.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html645"
+ HREF="node47.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html643"
+ HREF="node44.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html639"
+ HREF="node45.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html646"
+ HREF="node47.html">3.5 What a Smart</A>
+<B> Up:</B> <A NAME="tex2html644"
+ HREF="node44.html">3.4 Transaction Security</A>
+<B> Previous:</B> <A NAME="tex2html640"
+ HREF="node45.html">3.4.1 What are Kerberos,</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00442000000000000000">
+3.4.2 How can these protocols contribute to transaction security?</A>
+</H2>
+<P><DL>
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Kerberos</B>
+<DD>
+<P>
+It allows entities communicating over networks to prove their identity
+    to each other while preventing eavesdropping or replay attacks. It also
+    provides for data stream integrity (detection of modification) and
+    secrecy (preventing unauthorized reading) using cryptography systems
+    such as DES.
+<BR>
+<P>
+It is important to realize that Kerberos is a one-trick pony. It
+    provides for mutual authentication and secure communication between
+    principals on an open network by manufacturing secret keys for any
+    requestor and providing a mechanism for these secret keys to be safely
+    propagated through the network. Kerberos does not, per se, provide for
+    authorization or accounting, although applications that wish to can use
+    their secret keys to perform those functions securely. Kerberos also
+    does not provide password validation for individual workstations unless
+    care is taken.
+<BR>
+<P>
+It is also important to understand that using Kerberos on time-sharing
+    machines greatly weakens its protections, since user's tickets are then
+    only as secure as the `root' account (read: not very). Furthermore,
+    dumb terminals and most X terminals do not understand the Kerberos
+    protocol and as a result their cable connections remain insecure.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>PEM</B>
+<DD>
+<P>
+As far as I know, TIS/PEM and RIPEM are not used (or, at least, widely
+    used) for securing electronic commerce transactions, but only for
+    personal email messages. However, we may assume that some vendors will
+    support PEM encrypted messages for their transaction processes if a
+    significant number of customers desire so.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>PGP</B>
+<DD>
+<P>
+Some softwares developers have implemented a system by which NCSA
+    Mosaic client and/or server call external PGP program which encrypt and
+    decrypt their communications and thus provide secure communications
+    between the server and the client, and ensure that a user is who he/she
+    says he/she is.
+<BR>
+<P>
+However, the most ``natural'' mean to securely communicate with PGP is
+    by exchanging encrypted email messages, since this can be performed an
+    all platforms.
+<BR>
+<P>
+In both cases, the merchant can register his public key on a server
+    such as SLED (http://www.four11.com) where the customer will be able to
+    retrieve it. The merchant will have to provide the server with evidence
+    (by another mean than the Internet) that he/she claims who he/she
+    actually is, so that the customer will be able to trust his/her public
+    key.
+<BR>
+<P>
+Several electronic storefronts, such as NetMarket, support purchase
+    orders or customer sensitive information encrypted with PGP.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>SSL</B>
+<DD>
+<P>
+We can enter our credit card number on a secure (https) browser (we may
+    assume that other browsers than Netscape Navigator will support SSL in
+    a near future) form and transmit the form over the Internet to a secure
+    Commerce Server without risk of an intermediary obtaining our credit
+    card information. The security features offered by SSL compliant
+    technology protect commercial transactions, as well as all other
+    communications, from misappropriation and fraud that could otherwise
+    occur as information passes through Internet computers.
+<BR>
+<P>
+Secure communications does not eliminate all of an Internet user's
+    concerns. For example, the end-user must be willing to trust the server
+    administrator with his or her credit card number before he or she enter
+    into a commercial transaction. Security technology secures the routes
+    of Internet communication; but does not protect from unreputable or
+    careless people with whom we might choose to do business.
+<BR>
+<P>
+The situation is analogous to telling someone our credit card number
+    over the telephone. We may be secure in knowing that no one has
+    overheard our conversation (privacy) and that the person on the line
+    works for the company we wish to buy from (authentication), but we must
+    also be willing to trust the person and the company.
+<BR>
+<P>
+Server administrators must take additional precautions to prevent
+    security breaches. To protect information, they must maintain physical
+    security of their server computers and control access to software
+    passwords and private keys.
+<BR>
+<P>
+A lot of electronic storefronts, such as MarketNet, now support SSL
+    mechanism.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>S-HTTP</B>
+<DD>
+<P>
+S-HTTP specifies ways to add all the secure features needed in a
+    transaction to the conversations that occur over the Internet between
+    World Wide Web clients and servers. S-HTTP does not say how these
+    elements will appear to users or what elements should be used with what
+    transactions; that is up to the developers of the clients and servers
+    and their customers.
+<BR>
+<P>
+However, a few companies like OpenMarket and NCSA have already released
+    Web secure servers and clients that support S-HTTP, Terisa proposes
+    toolkits to develop such systems, and CyberCash has developed a payment
+    system based on this protocol.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>IPSEC</B>
+<DD>
+<P>
+The primary objective of the IPSEC work is to ensure that IPv4 and IPv6
+    will have solid cryptographic security mechanisms available to users
+    who desire security. These mechanisms are designed to avoid adverse
+    impacts on Internet users who do not employ these security mechanisms
+    for their traffic. These mechanisms are intended to be
+    algorithm-independent so that the cryptographic algorithms can be
+    altered without affecting the other parts of the implementation. These
+    security mechanisms should be useful in enforcing a variety of security
+    policies.
+<BR>
+<P>
+As far as I know, the IPSEC is not yet implemented: this protocol is in
+    a stage of ``work in progress'', but it may be worth to keep looking at
+    what it will become.
+</DL><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html645"
+ HREF="node47.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html643"
+ HREF="node44.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html639"
+ HREF="node45.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html646"
+ HREF="node47.html">3.5 What a Smart</A>
+<B> Up:</B> <A NAME="tex2html644"
+ HREF="node44.html">3.4 Transaction Security</A>
+<B> Previous:</B> <A NAME="tex2html640"
+ HREF="node45.html">3.4.1 What are Kerberos,</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

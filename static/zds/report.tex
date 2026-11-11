@@ -1,0 +1,57 @@
+\documentclass[10pt,a4paper,twoside]{report}
+
+\usepackage{fancyhdr}
+\usepackage[dvips]{graphicx}
+\input{/usr/local/lib/texmf/tex/dvips/psfig}
+\input{/homes/arnaud/htdocs/latex2html/texinputs/html.sty}
+\input{/homes/arnaud/htdocs/latex2html/texinputs/htmllist.sty}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\slshape \leftmark}
+%\fancyhead[LO,RE]{\slshape \rightmark}
+\fancyfoot[C]{\thepage}
+
+% \htmlbase{http://ecwww.eurecom.fr/~arnaud/zds/report}
+
+\begin{document}
+\externallabels{http://ecwww.eurecom.fr/\~{}arnaud/zds/appendix}{../applabels.pl}
+
+
+%\bodytext{BACKGROUND=../../background/grey.gif}
+\bodytext{BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9"}
+
+\begin{titlepage}
+  \begin{center}
+    {\Huge Security Status and Issues\\}
+    \vspace{1cm}
+    {\Huge \&\\}
+    \vspace{1cm}
+    {\Huge Electronic Commerce on the Internet\\}
+    \vspace{4cm}
+    {\Large Denis Arnaud\\}
+    \vspace{2cm}
+    {\large July 1995}
+  \end{center}
+\end{titlepage}         
+
+\begin{htmlonly}
+  \centerline{\htmladdnormallink{A Postscript version is also available
+      here.}{http://ecwww.eurecom.fr/\~{}arnaud/zds/report.ps.gz}}
+\end{htmlonly}
+
+\normalsize
+\begin{latexonly}
+  \tableofcontents
+\end{latexonly}
+\listoffigures
+
+\include{rep_part1}
+\include{rep_part2}
+\include{rep_part3}
+\include{rep_part4}
+\include{rep_part5}
+\include{rep_part6}  % The modified conclusion (modified for the Web)
+% \include{rep_part6_zds}   % The original conclusion (written for ZDS)
+
+\end{document}

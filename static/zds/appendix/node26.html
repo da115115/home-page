@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.15 What are alternatives to RSA?</TITLE>
+<META NAME="description" CONTENT="3.2.15 What are alternatives to RSA?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node27.html">
+<LINK REL="previous" HREF="node25.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node27.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html516"
+ HREF="node27.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html514"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html508"
+ HREF="node25.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html517"
+ HREF="node27.html">3.2.16 Is RSA currently</A>
+<B> Up:</B> <A NAME="tex2html515"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html509"
+ HREF="node25.html">3.2.14 Does RSA help</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION003215000000000000000">
+3.2.15 What are alternatives to RSA?</A>
+</H2>
+<A NAME="what_alt_rsa">&#160;</A>
+Many other public-key cryptosystems have been proposed, as a look through
+the proceedings of the annual Crypto and Eurocrypt conferences quickly
+reveals. A mathematical problem called the knapsack problem was the basis
+for several systems, but these have lost favor because several versions
+were broken. Another system, designed by ElGamal, is based on the discrete
+logarithm problem. The ElGamal system was, in part, the basis for several
+later signature methods, including one by Schnorr, which in turn was the
+basis for DSS, the digital signature standard proposed by NIST (see
+Question&nbsp;<A HREF="node77.html#what_dss">3.6.8</A>). Because of the NIST proposal, the relative merits
+of these signature systems versus RSA signatures has received a lot of
+attention. The ElGamal system has been used successfully in applications;
+it is slower for encryption and verification than RSA and its signatures
+are larger than RSA signatures.
+<BR>
+<P>
+In 1976, before RSA, Diffie and Hellman proposed a system for key
+exchange only; it permits secure exchange of keys in an otherwise
+conventional secret-key system. This system is in use today.
+<BR>
+<P>
+Cryptosystems based on mathematical operations on elliptic curves have also
+been proposed, as have cryptosystems based on discrete exponentiation in
+the finite field <I>GF</I>(2<SUP><I>n</I></SUP>). The latter are very fast in hardware; however,
+doubts have been raised about their security because the underlying problem
+may be easier to solve than factoring. There are also some probabilistic
+encryption methods, which have the attraction of being resistant to a
+guessed ciphertext attack (see Question&nbsp;<A HREF="node16.html#what_break_rsa">3.2.5</A>), but at a
+cost of data expansion. In probabilistic encryption, the same plaintext
+encrypted twice under the same key will give, with high probability, two
+different ciphertexts.
+<BR>
+<P>
+For digital signatures, Rabin proposed a system which is provably
+equivalent to factoring; this is an advantage over RSA, where one may
+still have a lingering worry about an attack unrelated to factoring.
+Rabin's method is susceptible to a chosen message attack, however, in
+which the attacker tricks the user into signing messages of a special
+form. Another signature scheme, by Fiat and Shamir, is based on
+interactive zero-knowledge protocols, but can be adapted for
+signatures. It is faster than RSA and is provably equivalent to
+factoring, but the signatures are much larger than RSA signatures.
+Other variations, however, lessen the necessary signature length; see
+for references. A system is ``equivalent to factoring'' if recovering
+the private key is provably as hard as factoring; forgery may be easier
+than factoring in some of the systems.
+<BR>
+<P>
+Advantages of RSA over other public-key cryptosystems include the fact
+that it can be used for both encryption and authentication, and that it
+has been around for many years and has successfully withstood much
+scrutiny. RSA has received far more attention, study, and actual use
+than any other public-key cryptosystem, and thus RSA has more empirical
+evidence of its security than more recent and less scrutinized systems.
+In fact, a large number of public-key cryptosystems which at first
+appeared secure were later broken.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html516"
+ HREF="node27.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html514"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html508"
+ HREF="node25.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html517"
+ HREF="node27.html">3.2.16 Is RSA currently</A>
+<B> Up:</B> <A NAME="tex2html515"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html509"
+ HREF="node25.html">3.2.14 Does RSA help</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

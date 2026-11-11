@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.1.1 Principles</TITLE>
+<META NAME="description" CONTENT="3.1.1 Principles">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node19.html">
+<LINK REL="previous" HREF="node17.html">
+<LINK REL="up" HREF="node17.html">
+<LINK REL="next" HREF="node19.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html343"
+ HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html341"
+ HREF="node17.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html335"
+ HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html344"
+ HREF="node19.html">3.1.2 Access decisions</A>
+<B> Up:</B> <A NAME="tex2html342"
+ HREF="node17.html">3.1 Local Network: Security</A>
+<B> Previous:</B> <A NAME="tex2html336"
+ HREF="node17.html">3.1 Local Network: Security</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00411000000000000000">
+3.1.1 Principles</A>
+</H2>
+There are some common security attributes that should be present in any
+system that processes valuable personal or sensitive information.
+System designs should include mechanisms to enforce the following
+security attributes.
+<P><DL>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Identification and authentication of users</B>
+<DD>
+<P>
+Each user of a computer system should have a unique identification on
+    the system, such as an account number or other user identification
+    code. There must also be a means of verifying that the individual
+    claiming that identity (e.g., by typing in that identifying code at a
+    terminal) is really the authorized individual and not an impostor. The
+    most common means of authentication is by a secret password, known only
+    to the authorized user. But one of the most reliable means of
+    authentication is by a smart card, owned only by the authorized user.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Authorization capability enforcing the
+    principle of least possible privilege</B>
+<DD>
+<P>
+Beyond ensuring that only authorized individuals can access the system,
+    it is also necessary to limit the users access to information and
+    transaction capabilities. Each person should be limited to only the
+    information and transaction authority that is required by their job
+    responsibilities. This concept, known as the principle of least
+    possible privilege, is a long-standing control practice. There should
+    be a way to easily assign each user just the specific access
+    authorities needed, and I believe that smart card technology could do
+    this job well.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Individual
+      accountability</B>
+<DD>
+<P>
+From both a control and legal point of view, it is necessary to
+    maintain records of the activities performed by each computer user. The
+    requirements for automated audit trails should be developed when a
+    system is designed. The information to be recorded depends on what is
+    significant about each particular system. To be able to hold
+    individuals accountable for their actions, there must be a positive
+    means of uniquely identifying each computer user and a routinely
+    maintained record of each user's activities.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Audit mechanisms</B>
+<DD>
+<P>
+Audit mechanisms detect unusual events and bring them to the attention
+    of management. This commonly occurs by violation reporting or by an
+    immediate warning to the computer system operator. The type of alarm
+    generated depends on the seriousness of the event.
+<BR>
+<P>
+A common technique to detect access attempts by unauthorized
+    individuals is to count attempts. The security monitoring functions of
+    the system can automatically keep track of unsuccessful attempts to
+    gain access and generate an alarm if the attempts reach an unacceptable
+    number.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Performance assurance</B>
+<DD>
+<P>
+A basic design consideration for any information system should be the
+    ability to verify that the system is functioning as intended. Systems
+    that are developed without such design considerations are often very
+    difficult to independently audit or review, leading to the possibility
+    of unintended results or inaccurate processing.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Recoverability</B>
+<DD>
+<P>
+Because companies can potentially be heavily dependent on a computer
+    system, an important design consideration is the ability to easily
+    recover from troublesome events, whether minor problems or major
+    disruptions of the system. From a design point of view, systems should
+    be designed to easily recover from minor problems, and to be either
+    transportable to another backup computer system or replaced by manual
+    processes in case of major disruption or loss of computer facility.
+</DL><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html343"
+ HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html341"
+ HREF="node17.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html335"
+ HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html344"
+ HREF="node19.html">3.1.2 Access decisions</A>
+<B> Up:</B> <A NAME="tex2html342"
+ HREF="node17.html">3.1 Local Network: Security</A>
+<B> Previous:</B> <A NAME="tex2html336"
+ HREF="node17.html">3.1 Local Network: Security</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

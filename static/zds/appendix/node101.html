@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.1.3 Other Factors</TITLE>
+<META NAME="description" CONTENT="4.1.3 Other Factors">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="previous" HREF="node100.html">
+<LINK REL="up" HREF="node98.html">
+<LINK REL="next" HREF="node102.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1319"
+ HREF="node102.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1317"
+ HREF="node98.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1313"
+ HREF="node100.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1320"
+ HREF="node102.html">4.2 Security Assessment of</A>
+<B> Up:</B> <A NAME="tex2html1318"
+ HREF="node98.html">4.1 Security Assessment of</A>
+<B> Previous:</B> <A NAME="tex2html1314"
+ HREF="node100.html">4.1.2 Security Service Requirements</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00413000000000000000">
+4.1.3 Other Factors</A>
+</H2>
+<P><DL>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Proxy Operation</B>
+<DD>
+<P>
+There are substantial issues associated with the use of SSL in a
+  proxy/firewall environment. SSL is intended to create a secure channel
+  between transport peers. HTTP proxies expect to operate on application
+  data. Consequently, there are two choices for proxy operation. Either an
+  SSL association can be established through the proxy and viewed as an
+  opaque hole through the proxy machine or the proxy can establish SSL
+  associations with the client and/or server. In either of these scenarios,
+  the proxy must be SSL aware.
+<BR>
+<P>
+In the case of allowing an SSL association to be established through the
+  firewall, the security services are provided between the end client and
+  server. There are two concerns with respect to the proxy itself.  First,
+  there is no way for the firewall to determine what information is flowing
+  through the SSL pipe. This amounts to a wide open door into the protected
+  environment and is a significant issue. The second concern is the ability
+  of the HTTP proxy to perform any application based functions (e.g.,
+  access control, filtering, caching). If the SSL association is made
+  through the proxy, no application based processing can be performed (in
+  fact, the proxy has no way of telling that HTTP transactions are being
+  exchanged).
+<BR>
+<P>
+If the proxy establishes the SSL association(s), then the proxy can
+  perform all of its normal processing (SSL becomes a specialized access
+  method). However, the security services are terminated at the proxy.
+  Consequently, all information is exposed at the proxy and the
+  authentication is limited to the identity of the proxy (not the end
+  client or server). There is no structured way for an end client or server
+  to determine that a given proxy authenticated by SSL is a ``reasonable''
+  proxy for the desired end system. The degree to which this is an issue
+  depends on the sensitivity of the information and the access control and
+  authentication policies of the clients and servers involved. SSL does not
+  provide any means for authenticating multiple parties along a transaction
+  path.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Performance impacts</B>
+<DD>
+<P>
+There are several dimensions to performance including connection
+  establishment latency, transaction overhead, and processing complexity.
+  For SSL, the transaction overhead is not significant. The primary impact
+  is on session establishment. Between 2 and 4 additional round trip times
+  (beyond any other establishment) are required depending upon whether an
+  SSL association has already been established (i.e. a master key exists)
+  and whether client authentication is performed. In general, the
+  operations performed by SSL are not expensive in terms of processing
+  (symmetric key and hash operations vs. private key encryption
+  operations).
+<BR>
+<P>
+SSL requires the maintenance of state information (keys, counters,
+  identity, and algorithm information) by both the client and server.
+  Management of this state information represents an additional requirement
+  for the server.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Granularity of security services provided by protocol</B>
+<DD>
+<P>
+Security services are negotiated for an entire association and apply to
+  the endpoints of the transport connection. In general, this implies a
+  binding to an instance of an application process. The identity being
+  authenticated will depend upon the naming information in the client or
+  server certificate and on local key management issues (outside of the
+  scope of the specification).
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Associated key management and cryptography</B>
+<DD>
+<P>
+In SSLv2 the authenticated part of the key establishment is limited to
+  RSA encryption of the secret key element. In v3, support for additional
+  approaches including DH key exchange are included.
+<BR>
+<P>
+SSL reuses the same IV throughout an association. In general, this is not
+  a problem given the frequency of changing session keys and the protection
+  provided by the MAC.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Negotiation of services, mechanisms, and formats</B>
+<DD>
+<P>
+SSL negotiates algorithm information as part of association
+  establishment. In SSLv2 the information used to negotiate algorithms is
+  not authenticated. This allows an active attacker to cause two parties to
+  use a particular selection common to both parties rather than having a
+  user's own selection logic invoked. So long as both the client and server
+  enforce a check that appropriate protection is applied to all information
+  exchanged, this is not a major issue. It may result in weaker
+  cryptographic protection being applied to an association than ``should''
+  have been used. In SSLv3, all negotiation exchanges are authenticated.
+  There are very few options in SSLv2, consequently interoperability
+  between independent implementations using common algorithm suites is
+  likely.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Ability to convey certificate and authorization
+    information</B>
+<DD>
+<P>
+SSL allows only the client or server certificate to be sent. No
+  certification path, CRL, or authorization data can be exchanged. It is
+  important that certificates used with SSL provide identification
+  information which can meaningfully be compared with identity information
+  used with HTTP.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Compromise
+    Recovery and Handling</B>
+<DD>
+<P>
+No explicit mechanisms exist to clean up association data once
+  established.  This is an issue only if associations (i.e. master keys)
+  exist for an extended period of time. Checks of certificate validity are
+  performed only during association establishment.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Susceptibility to active and passive attacks</B>
+<DD>
+<P>
+The security services provided by SSL appear to be robust in the presence
+  of active or passive attackers to the extent that robust cryptographic
+  algorithms are selected.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Time based issues</B>
+<DD>
+<P>
+SSL does not rely on any clock based mechanisms for security services.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Longevity of mechanism</B>
+<DD>
+<P>
+SSL provides flexibility in algorithm selection and key management which
+  provide for longevity of protection. There is a limit on the size of
+  challenge information exchanged for association establishment, however
+  the size seems more than adequate.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Interoperability
+    considerations</B>
+<DD>
+<P>
+Some aspects of the SSL specification could be clearer in terms of the
+  processing expected. Improved clarity would ease the development of
+  interoperable implementations.
+<BR>
+<P>
+SSL's architectural placement make integration essentially transparent to
+  applications (except with respect to exchange of security control
+  information) and should simplify integration.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Error handling and
+    recovery</B>
+<DD>
+<P>
+While an error reporting facility exists, there is little structure
+  provided. Consequently, applications integrating with SSL may see
+  slightly different behavior between different implementations with
+  respect to error information returned. SSL is specified to abort a
+  session in the event of an error.
+</DL></UL>
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1319"
+ HREF="node102.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1317"
+ HREF="node98.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1313"
+ HREF="node100.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1320"
+ HREF="node102.html">4.2 Security Assessment of</A>
+<B> Up:</B> <A NAME="tex2html1318"
+ HREF="node98.html">4.1 Security Assessment of</A>
+<B> Previous:</B> <A NAME="tex2html1314"
+ HREF="node100.html">4.1.2 Security Service Requirements</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

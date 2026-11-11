@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.3.12 What happens when a key expires?</TITLE>
+<META NAME="description" CONTENT="3.3.12 What happens when a key expires?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node45.html">
+<LINK REL="previous" HREF="node43.html">
+<LINK REL="up" HREF="node32.html">
+<LINK REL="next" HREF="node45.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html712"
+ HREF="node45.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html710"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html704"
+ HREF="node43.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html713"
+ HREF="node45.html">3.3.13 What happens if</A>
+<B> Up:</B> <A NAME="tex2html711"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html705"
+ HREF="node43.html">3.3.11 What are Certificate</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION003312000000000000000">
+3.3.12 What happens when a key expires?</A>
+</H2>
+<A NAME="what_key_exp">&#160;</A>
+In order to guard against a long-term factoring attack, every key must
+have an expiration date after which it is no longer valid. The time to
+expiration must therefore be much shorter than the expected factoring
+time, or equivalently, the key length must be long enough to make the
+chances of factoring before expiration extremely small. The validity
+period for a key pair may also depend on the circumstances in which the
+key will be used, although there will also be a standard period. The
+validity period, together ith the value of the key and the estimated
+strength of an expected attacker, then determines the appropriate key
+size.
+<BR>
+<P>
+The expiration date of a key accompanies the public key in a certificate r
+a directory listing. The signature verification program should check for
+expiration and should not accept a message signed with an expired key. This
+means that when one's own key expires, everything signed with it will no
+longer be considered valid. Of course, there will be cases where it is
+important that a signed document be considered valid for a much longer
+period of time; Question&nbsp;<A HREF="node49.html#how_sig_old">3.3.17</A> discusses ways to achieve this.
+<BR>
+<P>
+After expiration, the user chooses a new key, which should be longer
+than the old key, perhaps by several digits, to reflect both the
+performance increase of computer hardware and any recent improvements
+in factoring algorithms. Recommended key length schedules will likely
+be published. A user may recertify a key that has expired, if it is
+sufficiently long and has not been compromised. The certifying
+authority would then issue a new certificate for the same key, and all
+new signatures would point to the new certificate instead of the old.
+However, the fact that computer hardware continues to improve argues
+for replacing expired keys with new, longer keys every few years. Key
+replacement enables one to take advantage of the hardware improvements
+to increase the security of the cryptosystem. Faster hardware has the
+effect of increasing security, perhaps vastly, but only if key lengths
+are increased regularly (see Question&nbsp;<A HREF="node56.html#has_fac_eas">3.4.5</A>).
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html712"
+ HREF="node45.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html710"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html704"
+ HREF="node43.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html713"
+ HREF="node45.html">3.3.13 What happens if</A>
+<B> Up:</B> <A NAME="tex2html711"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html705"
+ HREF="node43.html">3.3.11 What are Certificate</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

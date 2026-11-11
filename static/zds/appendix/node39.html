@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.3.7 Who issues certificates and how?</TITLE>
+<META NAME="description" CONTENT="3.3.7 Who issues certificates and how?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node40.html">
+<LINK REL="previous" HREF="node38.html">
+<LINK REL="up" HREF="node32.html">
+<LINK REL="next" HREF="node40.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html662"
+ HREF="node40.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html660"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html654"
+ HREF="node38.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html663"
+ HREF="node40.html">3.3.8 What is a</A>
+<B> Up:</B> <A NAME="tex2html661"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html655"
+ HREF="node38.html">3.3.6 How are certificates</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00337000000000000000">
+3.3.7 Who issues certificates and how?</A>
+</H2>
+<A NAME="who_cert">&#160;</A>
+Certificates are issued by a certifying authority (CA), which can be
+any trusted central administration willing to vouch for the identities
+of those to whom it issues certificates. A company may issue
+certificates to its employees, a university to its students, a town to
+its citizens. In order to prevent forged certificates, the CA's public
+key must be trustworthy: a CA must either publicize its public key or
+provide a certificate from a higher-level CA attesting to the validity
+of its public key. The latter solution gives rise to hierarchies of CAs.
+<BR>
+<P>
+Certificate issuance proceeds as follows. Alice generates her own key
+pair and sends the public key to an appropriate CA with some proof of
+her identification. The CA checks the identification and takes any
+other steps necessary to assure itself that the request really did come
+from Alice, and then sends her a certificate attesting to the binding
+between Alice and her public key, along with a hierarchy of
+certificates verifying the CA's public key. Alice can present this
+certificate chain whenever desired in order to demonstrate the
+legitimacy of her public key.
+<BR>
+<P>
+Since the CA must check for proper identification, organizations will
+find it convenient to act as a CA for its own members and employees.
+There will also be CAs that issue certificates to unaffiliated
+individuals.
+<BR>
+<P>
+Different CAs may issue certificates with varying levels of
+identification requirements. One CA may insist on seeing a driver's
+license, another may want the certificate request form to be notarized,
+yet another may want fingerprints of anyone requesting a certificate.
+Each CA should publish its own identification requirements and
+standards, so that verifiers can attach the appropriate level of
+confidence in the certified name-key bindings.
+<BR>
+<P>
+An example of a certificate-issuing protocol is Apple Computer's Open
+Collaborative Environment (OCE). Apple OCE users can generate a key
+pair and then request and receive a certificate for the public key; the
+certificate request must be notarized.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html662"
+ HREF="node40.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html660"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html654"
+ HREF="node38.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html663"
+ HREF="node40.html">3.3.8 What is a</A>
+<B> Up:</B> <A NAME="tex2html661"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html655"
+ HREF="node38.html">3.3.6 How are certificates</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

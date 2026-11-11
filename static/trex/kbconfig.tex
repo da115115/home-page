@@ -1,0 +1,1006 @@
+% kbconfig.tex                               An idea of Bernard Gaulle 07/29/92
+%                                                                         V1.16
+%                           Copyright GUTenberg-Bernard Gaulle as in french.doc
+%
+% Is supposed to run with \catcode`@=11.
+%
+% mods: Let \csubinverse be known of the rest of the world.       --bg 04/20/93
+%       Let 7-bit accent macro produce 8-bit chars when possible. --bg 04/28/93
+%       Accent macros must produce only one token  otherwise
+%           upper/lower-casing isn't correctly
+%           converted (bug found by Jean-Claude Vivalda).         --bg 05/06/93
+% V1.3  Define << and >> for any 8-bit usage(pointed by H.Soulard)--bg 08/10/93
+% V1.4  Define a \global \FontEncoding as "CMR" or "ECM" to pass
+%           to any run-time style such as french.sty  (but let
+%           it asis if already defined).                          --bg 08/18/93
+%       Add code for kb2lex interface (only for TeX V3.xx)        --bg 08/27/93
+%       #4 param of \Madef wasn't a balanced text.                --bg 08/30/93
+%       Replace \FontEncoding by \encodingdefault of NFSS2.       --bg 08/31/93
+%       Current encoding used if any (\f@encoding).               --bg 09/01/93
+%       \@tempa no more redefined bec. used in \input def of NFSS2--bg 09/02/93
+%       But ngow using \@tempc...
+%       Introduce \protect outside kb2lex because a macro such
+%       as \copyright is not expandable due to alignement macros. --bg 09/03/93
+%       LaTeX loop over \@tempc solved by \edef to null in[ macros
+%       Issue warning when TeX V3 and CMR only.                   --bg 11/22/93
+%       \f@encoding may be undefined.                             --bg 12/03/93
+%       Allow the NFSS2 user to change of font encoding on the fly--bg 12/15/93
+%       \input replaced by \@@input if defined.                   --bg 12/17/93
+% V1.5  Accent macros redefined at end to usual if outside MlTeX.
+%       \aa and \AA were not redefined for 8bits.                 --bg 12/21/93
+% V1.6  Let \ifECM be globaly false if undefined. (pb of Goussard)--bg 03/23/94
+% V1.7  Correction of previous change that was wrongly coded.     --bg 03/31/94
+% V1.8  \ISOfalse disactivated too much active chars.             --bg 05/09/94
+% V1.9  Reduced usage of backslash in lex code.(pointed by Vial). --bg 05/30/94
+% V1.10 Give a global default definition for < and >.             --bg 06/07/94
+% V1.11 Reset invalid LaTeX2e chars to internal \catcode 11.      --bg 09/27/94
+%       Hack the format dumping time to set catcode correctly
+%       (normally to remove for the 94-95 winter release of LaTeX)--bg 09/29/94
+%       Take care of \I & \SS already defined in 2e.
+%       Correct 2e bug regarding OT1 uppercasing of ^^Y, ^^Z      --bg 09/30/94
+%       Document these hacks via \wlog.                           --bg 10/03/94
+%       Create a latex209.cfg to patch latex209.def which wrongly
+%         reset \catcodes.                                        --bg 10/06/94
+%       Let 8bit << and >> be equal to \fguillemets and \endfguillemets
+%         avoiding them to become back 7bit when a solution will
+%         be found...                                             --bg 10/10/94
+%       Don't define globally current 2e TextSymbols.
+%       Don't redefine accent macros for 2e T1 which includes something
+%         like our MlTeX \csubinverse mechanism.                  --bg 10/26/94
+%       Rename \: in \r wich is what 2e is using.                 --bg 11/16/94
+%       Stronger error messages when running initex TeX+cmr.
+%       Define MlTeX \OT1\accent macros for 2e.                   --bg 11/30/94
+%       Take in account case when hexa code are undefined for
+%         double chars outside MlTeX.                             --bg 12/17/94
+%       Set low invalid chars to 11 even if gobbled.
+%       Reload of kbconfig needed only for OT1.                   --bg 12/18/94
+%       8bit chars in T1 were not defined as accent on letter.    --bg 12/20/94
+% V1.13 oe, ae, etc were not activated in T1 ISO.
+%       Uppercase of oe, ae, etc were not set to 11 in T1.
+%       Force T1 if necessary when emulating 209.                 --bg 01/05/95
+% V1.14 \@c@@ wasn't correctly defined for OT1 in 2e.             --bg 01/09/95
+%       Avoid hexa codes to point back elsewhere in non-ISO.
+%       Enforce \ifHB and encodingdefault wishes.                 --bg 01/10/95
+%       Use ^^9c as a gateway to uppercase estzet.
+%       \csubinverse didn't use hexa code for non-ISO.
+%       \r was undefined in plain TeX.
+%       \lccode of \OE was undefined in (and for) plain TeX.
+%       Plain def of pounds must not use \char bu \string         --bg 01/14/95
+% V1.15 Let \i and \j be i and j inside 2e.                       --bg 02/05/95
+% V1.16 Low chars need to be 11, even in 2e.                      --bg 03/06/95
+%       Force T1 in latex209.cfg for non-MlTeX engines to ensure
+%         that hyphenation be clean. Sugg. by D.B.Roegel.
+%       No lcc/ucc for normal T1 ISO slots (correctly set in font).
+%       In T1 ISO, chars are not initiated. This was true except
+%         for MACRO & LIGS (chars were already activated).
+%       \DOhex provides chardef adjustement in hex. True but not
+%         for LEX.
+%       Plain has an incompatible \i definition for \csubinverse
+%        and no definition of \pounds (was wrongly removed by me
+%        as few defs for \oe \OE \ae \AE \o \O \ss... (just that!)
+%        probably when modifying the code for LEX and 2e).        --bg 03/07/95
+%       TeX3+CMR warning message rewritten in english and no more
+%        issued twice.                                            --bg 03/08/95
+%%
+%%      checksum        = "51431 1003 3008 50021"
+%%
+\def\@tempc{\let\ifLEX\iffalse\let\ifLEXhic\iftrue}%
+\ifx\ifLEX\undefined\message{keyboard,}\@tempc\fi%
+\let\@tempc=\undefined% so if someone use it...
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This code is able to read keyboard.dat and do appropriate customisation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\let\charsubdef\undefined% make MlTeX 3 unkown for tests
+%\let\starthyph\undefined%  make MlTeX 2 unkown for tests
+%\font\rm=dcr10\input dc-plain.ch% do test with dc fonts
+%------------------------------------------------------------------
+%\def\tracingall{\tracingonline\@ne\tracingcommands\tw@\tracingstats\tw@
+%  \tracingpages\@ne\tracingoutput\@ne\tracinglostchars\@ne
+%  \tracingmacros\tw@\tracingparagraphs\@ne\tracingrestores\@ne
+%  \showboxbreadth\maxdimen\showboxdepth\maxdimen\errorstopmode}
+%
+%%%% Dirty hack to be remove later...
+\def\@tempc{\let\ifECM\iffalse}%
+\ifx\ifECM\undefined\relax\@tempc\fi%
+\ifx\documentclass\undefined\else%
+  \edef\@tempb{\encodingdefault}\edef\@tempc{OT1}%
+    \ifx\dumpORI\undefined\let\dumpORI=\dump%
+\wlog{french-kbconfig: Intercepting the dump control sequence for %
+                       eliminating few invalid chars}%
+          \let\SetCfgFor\undefined%
+          \def\dump{\makeatletter\input kbconfig.tex %
+\message{french-kbconfig: Writing latex209.cfg ************************}%
+                                     \SetCfgFor209%
+\message{french-kbconfig: PLEASE COPY latex209.cfg in your LaTeX inputs}%
+                                     \ifECM\relax\else\uccode`\^^Y=`\^^Y%
+                                                      \uccode`\^^Z=`\^^Z%
+\wlog{french-kbconfig: Redefining \string ^\string ^\string Y uccode}%
+\wlog{french-kbconfig: Redefining \string ^\string ^\string Z uccode}%
+                                     \fi%
+                                     \makeatother\dumpORI}%
+    \fi%
+\fi%
+%%%%
+\ifx\I\undefined\def\I{I}\fi%
+\ifx\SS\undefined\def\SS{\hbox{SS}}\fi% new defs
+% \" is redefined, look at the accentuation macros
+\ifLEX\else% don't activate for kb2lex
+\expandafter\ifx\csname ^^63\endcsname\c % 128-255 going \active locally in V3
+            \catcode`^^80=13\catcode`^^81=13\catcode`^^82=13\catcode`^^83=13
+            \catcode`^^90=13\catcode`^^91=13\catcode`^^92=13\catcode`^^93=13
+            \catcode`^^a0=13\catcode`^^a1=13\catcode`^^a2=13\catcode`^^a3=13
+            \catcode`^^b0=13\catcode`^^b1=13\catcode`^^b2=13\catcode`^^b3=13
+            \catcode`^^c0=13\catcode`^^c1=13\catcode`^^c2=13\catcode`^^c3=13
+            \catcode`^^d0=13\catcode`^^d1=13\catcode`^^d2=13\catcode`^^d3=13
+            \catcode`^^e0=13\catcode`^^e1=13\catcode`^^e2=13\catcode`^^e3=13
+            \catcode`^^f0=13\catcode`^^f1=13\catcode`^^f2=13\catcode`^^f3=13
+            \catcode`^^84=13\catcode`^^85=13\catcode`^^86=13\catcode`^^87=13
+            \catcode`^^94=13\catcode`^^95=13\catcode`^^96=13\catcode`^^97=13
+            \catcode`^^a4=13\catcode`^^a5=13\catcode`^^a6=13\catcode`^^a7=13
+            \catcode`^^b4=13\catcode`^^b5=13\catcode`^^b6=13\catcode`^^b7=13
+            \catcode`^^c4=13\catcode`^^c5=13\catcode`^^c6=13\catcode`^^c7=13
+            \catcode`^^d4=13\catcode`^^d5=13\catcode`^^d6=13\catcode`^^d7=13
+            \catcode`^^e4=13\catcode`^^e5=13\catcode`^^e6=13\catcode`^^e7=13
+            \catcode`^^f4=13\catcode`^^f5=13\catcode`^^f6=13\catcode`^^f7=13
+            \catcode`^^88=13\catcode`^^89=13\catcode`^^8a=13\catcode`^^8b=13
+            \catcode`^^98=13\catcode`^^99=13\catcode`^^9a=13\catcode`^^9b=13
+            \catcode`^^a8=13\catcode`^^a9=13\catcode`^^aa=13\catcode`^^ab=13
+            \catcode`^^b8=13\catcode`^^b9=13\catcode`^^ba=13\catcode`^^bb=13
+            \catcode`^^c8=13\catcode`^^c9=13\catcode`^^ca=13\catcode`^^cb=13
+            \catcode`^^d8=13\catcode`^^d9=13\catcode`^^da=13\catcode`^^db=13
+            \catcode`^^e8=13\catcode`^^e9=13\catcode`^^ea=13\catcode`^^eb=13
+            \catcode`^^f8=13\catcode`^^f9=13\catcode`^^fa=13\catcode`^^fb=13
+            \catcode`^^8c=13\catcode`^^8d=13\catcode`^^8e=13\catcode`^^8f=13
+            \catcode`^^9c=13\catcode`^^9d=13\catcode`^^9e=13\catcode`^^9f=13
+            \catcode`^^ac=13\catcode`^^ad=13\catcode`^^ae=13\catcode`^^af=13
+            \catcode`^^bc=13\catcode`^^bd=13\catcode`^^be=13\catcode`^^bf=13
+            \catcode`^^cc=13\catcode`^^cd=13\catcode`^^ce=13\catcode`^^cf=13
+            \catcode`^^dc=13\catcode`^^dd=13\catcode`^^de=13\catcode`^^df=13
+            \catcode`^^ec=13\catcode`^^ed=13\catcode`^^ee=13\catcode`^^ef=13
+            \catcode`^^fc=13\catcode`^^fd=13\catcode`^^fe=13\catcode`^^ff=13
+\let ^^9c=\undefined%
+\fi
+\fi%\ifLEX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%------------------------------------------------------------------
+% code coming from compatible.tex (Aug. 1990) of MJF and Justin Bur
+\def\csubinverse #1#2#3{\expandafter\xdef\csname #2#3\endcsname{#1}}%
+%           #1 -- extended 8bits character to replace accent+letter
+%           #2 -- accent macro invocation for...
+%           #3 -- this letter (base character)
+%------------------------------------------------------------------
+\begingroup% to protect all the marmelade done here
+\ifLEX\else\let\protect\noexpand\fi%
+\catcode`[=13\catcode`@=11%
+\catcode`<=13\catcode`>=13% will allow << and >> in keyboard.dat
+%%%%%%%%%
+% test if ECM can be used (in fact DCM here)
+%
+\newif\ifECM% local redefinition for a global expansion.
+\global\let\ifECM\ifHB% may be it's already set by \ifHB in lhyphen/plain
+\ifx\ifHB\undefined\global\ECMfalse\fi%
+\ifECM\else% skip this if already decided
+\ifx\encodingdefault\undefined%%%%%%%%%%%%
+  \ifECM\else% if false test (again) if it might be an ec/dc font
+  \ifx\rm\undefined% may be \rm isn't allready defined (specially with LaTeX)
+                   \def\graveDC{\mathaccent"7000 }% so test such char
+                   \ifx\graveDC\grave\ECMtrue\else\ECMfalse\fi%
+  \else% try on fontname that is a better security
+     \def\is@DC#1#2#3\relax{\if d#11\fi \if e#11\fi \if c#22\fi}%
+     \def\dcdo{% \dcdo code Version 3 as of 01/27/92 on DCFONT discussion list
+               \ifnum 12=0\expandafter\is@DC\fontname\font xx\relax\space%
+                          \expandafter\dc@first%
+               \else      \expandafter\dc@second%
+               \fi}%
+          \def\dc@first#1#2{#1}%
+          \def\dc@second#1#2{#2}%
+  {\rm\dcdo{\global\ECMtrue}{\global\ECMfalse}}% final DC test
+  \fi%\ifx\rm\undefined
+  \fi%\ifECM\else..
+%
+  \ifECM\global\def\encodingdefault{T1}%   T1 is for DC/EC
+   \else\global\def\encodingdefault{OT1}% OT1 is for CMR
+  \fi%
+%
+\else%
+\ifx\f@encoding\undefined\edef\f@encoding{\encodingdefault}\fi%
+     \edef\@tempa{T1}\ifx\@tempa\f@encoding%
+                          {\global\ECMtrue}%
+                     \else{\global\ECMfalse}%
+                     \fi%
+\fi%\encodingdefault
+\fi% ifECM
+%%%%%%
+% Prevent LaTeX2e invalid chars
+\ifx\documentclass\undefined\else
+\ifECM%
+\catcode`\^^_=11%
+\catcode`\^^Y=11%
+\else%
+\catcode`\^^P=11%
+\catcode`\^^Q=11%
+\catcode`\^^Y=11%
+\catcode`\^^Z=11%
+\catcode`\^^]=11%
+\catcode`\^^[=11%
+\catcode`\^^^=11%
+\catcode`\^^\=11%
+\catcode`\^^_=11%
+\fi\fi%
+%%%%%%
+\newif\ifMACRO\MACROfalse\newif\ifLIGS\LIGSfalse
+%------------------------------------------------------------------
+% Now where is the accent in the font? local mods of plain code.
+% and how code it: diacritic+letter or accented 8bits char?
+%
+%Caution: never use TeX V2 hexadecimal notation, lowercase would be wrong
+\ifECM\def\POSgr{"00}\def\POSac{"01}\def\POSan{"06}
+      \def\POSv{"07}\def\POSu{"08}\def\POSeq{"09}
+      \def\POShat{"02}\def\POSdot{"0a}\def\POSH{"05}\def\POStil{"03}
+      \def\POSum{"04}\def\POSc{"13}
+\else\def\POSgr{18}\def\POSac{19}
+     \def\POSv{20}\def\POSu{21}\def\POSeq{22}\def\POSan{23}
+     \def\POShat{94}\def\POSdot{95}\def\POSH{125}\def\POStil{126}
+     \def\POSum{127}\def\POSc{24}
+\fi%
+\ifLEX\begingroup\catcode`+=0\catcode`[= 1\catcode`]=2
+                 \catcode`\{=12\catcode`\}=12\catcode`\\=12
+   +gdef+ToEight[% Due to lex capacities we keep only one expansion of
+                 % usual accent macros e.g. {\'E} but not \'{E} nor \'E
+      +def+`##1[%\\`\{##1\}|\\`##1|
+                \{\\`##1\}]
+      +def+'##1[%\\'\{##1\}|\\'##1|
+                \{\\'##1\}]
+      +def+r##1[\\"r "##1|\\r\{##1\}]
+      +def+v##1[\\"v "##1|\\v\{##1\}]
+      +def+u##1[\\"u "##1|\\u\{##1\}]
+      +def+=##1[%\\=\{##1\}|\\=##1|
+                \{\\=##1\}]
+      +def+^##1[%\\^\{##1\}|\\^##1|
+                \{\\^##1\}]
+      +def+.##1[%\\.\{##1\}|\\.##1|
+                \{\\.##1\}]
+      +def+H##1[\\"H "##1|\\H\{##1\}]
+      +def+~##1[%\\~\{##1\}|\\~##1|
+                \{\\~##1\}]
+      +def+"##1[%\\\"\{##1\}|\\\"##1|
+                \{\\\"##1\}]
+      +def+c##1[\\"c "##1|\\c\{##1\}]
+      +def+i[\\i]
+      +def+j[\\j]
+      +def+copyright[\\"copyright "|\{\\"copyright"\}|\\"copyright"\{\}]
+      +def+oe[\\"oe "|\{\\"oe"\}|\\"oe"\{\}]
+      +def+OE[\\"OE "|\{\\"OE"\}|\\"OE"\{\}]
+      +def+ss[\\"ss "|\{\\"ss"\}|\\"ss"\{\}]
+      +def+ae[\\"ae "|\{\\"ae"\}|\\"ae"\{\}]
+      +def+AE[\\"AE "|\{\\"AE"\}|\\"AE"\{\}]
+      +def+l[\\"l "|\{\\l\}|\\l\{\}]
+      +def+L[\\"L "|\{\\L\}|\\L\{\}]
+      +def+o[\\"o "|\{\\o\}|\\o\{\}]
+      +def+O[\\"O "|\{\\O\}|\\O\{\}]
+      +def+P[\\"P "|\{\\P\}|\\P\{\}]
+      +def+pounds[\\"pounds "|\{\\"pounds"\}|\\"pounds"\{\}]
+      +def+S[\\"S "|\{\\S\}|\\S\{\}]
+      +def+fguillemets["+string<+string<"]
+      +def+endfguillemets["+string>+string>"]%
+            ]%
+   +gdef+ToSeven[%
+      +def+`##1[{\\`##1}]
+      +def+'##1[{\\'##1}]
+      +def+r##1[\\r{##1}]
+      +def+v##1[\\v{##1}]
+      +def+u##1[\\u{##1}]
+      +def+=##1[{\\=##1}]
+      +def+^##1[{\\^##1}]
+      +def+.##1[{\\.##1}]
+      +def+H##1[\\H{##1}]
+      +def+~##1[{\\~##1}]
+      +def+"##1[{\\\"##1}]
+      +def+c##1[\\c{##1}]
+      +def+i[\\i]
+      +def+j[\\j]
+      +def+copyright[{\\copyright}]
+      +def+oe[{\\oe}]
+      +def+OE[{\\OE}]
+      +def+ss[{\\ss}]
+      +def+ae[{\\ae}]
+      +def+AE[{\\AE}]
+      +def+l[{\\l}]
+      +def+L[{\\L}]
+      +def+o[{\\o}]
+      +def+O[{\\O}]
+      +def+P[{\\P}]
+      +def+pounds[{\\pounds}]
+      +def+S[{\\S}]
+      +def+fguillemets[+string<+string<]
+      +def+endfguillemets[+string>+string>]%
+            ]%
+      +endgroup
+\else%
+% Folowing \ifx are not required there are here in case of any misplacement
+% of kbconfig (eg after hyconfig).
+\ifx\documentclass\undefined% do it in 2.09
+\edef\`#1{\expandafter\ifx\csname @gr@#1\endcsname\relax%
+                           \ifECM{\accent"00 #1}\else{\accent18 #1}\fi%
+                       \else\csname @gr@#1\endcsname\fi}%
+\edef\'#1{\expandafter\ifx\csname @ac@#1\endcsname\relax%
+                           \ifECM{\accent"01 #1}\else{\accent19 #1}\fi%
+                       \else\csname @ac@#1\endcsname\fi}%
+\edef\v#1{\expandafter\ifx\csname @v@#1\endcsname\relax%
+                           \ifECM{\accent"07 #1}\else{\accent20 #1}\fi%
+                       \else\csname @v@#1\endcsname\fi}%
+\edef\u#1{\expandafter\ifx\csname @u@#1\endcsname\relax%
+                           \ifECM{\accent"08 #1}\else{\accent21 #1}\fi%
+                       \else\csname @u@#1\endcsname\fi}%
+\edef\=#1{\expandafter\ifx\csname @eq@#1\endcsname\relax%
+                           \ifECM{\accent"09 #1}\else{\accent22 #1}\fi%
+                       \else\csname @eq@#1\endcsname\fi}%
+\edef\^#1{\expandafter\ifx\csname @hat@#1\endcsname\relax%
+                           \ifECM{\accent"02 #1}\else{\accent94 #1}\fi%
+                       \else\csname @hat@#1\endcsname\fi}%
+\edef\.#1{\expandafter\ifx\csname @dot@#1\endcsname\relax%
+                           \ifECM{\accent"0a #1}\else{\accent95 #1}\fi%
+                       \else\csname @dot@#1\endcsname\fi}%
+\edef\H#1{\expandafter\ifx\csname @H@#1\endcsname\relax%
+                           \ifECM{\accent"05 #1}\else{\accent125 #1}\fi%
+                       \else\csname @H@#1\endcsname\fi}%
+\edef\~#1{\expandafter\ifx\csname @til@#1\endcsname\relax%
+                           \ifECM{\accent"03 #1}\else{\accent126 #1}\fi%
+                       \else\csname @til@#1\endcsname\fi}%
+% plain defined it ``wrongly'' in hex ("7F) and so could be wrongly lowercased
+\edef\"#1{\expandafter\ifx\csname @um@#1\endcsname\relax%plain define it in hex
+                           \ifECM{\accent"04 #1}\else{\accent127 #1}\fi%
+                       \else\csname @um@#1\endcsname\fi}%
+\def\c#1{\expandafter\ifx\csname @c@#1\endcsname\relax\noexpand\c#1%
+                       \else\csname @c@#1\endcsname\fi}%
+% D. Knuth defined \oalign in a way that we can't use it in
+%          an \edef or \xdef so i changed it temporarily
+\def\oalign#1{\leavevmode\vtop{\baselineskip\z@skip \lineskip.25ex%
+  \ialign{####\crcr#1\crcr}}}% put characters over each other
+% our new def for angstrom bec. undefined in plain as an accent. macro
+\def\r#1{\if#1a\@a:a\else\if#1A\@A:A\fi\fi}%
+\def\@a:a{\expandafter\ifx\csname @an@a\endcsname\relax%
+                          \ifECM{\accent"06a}\else{\accent23a}\fi%
+                       \else\csname @an@a\endcsname\fi}%
+\def\@A:A{\expandafter\ifx\csname @an@A\endcsname\relax%
+                          \leavevmode\setbox0\hbox{h}\dimen@\ht0%
+                            \advance\dimen@-1ex\rlap{\raise.67\dimen@\hbox{%
+                                    \ifECM\char"06\else\char'27\fi}}A%
+                       \else\csname @an@A\endcsname\fi}%
+\xdef\aa{\r a}\xdef\AA{\r A}%
+\fi% done for 2.09
+\fi%\ifLEX
+% Strings def are global to allow \@accent@ to work properly (not for 2e)
+\def\@gobbletwo#1#2{}%
+\ifx\documentclass\undefined%
+\let\Gdef=\gdef%
+\else\let\Gdef\@gobbletwo%
+%%%%%%
+% Prevent LaTeX2e invalid chars even if gobbled
+\catcode`\^^P=11%
+\catcode`\^^Q=11%
+\catcode`\^^Y=11%
+\catcode`\^^Z=11%
+\catcode`\^^]=11%
+\catcode`\^^[=11%
+\catcode`\^^^=11%
+\catcode`\^^\=11%
+\catcode`\^^_=11%
+%%%%%%
+\fi%
+\ifECM\Gdef\oe{\string^^f7}\else\Gdef\oe{^^[}\fi%
+\ifECM\Gdef\OE{\string^^d7}\else\Gdef\OE{^^^}\fi%
+\ifECM\Gdef\ss{\string^^ff}\else\Gdef\ss{^^Y}\fi%
+\ifECM\Gdef\ae{\string^^e6}% ^^e6 introduce a pb, why?
+                          \else%
+                          \ifx\undefined\starthyph\Gdef\ae{^^Z}% for V3
+                              \else\Gdef\ae{\char`^^Z}\fi%       for V2
+                          \fi%
+\ifECM\Gdef\AE{\string^^c6}\else\Gdef\AE{^^]}\fi%
+\ifECM\else\global\lccode`^^]=`^^Z% a bypass for V2
+           \global\uccode`^^Z=`^^]%
+           \global\uccode`^^[=`^^^%
+           \global\lccode`^^^=`^^[%
+           \global\lccode`^^_=`^^\%
+           \global\uccode`^^\=`^^_%
+           \global\uccode`^^P=`I%
+           \global\uccode`^^Q=`J%
+\fi%
+\ifECM\Gdef\o {\string^^f8}\else\Gdef\o {^^\}\fi%
+\ifECM\Gdef\O {\string^^d8}\else\Gdef\O {^^_}\fi%
+% but require an uppercase def for \ss different for ec/dc ie:
+\ifECM\Gdef\SS{\string^^df}\fi% valid global def for DC
+%
+\def\D{\char^^bf}%
+\ifx\D\pounds\Gdef\pounds{\string^^bf}\fi%
+% Plain has no definition of \pounds
+\ifx\pounds\undefined{\ifECM\Gdef\pounds{\string ^^bf}%lfonts.tex will redef.it
+                     \else\Gdef\pounds{{\csname it\endcsname\char'44}}\fi}\fi%
+%
+\ifx<\undefined\gdef<{\string<}\fi%  defs until french.sty were activated
+\ifx>\undefined\gdef>{\string>}\fi%
+%
+\ifECM\Gdef\i{^^Y}\else\Gdef\i{^^P}\fi% needed by \csubinverse for patterns
+\ifECM\Gdef\j{^^Z}\else\Gdef\j{^^Q}\fi% dotless letters
+% Localy needed anyway:
+\ifECM\def\i{^^Y}\else\def\i{^^P}\fi% needed by \csubinverse for patterns
+% LaTeX 2e doesn't care of i and j without dot on it
+\ifx\documentclass\undefined\else%
+ \ifECM\edef\i{i}\edef\j{j}\fi%
+\fi%
+%
+% Are we in TeX V2 or V3?
+\newif\ifVtwo \newif\ifSkip \Skipfalse \newif\ifISO \ISOtrue % ISO 8859-1/Cork
+\newif\ifMlTeXthree \MlTeXthreefalse
+\catcode`^=\active% non hexa processing in V2
+\ifx\undefined\lefthyphenmin\Vtwotrue% Vtwo means MlTeX V2
+                          \def^#1{\ifx#1^\else\string^#1\fi}% eat ^^ in TeX v2
+                          \ifx\starthyph\undefined%
+                            \message{ATTENTION : TeX Version 2 ne permet pas
+                                    d'utiliser des caracteres accentues 8bits}%
+                            \ifnum\catcode`\{=1%\} emacs
+                            \message{Vous devez :}
+                            \message{- soit utiliser un moteur MlTeX,}
+                            \message{- soit passer en encodage OT1 par defaut.}
+                            \Stop% a vous de choisir... --bg
+                            \fi%
+                              \Skiptrue\fi%
+                     \else\ifx\starthyph\undefined\Vtwofalse\else\Vtwotrue\fi%
+                          \ifx\charsubdef\undefined\else\MlTeXthreetrue\fi%
+\ifx\SetCfgFor\undefined%
+\ifLEX\else%
+  \ifMlTeXthree\else%
+   \ifECM\else%
+   {\catcode`\^=12\newlinechar=`\^
+    \message{^french-kbconfig ****Warning****: your TeX V3 engine +  CMR}}
+   \message{fonts (your format default) isn't sufficient to hyphenate}%
+   \message{words containing diacritics (like in French).}%
+   \fi%
+  \fi%
+\fi% ifLEX
+\fi%\SerCfg
+\fi% lefthyphenmin
+\ifVtwo\else\catcode`\^=7% reset value of plain
+% reset first 32 chars too erroneously (?) illegal since 2e
+\catcode`\^^00=11%
+\catcode`\^^01=11%
+\catcode`\^^02=11%
+\catcode`\^^03=11%
+\catcode`\^^04=11%
+\catcode`\^^05=11%
+\catcode`\^^06=11%
+\catcode`\^^07=11%
+\catcode`\^^08=11%
+%\catcode`\^^09=11% is tab ^^I
+%\catcode`\^^0a=11% is nl  ^^J
+\catcode`\^^0b=11%
+%\catcode`\^^0c=11% is ff  ^^L
+%\catcode`\^^0d=11% is cr  ^^M
+\catcode`\^^0e=11%
+\catcode`\^^0f=11%
+\catcode`\^^10=11%
+\catcode`\^^11=11%
+\catcode`\^^12=11%
+\catcode`\^^13=11%
+\catcode`\^^14=11%
+\catcode`\^^15=11%
+\catcode`\^^16=11%
+\catcode`\^^17=11%
+\catcode`\^^18=11%
+\catcode`\^^19=11%
+\catcode`\^^1a=11%
+\catcode`\^^1b=11%
+\catcode`\^^1c=11%
+\catcode`\^^1d=11%
+\catcode`\^^1e=11%
+\catcode`\^^1f=11%
+\fi%
+\ifSkip\else% The code is only for MlTeX or TeX V3.xxxx
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Codage du tableau : definition de l'accentuation
+\def\ac[ #1 | #2 | #3 | #4 | #5 | #6 | #7 | #8 ]%
+       {\ifLEX\message{^^J PROCESSED CHARACTERS ARE:}\fi
+        \ifx.#1\let\ACa\undefined\else\def\ACa{#1}\fi% si different d'un point
+        \ifx.#2\let\ACb\undefined\else\def\ACb{#2}\fi%
+        \ifx.#3\let\ACc\undefined\else\def\ACc{#3}\fi%
+        \ifx.#4\let\ACd\undefined\else\def\ACd{#4}\fi%
+        \ifx.#5\let\ACe\undefined\else\def\ACe{#5}\fi%
+        \ifx.#6\let\ACf\undefined\else\def\ACf{#6}\fi%
+        \ifx.#7\let\ACg\undefined\else\def\ACg{#7}\fi%
+        \ifx.#8\let\ACh\undefined\else\def\ACh{#8}\fi\let[\minu%]
+       }%
+% La macro precisant les noms internes
+\def\noms| #1 | #2 | #3 | #4 | #5 | #6 | #7 | #8 |%
+       {\ifx.#1\let\ANa\undefined\else\def\ANa{#1}\fi%
+        \ifx.#2\let\ANb\undefined\else\def\ANb{#2}\fi%
+        \ifx.#3\let\ANc\undefined\else\def\ANc{#3}\fi%
+        \ifx.#4\let\ANd\undefined\else\def\ANd{#4}\fi%
+        \ifx.#5\let\ANe\undefined\else\def\ANe{#5}\fi%
+        \ifx.#6\let\ANf\undefined\else\def\ANf{#6}\fi%
+        \ifx.#7\let\ANg\undefined\else\def\ANg{#7}\fi%
+        \ifx.#8\let\ANh\undefined\else\def\ANh{#8}\fi}%
+\newif\ifONE\newif\ifOK%
+\def\ONECHAR#1#2/{\ifx9#2\ONEtrue\else\ONEfalse\fi}%
+%definition des minuscules
+%==>\madef{caract accentue}{accentuation}{Nom minuscule}{lettre}
+\def\madef#1#2#3#4{\ifx.#1\else\@madef{#1}{#2}{#3}{#4}\fi}% si pas un .
+\def\@madef#1#2#3#4{\ONECHAR#19/%
+    \ifx#2\undefined%
+    \else\ifVtwo\ifONE\xdef#1{#2{#4}}\fi% #1 is defaultly \active with MlTeX V2
+         \else\def\tempb{\catcode`}% now in V3
+                  \let\A=A\ifMACRO\let\A\active\else\ifLIGS\let\A\active\fi\fi%
+                  \ifx#2\empty\let\A=\active\fi%
+                  \ifcat\active\A%
+                     \ifECM\OKfalse% normally nothing to do
+                       \ifMACRO\OKtrue\fi% except for macros
+                       \ifLIGS\OKtrue\fi% except for ligs
+                       \ifISO\ifx#4\ss\OKtrue\fi% \ss is specific
+                        \else\OKtrue\fi% except if not ISO
+                       \ifOK%
+                          \ifONE% exclude multiletters
+                                \ifLEX\else\gdef #1{#4}\fi%
+                          \edef\OldActiveChars{\@tempc}%
+                          \xdef\@tempc{\OldActiveChars%
+                                            \tempb\string#1=\active}%
+                          \fi%
+                       \fi%
+                     \else% Not using ECM
+                          \ifONE% exclude multiletters
+                                \ifMlTeXthree\else\tempb#1=\active\fi%
+                             \ifLEX\else%
+                                   \gdef #1{#4}% don't xdef for oe, ae, etc.
+                             \fi%ifLEX
+                                \edef\OldActiveChars{\@tempc}%
+                                \xdef\@tempc{\OldActiveChars%
+                                                  \tempb\string#1=\active}%
+                          \fi%
+                     \fi%
+                  \else% Not a Macro, Not a lig, ..
+%%%                       \ifECM\else%  no accentuation in 8bits ???
+                        \ifLEX\else\xdef#1{\expandafter\noexpand#2{#4}}\fi%
+                       \ifMlTeXthree\else\tempb#1=\active\fi%
+                       \edef\OldActiveChars{\@tempc}%
+                       \xdef\@tempc{\OldActiveChars%
+                                         \tempb\string#1=\active}%
+%%%                       \fi%
+                  \fi%
+         \fi% ifVtwo
+     \expandafter\def\csname #3\endcsname{#1}% for further use
+     \fi% ifx#2
+ \ifLEX\ifLEXhic\ifONE\message{\string#1 \space}
+  {\ToSeven\def\GUILL{"}
+              \edef\FULL{#2\LaLettre}%
+  \ifx\empty#2\edef\FULL{\LaLettre}\fi
+  \immediate\write\kbseven{\string#1\space\space\space
+                                     printf(\GUILL\FULL\GUILL);}}
+  {\ToEight\def\GUILL{\ifLIGS"\fi}%
+              \edef\FULL{#2{\GUILL\LaLettre\GUILL}}%
+  \ifx\empty#2\edef\FULL{\GUILL\LaLettre\GUILL}\fi
+  \immediate\write\kbeight{\FULL%
+                           |\string#1\space\space\space printf("\string#1");}}
+ \fi\fi\fi% ifLEX
+}% @madef
+\def\minu#1 | #2 | #3 | #4 | #5 | #6 | #7 | #8 | #9 |%
+    {\ifLEX\edef\@tempc{}\fi% required for LaTeX kb2lex!
+\def\@tempa##1/{\def\LaLettre{##1}}\@tempa#1/%
+     \madef#2{\ACa}{LAa}{#1}%
+     \madef#3{\ACb}{LAb}{#1}%
+     \madef#4{\ACc}{LAc}{#1}%
+     \madef#5{\ACd}{LAd}{#1}%
+     \madef#6{\ACe}{LAe}{#1}%
+     \madef#7{\ACf}{LAf}{#1}%
+     \madef#8{\ACg}{LAg}{#1}%
+     \madef#9{\ACh}{LAh}{#1}%
+     \let\A=A\ifMACRO\let\A\active\else\ifLIGS\let\A\active\fi\fi%
+     \ifcat\A\active\xdef\Lchar{}\else\xdef\Lchar{#1}\fi%dummy for \oe \ae etc.
+     \let\hex\hexminu}%
+\def\hexminu| #1 | #2 | #3 | #4 | #5 | #6 | #7 | #8 %[
+                                                    ]%
+    {\ifx.#1\let\HLa\undefined\else\edef\HLa{\noexpand#1}\fi%
+     \ifx.#2\let\HLb\undefined\else\edef\HLb{\noexpand#2}\fi%
+     \ifx.#3\let\HLc\undefined\else\edef\HLc{\noexpand#3}\fi%
+     \ifx.#4\let\HLd\undefined\else\edef\HLd{\noexpand#4}\fi%
+     \ifx.#5\let\HLe\undefined\else\edef\HLe{\noexpand#5}\fi%
+     \ifx.#6\let\HLf\undefined\else\edef\HLf{\noexpand#6}\fi%
+     \ifx.#7\let\HLg\undefined\else\edef\HLg{\noexpand#7}\fi%
+     \ifx.#8\let\HLh\undefined\else\edef\HLh{\noexpand#8}\fi%
+     \let[\MAJU%]
+    }%
+%definition des majuscules
+%==>\Madef{caract accentue}{accentuation}{Nom majuscule}{lettre}
+\def\Madef#1#2#3#4{\ifx.#1\else\@madef{#1}{#2}{#3}{#4}\fi}% si pas un .
+\def\MAJU#1 | #2 | #3 | #4 | #5 | #6 | #7 | #8 | #9 |%
+    {\let\MAa\undefined\let\MAb\undefined\let\MAc\undefined\let\MAd\undefined
+     \let\MAe\undefined\let\MAf\undefined\let\MAg\undefined\let\MAh\undefined
+     \ifLEX\edef\@tempc{}\fi% required for LaTeX kb2lex!
+\def\@tempa##1/{\def\LaLettre{##1}}\@tempa#1/%
+     \Madef#2{\ACa}{MAa}{#1}%
+     \Madef#3{\ACb}{MAb}{#1}%
+     \Madef#4{\ACc}{MAc}{#1}%
+     \Madef#5{\ACd}{MAd}{#1}%
+     \Madef#6{\ACe}{MAe}{#1}%
+     \Madef#7{\ACf}{MAf}{#1}%
+     \Madef#8{\ACg}{MAg}{#1}%
+     \Madef#9{\ACh}{MAh}{#1}%
+     \let\A=A\ifMACRO\let\A\active\else\ifLIGS\let\A\active\fi\fi%
+     \ifcat\A\active\xdef\Mchar{}\else\xdef\Mchar{#1}\fi%dummy for \OE etc.
+     \let\hex\hexMAJU}%
+\def\hexMAJU| #1 | #2 | #3 | #4 | #5 | #6 | #7 | #8 %[
+                                                    ]%
+    {\ifx.#1\let\HMa\undefined\else\edef\HMa{\noexpand#1}\fi%
+     \ifx.#2\let\HMb\undefined\else\edef\HMb{\noexpand#2}\fi%
+     \ifx.#3\let\HMc\undefined\else\edef\HMc{\noexpand#3}\fi%
+     \ifx.#4\let\HMd\undefined\else\edef\HMd{\noexpand#4}\fi%
+     \ifx.#5\let\HMe\undefined\else\edef\HMe{\noexpand#5}\fi%
+     \ifx.#6\let\HMf\undefined\else\edef\HMf{\noexpand#6}\fi%
+     \ifx.#7\let\HMg\undefined\else\edef\HMg{\noexpand#7}\fi%
+     \ifx.#8\let\HMh\undefined\else\edef\HMh{\noexpand#8}\fi%
+     % process hexdecimal codes if necessary
+     \ifx\HLa\undefined\else\DOhex\ACa{\LAa}{\HLa}{\MAa}{\HMa}{\ANa}\fi%
+     \ifx\HLb\undefined\else\DOhex\ACb{\LAb}{\HLb}{\MAb}{\HMb}{\ANb}\fi%
+     \ifx\HLc\undefined\else\DOhex\ACc{\LAc}{\HLc}{\MAc}{\HMc}{\ANc}\fi%
+     \ifx\HLd\undefined\else\DOhex\ACd{\LAd}{\HLd}{\MAd}{\HMd}{\ANd}\fi%
+     \ifx\HLe\undefined\else\DOhex\ACe{\LAe}{\HLe}{\MAe}{\HMe}{\ANe}\fi%
+     \ifx\HLf\undefined\else\DOhex\ACf{\LAf}{\HLf}{\MAf}{\HMf}{\ANf}\fi%
+     \ifx\HLg\undefined\else\DOhex\ACg{\LAg}{\HLg}{\MAg}{\HMg}{\ANg}\fi%
+     \ifx\HLh\undefined\else\DOhex\ACh{\LAh}{\HLh}{\MAh}{\HMh}{\ANh}\fi%
+     % now ready to start a 4up
+     \let[\minu%]
+    }%
+\def\@tempc{}%
+\def\DOhex#1#2#3#4#5#6{%
+%                1              2         3           4        5        6
+%           accentuation, lettre_min+ code_hex, lettre_maj+code_hex, nom_accent
+%look firstly to see if there are more than one letter character
+\ONEfalse\ifx\undefined#4\else\expandafter\ONECHAR#49/\fi%
+    \ifVtwo% nothing to do in MlTeX V2
+           \else% we are with TeX 3 or MlTeX 3
+                \ifECM\ifISO\else% as just a chardef adjustement in hex.
+                            \ifLEX\else% not for LEX
+                            \def\tempa{\catcode`}\expandafter\tempa#2=\active%
+                            \expandafter\xdef#2{\expandafter\string#3}%
+                            \fi%
+                        \ifONE% exclude multiletters
+                         \ifx\undefined#4\else%
+                            \def\tempa{\catcode`}\expandafter\tempa#4=\active%
+                            \expandafter\xdef#4{\expandafter\string#5}%
+                         \fi%
+                        \fi%
+                      \fi%
+                \fi% now define \lccode & \uccode %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                \ifx\empty#1\let\X=X%
+                         \ifECM\ifISO% don't activate oe ae etc in 8bits
+                                     \edef\D{#2}\edef\E{\noexpand\ss}
+                                  \ifx \D\E% but let s-tzet
+                                  \else%
+                             \def\tempa{\catcode`}%\def\tempb{^}%
+                             \expandafter\tempa#2=11%
+                             \edef\OldActiveChars{\@tempc}%  disactivate
+                             \xdef\@tempc{\OldActiveChars%
+                                               \tempa\expandafter\string#2=11}%
+                             \ifx\undefined#4\else
+                                 \ifONE\expandafter\tempa#4=11%
+                                 \edef\OldActiveChars{\@tempc}%disactivate
+                                 \xdef\@tempc{\OldActiveChars%
+                                               \tempa\expandafter\string#4=11}%
+                                 \else%
+                                   \ifx\undefined#5\else% case hex code is undef
+                                     \let\tempc=#5\expandafter\tempa\tempc=11%
+                                   \fi% ifx undefined
+                                 \fi%
+                             \fi
+                             \let\X=\active%
+                                  \fi% s-tzet
+                         \fi\fi%
+                \else\let\X\active\ifISO%
+                               \def\tempa{\catcode`}\expandafter\tempa#2=11%
+                               \ifx\undefined#4\else\expandafter\tempa#4=11\fi%
+                                  \fi%
+                \ifECM\ifISO\let\X=\active\fi\fi% No lcc/ucc for normal T1 ISO
+                \fi%
+                \def\tempa{\lccode`}\def\tempb{=`}%
+                \ifLIGS\let\X=\active\fi% don't do that for ligs
+                \ifMACRO\let\X=\active\fi% don't do that for macros
+                \ifcat\X\active% do usual ucc/lcc encoding
+                      \global\expandafter\tempa#2\expandafter\tempb#2%
+                    \ifx\undefined#4\else
+                      \ifONE%
+                           \global\expandafter\tempa#4\expandafter\tempb#2%
+                           \def\tempa{\global\uccode`}%
+                           \expandafter\tempa#2\expandafter\tempb#4%
+                           \expandafter\tempa#4\expandafter\tempb#4%
+                      \else% do it in hexa for #4 ==> #5 replace #4
+                        \ifx\undefined#5\else% hex code may be undef
+                        \global\expandafter\tempa #5\expandafter\tempb #2%
+                        \ifLEX\else\def\tempa{\global\uccode`}%
+                             \edef\D{\expandafter\string#5}\edef\E{#2}%
+                             \expandafter\ifx#5\undefined\else\edef\D{#5}\fi%
+                         \ifx\D\E%
+                              \ifx ^^9c\undefined% do it once
+                                 {\def\tempa{\catcode`}\expandafter\tempa#2=11%
+                                  \def\tempa{\global\uccode`}%
+                                 \expandafter\tempa#2\tempb^^9c}%
+                                 \xdef ^^9c{#4}%
+                                 \def\tempa{\catcode`}%
+                                 \edef\OldActiveChars{\@tempc}%  disactivate
+                                 \xdef\@tempc{\OldActiveChars%
+                                              \tempa\string ^^9c=13}%
+                              \fi%
+                          \else%
+                              \expandafter\tempa #2\expandafter\tempb #5%
+                              \expandafter\tempa #5\expandafter\tempb #5%
+                          \fi%
+                        \ifECM\ifISO\else%
+                        \ifx\D\E\else% case estzet and SS
+                \global\expandafter\edef #3{\expandafter\string #3}% dont point
+                \global\expandafter\edef #5{\expandafter\string #5}% elsewhere
+                        \fi\fi\fi%
+                        \fi% ifLEX
+                        \fi% ifx undefined
+                      \fi%
+                    \fi%
+                \else\edef\D{#2}% do ucc/lcc encoding*after* expanding macros
+                    \global\expandafter\tempa\D\expandafter\tempb\D%
+                    \ifx\undefined#4\else\edef\Q{#4}%
+                    \global\expandafter\tempa\Q\expandafter\tempb\D%
+                    \def\tempa{\uccode`}%
+                    \global\expandafter\tempa\D\expandafter\tempb\Q%
+                    \global\expandafter\tempa\Q\expandafter\tempb\Q\fi%
+                \fi%
+                \ifMlTeXthree\OKfalse% MlTeX V3
+                    \ifx\Lchar\empty% ............. this is a control sequence
+                    \else% ........................ this is a letter+diacritic
+                        \ifx\undefined#6\else%maybe we dont have an accent-name
+                        \OKtrue\ifLEX\else%
+                        \def\tempa{\charsubdef`}\def\tempb{= }%
+                        \edef\tempc{`\Lchar}%
+                        \global\expandafter\tempa#2%
+                        \expandafter\tempb\csname POS#6\endcsname \tempc%
+                               \fi%\ifLEX
+                        \fi
+                    \fi%
+                    \ifx\Mchar\empty% and now uppercase
+                    \else%
+                        \ifx\undefined#6\else%maybe we dont have an accent-name
+                        \OKtrue\ifLEX\else%
+                        \def\tempa{\charsubdef`}\def\tempb{= }%
+                        \edef\tempc{`\Mchar}%
+                        \global\expandafter\tempa#4%
+                        \expandafter\tempb\csname POS#6\endcsname \tempc%
+                               \fi%\ifLEX
+                        \fi
+                    \fi%
+                    \ifOK%
+                      \def\tempb{\catcode`}%
+                      \edef\OldActiveChars{\@tempc}% in fact disactivate
+                      \xdef\@tempc{\OldActiveChars%
+                                        \tempb\expandafter\string#2=11}%
+                      \ifx\undefined#4\else%
+                          \ifONE%
+                         \edef\OldActiveChars{\@tempc}% disactivate
+                         \xdef\@tempc{\OldActiveChars%
+                                            \tempb\expandafter\string#4=11}%
+                          \fi%
+                      \fi%
+                    \fi% ifOK
+                \fi% MlTeX3
+           \fi%\ifVtwo
+                \ifx\undefined#6\else%
+                    \csubinverse {\expandafter\string#3}{@#6@}\Lchar%
+                    \csubinverse {\expandafter\string#5}{@#6@}\Mchar%
+                \fi
+                  }%end of DOhex
+\ifx\@@input\undefined\let\@@input\input\fi
+\@@input keyboard.dat % load my keyboard specs
+\fi% de \ifSkip
+\endgroup%
+\expandafter\ifx\csname ^^63\endcsname\c % 128-255 going chars in V3
+            \catcode`^^80=11\catcode`^^81=11\catcode`^^82=11\catcode`^^83=11
+            \catcode`^^90=11\catcode`^^91=11\catcode`^^92=11\catcode`^^93=11
+            \catcode`^^a0=11\catcode`^^a1=11\catcode`^^a2=11\catcode`^^a3=11
+            \catcode`^^b0=11\catcode`^^b1=11\catcode`^^b2=11\catcode`^^b3=11
+            \catcode`^^c0=11\catcode`^^c1=11\catcode`^^c2=11\catcode`^^c3=11
+            \catcode`^^d0=11\catcode`^^d1=11\catcode`^^d2=11\catcode`^^d3=11
+            \catcode`^^e0=11\catcode`^^e1=11\catcode`^^e2=11\catcode`^^e3=11
+            \catcode`^^f0=11\catcode`^^f1=11\catcode`^^f2=11\catcode`^^f3=11
+            \catcode`^^84=11\catcode`^^85=11\catcode`^^86=11\catcode`^^87=11
+            \catcode`^^94=11\catcode`^^95=11\catcode`^^96=11\catcode`^^97=11
+            \catcode`^^a4=11\catcode`^^a5=11\catcode`^^a6=11\catcode`^^a7=11
+            \catcode`^^b4=11\catcode`^^b5=11\catcode`^^b6=11\catcode`^^b7=11
+            \catcode`^^c4=11\catcode`^^c5=11\catcode`^^c6=11\catcode`^^c7=11
+            \catcode`^^d4=11\catcode`^^d5=11\catcode`^^d6=11\catcode`^^d7=11
+            \catcode`^^e4=11\catcode`^^e5=11\catcode`^^e6=11\catcode`^^e7=11
+            \catcode`^^f4=11\catcode`^^f5=11\catcode`^^f6=11\catcode`^^f7=11
+            \catcode`^^88=11\catcode`^^89=11\catcode`^^8a=11\catcode`^^8b=11
+            \catcode`^^98=11\catcode`^^99=11\catcode`^^9a=11\catcode`^^9b=11
+            \catcode`^^a8=11\catcode`^^a9=11\catcode`^^aa=11\catcode`^^ab=11
+            \catcode`^^b8=11\catcode`^^b9=11\catcode`^^ba=11\catcode`^^bb=11
+            \catcode`^^c8=11\catcode`^^c9=11\catcode`^^ca=11\catcode`^^cb=11
+            \catcode`^^d8=11\catcode`^^d9=11\catcode`^^da=11\catcode`^^db=11
+            \catcode`^^e8=11\catcode`^^e9=11\catcode`^^ea=11\catcode`^^eb=11
+            \catcode`^^f8=11\catcode`^^f9=11\catcode`^^fa=11\catcode`^^fb=11
+            \catcode`^^8c=11\catcode`^^8d=11\catcode`^^8e=11\catcode`^^8f=11
+%           \catcode`^^9c=11% this is our bypass
+                            \catcode`^^9d=11\catcode`^^9e=11\catcode`^^9f=11
+            \catcode`^^ac=11\catcode`^^ad=11\catcode`^^ae=11\catcode`^^af=11
+            \catcode`^^bc=11\catcode`^^bd=11\catcode`^^be=11\catcode`^^bf=11
+            \catcode`^^cc=11\catcode`^^cd=11\catcode`^^ce=11\catcode`^^cf=11
+            \catcode`^^dc=11\catcode`^^dd=11\catcode`^^de=11\catcode`^^df=11
+            \catcode`^^ec=11\catcode`^^ed=11\catcode`^^ee=11\catcode`^^ef=11
+            \catcode`^^fc=11\catcode`^^fd=11\catcode`^^fe=11\catcode`^^ff=11
+%%%%%%
+% Prevent LaTeX2e invalid chars
+\ifx\documentclass\undefined\else\ifECM
+\catcode`\^^_=11%
+\catcode`\^^Y=11%
+\catcode`\^^Z=11%
+\catcode`\^^P=11%
+\catcode`\^^Q=11%
+\else%
+\catcode`\^^P=11%
+\catcode`\^^Q=11%
+\catcode`\^^Y=11%
+\catcode`\^^Z=11%
+\catcode`\^^]=11%
+\catcode`\^^[=11%
+\catcode`\^^^=11%
+\catcode`\^^\=11%
+\catcode`\^^_=11%
+\fi\fi%
+%%%%%%
+% now intitialize only \ae \ae etc.
+\@tempc%
+%\show\@tempc%
+%%%%%%%% correct bug in latex209.def regarding catcodes %%%%%%%
+\edef\SetCfgFor209{{\noexpand\newwrite\noexpand\kbclean%
+                    \noexpand\immediate\noexpand\openout\noexpand\kbclean%
+                    =latex209.cfg%
+                    \noexpand\immediate\noexpand\write\noexpand\kbclean%
+                    {\@tempc}%
+      \ifECM% Force T1 if we are in T1
+                    \noexpand\immediate\noexpand\write\noexpand\kbclean%
+                    {\noexpand\noexpand\noexpand\def%
+                     \noexpand\noexpand\noexpand\encodingdefault{T1}}%
+      \else% Force T1 for non-MlTeX
+                    \noexpand\immediate\noexpand\write\noexpand\kbclean%
+                    {\noexpand\noexpand\noexpand\ifx%
+                     \noexpand\noexpand\noexpand\charsubdef%
+                     \noexpand\noexpand\noexpand\undefined%
+                     \noexpand\noexpand\noexpand\def%
+                     \noexpand\noexpand\noexpand\encodingdefault{T1}%
+                     \noexpand\noexpand\noexpand\fi%
+                    }%
+      \fi%
+                   }%
+                  }%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Reset no more useful macros
+\let\@tempc\undefined%
+\global\let\Lchar\undefined\global\let\Mchar\undefined%
+\ifx\fguillemets\undefined\def\fguillemets{<<}\fi%
+\ifx\endfguillemets\undefined\def\endfguillemets{>>}\fi%
+%
+% Now provide 7-bit new accent macros to produce 8-bit chars
+%
+%\catcode`@=11% normally done
+\let\next\undefined
+\ifx\starthyph\undefined\else\let\next\relax\fi
+\ifx\charsubdef\undefined\else\let\next\relax\fi
+\ifECM\let\next\relax\fi
+%%
+\ifx\documentclass\undefined%
+     \let\Edef\edef\let\Def\def\let\Let\let%
+\else%
+   \def\Edef#1{\expandafter\relax% define only for MlTeX OT1
+               \expandafter\global%
+               \expandafter\edef\csname OT\string1\string#1\endcsname}
+    \def\Def#1{\expandafter\relax% define only for MlTeX OT1
+               \expandafter\global%
+               \expandafter\def\csname OT\string1\string#1\endcsname}
+    \def\Let#1{\expandafter\relax% define only for MlTeX OT1
+               \expandafter\global%
+               \expandafter\let\csname OT\string1\string#1\endcsname}
+
+\ifECM\Edef\i{^^Y}\else\Edef\i{^^P}\fi% needed by \csubinverse for patterns
+\ifECM\Edef\j{^^Z}\else\Edef\j{^^Q}\fi% dotless letters
+%\let\next\undefined% to get rid of the following
+\fi%
+\ifx\next\relax% then do it (we have 8bits chars)
+\Edef\`#1{{\noexpand\expandafter\noexpand\ifx%
+          \noexpand\csname @gr@#1\noexpand\endcsname\noexpand\relax%
+          \ifECM{\accent"00 #1}\else{\accent18 #1}\fi%
+                               \noexpand\else%
+          \noexpand\csname @gr@#1\noexpand\endcsname\noexpand\fi}}%
+\Edef\'#1{{\noexpand\expandafter\noexpand\ifx%
+          \noexpand\csname @ac@#1\noexpand\endcsname\noexpand\relax%
+          \ifECM{\accent"01 #1}\else{\accent19 #1}\fi%
+                               \noexpand\else%
+          \noexpand\csname @ac@#1\noexpand\endcsname\noexpand\fi}}%
+\Edef\v#1{{\noexpand\expandafter\noexpand\ifx%
+          \noexpand\csname @v@#1\noexpand\endcsname\noexpand\relax%
+          \ifECM{\accent"07 #1}\else{\accent20 #1}\fi%
+                               \noexpand\else%
+          \noexpand\csname @v@#1\noexpand\endcsname\noexpand\fi}}%
+\Edef\u#1{{\noexpand\expandafter\noexpand\ifx%
+          \noexpand\csname @u@#1\noexpand\endcsname\noexpand\relax%
+          \ifECM{\accent"08 #1}\else{\accent21 #1}\fi%
+                               \noexpand\else%
+          \noexpand\csname @u@#1\noexpand\endcsname\noexpand\fi}}%
+\Edef\=#1{{\noexpand\expandafter\noexpand\ifx%
+          \noexpand\csname @eq@#1\noexpand\endcsname\noexpand\relax%
+          \ifECM{\accent"09 #1}\else{\accent22 #1}\fi%
+                               \noexpand\else%
+          \noexpand\csname @eq@#1\noexpand\endcsname\noexpand\fi}}%
+\Edef\^#1{{\noexpand\expandafter\noexpand\ifx%
+          \noexpand\csname @hat@#1\noexpand\endcsname\noexpand\relax%
+          \ifECM{\accent"02 #1}\else{\accent94 #1}\fi%
+                               \noexpand\else%
+          \noexpand\csname @hat@#1\noexpand\endcsname\noexpand\fi}}%
+\Edef\.#1{{\noexpand\expandafter\noexpand\ifx%
+          \noexpand\csname @dot@#1\noexpand\endcsname\noexpand\relax%
+          \ifECM{\accent"0a #1}\else{\accent95 #1}\fi%
+                               \noexpand\else%
+          \noexpand\csname @dot@#1\noexpand\endcsname\noexpand\fi}}%
+\Edef\H#1{{\noexpand\expandafter\noexpand\ifx%
+          \noexpand\csname @H@#1\noexpand\endcsname\noexpand\relax%
+          \ifECM{\accent"05 #1}\else{\accent125 #1}\fi%
+                               \noexpand\else%
+          \noexpand\csname @H@#1\noexpand\endcsname\noexpand\fi}}%
+\Edef\~#1{{\noexpand\expandafter\noexpand\ifx%
+          \noexpand\csname @til@#1\noexpand\endcsname\noexpand\relax%
+          \ifECM{\accent"03 #1}\else{\accent126 #1}\fi%
+                               \noexpand\else%
+          \noexpand\csname @til@#1\noexpand\endcsname\noexpand\fi}}%
+\Edef\"#1{{\noexpand\expandafter\noexpand\ifx%
+          \noexpand\csname @um@#1\noexpand\endcsname\noexpand\relax%
+          \ifECM{\accent"04 #1}\else{\accent127 #1}\fi%
+                               \noexpand\else%
+          \noexpand\csname @um@#1\noexpand\endcsname\noexpand\fi}}%
+%\ifx\@c@@\undefined\let\@c@@=\c\fi% now wrong with 2e
+\ifx\@c@@\undefined% needed for OT1
+\def\@c@@#1{\setbox\z@\hbox{#1}\ifdim\ht\z@=1ex\accent24 #1%
+  \else{\ooalign{\unhbox\z@\crcr\hidewidth\char24\hidewidth}}\fi}%
+\fi%
+\Def\c#1{{\expandafter\ifx%
+         \csname @c@#1\endcsname\relax%
+         \@c@@{#1}%
+                               \else%
+         \csname @c@#1\endcsname\fi}}%
+\ifx\@an@a\undefined\else\Let\aa\@an@a\fi%
+\ifx\@an@A\undefined\else\Let\AA\@an@A\fi%
+\ifx\r\undefined%
+\global\Def\r#1{\if#1a\@a:a\else\if#1A\@A:A\fi\fi}%
+\global\Def\@a:a{\expandafter\ifx\csname @an@a\endcsname\relax%
+                          \ifECM{\accent"06a}\else{\accent23a}\fi%
+                       \else\csname @an@a\endcsname\fi}%
+\global\Def\@A:A{\expandafter\ifx\csname @an@A\endcsname\relax%
+                          \leavevmode\setbox0\hbox{h}\dimen@\ht0%
+                            \advance\dimen@-1ex\rlap{\raise.67\dimen@\hbox{%
+                                    \ifECM\char"06\else\char'27\fi}}A%
+                       \else\csname @an@A\endcsname\fi}%
+\fi% \r undefined
+\fi% we have 8bits chars
+
+\ifx\next\undefined% we don't have any csubsinverse mechanism
+%                  % so reset any previous accent macros to usual
+\edef\`#1{\ifECM{\accent"00 #1}\else{\accent18 #1}\fi}%
+\edef\'#1{\ifECM{\accent"01 #1}\else{\accent19 #1}\fi}%
+\edef\v#1{\ifECM{\accent"07 #1}\else{\accent20 #1}\fi}%
+\edef\u#1{\ifECM{\accent"08 #1}\else{\accent21 #1}\fi}%
+\edef\=#1{\ifECM{\accent"09 #1}\else{\accent22 #1}\fi}%
+\edef\^#1{\ifECM{\accent"02 #1}\else{\accent94 #1}\fi}%
+\edef\.#1{\ifECM{\accent"0a #1}\else{\accent95 #1}\fi}%
+\edef\H#1{\ifECM{\accent"05 #1}\else{\accent125 #1}\fi}%
+\edef\~#1{\ifECM{\accent"03 #1}\else{\accent126 #1}\fi}%
+\edef\"#1{\ifECM{\accent"04 #1}\else{\accent127 #1}\fi}%
+\ifx\@c@@\undefined\else\let\c=\@c@@\fi%
+\def\aa{\ifECM{\accent"06a}\else{\accent23a}\fi}%
+\def\AA{\leavevmode\setbox0\hbox{h}\dimen@\ht0%
+         \advance\dimen@-1ex\rlap{\raise.67\dimen@\hbox{%
+         \ifECM\char"06\else\char'27\fi}}A}%
+\fi%we don't have any csubsinverse mechanism
+
+\fi
+\endinput%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+

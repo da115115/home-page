@@ -1,0 +1,334 @@
+\section{Composition -- Structure de l'application}
+\label{sec:comp}
+\subsection{Présentation}
+Comme cela a déjà été mentionné, les applications, du côté de l'émetteur
+comme du côté du récepteur, sont composées de trois couches:
+\begin{htmllist}
+  \htmlitemmark{RedBall}
+  \item[Interface utilisateur:] cette couche implémente l'interface
+    graphique utilisateur ({\it GUI: Graphic User Interface}), chargée de
+    scruter tous les événements provoqués par l'utilisateur, et de lui
+    présenter des fenêtres de dialogue pour recueillir des données
+    spécifiques. C'est cette couche qui ``garde la main'' et invoque,
+    grâce à des {\it call-backs}, les méthodes de la couche de contrôle.
+  \item[Contrôle:] cette couche commence par instancier un objet de la
+    classe interface graphique utilisateur, en lui faisant connaître les
+    méthodes (call-backs) qu'il faudra appeler lorsque des événements
+    provoqués par l'utilisateur seront détectés.
+  \item[Adaptation:] cette couche permet d'effectuer les transformations
+    entre une page Html, contenant éventuellement des codes binaires
+    (images, sons, films, appelettes Java, \etc), en un seul fichier
+    binaire compressé.
+\end{htmllist}
+
+Comme ce projet implémente de nombreuses classes, il est bon de rappeler la
+manière dont elles inter-agissent. Ainsi, sur les
+figures~\ref{fig:servclass} et \ref{fig:cltclass}, l'on voit comment les
+objets appellent les méthodes des autres classes.\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=10cm]{serverClass.ps}
+  \caption{Relations entre classes pour le côté serveur}
+  \label{fig:servclass}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=10cm]{clientClass.ps}
+  \caption{Relations entre classes pour le côté client}
+  \label{fig:cltclass}
+\end{figure}
+
+Et sur les figures~\ref{fig:servthread} et \ref{fig:cltthread}, l'on voit les
+relations entre les différents {\it Threads} intervenant à chacun des
+niveaux.\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=16cm]{threadserver.ps}
+  \caption{Relations entre les différents {\it Threads} pour le serveur}
+  \label{fig:servthread}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=16cm]{threadclient.ps}
+  \caption{Relations entre les différents {\it Threads} pour le client}
+  \label{fig:cltthread}
+\end{figure}
+
+\subsection{Couches de contrôle et d'interface graphique: détail}
+Lorsqu'on lance l'application, on lance en fait la méthode {\tt main()} de
+l'objet implémentant la couche de contrôle, à savoir {\it ControlLayer} pour
+le côté émetteur et {\it NetworkLayer} pour le côté récepteur.\\
+
+\begin{verbatim}
+public class ControlLayer implements Runnable {
+  private SenderGUI window;
+  public FileList fileList;
+
+  public ControlLayer () {
+    dbg.setLevel (10);
+     // tells the fileList who controls it
+    fileList = new FileList(10, false, this, 20, 10);
+    window = new SenderGUI (this);  // tells the GUI who controls it
+    window.preparation();  // defines the GUI
+    window.pack();
+    window.show();         // shows the GUI that waits for its related events
+  }
+
+  // Implements the call-back of the SenderGUI's sendButton
+  public void sendAction () {
+    fileList.sendItem ();
+  }
+
+  public static void main (String argv[]) {
+    ControlLayer controlLayer = new ControlLayer ();
+  }
+}
+\end{verbatim}
+
+Comme on le voie ci-dessus, la méthode {\tt main()} instancie l'objet dans
+lequel elle est implémentée ({\it ControlLayer} ou {\it NetworkLayer},
+donc), et s'arrête. Et c'est le constructeur qui instancie à son
+tour un objet de la classe GUI, à savoir {\it SenderGUI} pour le côté
+émetteur et {\it ReceiverGUI} pour le côté récepteur, en lui passant une
+référence sur lui-même (le {\tt this} de {\tt window = new SenderGUI
+  (this);}) afin de pouvoir être rappelé par l'interface utilisateur.\\
+
+Dans ce schéma, la méthode {\tt main()} de l'objet implémentant la couche
+contrôle ``rend la main'' tout de suite. C'est l'objet implémentant
+l'interface graphique qui ``garde la main'' pour scruter les événements
+déclenchés par l'utilisateur.\\
+
+Dans le nouveau modèle de {\it Java 1.1} gérant les événements, il faut
+enregistrer les méthodes à appeler, lors d'un événement particulier, auprès
+des objets déclenchant ces événements. Par exemple, un bouton déclenche un
+événement lorsque l'utilisateur appuie dessus, et l'on doit donc
+enregistrer auprès de ce bouton la méthode à invoquer lorsque l'utilisateur
+agira dessus.\\
+
+\begin{verbatim}
+public class SenderGUI extends Frame {
+  private ControlLayer controlLayer;
+  
+  public SenderGUI (ControlLayer c) {
+    super("The Sender Window");
+    controlLayer = c;
+  }
+
+  public void preparation () {
+    Button sendButton;
+    sendButton = new Button ("Send");
+
+    // Registers the actionPerformed method to the sendButton
+    sendButton.addActionListener ( new ActionListener () {
+      public void actionPerformed (ActionEvent e) {
+        // Calls the corresponding method within controlLayer
+        controlLayer.sendAction ();
+      }
+    });
+  }
+}
+\end{verbatim}
+
+La méthode de rappel, le {\it call-back} (ci-dessus,
+{\tt actionPerformed()}), est encapsulée dans un objet scruteur d'événements
+(ci-dessus, {\it ActionListener}) de type correspondant à celui des
+événements déclenchés (voir l'API Java 1.1 de gestion des événements pour
+plus de précisions).  Dans notre cas, la méthode de rappel, encapsulée dans
+l'objet d'interface utilisateur ({\it SenderGUI} ou {\it ReceiverGUI},
+donc), appelle à son tour la méthode correspondante implémentée dans
+l'objet de la couche contrôle ayant lancé l'interface graphique.\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=10cm]{serverEvent.ps}
+  \caption{Gestion des événements du côté émetteur}
+  \label{fig:servevt}
+\end{figure}
+
+Ainsi, l'objet interface utilisateur n'est ni plus ni moins qu'un relais
+entre l'utilisateur et la couche de contrôle, qui affiche des fenêtres et
+des dialogues, et qui relaie les événements générés par l'utilisateur. Tout
+cela est récapitulé sur la figure~\ref{fig:servevt}.
+
+\subsection{Relation entre ControlLayer et FileList}
+Du côté émetteur, une classe supplémentaire, {\it FileList}, a été
+implémentée afin de stocker les données relatives aux pages Html que l'on
+désire visualiser et/ou transmettre, et qui gère tous les retours des
+événements relatifs aux pages Html (envoi, affichage, configuration,
+\etc).\\
+
+Concrètement, {\it FileList} hérite de la classe {\tt java.awt.List},
+classe qui permet de gérer une liste d'objets de type quelconque.
+{\it FileList} contient une référence à l'objet {\it ControlLayer} qui l'a
+instancié, afin de pouvoir modifier les préférences de l'utilisateur sur le
+taux de transmission ({\it transmission rate}) et la durée de vie des
+paquets transmis à travers le réseau ({\it TTL}).\\
+
+D'autre part, {\it FileList} contient trois références à des objets de type
+{\tt Vector()}, permettant de stocker les noms des pages Html ({\it
+  filenameList}), leur chemin d'accès ({\it directoryList}) et leur de
+temps d'émission ({\it timeList}). L'utilisateur ne voit pas la liste des
+chemins d'accès, ce qui permet d'obtenir un affichage moins lourd.\\
+
+Puisque que {\it FileList} est un objet graphique, c'est auprès de lui
+qu'il faut enregistrer le scruteur des événements lui étant relatifs. C'est
+ce qui est fait avec:\\
+
+\begin{verbatim}
+public class FileList extends List {
+  // Display the slide on double-click
+  addActionListener (new ActionListener () {
+    public void actionPerformed(ActionEvent e) {
+      // Display the slide within the Web browser
+      display ();
+      }
+    });
+  }
+\end{verbatim}
+
+Ainsi, lorsque l'utilisateur opère un double-clic sur un nom de page Html,
+celle-ci est affichée dans le navigateur (invocation de la méthode
+{\tt display ()} de {\it FileList}).\\
+
+L'objet {\it FileList} fait lui-même appel à des méthodes génériques
+({\it static}), à savoir {\tt addFileActionHelper()}, {\tt importHelper()},
+{\tt changeTimeHelper()} et {\tt preferenceHelper()}, implémentées dans
+{\it SenderGUI}. Ces méthodes invoquent des assistants graphiques
+({\it FileDialog, TimeDialog, PreferenceDialog}) implémentés sous formes
+de sous-classes dans {\it SenderGUI}. Sans rentrer dans le détail (qui ne
+présente que des difficultés relatives à la scrutation d'événements, et à
+des considérations graphiques), ces méthodes permettent de prendre en
+charge la partie d'interactivité avec l'utilisateur, notamment pour que
+{\it FileList} connaisse les noms de fichier (de la page Html, de la
+configuration à charger ou à sauver) et les paramètres de la transmission
+ou des préférences.\\
+
+Il est à noter, d'autre part, que {\it FileList} utilise aussi les services
+d'un objet de la classe {\it Adapter} faisant partie de la couche
+d'adaptation.\\
+
+\begin{verbatim}
+  public void importList (SenderGUI window) {
+    Adapter adapt = new Adapter (dbg);
+    String[] beginDelim = {"directory=", "filename=", "displayTime="};
+    String[] endDelim = {"*", "*", "*"};
+    String[] fileInfo = SenderGUI.importHelper (window);
+
+    adapt.openFile (fileInfo[0] + fileInfo[1]);
+    Vector[] vects = adapt.fileSearch (3, beginDelim, endDelim);
+    Adapter.addVect (this, vects);
+  }
+\end{verbatim}
+
+Cette invocation permet à {\it FileList} d'aller extraire d'un fichier de
+configuration les informations relatives aux pages Html à afficher et/ou
+transmettre. Le fichier de configuration est au format texte, avec un
+délimiteur pour marquer clairement chaque fin de ligne (``*'' dans notre
+cas). L'extraction de ces informations est construite sur le même modèle
+que l'extraction des noms de fichiers contenus dans une page Html; c'est
+pour cela qu'{\it Adapter} l'implémente. Aussi, voyons à présent un peu
+plus en détail les relations entre les couches de contrôle et
+d'adaptation.
+
+\subsection{Couches de contrôle et d'adaptation: détail}
+Nous avons vu que certains call-backs de {\it ControlLayer} appelaient à
+leur tour des méthodes de {\it FileList}. C'est notamment le cas de la
+méthode {\tt controlLayer.sendAction()} qui appelle la méthode
+{\tt fileList.sendItem()}, déclenchant l'envoi sur le réseau d'une page
+Html.
+
+\begin{verbatim}
+public class ControlLayer implements Runnable {
+  public FileList fileList;
+  // Implements the call-back of the SenderGUI's sendButton
+  public void sendAction () {
+    fileList.sendItem ();
+  }
+}
+
+public class FileList extends List {
+  public void sendItem () {
+    int fileListIndex = getSelectedIndex ();
+    send (fileListIndex);
+  }
+
+  public int send (int i) {
+    AMPThreadCarrier ampThreadCarrier = new AMPThreadCarrier (dbg);
+    // Kill all previously running AMP process (stop the previous transmission)
+    Executer.exec (AMPKillerCmd, dbg);
+    // Create the Unix tar file to store all the inlined files contained
+    // by the Html page
+    String tarFilename = tarBuilder (directory, filename);
+    // Send the Html page alltogether with its inlined files (images, etc.)
+    ampThreadCarrier.cmdExec = "AMP " + filename;
+    ampThreadCarrier.start ();
+    return displayTime;
+  }
+}
+\end{verbatim}
+
+Comme on le voit ci-dessus, la méthode {\tt sendItem()} appelle à son tour
+la méthode {\tt send()}, cette dernière implémentant effectivement l'envoi
+de la page Html sur le réseau. Pour cela, plusieurs étapes sont
+nécessaires, le but étant de regrouper dans un seul fichier {\tt .tar} Unix
+le fichier {\tt .html} lui-même, ainsi que tous les fichiers inclus
+(images, sons, films et autres appelettes).\\
+
+Le programme {\tt tar} Unix respecte la hiérarchie des répertoires, et le
+récepteur pourra donc retrouver la même structure que celle de l'émetteur.
+Cependant, comme le fichier {\tt .tar} est stocké sur le répertoire
+{\tt /tmp}, tous les noms de fichiers inclus commen\c cant par
+{\tt ../} (chemin relatif du répertoire parent) ne pourront être incorporés
+tel quels dans le {\tt .tar}. Il faut donc trouver leur répertoire, et les
+copier, au sein de {\tt /tmp}, dans un autre répertoire (intitulé
+{\tt subDir} dans notre cas). Dans le {\tt .html} que re\c coit le
+récepteur, il faut donc que les noms de fichiers inclus correspondants
+soient modifiés pour commencer par quelque chose comme {\tt /tmp/subDir}.\\
+
+\begin{htmllist}
+  \htmlitemmark{RedBall}
+  \item[Arrêt de l'éventuelle transmission en cours:] on invoque pour cela
+    un script Unix ({\tt killer}), écrit pour l'occasion (voir
+    Annexe~\ref{ann:killer}), qui tue le processus Unix répondant au nom
+    d'AMP. Cette méthode est brutale, mais l'interface d'AMP ne permet pas
+    d'être plus fin.
+  \item[Extraction des noms des fichiers inclus:] on utilise une méthode de
+    la classe {\it Adapter}, qui extrait les noms de fichiers inclus dans
+    le {\tt .html} original, et réécrit un autre {\tt .html} avec les
+    éventuels nouveaux noms (ceux commen\c cant par {\tt /tmp/subDir}).
+  \item[Exécution de la commande Unix {\tt tar}:] cette commande regroupe
+    sous un même fichier tous les fichiers nécessaires à l'interprétation
+    de la page Html.
+  \item[Compression du fichier {\tt .tar}:] on utilise la commande Unix
+    {\tt gzip}.
+  \item[Nettoyage:] il faut effacer tous les sous-répertoires et
+    fichiers qui ont servi à la construction du {\tt .tar}.
+\end{htmllist}
+
+Enfin, après avoir créé le {\tt .tar}, il faut envoyer ce fichier sur le
+réseau en utilisant le protocole AMP. Or, l'appel au serveur AMP est
+bloquant, et l'on veut pouvoir stopper la transmission à tout moment: bref,
+l'on veut garder la main pendant la transmission. Aussi, il est nécessaire
+de lancer un {\it Thread}, qui va implémenter l'appel au serveur AMP.\\
+
+Pour des raisons de clarté, ce {\it Thread} est implémenté dans la classe
+{\it AMPThreadCarrier}, ce qui présente l'avantage de fournir des moyens de
+communication entre le {\it Thread} et le processus appelant (par
+l'intermédiaire d'attributs {\tt static}). Cela permet par exemple de faire
+exécuter plusieurs fois le serveur AMP sur des noms de fichier différents,
+sans détruire le {\it Thread}, mais simplement en le stoppant. Ici, donc,
+l'{\it AMPThreadCarrier} lance sous forme de commande Unix le serveur AMP.
+Pour stopper le {\it Thread}, il faudra tuer le processus AMP, ce qui
+permettra à {\it AMPThreadCarrier} de finir sa tâche.\\
+
+Pour finir, il est à noter que c'est la méthode {\tt send()} de
+{\it FileList} qui lance {\it AMPThreadCarrier}: à chaque fois que l'on
+demandera d'envoyer un fichier sur le réseau, la méthode {\tt run()}
+d'{\it AMPThreadCarrier} sera invoquée avec le nom de fichier à transmettre
+correspondant. {\it AMPThreadCarrier} est différent du {\it Thread} lancé
+par {\it ControlLayer} pour gérer le mode automatique. Dans le mode
+automatique, la méthode {\tt fileList.send()} est invoquée sur chacun des
+fichiers à transmettre, et cette dernière lance à son tour un
+{\it AMPThreadCarrier}. Le mode automatique est géré sous forme de
+{\it Thread} afin de pouvoir garder la main et, notamment, stopper ce mode.
+
+

@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.7 How large a modulus (key) should be used in RSA?</TITLE>
+<META NAME="description" CONTENT="3.2.7 How large a modulus (key) should be used in RSA?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node19.html">
+<LINK REL="previous" HREF="node17.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node19.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html436"
+ HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html434"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html428"
+ HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html437"
+ HREF="node19.html">3.2.8 How large should</A>
+<B> Up:</B> <A NAME="tex2html435"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html429"
+ HREF="node17.html">3.2.6 Are strong primes</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00327000000000000000">
+3.2.7 How large a modulus (key) should be used in RSA?</A>
+</H2>
+<P>
+The best size for an RSA modulus depends on one's security needs. The
+larger the modulus, the greater the security but also the slower the
+RSA operations. One should choose a modulus length upon consideration,
+first, of one's security needs, such as the value of the protected data
+and how long it needs to be protected, and, second, of how powerful
+one's potential enemy is. It is also possible that a larger key size
+will allow a digitally signed document to be valid for a longer time;
+see Question&nbsp;<A HREF="node49.html#how_sig_old">3.3.17</A>.
+<BR>
+<P>
+A good analysis of the security obtained by a given modulus length is given
+by Rivest, in the context of discrete logarithms modulo a prime, but it
+applies to RSA as well. Rivest's estimates imply that a 512-bit modulus can
+be factored with an $8.2 million effort, less in the future. It may
+therefore be advisable to use a longer modulus, perhaps 768 bits in length.
+Those with extremely valuable data (or large potential damage from digital
+forgery) may want to use a still longer modulus. A certifying authority
+(see Question&nbsp;<A HREF="node37.html#what_cert">3.3.5</A>) might use a modulus of length 1000 bits or
+more, because the validity of so many other key pairs depends on the
+security of the one central key.
+<BR>
+<P>
+The key of an individual user will expire after a certain time, say, two
+years (see Question&nbsp;<A HREF="node44.html#what_key_exp">3.3.12</A>). Upon expiration, the user will
+generate a new key which should be at least a few digits longer than the
+old key to reflect the speed increases of computers over the two years.
+Recommended key length schedules will probably be published by some
+authority or public body.
+<BR>
+<P>
+Users should keep in mind that the estimated times to break RSA are
+averages only. A large factoring effort, attacking many thousands of
+RSA moduli, may succeed in factoring at least one in a reasonable time.
+Although the security of any individual key is still strong, with some
+factoring methods there is always a small chance that the attacker may
+get lucky and factor it quickly.
+<BR>
+<P>
+As for the slowdown caused by increasing the key size (see
+Question&nbsp;<A HREF="node14.html#how_fast_rsa">3.2.3</A>), doubling the modulus length would, on
+average, increase the time required for public-key operations (encryption
+and signature verification) by a factor of 4, and increase the time taken
+by private key operations (decryption and signing) by a factor of 8. The
+reason that public-key operations are affected less than private-key
+operations is that the public exponent can remain fixed when the modulus is
+increased, whereas the private exponent increases proportionally. Key
+generation time would increase by a factor of 16 upon doubling the modulus,
+but this is a relatively infrequent operation for most users.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html436"
+ HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html434"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html428"
+ HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html437"
+ HREF="node19.html">3.2.8 How large should</A>
+<B> Up:</B> <A NAME="tex2html435"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html429"
+ HREF="node17.html">3.2.6 Are strong primes</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

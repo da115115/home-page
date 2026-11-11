@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.3.8 What is a CSU, or, How do certifying authorities store their
+private keys?</TITLE>
+<META NAME="description" CONTENT="3.3.8 What is a CSU, or, How do certifying authorities store their
+private keys?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node41.html">
+<LINK REL="previous" HREF="node39.html">
+<LINK REL="up" HREF="node32.html">
+<LINK REL="next" HREF="node41.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html672"
+ HREF="node41.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html670"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html664"
+ HREF="node39.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html673"
+ HREF="node41.html">3.3.9 Are certifying authorities</A>
+<B> Up:</B> <A NAME="tex2html671"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html665"
+ HREF="node39.html">3.3.7 Who issues certificates</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00338000000000000000">
+3.3.8 What is a CSU, or, How do certifying authorities store their
+private keys?</A>
+</H2>
+<A NAME="what_csu">&#160;</A>
+It is extremely important that private keys of certifying authorities
+are stored securely, because compromise would enable undetectable
+forgeries. One way to achieve the desired security is to store the key
+in a tamperproof box; such a box is called a Certificate Signing Unit,
+or CSU. The CSU would, preferably, destroy its contents if ever opened,
+and be shielded against attacks using electromagnetic radiation. Not
+even employees of the certifying authority should have access to the
+private key itself, but only the ability to use the private key in the
+process of issuing certificates.
+<BR>
+<P>
+There are many possible designs for CSUs; here is a description of one
+design found in some current implementations. The CSU is activated by a
+set of data keys, which are physical keys capable of storing digital
+information. The data keys use secret-sharing technology such that
+several people must all use their data keys to activate the CSU. This
+prevents one disgruntled CA employee from producing phony certificates.
+<BR>
+<P>
+Note that if the CSU is destroyed, say in a fire, no security is
+compromised. Certificates signed by the CSU are still valid, as long as the
+verifier uses the correct public key. Some CSUs will be manufactured so
+that a lost private key can be restored into a new CSU.  See Question
+<A HREF="node42.html#what_key_lost">3.3.10</A> for discussion of lost CA private keys.
+<BR>
+<P>
+Bolt, Beranek, and Newman (BBN) currently sells a CSU, and RSA Data
+Security sells a full-fledged certificate issuing system built around
+the BBN CSU.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html672"
+ HREF="node41.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html670"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html664"
+ HREF="node39.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html673"
+ HREF="node41.html">3.3.9 Are certifying authorities</A>
+<B> Up:</B> <A NAME="tex2html671"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html665"
+ HREF="node39.html">3.3.7 Who issues certificates</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

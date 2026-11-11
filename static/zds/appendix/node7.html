@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.1.3 What is public-key cryptography?</TITLE>
+<META NAME="description" CONTENT="3.1.3 What is public-key cryptography?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node8.html">
+<LINK REL="previous" HREF="node6.html">
+<LINK REL="up" HREF="node4.html">
+<LINK REL="next" HREF="node8.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html308"
+ HREF="node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html306"
+ HREF="node4.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html300"
+ HREF="node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html309"
+ HREF="node8.html">3.1.4 What are the</A>
+<B> Up:</B> <A NAME="tex2html307"
+ HREF="node4.html">3.1 General</A>
+<B> Previous:</B> <A NAME="tex2html301"
+ HREF="node6.html">3.1.2 What is authentication?</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00313000000000000000">
+3.1.3 What is public-key cryptography?</A>
+</H2>
+<A NAME="what_pkc">&#160;</A>
+Traditional cryptography is based on the sender and receiver of a
+message knowing and using the same secret key: the sender uses the
+secret key to encrypt the message, and the receiver uses the same
+secret key to decrypt the message. This method is known as secret-key
+cryptography. The main problem is getting the sender and receiver to
+agree on the secret key without anyone else finding out. If they are in
+separate physical locations, they must trust a courier, or a phone
+system, or some other transmission system to not disclose the secret
+key being communicated. Anyone who overhears or intercepts the key in
+transit can later read all messages encrypted using that key. The
+generation, transmission and storage of keys is called key management;
+all cryptosystems must deal with key management issues. Secret-key
+cryptography often has difficulty providing secure key management.
+<BR>
+<P>
+Public-key cryptography was invented in 1976 by Whitfield Diffie and
+Martin Hellman in order to solve the key management problem. In the new
+system, each person gets a pair of keys, called the public key and the
+private key. Each person's public key is published while the private
+key is kept secret. The need for sender and receiver to share secret
+information is eliminated: all communications involve only public keys,
+and no private key is ever transmitted or shared. No longer is it
+necessary to trust some communications channel to be secure against
+eavesdropping or betrayal. Anyone can send a confidential message just
+using public information, but it can only be decrypted with a private
+key that is in the sole possession of the intended recipient.
+Furthermore, public-key cryptography can be used for authentication
+(digital signatures) as well as for privacy (encryption).
+<BR>
+<P>
+Here's how it works for encryption: when Alice wishes to send a message
+to Bob, she looks up Bob's public key in a directory, uses it to
+encrypt the message and sends it off. Bob then uses his private key to
+decrypt the message and read it. No one listening in can decrypt the
+message. Anyone can send an encrypted message to Bob but only Bob can
+read it. Clearly, one requirement is that no one can figure out the
+private key from the corresponding public key.
+<BR>
+<P>
+Here's how it works for authentication: Alice, to sign a message, does
+a computation involving both her private key and the message itself;
+the output is called the digital signature and is attached to the
+message, which is then sent. Bob, to verify the signature, does some
+computation involving the message, the purported signature, and Alice's
+public key. If the results properly hold in a simple mathematical
+relation, the signature is verified as genuine; otherwise, the
+signature may be fraudulent or the message altered, and they are
+discarded.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html308"
+ HREF="node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html306"
+ HREF="node4.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html300"
+ HREF="node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html309"
+ HREF="node8.html">3.1.4 What are the</A>
+<B> Up:</B> <A NAME="tex2html307"
+ HREF="node4.html">3.1 General</A>
+<B> Previous:</B> <A NAME="tex2html301"
+ HREF="node6.html">3.1.2 What is authentication?</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

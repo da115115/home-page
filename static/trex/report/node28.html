@@ -1,0 +1,276 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>B Codage de Hamming</TITLE>
+<META NAME="description" CONTENT="B Codage de Hamming">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node29.html">
+<LINK REL="previous" HREF="node27.html">
+<LINK REL="up" HREF="report.html">
+<LINK REL="next" HREF="node29.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html334"
+ HREF="node29.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html332"
+ HREF="report.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html326"
+ HREF="node27.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html335"
+ HREF="node29.html">C Bouclage de phase</A>
+<B> Up:</B> <A NAME="tex2html333"
+ HREF="report.html">Comment faire son propre</A>
+<B> Previous:</B> <A NAME="tex2html327"
+ HREF="node27.html">A Le bloc de</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION00800000000000000000">
+B Codage de Hamming</A>
+</H1>
+<A NAME="annexe:hamming">&#160;</A>
+Soit le message binaire <IMG WIDTH="160" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img26.gif"
+ ALT="$S=(s_1,s_2,\cdots ,s_m)$">, dit message &quot;source&quot;. On
+lui fait correspondre le message cod suivant: <IMG WIDTH="159" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img27.gif"
+ ALT="$V=(v_1,v_2,\cdots ,v_n)$">,dit message &quot;voie&quot;. <I>V</I> est dtermin par les relations suivantes (les
+sommes sont faites modulo 2 et les <I>a</I><SUB><I>i</I></SUB> valent 0 ou 1):
+<P>
+<P ALIGN="CENTER"><IMG WIDTH="433" HEIGHT="211"
+ SRC="img28.gif"
+ ALT="\begin{displaymath}
+\begin{array}
+{rl}
+\mbox{m quations } &
+\left\{
+\begin{arra...
+ ...& = & k_1s_1+k_2s_2+\cdots +k_ms_m\end{array}\right.\end{array}\end{displaymath}"></P>
+<P>
+On peut aussi crire matriciellement:
+<P>
+<P ALIGN="CENTER"><IMG WIDTH="102" HEIGHT="31"
+ SRC="img29.gif"
+ ALT="\begin{displaymath}
+\left[ {\cal V} \right] = \left( {\cal G} \right) \, \left[ {\cal S} \right]\end{displaymath}"></P>
+<P>
+avec:
+<P>
+<P ALIGN="CENTER"><IMG WIDTH="227" HEIGHT="190"
+ SRC="img30.gif"
+ ALT="\begin{displaymath}
+\left( {\cal G} \right) = \left(
+\begin{array}
+{cccc}
+1 & 0 ...
+ ...vdots & & & \vdots\ k_1 & k_2 & \cdots & k_m\end{array}\right)\end{displaymath}"></P>
+<P>
+Aprs transmission, on reoit le message binaire <IMG WIDTH="26" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img31.gif"
+ ALT="$\left[ {\cal V} \right]$">,auquel on va faire subir les quations de vrification suivantes:
+<P>
+<P ALIGN="CENTER"><IMG WIDTH="328" HEIGHT="105"
+ SRC="img32.gif"
+ ALT="\begin{displaymath}
+\begin{array}
+{rcl}
+a_1v_1+a_2v_2+\cdots +a_mv_m+v_{m+1} & =...
+ ... \vdots\ k_1v_1+k_2v_2+\cdots +k_mv_m+v_n & = & z_k\end{array}\end{displaymath}"></P>
+<P>
+Il est clair que si aucune erreur n'est apparue lors de la transmission,
+alors le vecteur <IMG WIDTH="28" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img33.gif"
+ ALT="$\left[ {\cal Z}
+\right]$"> est nul, avec:
+<P>
+<P ALIGN="CENTER"><IMG WIDTH="110" HEIGHT="85"
+ SRC="img34.gif"
+ ALT="\begin{displaymath}
+\left[ {\cal Z} \right]=\left(
+\begin{array}
+{c}
+z_1\ \vdots\ z_k\end{array}\right)\end{displaymath}"></P>
+<P>
+Sinon, en gnral, il est non nul; en tout cas, pour un nombre limit
+d'erreur (&lt;<I>k</I>), il est systmatiquement non nul. Le principe de la
+correction d'<EM>une</EM> erreur est d'tablir une bijection entre l'ensemble
+des vecteurs <IMG WIDTH="28" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img33.gif"
+ ALT="$\left[ {\cal Z}
+\right]$"> non nuls (dits &quot;syndromes
+d'erreurs&quot;) et l'ensemble des erreurs possibles sachant qu'il est suppos
+n'y en avoir qu'une.
+<BR>
+<P>
+Le vecteur<IMG WIDTH="28" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img33.gif"
+ ALT="$\left[ {\cal Z}
+\right]$"> ayant <I>k</I> composantes et le vecteur
+<IMG WIDTH="26" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img31.gif"
+ ALT="$\left[ {\cal V} \right]$"> transmis ayant <I>n</I> composantes (<I>n</I> bits, donc
+<I>n</I> erreurs possibles), cela amne  la condition <I>n</I>=2<SUP><I>k</I></SUP>-1, ce qui
+dimensionne le systme d'quations, si l'on se fixe <I>n</I> <EM>a priori</EM> (ou
+<I>m</I>).  On a par ailleurs videmment <I>n</I>=<I>m</I>+<I>k</I>.
+<BR>
+<P>
+Il reste  dterminer les valeurs des coefficients des <I>k</I> quations de
+dpart. Pour cela crivons la relation de vrification sans, puis avec une
+erreur:
+<P><UL>
+<LI> sans erreur: <IMG WIDTH="156" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img35.gif"
+ ALT="$\left[ {\cal Z} \right]=\left( {\cal H} \right)\left[
+{\cal V} \right]=\left[ 0
+\right]$">, avec:
+<P>
+<P ALIGN="CENTER"><IMG WIDTH="353" HEIGHT="113"
+ SRC="img36.gif"
+ ALT="\begin{displaymath}
+\left( {\cal H} \right)=\left(
+\begin{array}
+{cccccccc}
+a_1 ...
+ ...k_1 & k_2 & \cdots & k_m & 0 & \cdots & 0 & 1\end{array}\right)\end{displaymath}"></P>
+<LI> avec une erreur: <IMG WIDTH="160" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img37.gif"
+ ALT="$\left[ {\cal Z} \right]=\left( {\cal H}
+\right)\left[ {\cal V'} \right]
+\neq\left[ 0 \right]$">, avec:
+<P>
+<P ALIGN="CENTER"><IMG WIDTH="180" HEIGHT="136"
+ SRC="img38.gif"
+ ALT="\begin{displaymath}
+\left[ {\cal V'}\right]=\left[ {\cal V} \right]+\left[
+\begi...
+ ...nd{array}\right]
+\begin{array}
+{c}
+\ \ -i\ \ \ \end{array}\end{displaymath}"></P>
+<P>
+Posons:
+
+<P ALIGN="CENTER"><IMG WIDTH="129" HEIGHT="136"
+ SRC="img39.gif"
+ ALT="\begin{displaymath}
+\left[ \varepsilon_i\right] = \left[
+\begin{array}
+{c}
+0\ \...
+ ...nd{array}\right]
+\begin{array}
+{c}
+\ \ -i\ \ \ \end{array}\end{displaymath}"></P>
+<P>
+Alors, on a:
+<P>
+<P ALIGN="CENTER"><IMG WIDTH="208" HEIGHT="74"
+ SRC="img40.gif"
+ ALT="\begin{displaymath}
+\begin{array}
+{rcl}
+\left[ {\cal Z}\right] & = & \left( {\ca...
+ ...& \left( {\cal H} \right)\left[ \varepsilon_i\right]\end{array}\end{displaymath}"></P></UL>
+<P>
+L'opration <IMG WIDTH="61" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img41.gif"
+ ALT="$\left( {\cal H} \right)\left[ \varepsilon_i\right]$"> est
+triviale vu la forme de <IMG WIDTH="27" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img42.gif"
+ ALT="$\left[ \varepsilon_i\right]$">: le rsultat est la
+<IMG WIDTH="34" HEIGHT="18" ALIGN="BOTTOM" BORDER="0"
+ SRC="img43.gif"
+ ALT="$i^{\grave{e} me}$"> colonne de <IMG WIDTH="33" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img44.gif"
+ ALT="$\left( {\cal H} \right)$">.  Ainsi,  chaque
+erreur diffrente est associe une colonne diffrente et une seule de
+<IMG WIDTH="33" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img44.gif"
+ ALT="$\left( {\cal H} \right)$">.
+<BR>
+<P>
+La bijection est alors ralise si toutes les colonnes de <IMG WIDTH="33" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img44.gif"
+ ALT="$\left( {\cal H} \right)$"> sont diffrentes entre elles et bien sr non nulles. D'o la
+construction de <IMG WIDTH="33" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img44.gif"
+ ALT="$\left( {\cal H} \right)$"> et aussi celle de <IMG WIDTH="29" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img45.gif"
+ ALT="$\left( {\cal G} \right)$">. Alors, une fois cette construction faite, une erreur sera
+localise grce  la valeur du syndrome <IMG WIDTH="28" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img33.gif"
+ ALT="$\left[ {\cal Z}
+\right]$"> trouve
+grce  une simple table de correspondance.
+<BR>
+<P>
+Exemple: <IMG WIDTH="345" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img46.gif"
+ ALT="$k=3\Rightarrow n=2^3-1=7\Rightarrow m=7-3=4$">.
+<BR>
+<P>
+Construction de <IMG WIDTH="33" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img44.gif"
+ ALT="$\left( {\cal H} \right)$">:<P>
+<P ALIGN="CENTER"><IMG WIDTH="261" HEIGHT="74"
+ SRC="img47.gif"
+ ALT="\begin{displaymath}
+\left( {\cal H} \right)=\left(
+\begin{array}
+{ccccccc}
+1&0&1&1&1&0&0\ 1&1&0&1&0&1&0\ 0&1&1&1&0&0&1\end{array}\right)\end{displaymath}"></P>
+<P>
+D'o:
+<P>
+<P ALIGN="CENTER"><IMG WIDTH="181" HEIGHT="166"
+ SRC="img48.gif"
+ ALT="\begin{displaymath}
+\left( {\cal G} \right)=\left(
+\begin{array}
+{cccc}
+1&0&0&0\...
+ ...0&1&0\ 0&0&0&1\ 1&0&1&1\ 1&1&0&1\ 0&1&1&1\end{array}\right)\end{displaymath}"></P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html334"
+ HREF="node29.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html332"
+ HREF="report.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html326"
+ HREF="node27.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html335"
+ HREF="node29.html">C Bouclage de phase</A>
+<B> Up:</B> <A NAME="tex2html333"
+ HREF="report.html">Comment faire son propre</A>
+<B> Previous:</B> <A NAME="tex2html327"
+ HREF="node27.html">A Le bloc de</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/25/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

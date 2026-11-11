@@ -1,0 +1,152 @@
+\section{Le déroulement du projet}
+
+Tout d'abord, après avoir validé notre vision du projet et du travail à
+réaliser avec notre encadrant, Jörg Nonnenmacher, nous avons défini une
+architecture générale définissant les différents blocs à implémenter et les
+interfaces entre ces blocs. Nous nous sommes éfforcés d'établir une
+architecture en couche (voir figure~\ref{fig:archgene}) afin de
+rendre réutilisable et indépendante chaque partie de notre travail.
+Une fois cette architecture définie, nous avons développé chacun des
+``blocs''.\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=16cm]{generalStruct.ps}
+  \caption{Architecture Générale}
+  \label{fig:archgene}
+\end{figure}
+
+\subsection{Le développement de l'interface graphique et du convertisseur
+de fichier HTML}
+Les premières implémentations que nous avons réalisées ont été, en
+parallèle pour les deux membres du binôme, celles de l'interface graphique
+et du convertisseur de fichier HTML.\\
+\begin{htmllist}
+  \htmlitemmark{RedBall}
+  \item[L'interface graphique:] notre travail sur cette partie a consisté
+    tout d'abord en l'étude de la bibliothèque graphique de Java
+    ({\it java.awt}). Une fois ces outils maîtrisés, nous avons développé
+    l'interface décrite dans la section~\ref{sec:fonction}, conformément aux
+    spécifications.
+  \item[Le convertisseur de fichier HTML:] l'objectif était, ici, de
+    réaliser une classe capable de traiter une page HTML en détectant tous
+    les composants référencés dans la page (réalisation d'un parseur de
+    fichier) et de fournir en sortie un seul fichier contenant la page HTML
+    et tous ses composants. Nous avons aussi ajouté une fonction de
+    compression du fichier de sortie afin d'optimiser sa transmission. Ce
+    bloc est décrit dans la section~\ref{sec:comp}.
+\end{htmllist}
+
+\subsection{Utilisation du protocole AMP}
+La diffusion de transparents est basée sur le protocole AMP. Ce protocole
+est implémenté, en C++ du côté émetteur, et en Java du côté récepteur. Notre
+projet devant être écrit en Java, nous avons dû interfacer C++ et Java.\\
+
+Il nous a fallu beaucoup de temps afin de comprendre comment fonctionnait
+l'implémentation du protocole AMP et comment nous devions l'utiliser (quels
+objets instancier, quelles méthodes appeler, comment paramétrer la
+transmission). De plus, l'implémentation d'AMP n'était pas finie lorsque
+nous avons commencé notre projet. Ainsi, il nous a fallu suivre son
+évolution, mettre régulièrement à jour nos programmes en fonction des
+nouvelles versions, et parfois même modifier certaines parties du protocole
+pour l'adapter à nos besoins (comme par exemple ajouter l'implémentation
+d'une méthode {\tt stop()} dans plusieurs classes (celle-ci n'existait pas),
+ou encore effectuer l'adaptation de l'implémentation de l'émetteur).\\
+
+Enfin, nous nous sommes heurtés à de nombreuses difficultés (dont certaines
+très difficiles à surmonter) dans cette partie d'interfa\c cage avec
+l'implémentation d'AMP, car ce dernier a été créé à l'origine au sein d'une
+application complète. Il n'était donc pas prévu d'interface pour
+l'implémentation d'une couche au-dessus d'AMP. Ce problème nous a même
+amené à l'abandon d'une des fonctionnalités de notre application
+(redémarrage automatique du récepteur après réception d'un transparent;
+voir la section~\ref{sec:fonction} pour plus de détails), car elle aurait
+nécessité la réécriture d'une grosse partie de l'implémentation d'AMP, soit
+une quantité de travail équivalente à celle d'un projet entier.
+
+\subsubsection{Côté émetteur: Interfa\c cage Java -- C++}
+Comme nous venons de l'expliquer, le protocole AMP, côté émetteur, a été
+implémenté en C++. Or, l'une des spécifications fortes de notre projet
+était justement l'utlisation de Java. Et, en fait, cette partie d'interfa\c
+cage a représenté une part majeur de notre travail.\\
+
+Nous nous sommes tout d'abord orientés vers les méthodes natives de Java
+({\it JNI: Java Native Interface}). Ces fonctions permettent l'utilisation,
+à partir d'objets Java, de fonctions de librairies dynamiques écrites dans
+un langage différent de Java (le langage natif). Les méthode natives pour C
+sont bien développées et faciles à utiliser, mais l'utilisation de
+librairies C++ n'est pas encore optimale. Par exemple, il n'est apparemment pas
+encore possible d'instancier un objet C++ à partir d'objets Java. C'est à
+la suite de nombreuses recherches et d'interrogations que nous nous sommes
+résolus à abandonner cette solution.\\
+
+Nous nous sommes alors intéressés au {\it C++ Object Factory Server}. Il
+s'agit, ici, de lancer un daemon C++ auquel on peut demander d'instancier un
+objet C++, et qui renvoie un pointeur sur cet objet. On peut ensuite
+demander au daemon d'appliquer des méthodes à l'objet dont nous possédons un
+pointeur. Cette méthode fonctionne mais est assez lourde à mettre en place
+et à utiliser.\\
+
+Finalement, nous avons choisi d'utiliser les appels système qu'offre Java.
+En écrivant une interface rudimentaire C++ au-dessus d'AMP (côté émetteur,
+implémenté en C++) prenant tous ses paramarètres sur la ligne de commande,
+il suffit alors de faire un appel système depuis l'application Java, comme
+pour demander la transmission d'un fichier. L'architecture de
+l'émetteur est décrite dans la section~\ref{sec:comp}.
+
+\subsubsection{Côté récepteur}
+Du côté récepteur, les difficultés étaient moindres, car le protocole AMP
+est implémenté en Java. La seule difficulté que nous avons rencontrée ici
+a été l'utilisation correcte d'AMP.\\
+Par exemple, il n'existait pas, à l'origine, de destructeur dans la classe
+client d'AMP. Ainsi, nous lancions un client et nous ne pouvions l'arrêter
+proprement: certains {\it Thread} continuaient à s'éxécuter après l'arrêt du
+récepteur et nous empêchaient de redémarrer ce dernier.\\
+
+Ces difficultés nous ont ainsi amenés à nous ``plonger'' à de nombreuses
+reprises dans l'implémentation d'AMP, soit pour bien le comprendre, soit
+pour le modifier.
+
+\subsection{Construction d'un émetteur (le serveur) et d'un récepteur (le
+  client)}
+Sont décrits dans cette partie les problèmes que nous avons rencontrés
+dans la construction des deux entités.\\
+
+\subsubsection{L'émetteur}
+Nous retrouvons ici le problème d'interfa\c cage avec AMP. En effet,
+l'émetteur fait un appel système pour lancer la transmission d'un fichier
+sur le réseau, et l'implémentation d'AMP ne prévoit pas l'arrêt du serveur
+en cours de transmission. Or, il nous fallait pouvoir l'interrompre à
+n'importe quel instant. Pour résoudre ce problème, nous avons utilisé des
+{\it Thread} (voir la section~\ref{sec:comp} pour plus de détails).
+    
+\subsubsection{Le récepteur}
+En plus du développement d'un récepteur sous forme d'application, nous
+avons étudié la réalisation de ce dernier sous forme d'une appelette. Pour
+ce faire, nous souhaitions incorporer le panneau de commande (voir la
+section~\ref{sec:fonction}) dans l'appelette. Il nous fallait donc pouvoir
+exécuter en parallèle deux processus qui communiquent entre eux (un pour
+scruter les événements, et l'autre pour afficher les pages re\c cues) dans
+une seule appelette.  Nous avons résolu ce problème en créant deux panneaux
+({\it panel}) dans l'appelette. Pour tester ce système, nous avons
+développé un exemple simple retranscrit dans l'annexe~\ref{ann:panel}.\\
+
+Mais le principal problème pour la réalisation du récepteur sous forme
+d'appelette vient du fait que l'on doit pouvoir écrire des fichiers
+(décompression puis décompactage du fichier re\c cu, effacement des
+fichiers non utilisés), ce qui n'est pas possible avec une appelette
+classique. Aussi, il est nécéssaire d'utiliser des appelettes signées.
+Nous avons donc étudié une méthode afin de signer les appelettes (voir
+l'annexe~\ref{ann:doit} pour plus de détails). Ces appelettes signées
+fonctionnent avec {\it appletviewer} (donné avec {\it JDK}), mais ce
+dernier n'est pas un navigateur et ne peut par conséquent pas afficher de
+pages HTML. D'autre part, avec Netscape, le mécanisme de sécurité est un
+peu différent, et il faut ainsi obtenir un certificat d'authentification
+reconnu par Netscape pour signer les appelettes. Or ces certificats sont
+payants et nous n'avons donc pu les obtenir: il ne nous a pas été possible
+de tester notre solution.
+
+\subsection{Test et validation}
+La derniére partie de notre travail a consisté en le test et la validation
+de notre solution.
+  
+

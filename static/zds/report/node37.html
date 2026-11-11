@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.3.3 What is public key cryptography (PKC)?</TITLE>
+<META NAME="description" CONTENT="3.3.3 What is public key cryptography (PKC)?">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node38.html">
+<LINK REL="previous" HREF="node36.html">
+<LINK REL="up" HREF="node34.html">
+<LINK REL="next" HREF="node38.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html543"
+ HREF="node38.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html541"
+ HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html535"
+ HREF="node36.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html544"
+ HREF="node38.html">3.3.4 How does someone</A>
+<B> Up:</B> <A NAME="tex2html542"
+ HREF="node34.html">3.3 Data Security: Cryptography</A>
+<B> Previous:</B> <A NAME="tex2html536"
+ HREF="node36.html">3.3.2 What is a</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00433000000000000000">
+3.3.3 What is public key cryptography (PKC)?</A>
+</H2>
+Public key cryptography (PKC) is a system based on pairs of keys, a
+public key and a private key, rather than on a single secret key. The
+keys are related in such a way that information that is encrypted with
+the public key can only be decrypted with the private key. This means
+that, if I have a pair of keys, I can make my public key freely
+available to anyone who wants it without worrying about who else might
+get it. If anyone wants to send me a secret message, they can use my
+public key to encrypt the message. Only I can decrypt the message,
+using my private key, which I keep safe.
+<BR>
+<P>
+The action of encrypting information with PKC keys is significantly
+slower than encrypting with a secret key, such as a DES (Data
+Encryption Standard) key. So, in practice, a system that uses PKC first
+generates a secret key according to a method such as DES. It uses the
+secret key to encrypt the message, and it uses the PKC key to encrypt
+the secret key. Then, it attaches the PKC-encrypted secret key to the
+secret key-encrypted message.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html543"
+ HREF="node38.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html541"
+ HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html535"
+ HREF="node36.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html544"
+ HREF="node38.html">3.3.4 How does someone</A>
+<B> Up:</B> <A NAME="tex2html542"
+ HREF="node34.html">3.3 Data Security: Cryptography</A>
+<B> Previous:</B> <A NAME="tex2html536"
+ HREF="node36.html">3.3.2 What is a</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

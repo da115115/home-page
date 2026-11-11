@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.5.3 How can your company use smart card systems?</TITLE>
+<META NAME="description" CONTENT="3.5.3 How can your company use smart card systems?">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node51.html">
+<LINK REL="previous" HREF="node49.html">
+<LINK REL="up" HREF="node47.html">
+<LINK REL="next" HREF="node51.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html699"
+ HREF="node51.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html697"
+ HREF="node47.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html691"
+ HREF="node49.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html700"
+ HREF="node51.html">3.5.4 The future</A>
+<B> Up:</B> <A NAME="tex2html698"
+ HREF="node47.html">3.5 What a Smart</A>
+<B> Previous:</B> <A NAME="tex2html692"
+ HREF="node49.html">3.5.2 What is a</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><strong>Subsections</strong></A>
+<UL>
+<LI><A NAME="tex2html701"
+ HREF="node50.html#SECTION00453100000000000000">
+Two-factor authentication process</A>
+<LI><A NAME="tex2html702"
+ HREF="node50.html#SECTION00453200000000000000">
+Card requirements</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+<H2><A NAME="SECTION00453000000000000000">
+3.5.3 How can your company use smart card systems?</A>
+</H2>
+<P><H3><A NAME="SECTION00453100000000000000">
+Two-factor authentication process</A>
+</H3>
+The major weakness in Kerberos based security is the reliance on
+passwords for the authentication of the end user. Passwords need to be
+reasonably easy to remember, or users will write them down, introducing
+yet another security vulnerability. Yet easy-to-remember passwords use
+only a small fraction of the key space, and are subject to dictionary
+attacks.
+<BR>
+<P>
+Smart cards can dramatically reduce password exposure by supporting a
+2-factor, 2-step authentication mechanism (See, for example, J. Kohl
+and C. Neumann, ``The Kerberos Network Authentication Service'',
+Internet Engineering Task Force, Networking Group, Internet Draft RFC
+1510, Sep 1993 or Marjan Krajewski, Jr., ``Smart Card Augmentation of
+Kerberos'', Proceedings of the Privacy and Security Research Group
+Workshop on Network and Distributed System Security, February 11-12,
+1993, San Diego, CA, pp.119-123.).
+<BR>
+<P>
+With passwords only, a user must know one piece of secret information
+-- the valid password for a principal name -- in order to log in to a
+company cell. There is one step involved in authentication -- supply a
+login name and its password to the system.
+<BR>
+<P>
+With smart cards, a user must possess a unique physical token -- the
+smart card -- as well as knowing one piece of secret information -- a
+password associated with the card. Knowledge of the card password is of
+no use without possession of the card itself. Possession of the card is
+of no use without knowledge of the associated password.
+<BR>
+<P>
+With passwords only, there is one step to the authentication process --
+the user principal is authenticated to the computer. With smart cards,
+there is an additional step involved -- before being authenticated to the
+computer, the end user must be authenticated to the smart card. The first
+step depends on knowing the correct password. The second step depends on
+possessing the correct smart card -- the one containing the user's
+long-term key.
+<BR>
+<P>
+Therefore it is hereby proposed using the smart card's secure file
+system to store the user's long-term key. To access the key and log in
+to the computer, a user must possess the card and must also know the
+password required to access the key file on the card.
+<BR>
+<P>
+The details of this solution are contained in the following sections.
+<P><H3><A NAME="SECTION00453200000000000000">
+Card requirements</A>
+</H3>
+To achieve the additional security provided by this solution, cards
+must meet certain minimum physical and functional requirements.
+<P><DL>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Physical access
+  requirements</B>
+<DD>
+<P>
+The card must conform to the accepted International Standards ISO
+    7816-1, ISO 7816-2, and ISO 7816-3.
+<BR>
+<P>
+The card must be tamper-resistant. Common tamper-resistance features
+    include: chip enclosed in a hard, opaque, tamper-evident sealing
+    coating over a passivation layer; circuitry to disable card output if
+    the passivation layer is removed or if temperature, voltage, or
+    frequency fluctuates outside the specified operating range.
+<BR>
+<P>
+Cards with higher levels of tamper-resistance generally have a higher
+    cost. The card issuer must evaluate with the card vendor the
+    appropriate level of tamper-resistance for the issuer's application.
+<BR>
+<P>
+Failure to provide adequate tamper-resistance makes the long-term key
+    stored on the card vulnerable to physical attacks, reducing security
+    when a card is lost or stolen.
+<BR>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Access control
+  requirements</B>
+<DD>
+<P>
+The card file system must provide access controls that support the use
+    of a password to protect access to the file containing the key.
+    Passwords of up to 8 bytes in length must be supported. Without
+    presentation to the card operating system of the password associated
+    with the key file, there should be no access to the key stored in the
+    card file system. Failure to conform to this specification negates the
+    additional security that smart cards offer.
+<BR>
+<P>
+The card must support detection of sequential invalid access attempts
+    (a request for a protected card operation without supplying the correct
+    password for the operation). Upon detecting N sequential invalid access
+    attempts on any operation (where N may be configurable), the card must
+    deny all further access to all operations except for possibly one
+    ``unlock/erase'' operation. This one operation, if supported, must
+    erase the key stored in the card file system before restoring normal
+    access to the card. Failure to conform to this specification leaves a
+    lost or stolen card vulnerable to off-line dictionary password-guessing
+    attacks. Accounts associated with lost or stolen cards are subject to
+    compromise until an administrator invalidates the account in the
+    Security Registry.
+<BR>
+<P>
+The card file system must support access controls that allow only the
+    user to modify the password associated with the key file (with the
+    possible exception described in the next paragraph).
+<BR>
+<P>
+An interesting implementation would have a way of providing
+    administrative access to unlock/erase a locked card (see above), set a
+    new key on the card and in the Security Registry, set a new card access
+    password, etc., but that is a vendor-issue not required for the basic
+    functionality specified here.
+</DL><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html699"
+ HREF="node51.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html697"
+ HREF="node47.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html691"
+ HREF="node49.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html700"
+ HREF="node51.html">3.5.4 The future</A>
+<B> Up:</B> <A NAME="tex2html698"
+ HREF="node47.html">3.5 What a Smart</A>
+<B> Previous:</B> <A NAME="tex2html692"
+ HREF="node49.html">3.5.2 What is a</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

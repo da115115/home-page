@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//FR">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Diffusion de Transparents sur Multicast</TITLE>
+<META NAME="description" CONTENT="Diffusion de Transparents sur Multicast">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node1.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html11"
+ HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif_gr.gif"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif_gr.gif">   
+<BR>
+<B> Next:</B> <A NAME="tex2html12"
+ HREF="node1.html">Liste des figures</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<P>
+<DIV ALIGN="CENTER">
+<FONT SIZE="+4">Diffusion de transparents
+<BR></FONT>
+    <BR>
+<BR>
+<BR>
+    <FONT SIZE="+4">par la technologie <I>PUSH</I>
+<BR></FONT>
+    <BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+    <BIG>Elves: Denis Arnaud, Sbastien Fabre
+<BR></BIG>
+    <BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+    <BIG>Institut Eurcom, Dcembre 1997</BIG>
+  </DIV>
+
+<P>
+<DIV ALIGN="CENTER"><A NAME="tex2html1"
+ HREF="/flip/report.ps.gz">Une version Postscript est aussi
+ disponible ici.</A>
+<BR>
+</DIV>
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS">&#160;</A>
+<UL>
+<LI><A NAME="tex2html13"
+ HREF="node1.html#SECTION00010000000000000000">
+Liste des figures</A>
+<LI><A NAME="tex2html14"
+ HREF="node2.html#SECTION00020000000000000000">
+1 L'objectif du projet</A>
+<UL>
+<LI><A NAME="tex2html15"
+ HREF="node3.html#SECTION00021000000000000000">
+1.1 La technologie <I>PUSH</I></A>
+<LI><A NAME="tex2html16"
+ HREF="node4.html#SECTION00022000000000000000">
+1.2 La diffusion de transparents</A>
+</UL>
+<LI><A NAME="tex2html17"
+ HREF="node5.html#SECTION00030000000000000000">
+2 Le droulement du projet</A>
+<UL>
+<LI><A NAME="tex2html18"
+ HREF="node6.html#SECTION00031000000000000000">
+2.1 Le dveloppement de l'interface graphique et du convertisseur
+de fichier HTML</A>
+<LI><A NAME="tex2html19"
+ HREF="node7.html#SECTION00032000000000000000">
+2.2 Utilisation du protocole AMP</A>
+<UL>
+<LI><A NAME="tex2html20"
+ HREF="node7.html#SECTION00032100000000000000">
+2.2.1 Ct metteur: Interfa&#231;age Java - C++</A>
+<LI><A NAME="tex2html21"
+ HREF="node7.html#SECTION00032200000000000000">
+2.2.2 Ct rcepteur</A>
+</UL>
+<LI><A NAME="tex2html22"
+ HREF="node8.html#SECTION00033000000000000000">
+2.3 Construction d'un metteur (le serveur) et d'un rcepteur (le
+  client)</A>
+<UL>
+<LI><A NAME="tex2html23"
+ HREF="node8.html#SECTION00033100000000000000">
+2.3.1 L'metteur</A>
+<LI><A NAME="tex2html24"
+ HREF="node8.html#SECTION00033200000000000000">
+2.3.2 Le rcepteur</A>
+</UL>
+<LI><A NAME="tex2html25"
+ HREF="node9.html#SECTION00034000000000000000">
+2.4 Test et validation</A>
+</UL>
+<LI><A NAME="tex2html26"
+ HREF="node10.html#SECTION00040000000000000000">
+3 Fonctionnalits</A>
+<UL>
+<LI><A NAME="tex2html27"
+ HREF="node11.html#SECTION00041000000000000000">
+3.1 L'metteur</A>
+<LI><A NAME="tex2html28"
+ HREF="node12.html#SECTION00042000000000000000">
+3.2 Le rcepteur</A>
+</UL>
+<LI><A NAME="tex2html29"
+ HREF="node13.html#SECTION00050000000000000000">
+4 Composition - Structure de l'application</A>
+<UL>
+<LI><A NAME="tex2html30"
+ HREF="node14.html#SECTION00051000000000000000">
+4.1 Prsentation</A>
+<LI><A NAME="tex2html31"
+ HREF="node15.html#SECTION00052000000000000000">
+4.2 Couches de contrle et d'interface graphique: dtail</A>
+<LI><A NAME="tex2html32"
+ HREF="node16.html#SECTION00053000000000000000">
+4.3 Relation entre ControlLayer et FileList</A>
+<LI><A NAME="tex2html33"
+ HREF="node17.html#SECTION00054000000000000000">
+4.4 Couches de contrle et d'adaptation: dtail</A>
+</UL>
+<LI><A NAME="tex2html34"
+ HREF="node18.html#SECTION00060000000000000000">
+5 Conclusion</A>
+<LI><A NAME="tex2html35"
+ HREF="node19.html#SECTION00070000000000000000">
+6 Remerciements</A>
+<LI><A NAME="tex2html36"
+ HREF="node20.html#SECTION00080000000000000000">
+A Guide d'installation</A>
+<LI><A NAME="tex2html37"
+ HREF="node21.html#SECTION00090000000000000000">
+B Source du scripte Unix ``killer''</A>
+<LI><A NAME="tex2html38"
+ HREF="node22.html#SECTION000100000000000000000">
+C Procdures de cration de cls, de certificats, et de signatures</A>
+<LI><A NAME="tex2html39"
+ HREF="node23.html#SECTION000110000000000000000">
+D Exemple d'applet  deux <I>panels</I></A>
+<LI><A NAME="tex2html40"
+ HREF="node24.html#SECTION000120000000000000000">
+E Sources des programmes</A>
+</UL>
+<!--End of Table of Child-Links-->
+<BR><HR>
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

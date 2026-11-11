@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.6.8 What is DSS?</TITLE>
+<META NAME="description" CONTENT="3.6.8 What is DSS?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node78.html">
+<LINK REL="previous" HREF="node76.html">
+<LINK REL="up" HREF="node69.html">
+<LINK REL="next" HREF="node78.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1063"
+ HREF="node78.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1061"
+ HREF="node69.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1055"
+ HREF="node76.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1064"
+ HREF="node78.html">3.6.9 Is DSS secure?</A>
+<B> Up:</B> <A NAME="tex2html1062"
+ HREF="node69.html">3.6 Capstone, Clipper and</A>
+<B> Previous:</B> <A NAME="tex2html1056"
+ HREF="node76.html">3.6.7 What is the</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00368000000000000000">
+3.6.8 What is DSS?</A>
+</H2>
+<A NAME="what_dss">&#160;</A>
+DSS is the proposed Digital Signature Standard, which specifies a Digital
+Signature Algorithm (DSA), and is a part of the U.S.  government's Capstone
+project (see Question&nbsp;<A HREF="node70.html#what_caps">3.6.1</A>). It was selected by NIST, in
+cooperation with the NSA (see Section 7), to be the digital authentication
+standard of the U.S. government; whether the government should in fact
+adopt it as the official standard is still under debate.
+<BR>
+<P>
+DSS is based on the discrete log problem (see Question&nbsp;<A HREF="node60.html#what_log_pb">3.4.9</A>)
+and derives from cryptosystems proposed by Schnorr and ElGamal. It is for
+authentication only.
+<BR>
+<P>
+DSS has, for the most part, been looked upon unfavorably by the
+computer industry, much of which had hoped the government would choose
+the RSA algorithm as the official standard; RSA is the most widely used
+authentication algorithm. Several articles in the press, such as,
+discuss the industry dissatisfaction with DSS. Criticism of DSS has
+focused on a few main issues: it lacks key exchange capability; the
+underlying cryptosystem is too recent and has been subject to too
+little scrutiny for users to be confident of its strength; verification
+of signatures with DSS is too slow; the existence of a second
+authentication standard will cause hardship to computer hardware and
+software vendors, who have already standardized on RSA; and that the
+process by which NIST chose DSS was too secretive and arbitrary, with
+too much influence wielded by NSA. Other criticisms were addressed by
+NIST by modifying the original proposal.
+<BR>
+<P>
+In the DSS system, signature generation is faster than signature
+verification, whereas in the RSA system, signature verification is
+faster than signature generation (if the public and private exponents
+are chosen for this property, which is the usual case). NIST claims
+that it is an advantage of DSS that signing is faster, but many people
+in cryptography think that it is better for verification to be the
+faster operation.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1063"
+ HREF="node78.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1061"
+ HREF="node69.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1055"
+ HREF="node76.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1064"
+ HREF="node78.html">3.6.9 Is DSS secure?</A>
+<B> Up:</B> <A NAME="tex2html1062"
+ HREF="node69.html">3.6 Capstone, Clipper and</A>
+<B> Previous:</B> <A NAME="tex2html1056"
+ HREF="node76.html">3.6.7 What is the</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

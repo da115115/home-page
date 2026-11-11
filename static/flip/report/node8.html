@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//FR">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2.3 Construction d'un metteur (le serveur) et d'un rcepteur (le client)</TITLE>
+<META NAME="description" CONTENT="2.3 Construction d'un metteur (le serveur) et d'un rcepteur (le client)">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node9.html">
+<LINK REL="previous" HREF="node7.html">
+<LINK REL="up" HREF="node5.html">
+<LINK REL="next" HREF="node9.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html129"
+ HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html127"
+ HREF="node5.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html121"
+ HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html130"
+ HREF="node9.html">2.4 Test et validation</A>
+<B> Up:</B> <A NAME="tex2html128"
+ HREF="node5.html">2 Le droulement du</A>
+<B> Previous:</B> <A NAME="tex2html122"
+ HREF="node7.html">2.2 Utilisation du protocole</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><strong>Subsections</strong></A>
+<UL>
+<LI><A NAME="tex2html131"
+ HREF="node8.html#SECTION00033100000000000000">
+2.3.1 L'metteur</A>
+<LI><A NAME="tex2html132"
+ HREF="node8.html#SECTION00033200000000000000">
+2.3.2 Le rcepteur</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+<H2><A NAME="SECTION00033000000000000000">
+2.3 Construction d'un metteur (le serveur) et d'un rcepteur (le
+  client)</A>
+</H2>
+Sont dcrits dans cette partie les problmes que nous avons rencontrs
+dans la construction des deux entits.
+<BR>
+<P><H3><A NAME="SECTION00033100000000000000">
+2.3.1 L'metteur</A>
+</H3>
+Nous retrouvons ici le problme d'interfa&#231;age avec AMP. En effet,
+l'metteur fait un appel systme pour lancer la transmission d'un fichier
+sur le rseau, et l'implmentation d'AMP ne prvoit pas l'arrt du serveur
+en cours de transmission. Or, il nous fallait pouvoir l'interrompre 
+n'importe quel instant. Pour rsoudre ce problme, nous avons utilis des
+<I>Thread</I> (voir la section&nbsp;<A HREF="node13.html#sec:comp">4</A> pour plus de dtails).
+<P><H3><A NAME="SECTION00033200000000000000">
+2.3.2 Le rcepteur</A>
+</H3>
+En plus du dveloppement d'un rcepteur sous forme d'application, nous
+avons tudi la ralisation de ce dernier sous forme d'une appelette. Pour
+ce faire, nous souhaitions incorporer le panneau de commande (voir la
+section&nbsp;<A HREF="node10.html#sec:fonction">3</A>) dans l'appelette. Il nous fallait donc pouvoir
+excuter en parallle deux processus qui communiquent entre eux (un pour
+scruter les vnements, et l'autre pour afficher les pages re&#231;ues) dans
+une seule appelette.  Nous avons rsolu ce problme en crant deux panneaux
+(<I>panel</I>) dans l'appelette. Pour tester ce systme, nous avons
+dvelopp un exemple simple retranscrit dans l'annexe&nbsp;<A HREF="node23.html#ann:panel">D</A>.
+<BR>
+<P>
+Mais le principal problme pour la ralisation du rcepteur sous forme
+d'appelette vient du fait que l'on doit pouvoir crire des fichiers
+(dcompression puis dcompactage du fichier re&#231;u, effacement des
+fichiers non utiliss), ce qui n'est pas possible avec une appelette
+classique. Aussi, il est ncssaire d'utiliser des appelettes signes.
+Nous avons donc tudi une mthode afin de signer les appelettes (voir
+l'annexe&nbsp;<A HREF="node22.html#ann:doit">C</A> pour plus de dtails). Ces appelettes signes
+fonctionnent avec <I>appletviewer</I> (donn avec <I>JDK</I>), mais ce
+dernier n'est pas un navigateur et ne peut par consquent pas afficher de
+pages HTML. D'autre part, avec Netscape, le mcanisme de scurit est un
+peu diffrent, et il faut ainsi obtenir un certificat d'authentification
+reconnu par Netscape pour signer les appelettes. Or ces certificats sont
+payants et nous n'avons donc pu les obtenir: il ne nous a pas t possible
+de tester notre solution.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html129"
+ HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html127"
+ HREF="node5.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html121"
+ HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html130"
+ HREF="node9.html">2.4 Test et validation</A>
+<B> Up:</B> <A NAME="tex2html128"
+ HREF="node5.html">2 Le droulement du</A>
+<B> Previous:</B> <A NAME="tex2html122"
+ HREF="node7.html">2.2 Utilisation du protocole</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

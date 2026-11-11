@@ -1,0 +1,479 @@
+This is MlTeX (2.01), C Version 3.1415 (C version 6.1) (format=latex 96.5.9)  25 NOV 1997 18:36
+**report.tex
+(report.tex
+LaTeX2e <1995/12/01> patch level 2
+(/usr/local/lib/texmf/tex/latex2e/base/report.cls
+Document Class: report 1995/12/20 v1.3q Standard LaTeX document class
+(/usr/local/lib/texmf/tex/latex2e/base/size12.clo
+File: size12.clo 1995/11/30 v1.3p Standard LaTeX file (size option)
+)
+\c@part=\count82
+\c@chapter=\count83
+\c@section=\count84
+\c@subsection=\count85
+\c@subsubsection=\count86
+\c@paragraph=\count87
+\c@subparagraph=\count88
+\c@figure=\count89
+\c@table=\count90
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/local/lib/texmf/tex/latex2e/ams/amssymb.sty
+Package: amssymb 1995/02/01 v2.2a
+
+(/usr/local/lib/texmf/tex/latex2e/ams/amsfonts.sty
+Package: amsfonts 1995/02/01 v2.2b
+\@emptytoks=\toks14
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 128.
+))
+(/usr/local/lib/texmf/tex/latex2e/graphics/graphicx.sty
+Package: graphicx 1995/12/06 v0.6h Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/lib/texmf/tex/latex2e/graphics/keyval.sty
+Package: keyval 1995/09/21 v1.09 key=value parser (DPC)
+)
+(/usr/local/lib/texmf/tex/latex2e/graphics/graphics.sty
+Package: graphics 1996/02/20 v0.7h Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/lib/texmf/tex/latex2e/graphics/trig.sty
+Package: trig 1994/10/16 v1.08 sin cos tan (DPC)
+)
+(/usr/local/lib/texmf/tex/latex2e/graphics/graphics.cfg)
+Package graphics Info: Driver file: dvips.def on input line 82.
+
+(/usr/local/lib/texmf/tex/latex2e/graphics/dvips.def
+File: dvips.def 1995/12/04 v2.14 Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+(/usr/local/lib/texmf/tex/dvips/psfig.tex
+\@unused=\write4
+\ps@stream=\read1
+\p@intvaluex=\dimen105
+\p@intvaluey=\dimen106
+
+psfig/tex 1.10-dvips
+) (/homes/arnaud/htdocs/latex2html/texinputs/html.sty
+
+LaTeX Warning: You have requested package `',
+               but the package provides `html'.
+
+Package: html 1996/12/22 v1.1 hypertext commands for latex2html (nd, hws, rrm)
+\c@lpart=\count91
+\c@lchapter=\count92
+\c@lsection=\count93
+\c@lsubsection=\count94
+\c@lsubsubsection=\count95
+\c@lparagraph=\count96
+\c@lsubparagraph=\count97
+\c@lequation=\count98
+\c@lsubsubparagraph=\count99
+\ptrfile=\write5
+) (/homes/arnaud/htdocs/latex2html/texinputs/htmllist.sty) (report.aux)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+
+[1
+
+] (report.toc
+LaTeX Font Info:    Try loading font information for U+msa on input line 2.
+ (/usr/local/lib/texmf/tex/latex2e/mfnfss/Umsa.fd
+File: Umsa.fd 1995/01/05 v2.2e AMS font definitions
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 2.
+
+(/usr/local/lib/texmf/tex/latex2e/mfnfss/Umsb.fd
+File: Umsb.fd 1995/01/05 v2.2e AMS font definitions
+) [1
+
+])
+\tf@toc=\write6
+ [2] (report.lof
+Overfull \hbox (3.59335pt too wide) in paragraph at lines 11--11
+ [][] []\OT1/cmr/m/n/12 Numérisation d'un sig-nal analogique: 1-Signal analogiq
+ue; 2-Échantillonage; 
+ []
+
+)
+\tf@lof=\write7
+ [3
+
+]
+Chapter 1.
+
+Underfull \hbox (badness 10000) in paragraph at lines 57--61
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--71
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--76
+
+ []
+
+[4
+
+] [5] [6]
+Chapter 2.
+
+Underfull \hbox (badness 10000) in paragraph at lines 138--151
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 152--160
+
+ []
+
+
+Overfull \hbox (12.20523pt too wide) in paragraph at lines 185--192
+[]\OT1/cmr/m/n/12 Comme les mon-tages élec-tron-iques, tels les am-plifi-ca-teu
+rs (ser-vant à re-layer l'information,
+ []
+
+[7
+
+] [8]
+Underfull \hbox (badness 10000) in paragraph at lines 235--245
+
+ []
+
+[9] [10]
+Chapter 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 294--301
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 302--310
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 311--317
+
+ []
+
+
+Overfull \hbox (24.67046pt too wide) in paragraph at lines 329--338
+\OT1/cmr/m/n/12 d'échantillonnage), écartés au plus d'un temps $\OML/cmm/m/it/1
+2 T \OT1/cmr/m/n/12 = 1\OML/cmm/m/it/12 =\OT1/cmr/m/n/12 (2\OML/cmm/m/it/12 f\O
+T1/cmr/m/n/12 )$, T étant la péri-ode d'échantillonnage
+ []
+
+[11
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 354--365
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 366--377
+
+ []
+
+[12] [13]
+Underfull \hbox (badness 10000) in paragraph at lines 410--423
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 424--429
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 430--441
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 442--453
+
+ []
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 506--511
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 512--514
+
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 515--518
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 519--522
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 523--526
+
+ []
+
+[16]
+Overfull \hbox (11.1608pt too wide) in paragraph at lines 585--595
+\OT1/cmr/m/n/12 trans-mis (et con-tenant im-plicite-ment le sig-nal d'horloge) 
+et du sig-nal émanant de l'oscillateur
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 585--595
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 614--627
+
+ []
+
+[17] [18] [19]
+Chapter 4.
+
+Underfull \hbox (badness 10000) in paragraph at lines 701--706
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 707--715
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 731--737
+
+ []
+
+[20
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 778--782
+
+ []
+
+[21] [22]
+Underfull \hbox (badness 10000) in paragraph at lines 813--823
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 863--863
+
+ []
+
+[23]
+Overfull \hbox (24.70372pt too wide) in paragraph at lines 887--895
+[]\OT1/cmr/m/n/12 L'opération de trans-po-si-tion étant réal-isée par des cir-c
+uits spé-cial-isés à base d'amplificateurs
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 887--895
+
+ []
+
+[24] [25]
+Underfull \hbox (badness 10000) in paragraph at lines 896--903
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 904--911
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 927--944
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 945--950
+
+ []
+
+[26] [27]
+Chapter 5.
+
+Underfull \hbox (badness 10000) in paragraph at lines 977--982
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 983--989
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 990--1000
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1001--1011
+
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 1019
+.
+(/usr/local/lib/texmf/tex/latex2e/base/OMScmr.fd
+File: OMScmr.fd 1995/12/04 v2.4e Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 1019.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1039--1046
+
+ []
+
+[28
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1076--1078
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1079--1087
+
+ []
+
+[29] [30]
+Overfull \hbox (0.48592pt too wide) in paragraph at lines 1088--1107
+[]\OT1/cmr/m/n/12 Le cir-cuit cryp-teur doit se placer en amont de la phase de 
+codage-modulation-transposi-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1088--1107
+
+ []
+
+Missing character: There is no ¦ in font cmr12!
+[31]
+Chapter 6.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1167--1172
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1173--1185
+
+ []
+
+[32
+
+] [33]
+Missing character: There is no ¦ in font cmr12!
+
+Underfull \hbox (badness 10000) in paragraph at lines 1186--1193
+
+ []
+
+[34]
+Appendix A.
+[35
+
+]
+Appendix B.
+[36
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1340--1346
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1347--1352
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1429--1434
+
+ []
+
+[37]
+Underfull \hbox (badness 10000) in paragraph at lines 1435--1441
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1442--1443
+
+ []
+
+[38]
+Appendix C.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1495--1511
+
+ []
+
+[39
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 1556--1568
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1569--1579
+
+ []
+
+[40]
+Appendix D.
+Missing character: There is no ¦ in font cmr12!
+
+Underfull \hbox (badness 10000) in paragraph at lines 1618--1626
+
+ []
+
+[41
+
+] [42]
+Appendix E.
+[43
+
+] [44] [45] [46] (report.aux) ) 
+Here is how much of TeX's memory you used:
+ 1353 strings out of 10708
+ 14589 string characters out of 71759
+ 65364 words of memory out of 262141
+ 4357 multiletter control sequences out of 9500
+ 12464 words of font info for 48 fonts, out of 100000 for 255
+ 15 hyphenation exceptions out of 607
+ 25i,13n,24p,285b,231s stack positions out of 300i,100n,60p,3000b,4000s
+
+Output written on report.dvi (47 pages, 110616 bytes).

@@ -1,0 +1,238 @@
+\section{L'administration du réseau}
+
+Pour l'administration de notre réseau nous avons besoin d'effectuer plusieurs
+mesures sur les switchs, le routeur et les serveurs, d'être prévenus au
+plus tôt des pannes survenant sur le réseau et de connaître le
+trafic généré sur le WAN (la part de trafic http et le trafic total).
+
+\subsection{Taux de disponibilité des switchs et du routeur}
+Sur chaque site, nous disposons de trois switchs ATM Fore et d'un routeur
+Cisco. Ces matériels implémentent une MIB propriétaire en plus de la MIB
+II.\\
+
+Pour effectuer la mesure du taux de disponibilité sur les switchs Fore
+(avec la MIB Fore), nous disposons d'une variable $UpTime$ (voir
+figure~\ref{fig:MibForeUpTime}) indiquant le temps écoulé depuis la
+dernière ré-initialisation du switch.\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=5cm]{MibForeUpTime.ps}
+  \caption{Variable $UpTime$ dans la MIB Fore}
+  \label{fig:MibForeUpTime}
+\end{figure}
+
+Grâce à un sondage ({\it polling}) fréquent (toutes les 5 minutes à
+l'installation, puis moins souvent si le réseau s'avère fiable) sur cette
+variable, nous pouvons mesurer la diponibilité des switchs avec une
+granularité égale à celle du polling.\\
+
+Du côté du routeur, la MIB Cisco ne fournit aucune variable pour la mesure
+de la disponibilité. Par contre, Avec la MIB II, nous retrouvons une
+variable $SysUpTime$ (voir figure~\ref{fig:MibIISysUpTime}), équivalente
+a l'$UpTime$ de la MIB Fore que nous utilisons de la même fa\c con.\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=2cm]{MibIISysUpTime.ps}
+  \caption{Variable $SysUpTime$ dans la MIB II}
+  \label{fig:MibIISysUpTime}
+\end{figure}
+
+
+\subsection{Connaître l'état opérationnel des liens et des équipements}
+Il s'agit ici de surveiller les liens physiques et les matériels.
+
+\subsubsection{Les switchs}
+Sur les switchs, disposant de la MIB Fore, on utilise la variable $Carrier$
+(voir figure~\ref{fig:MibForeCarrier_OperTable}) qui indique pour chaque
+port l'état du lien auquel il est connecté. On peut ainsi connaître l'état
+des trois liens principaux du réseau de chaque site (deux liens
+inter-switch, et un lien switch central -- routeur).  Pour surveiller l'état
+des switchs eux-mêmes on interroge la variable $OperStatus$ (voir
+figure~\ref{fig:MibForeCarrier_OperTable}) qui nous
+donne l'état opérationnel de chaque port.\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=11cm]{MibForeCarrier_OperTable.ps}
+  \caption{Variables $Carrier$ et $OperStatus$ de la MIB Fore}
+  \label{fig:MibForeCarrier_OperTable}
+\end{figure}
+   
+De plus, la MIB Fore comporte des alarmes à trois états: $no alarm$,
+$minor alarm$ et $major alarm$. Ces alarmes sont présentes dans tous les
+groupes sous la forme d'une variable appelée $alarmstate$. En interrogeant
+ces variables on peut connaître l'état opérationnel de chaque groupe du
+switch. Par exemple, dans le groupe $powerGroup$, si $alarmstate = no
+alarm$ tout va bien, si $alarmstate = minor alarm$, certaines alimentations
+sont en pannes et si $alarmstate = major alarm$, toutes les alimentations
+sont hors service. Ces alarmes permettent une gestion ``fine'' des
+problèmes~; en fonction de la gravité des alarmes on prévient
+automatiquement certaines personnes.
+      
+\subsubsection{Le routeur}
+Sur le routeur, on utilise la variable $ifOperStatus$ (voir
+figure~\ref{fig:MibIIifOperStatus}), qui indique elle aussi l'état
+opérationnel de chaque interface.
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=4cm]{MibIIifOperStatus.ps}
+  \caption{Variable $ifOperStatus$ de la MIB II}
+  \label{fig:MibIIifOperStatus}
+\end{figure}
+    
+\subsubsection{Les serveurs}
+Les serveurs de calcul et de fichiers, comme décrit dans la
+section~\ref{sec:exist}, sont portés par des {\it hosts}. Nous avions donc
+la possibilité de prendre ou de laisser la MIB {\it Host Resources}. Cette
+dernière est très riche et nous permettrait d'effectuer facilement toutes
+nos mesures, et en particulier celles sur la CPU et la mémoire. Toutefois,
+avant d'opter pour une MIB, il faut vérifier qu'elle soit réellement
+implémentée par des constructeurs. C'est le cas d'Empire Technologies qui
+développe cette MIB. Nous avons donc choisi d'utiliser la MIB Host
+Resources (RFC 1514).\\
+
+Il est à noter, cependant, que dans la plupart des cas, les constructeurs
+(Sun, HP, IBM, DEC, etc.) implémentent une MIB propriétaire sur leurs
+{\it hosts}, qui reprend les principaux avantages de la MIB Host Resources.
+Dans le cadre de cette étude, nous avons tout de même pris la MIB Host
+Resources afin de prendre un exemple ``pédagogique''. Si nous avions à
+implémenter ce système, nous prendrions bien sûr les MIBs propriétaires
+fournies en standard sur les {\it hosts}, plutôt que d'aller acheter
+l'implémentation d'une MIB supplémenatire.\\
+    
+Cette MIB comprend la variable $hrSystemUptime$ (voir
+figure~\ref{fig:MibHosthrSystemUptime}) équivalente aux variables $upTime$
+de la MIB Fore et $SysUpTime$ de la MIB II. En interrogeant
+régulièrement cette variable on surveille l'état des hosts.\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=3cm]{MibHosthrSystemUptime.ps}
+  \caption{Variable $hrSystemUptime$ de la MIB Host Resources}
+  \label{fig:MibHosthrSystemUptime}
+\end{figure}
+
+Connaître l'état opérationnel des liens et des équipements est important
+car une panne peut avoir de graves conséquences. Toutefois, il ne faut pas
+surcharger le réseau de requêtes. Ainsi, nous pensons qu'un polling assez
+fréquent (tous les quarts d'heure) correspond à un bon compromis sécurité
+-- trafic. Nous renforcerons tout de même cette surveillance par un système
+de traps SNMP (voir la section~\ref{sub:trap}) car la panne d'organes
+vitaux comme les switchs ou le routeur doit être connue de l'administrateur
+au plus tôt.
+
+\subsection{Prévenir le ou les administrateurs au plus tôt}
+\label{sub:trap}
+Pour prévenir l'administrateur on utilise les traps SNMP. Il existe 6 traps
+($coldStart$, $warmStart$, $linkDown$, $linkUp$, $authentificationFailure$,
+et $egpNeighborloss Trap$) prédifinies dans SNMP et utilisables par tous
+les agents (s'il les supporte). En outre, les MIB propriétaires peuvent
+fournir d'autres traps, qui ne peuvent être traitées que par les
+plates-formes d'administration compatibles avec le matériel ({\it i.e.},
+pouvant traiter les informations contenues dans les traps propriétaires).
+
+\begin{itemize}  
+  \item Le routeur Cisco implémente tous ces traps sauf le $warmStart Trap$.
+    On va donc valider l'emission des traps classiques SNMP sur l'agent du
+    routeur, et on sera prévenu des pannes sur les liens ou les
+    interfaces du routeur par les $linkDown trap$.\\
+  \item Les switchs Fore sont gérés par des agents utilisant la MIB Fore.
+    Cette MIB comprend 6 traps ($asxSwLinkDown$, $asxswLinkUp$,
+    $asxHostLinkDown$, $asxHostLinkUp$, $asxNetModuleDown$,
+    $asxNetModuleUp$). De même, on valide l'émission des traps sur les
+    agents Fore pour être prévenu de la moindre panne dès qu'elle survient.
+  \item Pour les serveurs, la MIB Host Resources ne prévoyant aucun trap,
+    on utilisera les traps génériques SNMP.
+\end{itemize}
+
+\subsection{Surveiller le taux de remplissage des partitions des disques}
+Il s'agit ici d'accéder à la taille de chaque partition et à la taille de
+sa zône occupée. Grâce à la MIB Host Resources ces informations sont
+directement disponibles.  La variable $hrStorageSize$ (voir
+figure~\ref{fig:MibHostStorage}) donne la taille de n'importe quel type de
+zône mémoire (mémoire vive ou partition disque). La variable
+$hrStorageUsed$ (voir figure~\ref{fig:MibHostStorage}) en donne
+elle la taille de la zône utilisée.\\
+
+On a donc comme taux de remplissage~: $\frac{hrStorageUsed}{hrStorageSize}$.\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=7cm]{MibHostStorage.ps}
+  \caption{Variables $hrStorageUsed$ et $hrStorageSize$ de la MIB Host
+    Resources}
+  \label{fig:MibHostStorage}
+\end{figure}
+
+On effectue sur ces variables un polling de faible fréquence (3 fois par
+jours), car en utilisation normale, ces données évoulent assez lentement. De
+plus, les quotas offrent une relative protection contre les débordements.
+Toutefois, si le taux de remplissage d'un disque atteignait 90\%, il faudrait
+alors augmenter significativement la fréquence du polling sur ce disque.
+     
+\subsection{Surveiller l'utilisation CPU et mémoire}
+\subsubsection{La mémoire}
+Pour l'utilisation de la mémoire, on a vu dans le paragraphe précédent que
+la mémoire était traitée de la même fa\c con que les partitions disques. On
+effectuera par contre un polling plus fréquent car les variations de la
+zône mémoire utilisée sont plus rapides que celles de la zône disque
+utilisée. Un polling de période 15 minutes devrait nous permettre une
+surveillance moyenne. Pour la mémoire, il faudrait avoir une vision presque
+instantannée, or le trafic généré par un tel polling serait trop important.
+Ici, on se limitera à la prise ``d'une photo'' à un instant t et au relevé
+des problèmes survenus sur une longue période. Si le nombre de problèmes
+relevés sur une assez longue période est élevé, on peut en déduire un
+sous-dimensionnement du matériel ou un mauvaise répartition de la charge.
+
+\subsubsection{Le processeur}
+Pour la charge du processeur, nous sommes soumis au même problème, car
+l'utilisation CPU est une donnée évoluant très vite. On adopte donc la même
+politique de polling. Par contre c'est une autre variable que l'on va
+interroger~: la variable $hrProcessorLoad$ (voir la
+figure~\ref{fig:MibHostProcessor}). Elle nous donne en pourcent le
+taux d'utilisation du processeur.\\
+    
+\begin{figure}[htbp]
+  \centering\includegraphics[width=9cm]{MibHostProcessor.ps}
+  \caption{Variable $hrProcessorLoad$ de la MIB Host Resources}
+  \label{fig:MibHostProcessor}
+\end{figure}
+
+\subsection{Mesurer le trafic vers le WAN et le trafic Web}
+Comme nous l'avons vu dans le premier chapitre nous avons décidé d'insérer
+une sonde RMON à la sortie du routeur Cisco vers le WAN. Cette sonde nous
+servira à mesurer le trafic WAN généré par chaque site (ce qui
+pourrait-être fait directement par le routeur), mais surtout à mesurer le
+trafic WEB en particulier (protocole http dans IP) (ce que ne peut pas
+faire le routeur). Cette dernière mesure justifie à elle seule l'achat
+d'une sonde RMON.
+
+\subsection{Politique d'administration: les noms de communauté}
+Dans le deuxième chapitre de ce rapport nous avons expliqué que notre
+réseau pouvait être géré de deux fa\c con, soit avec une gestion séparée de
+chaque site, soit avec une gestion centralisée de sites répartis quasiment
+autonomes. Nous avons donc choisi un système de noms de communauté
+pouvant être utilisé dans les deux cas.\\
+
+Nous avons défini trois communautés:
+\begin{htmllist}
+  \htmlitemmark{RedBall}
+  \item[La communauté PUBLIC:] avec des droits read-only seulement et une
+    vision de la plupart des variables (excepté les variables critiques
+    comme la configuration de la sonde RMON par exemple).
+  \item[La communauté ADMINDELEGUE:] ayant une vision sur les mêmes variables
+    que la communauté PUBLIC mais avec des droits Read-Write sur certaines
+    d'entre elles pour permettre à un ``administrateur délégué''
+    d'effectuer des modifications simples (par exemple la configuration des
+    imprimantes).
+  \item[La communauté ADMINISTRATEUR:] ayant tous les droits sur toutes les
+    variables.
+\end{htmllist}
+
+La communauté ADMINDELEGUE peut voir sa vision et ses droits augmentés dans
+le cas de la gestion répartie du réseau. Cette communauté correspondra
+alors aux administrateurs locaux de chaques sites.
+
+\subsection{Vision globale des équipements et leur(s) MIB(s) sur le réseau}
+  
+\begin{figure}[htbp]
+  \centering\includegraphics[width=15cm]{reseau_seb.ps}
+  \caption{Les équipements et leur(s) MIB(s)}
+\end{figure}

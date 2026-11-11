@@ -1,0 +1,577 @@
+\chapter{Appendix 4: More about SSL and S-HTTP}
+
+\section{Security Assessment of the SSL Protocol}
+
+\subsection{Introduction}
+
+SSL is a channel security protocol. It provides a secure pipe between
+two systems which may be used to carry HTTP transactions or any other
+application data. It is not coupled to particular electronic commerce
+features or applications. Architecturally, SSL may be compared to
+versions of SOCKS which perform encryption or to IP security proposals.
+SSL includes the facilities for establishing, negotiating, and managing
+the security association between the endpoints (including performing
+authentication).\\
+
+SSL operates based on longer term security associations oriented around
+the generation of a master key between two parties and short lived
+sessions with per-session keys derived from the master key. In the
+assessment below, distinctions will be made between the services
+applied on a per-association basis vs those performed on a per-session
+basis.
+
+\subsection{Security Service Requirements}
+
+\latexhtml{\begin{itemize}}{\begin{htmllist}
+      \htmlitemmark{RedBall}}
+
+    \latexhtml{\item Transaction confidentiality}{\item[Transaction
+    confidentiality]}
+  
+  SSL provides confidentiality for all data exchanged between the two
+  systems. In SSLv2, encryption (i.e. confidentiality) is mandatory for all
+  associations. In SSLv3 confidentiality is an optional service.
+
+  \latexhtml{\item Selective field confidentiality}{\item[Selective field
+    confidentiality]}
+    
+  No selective field confidentiality is provided by SSL. When
+  confidentiality is provided, all data exchanged between the parties is
+  encrypted.
+
+  \latexhtml{\item Privacy/anonymity}{\item[Privacy/anonymity]}
+  
+  SSL decouples server and client authentication. Server authentication is
+  a mandatory part of security association establishment processing.
+  Client authentication is an optional service which may be required and
+  invoked by certain servers. If client authentication is not performed,
+  the client's identity need not be disclosed.
+
+  \latexhtml{\item Server authentication}
+  
+  Server authentication is performed as part of the establishment of any
+  new association. Authentication is based on the validation of the server
+  certificate from which the server's public key is used as part of the
+  master key generation process.
+
+  \latexhtml{\item Client authentication}{\item[Client authentication]}
+  
+  Client authentication may optionally be requested by the server.
+  Authentication is based on the validation of the client certificate which
+  is used as part of checking the signature on the client's response to an
+  optional challenge issued by the server.
+
+  \latexhtml{\item Data integrity}{\item[Data integrity]}
+  
+  SSL performs a keyed MAC calculation for all data exchanged. The MAC is
+  based on a shared secret (created during session establishment), the
+  data, and a sequence number. The MAC is mandatory for all information
+  exchanged.
+
+  \latexhtml{\item Data origin authentication}{\item Data origin
+    authentication}
+  
+  Data origin authentication is provided as a consequence of the
+  authentication performed during session establishment and ensures
+  continuity during a session lifetime based on the key management (i.e.
+  based on possession of the keys derived from the authenticated session
+  establishment.).
+
+  \latexhtml{\item Non-repudiation}{\item Non-repudiation}
+  
+  No non-repudiation services are provided by SSL.
+
+  \latexhtml{\item Message Stream integrity}{\item[Message Stream
+    integrity]}
+  
+  There are two levels of message stream integrity addressed within SSL.
+  The MAC calculated for each record within a session includes a sequence
+  number and prevents any modification (insertion, deletion, or reordering)
+  of the sequence of records. Multiple sessions may be established under a
+  single master key created during the authenticated association
+  establishment exchanges. SSL prevents replays of entire sessions by
+  exchanging per-session values provided by each party for each session and
+  incorporating them into the generation of the per-session key.
+
+  \latexhtml{\item Denial of Service}{\item[Denial of Service]}
+  
+  Denial of service concerns with SSL relate primarily to consumption of
+  resources at the server. An active attacker can readily force a reset of
+  a security association and force a new association establishment
+  exchange. An attacker could also try to overflow a server's session cache
+  and force each new session to repeat the complete association
+  establishment exchange. There is little that can be done about either of
+  these concerns and neither is significant in the context of what an
+  active attacker can do to disrupt communication.
+\latexhtml{\end{itemize}}{\end{htmllist}}
+
+
+\subsection{Other Factors}
+
+\latexhtml{\begin{itemize}}{\begin{htmllist}
+      \htmlitemmark{RedBall}}
+
+  \latexhtml{\item Proxy Operation}{\item[Proxy Operation]}
+  
+  There are substantial issues associated with the use of SSL in a
+  proxy/firewall environment. SSL is intended to create a secure channel
+  between transport peers. HTTP proxies expect to operate on application
+  data. Consequently, there are two choices for proxy operation. Either an
+  SSL association can be established through the proxy and viewed as an
+  opaque hole through the proxy machine or the proxy can establish SSL
+  associations with the client and/or server. In either of these scenarios,
+  the proxy must be SSL aware.\\
+
+  In the case of allowing an SSL association to be established through the
+  firewall, the security services are provided between the end client and
+  server. There are two concerns with respect to the proxy itself.  First,
+  there is no way for the firewall to determine what information is flowing
+  through the SSL pipe. This amounts to a wide open door into the protected
+  environment and is a significant issue. The second concern is the ability
+  of the HTTP proxy to perform any application based functions (e.g.,
+  access control, filtering, caching). If the SSL association is made
+  through the proxy, no application based processing can be performed (in
+  fact, the proxy has no way of telling that HTTP transactions are being
+  exchanged).\\
+  
+  If the proxy establishes the SSL association(s), then the proxy can
+  perform all of its normal processing (SSL becomes a specialized access
+  method). However, the security services are terminated at the proxy.
+  Consequently, all information is exposed at the proxy and the
+  authentication is limited to the identity of the proxy (not the end
+  client or server). There is no structured way for an end client or server
+  to determine that a given proxy authenticated by SSL is a ``reasonable''
+  proxy for the desired end system. The degree to which this is an issue
+  depends on the sensitivity of the information and the access control and
+  authentication policies of the clients and servers involved. SSL does not
+  provide any means for authenticating multiple parties along a transaction
+  path.
+
+  \latexhtml{\item Performance impacts}{\item[Performance impacts]}
+  
+  There are several dimensions to performance including connection
+  establishment latency, transaction overhead, and processing complexity.
+  For SSL, the transaction overhead is not significant. The primary impact
+  is on session establishment. Between 2 and 4 additional round trip times
+  (beyond any other establishment) are required depending upon whether an
+  SSL association has already been established (i.e. a master key exists)
+  and whether client authentication is performed. In general, the
+  operations performed by SSL are not expensive in terms of processing
+  (symmetric key and hash operations vs. private key encryption
+  operations).\\
+  
+  SSL requires the maintenance of state information (keys, counters,
+  identity, and algorithm information) by both the client and server.
+  Management of this state information represents an additional requirement
+  for the server.
+
+  \latexhtml{\item Granularity of security services provided by
+    protocol}{\item[Granularity of security services provided by protocol]}
+  
+  Security services are negotiated for an entire association and apply to
+  the endpoints of the transport connection. In general, this implies a
+  binding to an instance of an application process. The identity being
+  authenticated will depend upon the naming information in the client or
+  server certificate and on local key management issues (outside of the
+  scope of the specification).
+
+  \latexhtml{\item Associated key management and
+    cryptography}{\item[Associated key management and cryptography]}
+  
+  In SSLv2 the authenticated part of the key establishment is limited to
+  RSA encryption of the secret key element. In v3, support for additional
+  approaches including DH key exchange are included.\\
+  
+  SSL reuses the same IV throughout an association. In general, this is not
+  a problem given the frequency of changing session keys and the protection
+  provided by the MAC.
+
+  \latexhtml{\item Negotiation of services, mechanisms, and
+    formats}{\item[Negotiation of services, mechanisms, and formats]}
+  
+  SSL negotiates algorithm information as part of association
+  establishment. In SSLv2 the information used to negotiate algorithms is
+  not authenticated. This allows an active attacker to cause two parties to
+  use a particular selection common to both parties rather than having a
+  user's own selection logic invoked. So long as both the client and server
+  enforce a check that appropriate protection is applied to all information
+  exchanged, this is not a major issue. It may result in weaker
+  cryptographic protection being applied to an association than ``should''
+  have been used. In SSLv3, all negotiation exchanges are authenticated.
+  There are very few options in SSLv2, consequently interoperability
+  between independent implementations using common algorithm suites is
+  likely.
+
+  \latexhtml{\item Ability to convey certificate and authorization
+    information}{\item[Ability to convey certificate and authorization
+    information]}
+  
+  SSL allows only the client or server certificate to be sent. No
+  certification path, CRL, or authorization data can be exchanged. It is
+  important that certificates used with SSL provide identification
+  information which can meaningfully be compared with identity information
+  used with HTTP.
+
+  \latexhtml{\item Compromise Recovery and Handling}{\item[Compromise
+    Recovery and Handling]}
+  
+  No explicit mechanisms exist to clean up association data once
+  established.  This is an issue only if associations (i.e. master keys)
+  exist for an extended period of time. Checks of certificate validity are
+  performed only during association establishment.
+
+  \latexhtml{\item Susceptibility to active and passive
+    attacks}{\item[Susceptibility to active and passive attacks]}
+  
+  The security services provided by SSL appear to be robust in the presence
+  of active or passive attackers to the extent that robust cryptographic
+  algorithms are selected.
+
+  \latexhtml{\item Time based issues}{\item[Time based issues]}
+  
+  SSL does not rely on any clock based mechanisms for security services.
+
+  \latexhtml{\item Longevity of mechanism}{\item[Longevity of mechanism]}
+  
+  SSL provides flexibility in algorithm selection and key management which
+  provide for longevity of protection. There is a limit on the size of
+  challenge information exchanged for association establishment, however
+  the size seems more than adequate.
+
+  \latexhtml{\item Interoperability considerations}{\item[Interoperability
+    considerations]}
+  
+  Some aspects of the SSL specification could be clearer in terms of the
+  processing expected. Improved clarity would ease the development of
+  interoperable implementations.\\
+  
+  SSL's architectural placement make integration essentially transparent to
+  applications (except with respect to exchange of security control
+  information) and should simplify integration.
+
+  \latexhtml{\item Error handling and recovery}{\item[Error handling and
+    recovery]}
+  
+  While an error reporting facility exists, there is little structure
+  provided. Consequently, applications integrating with SSL may see
+  slightly different behavior between different implementations with
+  respect to error information returned. SSL is specified to abort a
+  session in the event of an error.
+\latexhtml{\end{itemize}}{\end{htmllist}}
+
+
+\section{Security Assessment of the SHTTP Protocol}
+
+\subsection{Introduction}
+
+SHTTP is a transaction security protocol designed explicitly to protect
+HTTP transactions. It operates as part of a secured application and
+encapsulates (possibly recursively) the application data (i.e. the HTTP
+transaction) and applies security services. SHTTP does not rely on an
+explicit security association but applies services atomically to each
+transaction. Architecturally, SHTTP may be compared to secure messaging
+protocols and, in fact, supports the use of such formats to provide the
+secure encapsulation. SHTTP includes a description of the means whereby
+a party determines what services and formats to apply to a transaction.
+SHTTP is designed to support the orthogonal application of security
+services (i.e. there are no mandatory services and any combination is
+allowed).
+
+\subsection{Security Service Requirements}
+
+\latexhtml{\begin{itemize}}{\begin{htmllist}
+      \htmlitemmark{RedBall}}
+
+  \latexhtml{\item Transaction confidentiality}{\item[Transaction
+    confidentiality]}
+  
+  SHTTP provides confidentiality for the encapsulated data exchanged
+  between parties. Sufficient (S)HTTP header information to allow
+  processing of the SHTTP transaction is sent in the clear.
+
+  \latexhtml{\item Selective field confidentiality}{\item[Selective field
+    confidentiality]}
+  
+  While SHTTP supports recursive encapsulation of transaction data, this is
+  expected to be applied to complete HTTP (or SHTTP) transactions.
+  Consequently, the granularity of protection remains a complete HTTP
+  transaction. This facility could be used to support prior generation of
+  signed information objects (contained in minimal HTTP response
+  transactions) which would then be returned when requested (possibly with
+  additional security encapsulation).
+
+  \latexhtml{\item Privacy/anonymity}{\item[Privacy/anonymity]}
+  
+  The degree to which anonymity is supported depends upon the security
+  services selected. If any authentication or non-repudiation services are
+  applied, then an identity of the parties will be disclosed.
+
+  \latexhtml{\item Server authentication}{\item[Server authentication]}
+  
+  Server authentication may be applied as part of any transaction.
+  Authentication may be based on a digital signature applied to the
+  transaction as well as based on the key management approach applied to
+  encryption keys or based on the keyed MAC calculations. Certain of these
+  approaches rely on the validation of certificates.
+
+  \latexhtml{\item Client authentication}{\item[Client authentication]}
+  
+  Client authentication may be applied as part of any transaction.
+  Authentication may be based on a digital signature applied to the
+  transaction as well as based on the key management approach applied to
+  encryption keys or based on the keyed MAC calculations. Certain of these
+  approaches rely on the validation of certificates.
+
+  \latexhtml{\item Data integrity}{\item[Data integrity]}
+  
+  Data integrity may be applied to any transaction and is based on a
+  message integrity check or message authentication code included in the
+  protected transaction. Integrity may also be provided by a digital
+  signature. If the timestamp based MAC is used, then pre-generation of the
+  SHTTP transaction is not possible.
+
+  \latexhtml{\item Data origin authentication}{\item[Data origin
+    authentication]}
+  
+  For SHTTP, data origin authentication is equivalent to the server or
+  client authentication service since all SHTTP services are applied to an
+  individual transaction.
+
+  \latexhtml{\item Non-repudiation}{\item[Non-repudiation]}
+  
+  SHTTP supports non-repudiation with proof of origin through the
+  application of digital signatures to the encapsulated transaction.  SHTTP
+  does not directly support non-repudiation with proof of receipt or any
+  other explicit proof of delivery/receipt mechanism.
+
+  \latexhtml{\item Message Stream integrity}{\item[Message Stream
+    integrity]}
+  
+  SHTTP itself applies services to individual transactions and so does not
+  explicitly address message stream issues. SHTTP provides a facility to
+  allow an application to perform weak sequence related checks through the
+  inclusion of a timestamp in MAC check values or strong freshness checks
+  through a nonce-based challenge response facility.
+
+  \latexhtml{\item Denial of Service}{\item[Denial of Service]}
+  
+  Denial of service concerns are limited to the destruction of transactions
+  in flight and consumption of resources. The ability of an attacker to
+  destroy messages on a channel cannot be addressed by an application
+  solution. The consumption of resource issue is based on the ability of an
+  attacker to overwhelm a server (or client) which transaction requiring
+  extensive processing resources.
+\latexhtml{\end{itemize}}{\end{htmllist}}
+
+
+\subsection{Other Factors}
+
+\latexhtml{\begin{itemize}}{\begin{htmllist}
+      \htmlitemmark{RedBall}}
+
+  \latexhtml{\item Proxy Operation}{\item[Proxy Operation]}
+  
+  SHTTP's selective security services and support for multiple
+  encapsulations provide some flexibility for accommodating proxy
+  environments. Most importantly, SHTTP allows for authentication (or other
+  security services) between multiple parties in a transaction path.
+  Consequently, a proxy may be authenticated along with the end client or
+  server. Such authentication may be performed either through a single
+  signature which can be checked by multiple parties or through multiple
+  encapsulations.\\
+  
+  The interaction with proxies will depend on the peer relationships of
+  security services, especially with respect to encryption and key
+  management and the operation of the proxy itself. The compatibility with
+  proxies will depend upon the degree to which the proxy is SHTTP aware and
+  the nature of the processing performed at the proxy. If the proxy is not
+  SHTTP aware or if the HTTP transaction is encrypted and hidden from the
+  proxy, then the functions which can be performed are very limited (e.g.,
+  limited caching, no information based processing).\\
+  
+  SHTTP does provide an ability to decouple the encryption and
+  authentication functions and to encapsulate these services in either
+  order so that a proxy may be capable of authenticating the source without
+  seeing the data or may examine the data while still preserving end-to-end
+  authentication.\\
+  
+  These abilities will support some, but not all, proxy environments.
+  There are limitations using SHTTP with non-SHTTP aware proxies or in
+  situations where the proxy must access the information within an HTTP
+  transaction.
+
+  \latexhtml{\item Performance impacts}{\item[Performance impacts]}
+  
+  There are several dimensions to performance including connection
+  establishment latency, transaction overhead, and processing complexity.
+  For SHTTP the establishment latency is minimal with many situations
+  requiring no added exchanges. SHTTP does add a possibly significant
+  amount of overhead to a transaction depending on the security format and
+  services selected. This overhead is apparent in terms of both the
+  increased size of transactions (especially requests) and in the time to
+  process a transaction. Depending on the processing, a number of expensive
+  (i.e. private key) operations may be required to process a request and
+  response. In addition, certification path validation (possibly including
+  retrieving certificate validation data) is likely to be required for most
+  transactions. The significance of the performance impact must be assessed
+  for specific environments (formats, algorithms, and policies).
+
+  \latexhtml{\item Granularity of security services provided by
+    protocol}{\item[Granularity of security services provided by protocol]}
+  
+  Security services are applied to individual HTTP transactions and apply
+  to the entire encapsulated data item (an HTTP or SHTTP transaction).  The
+  identity being used for security services will depend upon the naming
+  information in the client or server certificate (or other data) and on
+  local key management issues (outside of the scope of the specification).
+
+  \latexhtml{\item Associated key management and
+    cryptography}{\item[Associated key management and cryptography]}
+  
+  SHTTP provides for a large and extensible set of algorithms and key
+  management techniques. These algorithms may be grouped together to
+  support selectable suites or may be individually selected.
+
+  \latexhtml{\item Negotiation of services, mechanisms, and
+    formats}{\item[Negotiation of services, mechanisms, and formats]}
+  
+  The SHTTP negotiation process is based on each party making known
+  required and optional capabilities. These lists may be sent in HTTP
+  exchanges and may also be present in HTML anchors (this will determine,
+  in part, whether additional protocol exchanges are required). The sender
+  selects an appropriate choice from the list based on the sender's own
+  capabilities and policies. The information used to negotiate algorithms
+  and formats is not authenticated. This allows an active attacker to cause
+  two parties to use a particular selection common to both parties rather
+  than having a party's own selection logic invoked. So long as both the
+  client and server enforce a check that appropriate protection is applied
+  to all transactions, this is not a major issue. It may result in weaker
+  cryptographic protection being applied to an association than ``should''
+  have been used.\\
+  
+  SHTTP provides a rich set of options in terms of services, formats, and
+  algorithms. Consequently, there is a significant possibility of having
+  independent, compliant implementations which are not capable of
+  interoperating. Definition of minimum essential requirements (MERs) or
+  standard profiles would enhance the likelihood of interoperability.
+
+  \latexhtml{\item Ability to convey certificate and authorization
+    information}{\item[Ability to convey certificate and authorization
+    information]}
+  
+  The information which may be conveyed depends upon the format/domain
+  selected. Certification path information may always be sent while PKCS-7
+  encapsulation also supports transfer of CRLs. Authorization data is not
+  currently addressed. It is important that certificates used with SHTTP
+  provide identification information which can meaningfully be compared
+  with identity information used with HTTP.
+
+  \latexhtml{\item Compromise Recovery and Handling}{\item[Compromise
+    Recovery and Handling]}
+  
+  There is no explicit mechanism to deal with compromise recovery for
+  outband or shared secret keys managed externally. This should be dealt
+  with through whatever mechanism is used to manage such keys.
+
+  \latexhtml{\item Susceptibility to active and passive
+    attacks}{\item[Susceptibility to active and passive attacks]}
+  
+  The security services provided by SHTTP appear to be robust in the
+  presence of active or passive attackers to the extent that robust
+  cryptographic algorithms are selected.
+
+  \latexhtml{\item Time based issues}{\item[Time based issues]}
+  
+  Local clocks are used as one basis of ensuring freshness of transactions.
+  Based on the reliability and accuracy of local clocks, this is a weak
+  mechanism.
+
+  \latexhtml{\item Longevity of mechanism}{\item[Longevity of mechanism]}
+  
+  There are no constraints in SHTTP which represent concerns about the
+  longevity of the protection, given the flexibility in algorithms.
+
+  \latexhtml{\item Interoperability considerations}{\item[Interoperability
+    considerations]}
+  
+  SHTTP provides a very rich set of options for applying security services.
+  The specification describes these tools, but is not clear in guiding the
+  use of these options. Additional explanation, and especially the
+  inclusion of examples, would enhance the ability to implement compatible
+  systems.\\
+  
+  SHTTP does make use of other standard security encapsulations (PEM, PGP,
+  PKCS-7) to apply the security services and this should facilitate
+  interoperability and integration in client environments. SHTTP's
+  architectural placement requires integration with the HTTP processing
+  engine; however, the security processing may be performed by an external
+  filter (especially given the use of existing security protocol
+  encapsulations).
+
+  \latexhtml{\item Error handling and recovery}{\item[Error handling and
+    recovery]}
+  
+  SHTTP relies on error codes and handling sent in HTTP. This allows
+  protection of the error information and makes use of defined processing
+  rules which provides a good basis for error handling.
+\latexhtml{\end{itemize}}{\end{htmllist}}
+
+
+\section{Conclusion}
+
+The preceding sections have presented a description of requirements and
+other factors to be considered in assessing candidate protocols used to
+provide security for electronic commerce applications. The protocols
+evaluated here, SSL and SHTTP, represent two possible tools which might
+be used to build secure applications. These tools may well need to be
+combined with other security mechanisms, particularly secure payment
+schemes, to meet overall system security requirements. In addition,
+operational security elements beyond the scope of the protocol
+specification (e.g. key management, user actions, audit, platform
+issues) are critical to system security.\\
+
+In general, SSL and SHTTP provide architecturally distinct, and
+possibly complementary, methods for supplying many similar security
+services. The main differences lie in four areas:
+\begin{htmllist}
+  \htmlitemmark{RedBall}
+  \item[Operation in proxy environments]
+  
+    SSL mostly requires a tradeoff between potentially compromising the
+    firewall by creating secure associations through the proxy and
+    terminating the security services at the proxy. SHTTP may also require
+    terminating services at the proxy depending on policy but supports
+    security services, especially authentication, between multiple parties
+    and provides greater flexibility in cases where the proxy is SHTTP
+    aware.
+
+  \item[Nature of integration]
+    
+    SSL is essentially an added layer between the application and the
+    transport service and consequently should be simpler to integrate (and
+    may support multiple applications). SHTTP is HTTP specific and is
+    likely to require integration with the application package. For
+    providing secure system solutions, some degree of coupling between the
+    security service and the application will be needed regardless of the
+    choice of protocol.
+
+  \item[Performance]
+    
+    SSL incurs a start up latency, especially for new associations and then
+    adds little performance penalty. SHTTP incurs little or no start up
+    delay but adds more per transaction overhead in terms of both size and
+    processing complexity.
+
+  \item[Non-repudiation]
+    
+    SSL provides no facilities for non-repudiation while SHTTP provides
+    non-repudiation with proof of origin when digital signatures are
+    employed.
+\end{htmllist}
+
+This document serves to provide information to system integrators and
+providers on the characteristics of the respective protocols. The
+selection of one or more as elements of a system solution will depend
+on the requirements of those particular systems and on a detailed
+analysis of customer, operational, and regulatory characteristics.
+

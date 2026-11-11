@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.3.6 How are certificates used?</TITLE>
+<META NAME="description" CONTENT="3.3.6 How are certificates used?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node39.html">
+<LINK REL="previous" HREF="node37.html">
+<LINK REL="up" HREF="node32.html">
+<LINK REL="next" HREF="node39.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html652"
+ HREF="node39.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html650"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html644"
+ HREF="node37.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html653"
+ HREF="node39.html">3.3.7 Who issues certificates</A>
+<B> Up:</B> <A NAME="tex2html651"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html645"
+ HREF="node37.html">3.3.5 What are certificates?</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00336000000000000000">
+3.3.6 How are certificates used?</A>
+</H2>
+<P>
+A certificate is displayed in order to generate confidence in the
+legitimacy of a public key. Someone verifying a signature can also
+verify the signer's certificate, to insure that no forgery or false
+representation has occurred. These steps can be performed with greater
+or lesser rigor depending on the context.
+<BR>
+<P>
+The most secure use of authentication involves enclosing one or more
+certificates with every signed message. The receiver of the message
+would verify the certificate using the certifying authority's public
+key and, now confident of the public key of the sender, verify the
+message's signature. There may be two or more certificates enclosed
+with the message, forming a hierarchical chain, wherein one certificate
+testifies to the authenticity of the previous certificate. At the end
+of a certificate hierarchy is a top-level certifying authority, which
+is trusted without a certificate from any other certifying authority.
+The public key of the top-level certifying authority must be
+independently known, for example by being widely published.
+<BR>
+<P>
+The more familiar the sender is to the receiver of the message, the
+less need there is to enclose, and to verify, certificates. If Alice
+sends messages to Bob every day, Alice can enclose a certificate chain
+on the first day, which Bob verifies. Bob thereafter stores Alice's
+public key and no more certificates or certificate verifications are
+necessary. A sender whose company is known to the receiver may need to
+enclose only one certificate (issued by the company), whereas a sender
+whose company is unknown to the receiver may need to enclose two
+certificates. A good rule of thumb is to enclose just enough of a
+certificate chain so that the issuer of the highest level certificate
+in the chain is well-known to the receiver.
+<BR>
+<P>
+According to the PKCS standards for public-key cryptography (see Question
+<A HREF="node95.html#what_pkcs">3.8.9</A>), every signature points to a certificate that validates
+the public key of the signer. Specifically, each signature contains the
+name of the issuer of the certificate and the serial number of the
+certificate. Thus even if no certificates are enclosed with a message, a
+verifier can still use the certificate chain to check the status of the
+public key.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html652"
+ HREF="node39.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html650"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html644"
+ HREF="node37.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html653"
+ HREF="node39.html">3.3.7 Who issues certificates</A>
+<B> Up:</B> <A NAME="tex2html651"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html645"
+ HREF="node37.html">3.3.5 What are certificates?</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>7.3.4 Life Cycle</TITLE>
+<META NAME="description" CONTENT="7.3.4 Life Cycle">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="previous" HREF="node118.html">
+<LINK REL="up" HREF="node115.html">
+<LINK REL="next" HREF="node120.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1513"
+ HREF="node120.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1511"
+ HREF="node115.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1507"
+ HREF="node118.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1514"
+ HREF="node120.html">7.4 Standards</A>
+<B> Up:</B> <A NAME="tex2html1512"
+ HREF="node115.html">7.3 Smart Card Technology</A>
+<B> Previous:</B> <A NAME="tex2html1508"
+ HREF="node118.html">7.3.3 Logical Characteristics</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00734000000000000000">
+7.3.4 Life Cycle</A>
+</H2>
+<P>
+As stand-alone active entities, smart cards have a life-cycle and
+actors.
+<BR>
+<P>
+First, some terminology. The ``chip manufacturer'' is responsible for
+the chip design, production, and testing. The ``card manufacturer''
+embeds the chip into the plastic card. The ``card issuer'' creates,
+designs, and prints the end-user organization's logo onto the plastic
+card. The ``card holder'' is the user whose name is printed on the
+outside of the card at the same time it is written to a file inside the
+card file system.
+<BR>
+<P>
+The following life-cycle is typical for single-application smart cards:
+<UL>
+<LI> Control structure(behavioral) development customization.
+<LI> Data structure development.
+<LI> Plastic card manufacturing.
+<LI> Chip production and testing.
+<LI> Smart card manufacturing.
+<LI> Control structure(behavioral) customization.
+<LI> Data structure customization.
+<LI> Application preparation.
+<LI> Use.
+<LI> Invalidation.
+</UL>
+<P>
+The internal architecture development stage is used to develop the
+control and data structures that is best suited to the requirements of
+applications that will use the card. Some structures might not be
+architected, and might be left open to future application developments
+and extensions. Once an architected solution is found, it defines a
+permanent configuration specifying the file directory structure, and
+card behavior: it becomes a solution model. This solution model is a
+solution for a given problem (for example, a GSM solution model or a
+company solution model) that can be reproduced and manufactured.
+Multiple card manufacturers can reproduce the solution model if the
+solution specification follows interoperability characteristics.
+<BR>
+<P>
+The next requirement is for the chip for a card to be manufactured and
+given a unique serial number that identifies characteristics of
+manufacture (IC lot number, wafer number, die number, test equipment
+numbers, etc.). The chip then undergoes a self-test process that
+results either in an invalid, erased chip, or a valid chip with no
+non-user modes enabled. After this stage, there is no access to card
+memory addresses except under the control of the card operating system.
+Tamper-resistance circuitry has been activated.
+<BR>
+<P>
+Independent of chip manufacture, plastic card manufacture occurs.
+<BR>
+<P>
+During the smart card manufacturing stage, a chip is embedded into the
+plastic card. The card can be printed with the issuer's logo at this
+point or later.
+<BR>
+<P>
+The smart card preparation stage creates the externally-downloadable
+control structure and downloads it to the smart card - changing the
+basic behavior of the smart card, specifying the file structure that
+will exist on the card, associating rights, keys, and privileges with
+directories and files through various primitive card access and control
+operations (see Security Architecture), as well as setting basic card
+control parameters such as number of allowed invalid access attempts.
+<BR>
+<P>
+If the smart card preparation stage is not integrated with the
+application preparation stage, cards need to be transported from the
+card manufacturer to the end-user. In this case, the keys written at
+the smart card preparation stage are termed ``transport keys'' or
+``initialization keys''. These keys are sent to the card issuer by the
+manufacturer separately from the cards. They prevent modification of
+the cards during transport from the manufacturer to the issuer. Once in
+possession of the transport keys, the issuer can access the card to
+perform the application preparation stage.
+<BR>
+<P>
+For security purposes, the card manufcaturer can permanently set rights
+and privileges before cards can move to the application preparation
+stage.
+<BR>
+<P>
+The application preparation stage initializes the card password(s), the
+data in the card file system, and optionally writes the user's name on
+the card. Some cards accept dynamic update, creation and deletion of
+files in the file structure after the application preparation stage
+(depending on the card preparation stage), but others enforce a fixed
+file structure once application preparation has taken place.
+<BR>
+<P>
+Then follows a stage of active card usage, during which the operations
+defined in the card preparation stage may be performed using the
+passwords defined during the card preparation stage. Usually, passwords
+and keys may be changed during the usage stage.
+<BR>
+<P>
+During the final stage of the card lifecycle, the card is invalidated.
+Cards should not be re-used in order to avoid any problems in
+organizational policy that might arise from having two users associated
+over time with the same card serial number. Invalidation of
+multi-application cards can be complex if internal applications are
+tied to the exterior appearance of the card: if one application is
+invalidated, then the issuer logo on the card may be confusing for the
+user. If the entire card must be invalidated in order to invalidate one
+expired application, then the user must obtain a new card in order to
+maintain access to the remaining applications.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1513"
+ HREF="node120.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1511"
+ HREF="node115.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1507"
+ HREF="node118.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1514"
+ HREF="node120.html">7.4 Standards</A>
+<B> Up:</B> <A NAME="tex2html1512"
+ HREF="node115.html">7.3 Smart Card Technology</A>
+<B> Previous:</B> <A NAME="tex2html1508"
+ HREF="node118.html">7.3.3 Logical Characteristics</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

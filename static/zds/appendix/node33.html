@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.3.1 What key management issues are involved in public-key
+cryptography?</TITLE>
+<META NAME="description" CONTENT="3.3.1 What key management issues are involved in public-key
+cryptography?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node34.html">
+<LINK REL="previous" HREF="node32.html">
+<LINK REL="up" HREF="node32.html">
+<LINK REL="next" HREF="node34.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html602"
+ HREF="node34.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html600"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html594"
+ HREF="node32.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html603"
+ HREF="node34.html">3.3.2 Who needs a</A>
+<B> Up:</B> <A NAME="tex2html601"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html595"
+ HREF="node32.html">3.3 Key Management</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00331000000000000000">
+3.3.1 What key management issues are involved in public-key
+cryptography?</A>
+</H2>
+<P>
+Secure methods of key management are extremely important. In practice,
+most attacks on public-key systems will probably be aimed at the key
+management levels, rather than at the cryptographic algorithm itself.
+The key management issues mentioned here are discussed in detail in
+later questions.
+<BR>
+<P>
+Users must be able to obtain securely a key pair suited to their
+efficiency and security needs. There must be a way to look up other
+people's public keys and to publicize one's own key. Users must have
+confidence in the legitimacy of others' public keys; otherwise an
+intruder can either change public keys listed in a directory, or
+impersonate another user. Certificates are used for this purpose.
+Certificates must be unforgeable, obtainable in a secure manner, and
+processed in such a way that an intruder cannot misuse them. The
+issuance of certificates must proceed in a secure way, impervious to
+attack. If someone's private key is lost or compromised, others must be
+made aware of this, so that they will no longer encrypt messages under
+the invalid public key nor accept messages signed with the invalid
+private key. Users must be able to store their private keys securely,
+so that no intruder can find it, yet the keys must be readily
+accessible for legitimate use. Keys need to be valid only until a
+specified expiration date. The expiration date must be chosen properly
+and publicized securely. Some documents need to have verifiable
+signatures beyond the time when the key used to sign them has expired.
+<BR>
+<P>
+Although most of these key management issues arise in any public-key
+cryptosystem, for convenience they are discussed here in the context of
+RSA.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html602"
+ HREF="node34.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html600"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html594"
+ HREF="node32.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html603"
+ HREF="node34.html">3.3.2 Who needs a</A>
+<B> Up:</B> <A NAME="tex2html601"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html595"
+ HREF="node32.html">3.3 Key Management</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

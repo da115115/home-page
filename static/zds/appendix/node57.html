@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.4.6 What are the best factoring methods in use today?</TITLE>
+<META NAME="description" CONTENT="3.4.6 What are the best factoring methods in use today?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node58.html">
+<LINK REL="previous" HREF="node56.html">
+<LINK REL="up" HREF="node51.html">
+<LINK REL="next" HREF="node58.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html850"
+ HREF="node58.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html848"
+ HREF="node51.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html842"
+ HREF="node56.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html851"
+ HREF="node58.html">3.4.7 What are the</A>
+<B> Up:</B> <A NAME="tex2html849"
+ HREF="node51.html">3.4 Factoring and Discrete</A>
+<B> Previous:</B> <A NAME="tex2html843"
+ HREF="node56.html">3.4.5 Has factoring been</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00346000000000000000">
+3.4.6 What are the best factoring methods in use today?</A>
+</H2>
+<A NAME="what_fac_use">&#160;</A>
+Factoring is a very active field of research among mathematicians and
+computer scientists; the best factoring algorithms are mentioned below
+with some references and their <I>big</I>-<I>O</I> asymptotic efficiency. <I>O</I> notation
+measures how fast an algorithm is; it gives an upper bound on the
+number of operations (to order of magnitude) in terms of <I>n</I>, the number
+to be factored, and <I>p</I>, a prime factor of <I>n</I>.
+<BR>
+<P>
+Factoring algorithms come in two flavors, special purpose and general
+purpose; the efficiency of the former depends on the unknown factors,
+whereas the efficiency of the latter depends on the number to be
+factored. Special purpose algorithms are best for factoring numbers
+with small factors, but the numbers used for the modulus in the RSA
+system do not have any small factors. Therefore, general purpose
+factoring algorithms are the more important ones in the context of
+cryptographic systems and their security.
+<BR>
+<P>
+Special purpose factoring algorithms include the Pollard <IMG WIDTH="11" HEIGHT="24" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.gif"
+ ALT="$\rho$"> method,
+with expected running time <IMG WIDTH="49" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.gif"
+ ALT="$O(\sqrt{p})$">, and the Pollard <I>p</I>-1 method, with
+running time <I>O</I>(<I>p</I>'), where <I>p</I>' is the largest prime factor of <I>p</I>-1. Both
+of these take an amount of time that is exponential in the size of <I>p</I>,
+the prime factor that they find; thus these algorithms are too slow for
+most factoring jobs. The elliptic curve method (ECM) is superior to
+these; its asymptotic running time is <IMG WIDTH="111" HEIGHT="40" ALIGN="MIDDLE" BORDER="0"
+ SRC="img3.gif"
+ ALT="$O(e^{\sqrt{2 \ln p \ln \ln p}})$">.The ECM is often used in practice to find factors of randomly generated
+numbers; it is not strong enough to factor a large RSA modulus.
+<BR>
+<P>
+The best general purpose factoring algorithm today is the number field
+sieve, which runs in time approximately <IMG WIDTH="161" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.gif"
+ ALT="$O(e^{1.9 (\ln n)^{1/3} (\ln \ln
+n)^{2/3}} )$">. It has only recently been implemented, and not yet practical
+enough to perform the most desired factorizations. Instead, the most widely
+used general purpose algorithm is the multiple polynomial quadratic sieve
+(mpqs), which has running time <IMG WIDTH="103" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.gif"
+ ALT="$O(e^{\sqrt{\ln n \ln \ln n}})$">. The mpqs (and
+some of its variations) is the only general purpose algorithm that has
+successfully factored numbers greater than 110 digits; a variation known as
+ppmpqs has been particularly popular.
+<BR>
+<P>
+It is expected that within a few years the number field sieve will
+overtake the mpqs as the most widely used factoring algorithm, as the
+size of the numbers being factored increases from about 120 digits,
+which is the current threshold of general numbers which can be
+factored, to 130 or 140 digits. A ``general number'' is one with no
+special form that might make it easier to factor; an RSA modulus is a
+general number. Note that a 512-bit number has about 155 digits.
+<BR>
+<P>
+Numbers that have a special form can already be factored up to 155
+digits or more. The Cunningham Project keeps track of the
+factorizations of numbers with these special forms and maintains a ``10
+Most Wanted'' list of desired factorizations. Also, a good way to
+survey current factoring capability is to look at recent results of the
+RSA Factoring Challenge (see Question&nbsp;<A HREF="node59.html#what_rsa_fac">3.4.8</A>).
+<BR>
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html850"
+ HREF="node58.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html848"
+ HREF="node51.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html842"
+ HREF="node56.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html851"
+ HREF="node58.html">3.4.7 What are the</A>
+<B> Up:</B> <A NAME="tex2html849"
+ HREF="node51.html">3.4 Factoring and Discrete</A>
+<B> Previous:</B> <A NAME="tex2html843"
+ HREF="node56.html">3.4.5 Has factoring been</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

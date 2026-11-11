@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.8.5 3..8..5. What is Kerberos?</TITLE>
+<META NAME="description" CONTENT="3.8.5 3..8..5. What is Kerberos?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node92.html">
+<LINK REL="previous" HREF="node90.html">
+<LINK REL="up" HREF="node86.html">
+<LINK REL="next" HREF="node92.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1211"
+ HREF="node92.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1209"
+ HREF="node86.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1203"
+ HREF="node90.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1212"
+ HREF="node92.html">3.8.6 What are RC2</A>
+<B> Up:</B> <A NAME="tex2html1210"
+ HREF="node86.html">3.8 Misceallenous</A>
+<B> Previous:</B> <A NAME="tex2html1204"
+ HREF="node90.html">3.8.4 What is SHS?</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00385000000000000000">
+3.8.5 3..8..5. What is Kerberos?</A>
+</H2>
+<P>
+Kerberos is a secret-key network authentication system developed at
+MIT; it uses DES for encryption and authentication. Unlike a public-key
+authentication system, it does not produce digital signatures: Kerberos
+was designed to authenticate requests for network resources rather than
+to authenticate authorship of documents. Kerberos provides real-time
+authentication in a distributed environment, but does not provide for
+future third-party verification of documents.
+<BR>
+<P>
+In a Kerberos system, there is a designated site on the network, called
+the Kerberos server, which performs centralized key management and
+administrative functions. The server maintains a database containing
+the secret keys of all users, generates session keys whenever two users
+wish to communicate securely, and authenticates the identity of a user
+who requests certain network services.
+<BR>
+<P>
+Kerberos, like other secret-key systems, requires trust in a third party,
+in this case the Kerberos server. If the server were compromised, the
+integrity of the whole system would fall. Public-key cryptography was
+designed precisely to avoid the necessity to trust third parties or
+communication lines (see Question&nbsp;<A HREF="node8.html#what_adv_pkc">3.1.4</A>). Kerberos may be
+adequate for those who do not need the more robust functions and properties
+of public-key systems.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1211"
+ HREF="node92.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1209"
+ HREF="node86.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1203"
+ HREF="node90.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1212"
+ HREF="node92.html">3.8.6 What are RC2</A>
+<B> Up:</B> <A NAME="tex2html1210"
+ HREF="node86.html">3.8 Misceallenous</A>
+<B> Previous:</B> <A NAME="tex2html1204"
+ HREF="node90.html">3.8.4 What is SHS?</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

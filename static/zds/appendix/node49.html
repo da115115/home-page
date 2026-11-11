@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.3.17 How can signatures remain valid beyond the expiration dates of
+their keys, or, How do you verify a 20-year-old signature?</TITLE>
+<META NAME="description" CONTENT="3.3.17 How can signatures remain valid beyond the expiration dates of
+their keys, or, How do you verify a 20-year-old signature?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node50.html">
+<LINK REL="previous" HREF="node48.html">
+<LINK REL="up" HREF="node32.html">
+<LINK REL="next" HREF="node50.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html762"
+ HREF="node50.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html760"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html754"
+ HREF="node48.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html763"
+ HREF="node50.html">3.3.18 What is a</A>
+<B> Up:</B> <A NAME="tex2html761"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html755"
+ HREF="node48.html">3.3.16 How do I</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION003317000000000000000">
+3.3.17 How can signatures remain valid beyond the expiration dates of
+their keys, or, How do you verify a 20-year-old signature?</A>
+</H2>
+<A NAME="how_sig_old">&#160;</A>
+Normally, a key expires after, say, two years and a document signed
+with an expired key should not be accepted. However, there are many
+cases where it is necessary for signed documents to be regarded as
+legally valid for much longer than two years; long-term leases and
+contracts are examples. How should these cases be handled? Many
+solutions have been suggested but it is unclear which will prove the
+best. Here are some possibilities.
+<BR>
+<P>
+One can have special long-term keys as well as the normal two-year keys.
+Long-term keys should have much longer modulus lengths and be stored more
+securely than two-year keys. If a long-term key expires in 50 years, any
+document signed with it would remain valid within that time. A problem with
+this method is that any compromised key must remain on the relevant CRL
+until expiration (see Question&nbsp;<A HREF="node43.html#what_crl">3.3.11</A>); if 50-year keys are
+routinely placed on CRLs, the CRLs could grow in size to unmanageable
+proportions. This idea can be modified as follows.  Register the long-term
+key by the normal procedure, i.e., for two years. At expiration time, if it
+has not been compromised, the key can be recertified, that is, issued a new
+certificate by the certifying authority, so that the key will be valid for
+another two years. Now a compromised key only needs to be kept on a CRL for
+at most two years, not fifty.
+<BR>
+<P>
+One problem with the previous method is that someone might try to
+invalidate a long-term contract by refusing to renew his key. This problem
+can be circumvented by registering the contract with a digital
+time-stamping service (see Question&nbsp;<A HREF="node50.html#what_ts">3.3.18</A>) at the time it is
+originally signed. If all parties to the contract keep a copy of the
+time-stamp, then each can prove that the contract was signed with valid
+keys. In fact, the time-stamp can prove the validity of a contract even if
+one signer's key gets compromised at some point after the contract was
+signed. This time-stamping solution can work with all signed digital
+documents, not just multi-party contracts.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html762"
+ HREF="node50.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html760"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html754"
+ HREF="node48.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html763"
+ HREF="node50.html">3.3.18 What is a</A>
+<B> Up:</B> <A NAME="tex2html761"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html755"
+ HREF="node48.html">3.3.16 How do I</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

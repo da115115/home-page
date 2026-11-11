@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.2 Design decisions</TITLE>
+<META NAME="description" CONTENT="3.2.2 Design decisions">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node31.html">
+<LINK REL="previous" HREF="node29.html">
+<LINK REL="up" HREF="node28.html">
+<LINK REL="next" HREF="node31.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html466"
+ HREF="node31.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html464"
+ HREF="node28.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html458"
+ HREF="node29.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html467"
+ HREF="node31.html">3.2.3 Levels of threat</A>
+<B> Up:</B> <A NAME="tex2html465"
+ HREF="node28.html">3.2 Access Security: Firewalls</A>
+<B> Previous:</B> <A NAME="tex2html459"
+ HREF="node29.html">3.2.1 Introduction</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00422000000000000000">
+3.2.2 Design decisions</A>
+</H2>
+In configuring a firewall, the major design decisions with respect to
+security are often already dictated by corporate or organizational
+policy; specifically, a decision must be made as to whether security is
+more important than ease-of-use, or vice versa. There are two basic
+approaches that summarize the conflict:
+<UL>
+<LI> That which is not expressly permitted is prohibited.
+<LI> That which is not expressly prohibited is permitted.
+</UL>
+<P>
+The importance of this distinction cannot be overemphasized. In the
+former case, the firewall must be designed to block everything, and
+services must be enabled on a case-by-case basis only after a careful
+assessment of need and risk. This tends to impact users directly, and
+they may see the firewall as a hindrance. In the second case, the
+systems administrator is placed in a reactive mode, having to predict
+what kinds of actions the user population might take that would weaken
+the security of the firewall, and preparing defenses against them. This
+essentially pits the firewall administrator against the users in an
+endless arms race that can become quite fierce. Users can generally
+compromise the security of their login if they try or are not aware of
+reasonable security precautions. If the user has an open access login
+on the firewall system itself, a serious security breach can result.
+The presence of user logins on the firewall system tends to magnify the
+problem of maintaining the system's integrity. A second important
+statement of policy is implicit in the ``that which is not expressly
+permitted is prohibited'' stance. This stance is more ``fail safe,''
+since it accepts that the administrator is ignorant of what TCP ports
+are safe, or what holes may exist in the manufacturer's kernel or
+applications. Since many vendors are slow to publicise security holes,
+this is clearly a more conservative approach. It is an admission of the
+fact that what you do not know can hurt you.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html466"
+ HREF="node31.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html464"
+ HREF="node28.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html458"
+ HREF="node29.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html467"
+ HREF="node31.html">3.2.3 Levels of threat</A>
+<B> Up:</B> <A NAME="tex2html465"
+ HREF="node28.html">3.2 Access Security: Firewalls</A>
+<B> Previous:</B> <A NAME="tex2html459"
+ HREF="node29.html">3.2.1 Introduction</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

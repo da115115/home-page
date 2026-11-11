@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.3.10 What if the certifying authority's key is lost or compromised?</TITLE>
+<META NAME="description" CONTENT="3.3.10 What if the certifying authority's key is lost or compromised?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node43.html">
+<LINK REL="previous" HREF="node41.html">
+<LINK REL="up" HREF="node32.html">
+<LINK REL="next" HREF="node43.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html692"
+ HREF="node43.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html690"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html684"
+ HREF="node41.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html693"
+ HREF="node43.html">3.3.11 What are Certificate</A>
+<B> Up:</B> <A NAME="tex2html691"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html685"
+ HREF="node41.html">3.3.9 Are certifying authorities</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION003310000000000000000">
+3.3.10 What if the certifying authority's key is lost or compromised?</A>
+</H2>
+<A NAME="what_key_lost">&#160;</A>
+If the certifying authority's key is lost or destroyed but not
+compromised, certificates signed with the old key are still valid, as
+long as the verifier knows to use the old public key to verify the
+certificate.
+<BR>
+<P>
+In some CSU designs, encrypted backup copies of the CA's private key
+are kept. A CA which loses its key can then restore it by loading the
+encrypted backup into the CSU, which can decrypt it using some unique
+information stored inside the CSU; the encrypted backup can only be
+decrypted using the CSU. If the CSU itself is destroyed, the
+manufacturer may be able to supply another with the same internal
+information, thus allowing recovery of the key.
+<BR>
+<P>
+A compromised CA key is a much more dangerous situation. An attacker who
+discovers a certifying authority's private key can issue phony certificates
+in the name of the certifying authority, which would enable undetectable
+forgeries; for this reason, all precautions must be taken to prevent
+compromise, including those outlined in Questions <A HREF="node40.html#what_csu">3.3.8</A> and
+<A HREF="node41.html#cert_attac">3.3.9</A>. If a compromise does occur, the CA must immediately cease
+issuing certificates under its old key and change to a new key. If it is
+suspected that some phony certificates were issued, all certificates should
+be recalled, and then reissued with a new CA key. These measures could be
+relaxed somewhat if certificates were registered with a digital
+time-stamping service (see Question&nbsp;<A HREF="node50.html#what_ts">3.3.18</A>). Note that compromise of
+a CA key does not invalidate users' eys, but only the certificates that
+authenticate them. Compromise of a top-level CA's key should be considered
+catastrophic, since the key may be built into applications that verify
+certificates.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html692"
+ HREF="node43.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html690"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html684"
+ HREF="node41.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html693"
+ HREF="node43.html">3.3.11 What are Certificate</A>
+<B> Up:</B> <A NAME="tex2html691"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html685"
+ HREF="node41.html">3.3.9 Are certifying authorities</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

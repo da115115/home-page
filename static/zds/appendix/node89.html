@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.8.3 What are MD2, MD4 and MD5?</TITLE>
+<META NAME="description" CONTENT="3.8.3 What are MD2, MD4 and MD5?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node90.html">
+<LINK REL="previous" HREF="node88.html">
+<LINK REL="up" HREF="node86.html">
+<LINK REL="next" HREF="node90.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1191"
+ HREF="node90.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1189"
+ HREF="node86.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1183"
+ HREF="node88.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1192"
+ HREF="node90.html">3.8.4 What is SHS?</A>
+<B> Up:</B> <A NAME="tex2html1190"
+ HREF="node86.html">3.8 Misceallenous</A>
+<B> Previous:</B> <A NAME="tex2html1184"
+ HREF="node88.html">3.8.2 What is a</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00383000000000000000">
+3.8.3 What are MD2, MD4 and MD5?</A>
+</H2>
+<A NAME="what_mds">&#160;</A>
+MD2, MD4 and MD5 (MD stands for Message Digest) are widely used hash
+functions designed by Ron Rivest specifically for cryptographic use.
+They produce 128-bit digests and there is no known attack faster than
+exhaustive search.
+<BR>
+<P>
+MD2 is the slowest of the three; MD4 is the fastest. MD5 has been dubbed
+``MD4 with safety belts'' by Rivest, since it has a more conservative
+design than MD4; the design gives it increased security against attack, but
+at a cost of being approximately 33% slower than MD4. MD5 is the most
+commonly used of the three algorithms. MD4 and MD5 are publicly available
+for unrestricted use; MD2 is available for use with PEM (see Question
+<A HREF="node93.html#what_pem">3.8.7</A>). Details of MD2, MD4, and MD5 with sample C code are
+available in Internet RFCs (Requests For Comments) 1319, 1320, and 1321,
+respectively.
+<BR>
+<P>
+No feasible attacks on any of the MD algorithms have been discovered,
+although some recent theoretical work has found some interesting
+structural properties.
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

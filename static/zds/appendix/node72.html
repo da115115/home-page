@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.6.3 How does the Clipper chip work?</TITLE>
+<META NAME="description" CONTENT="3.6.3 How does the Clipper chip work?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node73.html">
+<LINK REL="previous" HREF="node71.html">
+<LINK REL="up" HREF="node69.html">
+<LINK REL="next" HREF="node73.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1013"
+ HREF="node73.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1011"
+ HREF="node69.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1005"
+ HREF="node71.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1014"
+ HREF="node73.html">3.6.4 Who are the</A>
+<B> Up:</B> <A NAME="tex2html1012"
+ HREF="node69.html">3.6 Capstone, Clipper and</A>
+<B> Previous:</B> <A NAME="tex2html1006"
+ HREF="node71.html">3.6.2 What is Clipper?</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00363000000000000000">
+3.6.3 How does the Clipper chip work?</A>
+</H2>
+<P>
+The Clipper chip contains an encryption algorithm called Skipjack (see
+Question&nbsp;<A HREF="node74.html#what_skipj">3.6.5</A>), whose details have not been made public. Each
+chip also contains a unique 80-bit unit key U, which is escrowed in two
+parts at two escrow agencies; both parts must be known in order to recover
+the key. Also present is a serial number and an 80-bit ``family key'' F;
+the latter is common to all Clipper chips. The chip is manufactured so that
+it cannot be reverse engineered; this means that the Skipjack algorithm and
+the keys cannot be read off the chip.
+<BR>
+<P>
+When two devices wish to communicate, they first agree on an
+80-bit``session key'' K. The method by which they choose this key is
+left up to the implementer's discretion; a public-key method such as
+RSA or Diffie-Hellman seems a likely choice. The message is encrypted
+withthe key K and sent; note that the key K is not escrowed. In
+addition to the encrypted message, another piece of data, called the
+law-enforcement access field (LEAF), is created and sent. It includes
+the session key K encrypted with the unit key U, then concatenated with
+the serial number of the sender and an authentication string, and then,
+finally, all encrypted with the family key. The exact details of the
+law-enforcement field are classified.
+<BR>
+<P>
+The receiver decrypts the law-enforcement field, checks the
+authentication string, and decrypts the message with the key K.
+<BR>
+<P>
+Now suppose a law-enforcement agency wishes to tap the line. It uses
+the family key to decrypt the law-enforcement field; the agency now
+knows the serial number and has an encrypted version of the session
+key. It presents an authorization warrant to the two escrow agencies
+along with the serial number. The escrow agencies give the two parts of
+the unit key to the law-enforcement agency, which then decrypts to
+obtain the session key K. Now the agency can use K to decrypt the
+actual message.
+<BR>
+<P>
+Further details on the Clipper chip operation, such as the generation
+of the unit key, are sketched by Denning.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1013"
+ HREF="node73.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1011"
+ HREF="node69.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1005"
+ HREF="node71.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1014"
+ HREF="node73.html">3.6.4 Who are the</A>
+<B> Up:</B> <A NAME="tex2html1012"
+ HREF="node69.html">3.6 Capstone, Clipper and</A>
+<B> Previous:</B> <A NAME="tex2html1006"
+ HREF="node71.html">3.6.2 What is Clipper?</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

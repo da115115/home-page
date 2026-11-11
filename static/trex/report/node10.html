@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.2 Le codage protecteur</TITLE>
+<META NAME="description" CONTENT="3.2.2 Le codage protecteur">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node11.html">
+<LINK REL="previous" HREF="node9.html">
+<LINK REL="up" HREF="node8.html">
+<LINK REL="next" HREF="node11.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html155"
+ HREF="node11.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html153"
+ HREF="node8.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html147"
+ HREF="node9.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html156"
+ HREF="node11.html">3.2.3 Mise en srie</A>
+<B> Up:</B> <A NAME="tex2html154"
+ HREF="node8.html">3.2 L'ensemble &quot;metteur&quot;</A>
+<B> Previous:</B> <A NAME="tex2html148"
+ HREF="node9.html">3.2.1 Le convertisseur numrique</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00322000000000000000">
+3.2.2 Le codage protecteur</A>
+</H2>
+<P>
+Tout d'abord, il est  noter que les botiers proposent en option d'oprer
+une vrification de transmission par ajout d'un bit de parit. En fait,
+lorsque cette option est enclenche, un bit est supprim, celui de poids
+binaire le plus faible (c'est--dire correspondant  des valeurs modulo 2),
+et remplac par le bit dit de parit, obtenu par la somme binaire des 7
+bits prcdents. Cette opration divise donc par deux la prcision de
+quantification du signal analogique (puisque l'on passe de 2<SUP>8</SUP> = 256 
+2<SUP>7</SUP> = 128 valeurs possibles) et ne permet, de plus, qu'une vrification
+d'erreur de transmission, et non pas sa correction, puisque ce dispositif
+est incapable de situer, sur les 8 bits (les 7 bits utiles, ou le bit de
+parit lui-mme), l'erreur de transmission. Il est  remarquer, aussi, que
+ce dispositif n'est valable que pour des erreurs n'affectant qu'un seul des
+8 bits transmis.
+<BR>
+<P>
+Aussi, il est apparu ncessaire de se protger des erreurs de transmission,
+c'est--dire de les corriger lorsqu'elles occurrent: c'est tout l'intrt
+du codage protecteur, que l'on peut mettre en fonction sur les botiers
+grce  un commutateur trois positions (message de 8 bits seul; ajout de la
+parit; ajout du dispositif correcteur).
+<BR>
+<P>
+Normalement, le dispositif de codage protecteur contre les erreurs
+introduit une certaine redondance dans le message. En effet, il faut
+adjoindre une squence de contrle au mot initial, squence obtenue par
+combinaison linaire binaire des bits du message, et donc non indpendante
+de ces derniers. Il existe plusieurs algorithmes de codage protecteur, et
+dans notre cas, celui retenu est le codage de Hamming, impos par le
+botier utilis. Le principe est de se servir de bits dits de correction
+pour localiser une erreur de transmission sur les bits utiles, <EM>i.e.</EM>
+ceux qui manent de la quantification du message initial. Le code de
+Hamming utilis ne permet toutefois de corriger des erreurs que sur un seul
+bit (mais il faut bien arrter la sophistication quelque part!).
+<BR>
+<P>
+En fait, la thorie (cf Annexe <A HREF="node28.html#annexe:hamming">B</A>) montre qu'il serait
+ncessaire d'ajouter 7 bits de correction  chacun des mots de 8 bits du
+message initial, mais cela impose quasiment le doublement du dbit
+d'information, et donc le doublement de la frquence de transmission des
+bits: il faudrait, pour le mme dbit d'information utile, passer d'une
+frquence d'horloge  80<I>kHz</I>  une frquence de <IMG WIDTH="251" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.gif"
+ ALT="$(8+7+1)\times10000 = 160kHz$">. Or, les botiers utiliss dans la maquette ne permettent pas de
+construire des mots binaires de plus de 8 bits, aussi la solution retenue
+lorsqu'il y a codage de Hamming est-elle de non plus quantifier le signal
+analogique sur 8 bits, mais sur 4 seulement, auxquels seront ajouts les 3
+bits de correction et le bit de parit, dans notre cas.
+<BR>
+<P>
+En rsum, l'on aura toujours la transmission de mots binaires de 8 bits 
+la frquence de 80<I>kHz</I>/<I>bit</I> (10<I>kHz</I> par mot de 8 bits) mais, suivant la
+position du commutateur trois positions du botier &quot;metteur&quot;, l'on
+transmettra soit 8 bits utiles, soit 7, soit seulement 4. Cela donnera donc
+une quantification apparente du signal analogique initial, respectivement
+sur 256, 128 ou 16 valeurs. En fait, l'intrt du codage de Hamming sur ce
+botier est surtout pdagogique car, mme si ce dispositif corrige les
+erreurs de transmission numrique, il introduit un bruit de quantification
+(c'est--dire le passage d'une quantification sur 256 valeurs  une de 16
+valeurs seulement) assez important qui, en pratique, gne plus qu'il
+n'arrange: alors que la voix, sans correction d'erreurs, bnficie d'une
+rception correcte, avec protection elle devient quasiment inaudible, tant
+le bruit de fond reste prsent. Pour palier cet inconvnient, il suffirait
+donc de garder une quantification sur 8 bits, tout en doublant la frquence
+d'mission des bits. C'est probablement le type de solution que nous
+adopterons pour la construction de nos propres GSM...
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html155"
+ HREF="node11.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html153"
+ HREF="node8.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html147"
+ HREF="node9.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html156"
+ HREF="node11.html">3.2.3 Mise en srie</A>
+<B> Up:</B> <A NAME="tex2html154"
+ HREF="node8.html">3.2 L'ensemble &quot;metteur&quot;</A>
+<B> Previous:</B> <A NAME="tex2html148"
+ HREF="node9.html">3.2.1 Le convertisseur numrique</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/25/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

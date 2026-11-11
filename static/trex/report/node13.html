@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.5 Le codage</TITLE>
+<META NAME="description" CONTENT="3.2.5 Le codage">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="previous" HREF="node12.html">
+<LINK REL="up" HREF="node8.html">
+<LINK REL="next" HREF="node14.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html183"
+ HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html181"
+ HREF="node8.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html177"
+ HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html184"
+ HREF="node14.html">3.3 L'ensemble &quot;rcepteur&quot;</A>
+<B> Up:</B> <A NAME="tex2html182"
+ HREF="node8.html">3.2 L'ensemble &quot;metteur&quot;</A>
+<B> Previous:</B> <A NAME="tex2html178"
+ HREF="node12.html">3.2.4 La synchronisation</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00325000000000000000">
+3.2.5 Le codage</A>
+</H2>
+<P>
+Le codeur numrique fabrique un signal lectrique reprsentant chacun des
+bits. Aussi, comme le rcepteur doit pouvoir retrouver dans le signal
+numrique la cadence d'mission des bits et s'accorder dessus, c'est
+prcisment le rle du codeur de faire apparatre cette frquence dite
+d'horloge (qui vaut bien entendu 80<I>kHz</I> dans notre cas).
+<BR>
+<P>
+Sur le botier, diffrents codes sont proposs, parmi lesquels le NRZ (Non
+Return to Zero), le RZ (Return to Zero) et le Bi<IMG WIDTH="16" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img7.gif"
+ ALT="$\Phi$"> (Biphase).
+<BR>
+<P>
+Pour le NRZ, on transmet un palier de hauteur nulle pendant une priode
+d'horloge (donc pendant <IMG WIDTH="59" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img8.gif"
+ ALT="$12,5\mu s$">) pour signifier le bit 0; le palier de
+hauteur +<I>V</I> (par exemple <I>V</I>=5 <I>V</I>) correspond, lui, au bit 1.
+<BR>
+<P>
+Au niveau du RZ, la correspondance est juste modifie pour le bit 1: on
+transmet, pour signifier ce bit, le signal d'horloge H (en fait, +<I>V</I>
+pendant <IMG WIDTH="59" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img9.gif"
+ ALT="$6,25\mu s$"> puis 0 pendant les <IMG WIDTH="59" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img9.gif"
+ ALT="$6,25\mu s$"> restantes).
+<BR>
+<P>
+Enfin, pour le Bi<IMG WIDTH="16" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img7.gif"
+ ALT="$\Phi$">, pour signifier le bit 1 on transmet le signal
+d'horloge H, et pour le bit 0 le complmentaire de H (+<I>V</I> pendant
+<IMG WIDTH="59" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img9.gif"
+ ALT="$6,25\mu s$"> puis 0 pendant les <IMG WIDTH="59" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img9.gif"
+ ALT="$6,25\mu s$"> restantes).
+<BR>
+<P>
+En rsum, cela donne:
+<P>
+<P ALIGN="CENTER"><IMG WIDTH="274" HEIGHT="190"
+ SRC="img10.gif"
+ ALT="\begin{displaymath}
+\begin{array}
+{ll}
+NRZ: & \left\{ \begin{array}
+{rcl}
+ 0 & \...
+ ...  1 & \rightarrow & \overline{H}
+ \end{array}\right.\end{array}\end{displaymath}"></P>
+<P>
+En clair, puisqu'un schma vaut toujours mieux qu'un long discours, la
+figure <A HREF="node13.html#fig:codages">3.3</A> rsume ces diffrents codages.
+<P>
+<DIV ALIGN="CENTER"><IMG WIDTH="350" HEIGHT="225" ALIGN="BOTTOM" BORDER="0"
+ SRC="../nrz_rz_b.gif">
+<BR>
+</DIV>
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node13.html#fig:codages">3.3</A>: Les diffrents codages</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="fig:codages">&#160;</A>Il est  noter que le signal d'horloge H est implicite dans les signaux RZ
+et Bi<IMG WIDTH="16" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img7.gif"
+ ALT="$\Phi$">, par contre il l'est beaucoup moins avec le codage NRZ. Aussi,
+c'est du codage Bi<IMG WIDTH="16" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img7.gif"
+ ALT="$\Phi$"> dont on se sert pour la transmission.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html183"
+ HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html181"
+ HREF="node8.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html177"
+ HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html184"
+ HREF="node14.html">3.3 L'ensemble &quot;rcepteur&quot;</A>
+<B> Up:</B> <A NAME="tex2html182"
+ HREF="node8.html">3.2 L'ensemble &quot;metteur&quot;</A>
+<B> Previous:</B> <A NAME="tex2html178"
+ HREF="node12.html">3.2.4 La synchronisation</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/25/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

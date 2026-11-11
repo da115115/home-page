@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2 La transmission analogique</TITLE>
+<META NAME="description" CONTENT="2 La transmission analogique">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node6.html">
+<LINK REL="previous" HREF="node1.html">
+<LINK REL="up" HREF="report.html">
+<LINK REL="next" HREF="node6.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html88"
+ HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html86"
+ HREF="report.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html80"
+ HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html89"
+ HREF="node6.html">3 La numrisation du</A>
+<B> Up:</B> <A NAME="tex2html87"
+ HREF="report.html">Comment faire son propre</A>
+<B> Previous:</B> <A NAME="tex2html81"
+ HREF="node4.html">1.3 Schma synoptique</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION00200000000000000000">
+2 La transmission analogique</A>
+</H1>
+<P>
+Tout d'abord, il est ncessaire d'alimenter les postes tlphoniques, et
+cela s'effectue au moyen d'un gnrateur de tension continue de
+35<I>V</I><A NAME="tex2html1"
+ HREF="footnode.html#41"><SUP><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="/latex2html/icons.gif/foot_motif.gif"></SUP></A>. Du poste ne sortent que deux fils lectriques, entre lesquels
+s'tablit une ddp<A NAME="tex2html2"
+ HREF="footnode.html#42"><SUP><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="/latex2html/icons.gif/foot_motif.gif"></SUP></A> variable (signal de
+&quot;parole&quot; dont les frquences varient entre 300<I>Hz</I> et 3400<I>Hz</I>, domaine de
+frquences normalis pour la tlphonie) se superposant  la ddp continue
+d'alimentation de 35<I>V</I>.  Sans entrer dans les dtails, la ddp variable
+recueillie entre les deux fils est proportionnelle  la diffrence de
+pressions atmosphriques, gnre par la propagation d'un son dans l'air,
+et convertie en signal lectrique grce au microphone; en d'autres termes,
+le microphone transforme l'onde sonore en onde lectrique, et l'couteur,
+techniquement quivalent au microphone, permet l'opration inverse.
+<BR>
+<P>
+Les deux postes sont dits  batterie centrale (par opposition  batterie
+locale), c'est--dire que l'alimentation en tension continue se fait au
+centre de rattachement, et non  proximit immdiate de chacun des postes
+(tous les postes actuellement en service dans la plupart des rseaux
+publics et privs sont des postes  batterie centrale, ce qui permet la
+suppression des sources individuelles et donc un entretien moins coteux,
+ainsi que de rcuprer l'information sur le dcrochage ou le raccrochage de
+l'appareil).
+<BR>
+<P>
+Afin que le signal de &quot;parole&quot; puisse tre transmis entre les deux postes
+aliments en tension continue, il est ncessaire d'ajouter une inductance
+qui permet  la tension rgnant entre les paires de fils de varier autour
+de la valeur moyenne de 35<I>V</I>, et non pas de rester gale  cette dernire.
+A l'aide du schma de principe (figure <A HREF="node5.html#fig:analogique">2.1</A>), l'on voit que
+la ddp entre les deux fils d'un poste vaut: <I>U</I> = 35<I>V</I> + <I>u</I>(<I>t</I>), o <I>u</I>(<I>t</I>), 
+valeur moyenne nulle et de frquence comprise dans l'intervalle
+300-3400<I>Hz</I>, reprsente le signal de parole.
+<P>
+<DIV ALIGN="CENTER"><IMG WIDTH="236" HEIGHT="126" ALIGN="BOTTOM" BORDER="0"
+ SRC="../analogiq.gif">
+<BR>
+</DIV>
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node5.html#fig:analogique">2.1</A>: Schma de principe de la
+    transmission deux fils</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="fig:analogique">&#160;</A>Comme les montages lectroniques, tels les amplificateurs (servant 
+relayer l'information, lorsque les pertes dues  l'imperfection des
+conducteurs attnuent trop les signaux utiles), ne transmettent l'nergie
+que dans un seul sens, et comme une conversation tlphonique est
+bilatrale, des dispositions spciales sont  prendre pour que les signaux
+vocaux puissent tre amplifis dans les deux sens, sans raction de l'un
+sur l'autre.
+<P>
+<DIV ALIGN="CENTER"><IMG WIDTH="236" HEIGHT="126" ALIGN="BOTTOM" BORDER="0"
+ SRC="../analogiq.gif">
+<BR>
+</DIV>
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node5.html#fig:Principe_blocT">2.2</A>: Schma de principe de
+    la transformation 2 fils-4 fils</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="fig:Principe_blocT">&#160;</A>Un tel rsultat peut tre obtenu en constituant  partir des deux fils un
+circuit  quatre fils (cf figure <A HREF="node5.html#fig:Principe_blocT">2.2</A>), notamment grce
+ un montage lectronique  amplificateur oprationnel (cf figure
+<A HREF="node5.html#fig:blocT">2.3</A>), ce qui confre  ce dispositif le nom de bloc &quot;T&quot;. Il est
+ noter que nous aurions pu utiliser, aussi, un transformateur spcial pour
+raliser cette fonction. D'autre part, il faut remarquer que lors de
+l'insertion de montages lectroniques entre les deux postes, il est
+ncessaire d'isoler le rfrentiel de tension de ces derniers, cela afin
+qu'ils n'interfrent pas avec l'alimentation centrale des postes
+tlphoniques; cette fonction est naturellement ralise par les
+transformateurs d'isolement.
+<P>
+<DIV ALIGN="CENTER"><IMG WIDTH="332" HEIGHT="227" ALIGN="BOTTOM" BORDER="0"
+ SRC="../bloct.gif">
+<BR>
+</DIV>
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node5.html#fig:blocT">2.3</A>: Schma lectronique de la
+    transformation 2 fils-4 fils</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="fig:blocT">&#160;</A>L'intrt de laisser une impdance &quot;<I>Z</I>&quot; variable (qui n'est, en pratique,
+qu'une rsistance variable) est de pouvoir ajuster cette dernire afin
+qu'elle gale l'impdance vue par la ligne, et cela permet au dispositif de
+fonctionner correctement: le signal sur la branche &quot;<I>d</I>&quot; (dpart) est
+proportionnel  celui de la branche &quot;<I>l</I>&quot; (ligne, et donc, dans ce cas, le
+signal provenant du microphone) lorsque la personne parle dans le poste, et
+le signal sur la branche &quot;<I>a</I>&quot; (arrive) est proportionnel  celui de la
+branche &quot;<I>l</I>&quot; (ligne, et donc, dans ce cas, le signal allant sur
+l'couteur) lorsque la personne coute (pour le dtail des calculs, voir
+l'annexe <A HREF="node27.html#annexe:blocT">A</A>).
+<BR>
+<P>
+Le systme tant ainsi prt  recevoir des montages lectroniques entre les
+postes, on peut installer des amplificateurs afin d'amplifier les signaux
+mis par chacun des deux postes.  L'amplification est ralise grce  des
+montages classiques  amplificateur oprationnel (cf figure
+<A HREF="node5.html#fig:amplis">2.4</A>). L'intrt du condensateur est de limiter la bande
+passante du montage  la bande utile de la tlphonie (ce qui donne une
+frquence maximale <I>Fmax</I>=3400<I>Hz</I>), et <I>C</I> est alors donn par la relation:
+<IMG WIDTH="179" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img1.gif"
+ ALT="$C = 1 / (2\, \pi\,
+R_1\, Fmax)$">.<P>
+<DIV ALIGN="CENTER"><IMG WIDTH="440" HEIGHT="166" ALIGN="BOTTOM" BORDER="0"
+ SRC="../amplisao.gif">
+<BR>
+</DIV>
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node5.html#fig:amplis">2.4</A>: Schma des amplificateurs
+    AO</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="fig:amplis">&#160;</A>Toutefois, lors du test de ce montage, nous n'avons pas russi  nous
+parler par l'intermdiaire des postes tlphoniques, alors que le
+dispositif sans les amplificateurs (mais avec les blocs en &quot;T&quot;) permettait
+tout de mme la transmission de la voix, mme si celle-ci parvenait  nos
+oreilles trs affaiblie,  la limite de l'audible. En fait, les
+amplificateurs constituent, avec les deux blocs en &quot;T&quot;, une boucle de gain
+global suprieur  1, due notamment  l'imperfection du bloc en &quot;T&quot; qui ne
+supprime pas compltement le passage direct de la branche &quot;<I>a</I>&quot; sur la
+branche &quot;<I>d</I>&quot;: le systme est entran dans un rgime d'oscillations
+entretenues superposant tous les signaux entre les deux blocs en &quot;T&quot;, et
+rendant donc mconnaissable les signaux initiaux des voix. Il est  noter,
+cependant, qu'il aurait fallu, pour remdier  ce problme, mettre en srie
+avec la rsistance variable du bloc en &quot;T&quot; une inductance variable, car
+l'impdance de la branche &quot;<I>l</I>&quot; (et notamment du microphone) comporte non
+seulement une rsistance, mais bien aussi une inductance: ainsi, on
+pourrait galer plus correctement l'impdance variable avec celle vue par
+la ligne. Nous n'avons pas remdi  ce dfaut, essentiellement parce que
+ce n'tait pas l le but de cette tude, et nous avons donc procd 
+l'tape suivante.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html88"
+ HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html86"
+ HREF="report.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html80"
+ HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html89"
+ HREF="node6.html">3 La numrisation du</A>
+<B> Up:</B> <A NAME="tex2html87"
+ HREF="report.html">Comment faire son propre</A>
+<B> Previous:</B> <A NAME="tex2html81"
+ HREF="node4.html">1.3 Schma synoptique</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/25/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,164 @@
+
+
+
+
+Security Status and Issues
+
+
+&
+
+
+Electronic Commerce on the Internet
+
+?1. Introduction	4
+
+1.1. The Internet	4
+
+1.2. Why is Security on the Internet an Issue?	5
+
+2. What is Security Needed for?	7
+
+2.1. Introduction	7
+
+2.2. Local Computing Environment	7
+
+2.2.1. Introduction	7
+
+2.2.2. The risks	8
+
+2.2.3. The goals	8
+
+2.2.4. Control decisions	9
+
+2.3. What Does the Use of the Web Imply About Security?	9
+
+2.3.1. Client threats	9
+
+2.3.2. Server threats	9
+
+2.3.3. Point to point security issues	10
+
+3. How Can Security Issue Be Addressed?	11
+
+3.1. Local Network: Security Policy	11
+
+3.1.1. Principles	11
+
+3.1.2. Access decisions	12
+
+3.1.3. Systems development process	12
+
+3.1.4. Physical security	12
+
+3.1.5. Data security	13
+
+3.1.6. Monitoring and review	13
+
+3.1.7. Personnel management	14
+
+3.1.8. Personnel security	14
+
+3.1.9. Training	14
+
+3.1.10. User-level security policy	15
+
+3.2. Access Security: Firewalls	15
+
+3.2.1. Introduction	15
+
+3.2.2. Design decisions	15
+
+3.2.3. Levels of threat	16
+
+3.2.4. Firewalls and their components	17
+
+3.2.5. Comments	22
+
+3.3. Data Security: Cryptography	23
+
+3.3.1. What is cryptography?	23
+
+3.3.2. What is a key?	23
+
+3.3.3. What is public key cryptography (PKC)?	23
+
+3.3.4. How does someone obtain a pair of keys?	23
+
+3.3.5. How is information integrity assured?	23
+
+3.3.6. What about authenticity?	24
+
+3.3.7. Is the certificate trustworthy?	24
+
+3.3.8. What about non-repudiatability of origin?	24
+
+3.3.9. What about non-repudiatability of receipt?	24
+
+3.3.10. How can I tell when a message was originated?	24
+
+3.4. Transaction Security	25
+
+3.4.1. What are Kerberos, PGP, PEM, SSL, S-HTTP and IPSEC?	25
+
+3.4.2. How can these protocols contribute to transaction security?	33
+
+3.5. What a Smart Card is Intended for -- A Typical Example: the
+Authentication Issue	34
+
+3.5.1. Smart card applications	34
+
+3.5.2. What is a smart card?	37
+
+3.5.3. How can ZDS use smart card systems?	40
+
+3.5.4. The future	41
+
+4. Payment and Transaction Issues	43
+
+4.1. The Rush Is on to Make Net Commerce Happen	43
+
+4.1.1. Introduction	43
+
+4.1.2. What is available? What is coming?	43
+
+4.1.3. Connecting financial systems	45
+
+4.1.4. No numbers, no crime	45
+
+4.1.5. Internet-savvy business	46
+
+4.2. A Tool to Make Web Commerce Secure	46
+
+4.2.1. Introduction	46
+
+4.2.2. A head for business	47
+
+4.2.3. The safe sell	47
+
+4.2.4. Terisa is born	48
+
+4.2.5. The clang of the cash register	48
+
+4.2.6. Money makes the world go round	49
+
+5. The legal issue: Clipper's Still Kicking	51
+
+5.1. Introduction	51
+
+5.2. The Clipper Controversy	51
+
+5.3. A Chip with Nine Lives	52
+
+5.4. Uncle Sam is Listening	52
+
+5.5. Getting Clipped	53
+
+5.6. An Orwellian Future?	53
+
+6. Conclusion	54
+
+6.1. General	54
+
+6.2. Prospectives: Opportunities for ZDS and CP8	57
+
+

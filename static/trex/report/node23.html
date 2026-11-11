@@ -1,0 +1,237 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>5 Le cryptage de la liaison</TITLE>
+<META NAME="description" CONTENT="5 Le cryptage de la liaison">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node24.html">
+<LINK REL="previous" HREF="node19.html">
+<LINK REL="up" HREF="report.html">
+<LINK REL="next" HREF="node24.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html284"
+ HREF="node24.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html282"
+ HREF="report.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html276"
+ HREF="node22.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html285"
+ HREF="node24.html">6 Conclusion</A>
+<B> Up:</B> <A NAME="tex2html283"
+ HREF="report.html">Comment faire son propre</A>
+<B> Previous:</B> <A NAME="tex2html277"
+ HREF="node22.html">4.3 La transposition en</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION00500000000000000000">
+5 Le cryptage de la liaison</A>
+</H1>
+<P>
+Maintenant que la transmission est tablie, l'on peut se pencher sur un
+point optionnel,  savoir le cryptage des donnes. L'intrt de cette
+dernire tape consiste en la scurisation de la liaison, en rendant
+illisibles les donnes  quiconque ne possdant pas une cl de
+dchiffrement.
+<BR>
+<P>
+Lorsque l'information se voit transmise par voie analogique, l'on peut bien
+sr la brouiller  l'aide de signaux ayant l'apparence de bruit. Mais ces
+techniques de brouillage se montrent rapidement limites, aussi apparat l
+un autre avantage de la conversion numrique,  savoir celui de pouvoir
+appliquer de puissants algorithmes de cryptage, celui de pouvoir
+relativement facilement manipuler les messages numriques.
+<BR>
+<P>
+Il a t retenu pour cette tude un principe de cryptage assez simple, du
+moins dans sa mise en oeuvre, puisqu'il suffit de modifier
+pseudo-alatoirement un  un les bits que l'on transmet, et de modifier en
+sens inverse les bits que l'on reoit  l'aide de la mme squence
+pseudo-alatoire: si <IMG WIDTH="17" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img15.gif"
+ ALT="$\oplus$"> dsigne l'addition binaire (addition modulo 2
+ou, ce qui est quivalent, le &quot;ou exclusif&quot;) et si <I>M</I><SUB><I>i</I></SUB>, <I>S</I><SUB><I>i</I></SUB> et <I>C</I><SUB><I>i</I></SUB>
+reprsentent respectivement les bits  l'instant <I>t</I>=<I>i</I> du message en clair,
+de la squence pseudo-alatoire et du message crypt, on a <IMG WIDTH="110" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img16.gif"
+ ALT="$C_i = M_i \oplus S_i$"> et, bien sr, on rcupre <I>M</I><SUB><I>i</I></SUB> par l'opration <IMG WIDTH="110" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img17.gif"
+ ALT="$M_i = C_i \oplus S_i$">.
+<BR>
+<P>
+La squence selon laquelle les bits sont modifis est pseudo-alatoire, et
+non compltement alatoire, justement parce que l'on connat  l'avance
+par calcul cette squence, mais qu'elle &quot;parat&quot; alatoire  tous ceux qui
+ne connaissent pas la manire de la gnrer. Elle est ralise  l'aide
+d'un systme de registre binaire  dcalage (de <I>n</I> bits, contenant les
+bits <I>S</I><SUB><I>t</I>,<I>i</I></SUB> pour <IMG WIDTH="80" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img18.gif"
+ ALT="$1\leq i\leq n$"> et <I>t</I> quelconque) boucl sur lui-mme
+et de &quot;ou exclusif&quot; (cf figure <A HREF="node23.html#fig:cryptage">5.1</A>), montage qui ralise
+l'opration <IMG WIDTH="390" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img19.gif"
+ ALT="$P_t(S)=S_{t,n}\oplus a_{n-1}\cdot S_{t,n-1}\oplus\cdots\oplus a_1\cdot
+S_{t,1} \oplus a_0$">  chaque instant <I>t</I> (le registre doit tre 
+dcalage car  (<I>t</I>+1), l'on doit avoir: <I>S</I><SUB><I>t</I>+1,<I>n</I></SUB>=<I>P</I><SUB><I>t</I></SUB>(<I>S</I>)).
+<BR>
+<P>
+En effet, l'on peut montrer que ce polynme, s'il est primitif<A NAME="tex2html5"
+ HREF="footnode.html#168"><SUP><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="/latex2html/icons.gif/foot_motif.gif"></SUP></A>,
+gnre une suite (<I>A</I><SUB><I>t</I></SUB>) de squences de <I>n</I> bits (les squences <IMG WIDTH="230" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img21.gif"
+ ALT="$(A_t) = \left(S_{t,n}, S_{t,n-1}, \cdots,
+S_{t,1}\right)$">,  chaque instant <I>t</I>)
+dont la priode de rapparition est maximale et gale  2<SUP><I>n</I></SUP>-1.
+<P>
+<DIV ALIGN="CENTER"><IMG WIDTH="415" HEIGHT="258" ALIGN="BOTTOM" BORDER="0"
+ SRC="../cryptag1.gif">
+<BR>
+</DIV>
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node23.html#fig:cryptage">5.1</A>: Schma de principe de
+    l'obtention des squences et du cryptage</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="fig:cryptage">&#160;</A>Dans notre cas, nous avons pris autant de bits pour la squence de cryptage
+qu'il y en avait pour le codage des donnes, et le polynme primitif que
+nous avons utilis est donc: <IMG WIDTH="253" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img22.gif"
+ ALT="$P_t(S)=S_{t,8}\oplus S_{t,6}\oplus S_{t,5}\oplus S_{t,1}$"> (ce qui donne une priode de 2<SUP>8</SUP>-1=255 itrations
+avant de retrouver la mme squence), mais nous aurions pu utiliser
+d'autres polynmes afin d'augmenter ou de diminuer la priode de retour 
+une valeur donne de la suite des squences (<I>A</I><SUB><I>t</I></SUB>).
+<BR>
+<P>
+Ce mode de cryptage est parfaitement inversible, mais un problme se pose
+toutefois pour dcrypter un message: la ncessit d'une synchronisation
+entre les bits <I>S</I><SUB><I>i</I></SUB> de l'metteur qui cryptent les bits du message, et les
+bits <I>S</I><SUB><I>i</I></SUB> du rcepteur qui le dcryptent. S'il y a le moindre dcalage, le
+message crypt ne pourra plus tre lu, et le possesseur de la cl de
+cryptage (la cl est le polynme <I>P</I><SUB><I>t</I></SUB>(<I>S</I>)) n'aura alors plus aucun avantage
+sur ceux qui ne la connaissent pas...  Aussi, pour palier ce problme, il
+suffit de modifier lgrement l'installation prcdente afin de rendre le
+circuit du ct rcepteur &quot;auto-synchronisable&quot;, <EM>i.e.</EM>  dont les
+squences <I>A</I><SUB><I>t</I></SUB> deviennent identiques au bout d'un certain temps (dont le
+maximum correspond  un passage de <I>n</I> bits, ce qui est trs faible en
+gnral, <I>n</I> tant le nombre de bits dans une squence <I>A</I><SUB><I>t</I></SUB>)  celles du
+circuit ct metteur (cf figure <A HREF="node23.html#fig:autosynchro">5.2</A>).
+<P>
+<DIV ALIGN="CENTER"><IMG WIDTH="500" HEIGHT="407" ALIGN="BOTTOM" BORDER="0"
+ SRC="../cryptage.gif">
+<BR>
+</DIV>
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node23.html#fig:autosynchro">5.2</A>: Schma de principe du
+    cryptage avec auto-synchronisation</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="fig:autosynchro">&#160;</A>Pour le montage lectrique des circuits permettant le cryptage et le
+dcryptage, nous renvoyons  l'annexe <A HREF="node31.html#annexe:cryptage">E</A>.
+<BR>
+<P>
+L'inconvnient, certes majeur, de cette solution, est qu'il devient facile
+de dcrypter les messages ds lors que l'on connat le nombre de bits d'une
+squence et que l'on sait que la mthode de cryptage employe est celle-l.
+En effet, pour un nombre donn de bits dans une squence, il n'y a qu'un
+polynme irrductible, bien connu, et comme le systme rcepteur est
+auto-synchronisable, il se configurera tout seul sans besoin d'une
+quelconque autre cl inconnue. Le systme de cryptage devient donc, dans
+cette configuration, plutt un systme de brouillage...
+<BR>
+<P>
+Le circuit crypteur doit se placer en amont de la phase de
+codage-modulation-transposition, l o le signal demeure sous forme
+numrique NRZ (0 ou 1 pendant toute la priode d'horloge). Ainsi, mme les
+mots de synchronisation seront crypts! Mais tels que se prsentent les
+botiers de traitement numrique, il n'y a pas d'autre solution. D'autre
+part, le circuit dcrypteur devrait normalement se placer en aval de la
+partie traitant la rcupration du signal numrique (rcupration du signal
+d'horloge) et en amont de la synchronisation par mots de 24 bits (pour que
+ces derniers soient en clair, sans quoi le botier, ne &quot;connaissant&quot; pas la
+cl de cryptage, ne pourra jamais les reconnatre). Mais,  cet endroit, le
+signal est sous forme Bi<IMG WIDTH="16" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img7.gif"
+ ALT="$\Phi$">, ce qui le rend inexploitable par le circuit
+de dcryptage.  Pour ce problme, on n'a trouv qu'une solution: monter en
+srie, l'un derrire l'autre, les deux circuits de cryptage et de
+dcryptage, au niveau du dispositif metteur, juste avant l'opration de
+codage numrique (passage de la forme NRZ  la forme Bi<IMG WIDTH="16" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img7.gif"
+ ALT="$\Phi$">). videmment,
+l'intrt pratique de cette solution s'avre limit, si ce n'est qu'elle
+nous a permis de nous familiariser avec les techniques de cryptage, et d'en
+mettre une compltementen oeuvre, ce qui n'est tout de mme dj pas trop
+mal!
+<BR>
+<P>
+Afin d'obtenir un systme sans auto-synchronisation, il faudrait pouvoir
+installer le circuit de cryptage en amont du codage de Hamming et donc de
+la synchronisation (sur le dispositif d'mission), et celui de dcryptage
+en aval de la synchronisation et de la correction d'erreurs (sur le
+dispositif de rception). Ds lors, l'on pourrait insrer, aux cts du
+circuit de synchronisation, un systme permettant d'mettre des mots
+d'initialisation des squences de cryptage:  chaque fois que ces mots
+seraient mis, du ct de l'metteur, la squence de cryptage serait
+rinitialise, et  chaque fois qu'ils seraient lus, du ct du rcepteur,
+la squence de dcryptage subirait le mme sort que sa consur de cryptage.
+Cette rinitialisation (occurant  une certaine frquence, par exemple
+1<I>Hz</I>) permettrait donc de synchroniser les squences de cryptage et de
+dcryptage, au cas o ces dernires n'agiraient plus de concert,  la suite
+par exemple d'un bit transmis erron mais non dtect comme tel. Avec une
+frquence de rinitialisation de 1<I>Hz</I>, la dure maximale de conversation
+non convenablement dcrypte serait de 1<I>s</I>, ce qui semble honnte.
+Remarquons, enfin, qu'initialiser les squences de cryptage avec une
+frquence de 1<I>Hz</I> revient  modifier 1 srie de squences toutes les
+10000/255 = 39 (par seconde, il y a transmission de 10000 bits, et une
+srie contient normalement 255 squences de cryptage, ce qui correspond
+donc  255 dcalages de 1 bit), ce qui est encore assez peu pour que
+les squences ne puissent plus tre considres comme alatoires.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html284"
+ HREF="node24.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html282"
+ HREF="report.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html276"
+ HREF="node22.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html285"
+ HREF="node24.html">6 Conclusion</A>
+<B> Up:</B> <A NAME="tex2html283"
+ HREF="report.html">Comment faire son propre</A>
+<B> Previous:</B> <A NAME="tex2html277"
+ HREF="node22.html">4.3 La transposition en</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/25/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

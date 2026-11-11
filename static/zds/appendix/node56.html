@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.4.5 Has factoring been getting easier?</TITLE>
+<META NAME="description" CONTENT="3.4.5 Has factoring been getting easier?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node57.html">
+<LINK REL="previous" HREF="node55.html">
+<LINK REL="up" HREF="node51.html">
+<LINK REL="next" HREF="node57.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html840"
+ HREF="node57.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html838"
+ HREF="node51.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html832"
+ HREF="node55.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html841"
+ HREF="node57.html">3.4.6 What are the</A>
+<B> Up:</B> <A NAME="tex2html839"
+ HREF="node51.html">3.4 Factoring and Discrete</A>
+<B> Previous:</B> <A NAME="tex2html833"
+ HREF="node55.html">3.4.4 What is the</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00345000000000000000">
+3.4.5 Has factoring been getting easier?</A>
+</H2>
+<A NAME="has_fac_eas">&#160;</A>
+Factoring has become easier over the last fifteen years for two
+reasons: computer hardware has become more powerful, and better
+factoring algorithms have been developed.
+<BR>
+<P>
+Hardware improvement will continue inexorably, but it is important to
+realize that hardware improvements make RSA more secure, not less. This
+is because a hardware improvement that allows an attacker to factor a
+number two digits longer than before will at the same time allow a
+legitimate RSA user to use a key dozens of digits longer than before; a
+user can choose a new key a dozen digits longer than the old one
+without any performance slowdown, yet a factoring attack will become
+much more difficult. Thus although the hardware improvement does help
+the attacker, it helps the legitimate user much more. This general rule
+may fail in the sense that factoring may take place using fast machines
+of the future, attacking RSA keys of the past; in this scenario, only
+the attacker gets the advantage of the hardware improvement. This
+consideration argues for using a larger key size today than one might
+otherwise consider warranted. It also argues for replacing one's RSA
+key with a longer key every few years, in order to take advantage of
+the extra security offered by hardware improvements. This point holds
+for other public-key systems as well.
+<BR>
+<P>
+Better factoring algorithms have been more help to the RSA attacker
+than have hardware improvements. As the RSA system, and cryptography in
+general, have attracted much attention, so has the factoring problem,
+and many researchers have found new factoring methods or improved upon
+others. This has made factoring easier, for numbers of any size and
+irrespective of the speed of the hardware. However, factoring is still
+a very difficult problem.
+<BR>
+<P>
+Overall, any recent decrease in security due to algorithm improvement
+can be offset by increasing the key size. In fact, between general
+computer hardware improvements and special-purpose RSA hardware
+improvements, increases in key size (maintaining a constant speed of
+RSA operations) have kept pace or exceeded increases in algorithm
+efficiency, resulting in no net loss of security. As long as hardware
+continues to improve at a faster rate than that at which the complexity
+of factoring algorithms decreases, the security of RSA will increase,
+assuming RSA users regularly increase their key size by appropriate
+amounts. The open question is how much faster factoring algorithms can
+get; there must be some intrinsic limit to factoring speed, but this
+limit remains unknown.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html840"
+ HREF="node57.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html838"
+ HREF="node51.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html832"
+ HREF="node55.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html841"
+ HREF="node57.html">3.4.6 What are the</A>
+<B> Up:</B> <A NAME="tex2html839"
+ HREF="node51.html">3.4 Factoring and Discrete</A>
+<B> Previous:</B> <A NAME="tex2html833"
+ HREF="node55.html">3.4.4 What is the</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

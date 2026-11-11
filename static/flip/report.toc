@@ -1,0 +1,27 @@
+\contentsline {section}{\numberline {1}L'objectif du projet}{1}
+\contentsline {subsection}{\numberline {1.1}La technologie $PUSH$}{1}
+\contentsline {subsection}{\numberline {1.2}La diffusion de transparents}{1}
+\contentsline {section}{\numberline {2}Le déroulement du projet}{3}
+\contentsline {subsection}{\numberline {2.1}Le développement de l'interface graphique et du convertisseur de fichier HTML}{3}
+\contentsline {subsection}{\numberline {2.2}Utilisation du protocole AMP}{3}
+\contentsline {subsubsection}{\numberline {2.2.1}Côté émetteur: Interfa\c cage Java -- C++}{5}
+\contentsline {subsubsection}{\numberline {2.2.2}Côté récepteur}{6}
+\contentsline {subsection}{\numberline {2.3}Construction d'un émetteur (le serveur) et d'un récepteur (le client)}{6}
+\contentsline {subsubsection}{\numberline {2.3.1}L'émetteur}{6}
+\contentsline {subsubsection}{\numberline {2.3.2}Le récepteur}{7}
+\contentsline {subsection}{\numberline {2.4}Test et validation}{7}
+\contentsline {section}{\numberline {3}Fonctionnalités}{8}
+\contentsline {subsection}{\numberline {3.1}L'émetteur}{8}
+\contentsline {subsection}{\numberline {3.2}Le récepteur}{10}
+\contentsline {section}{\numberline {4}Composition -- Structure de l'application}{11}
+\contentsline {subsection}{\numberline {4.1}Présentation}{11}
+\contentsline {subsection}{\numberline {4.2}Couches de contrôle et d'interface graphique: détail}{11}
+\contentsline {subsection}{\numberline {4.3}Relation entre ControlLayer et FileList}{17}
+\contentsline {subsection}{\numberline {4.4}Couches de contrôle et d'adaptation: détail}{20}
+\contentsline {section}{\numberline {5}Conclusion}{23}
+\contentsline {section}{\numberline {6}Remerciements}{25}
+\contentsline {section}{\numberline {A}Guide d'installation}{2}
+\contentsline {section}{\numberline {B}Source du scripte Unix ``killer''}{3}
+\contentsline {section}{\numberline {C}Procédures de création de clés, de certificats, et de signatures}{4}
+\contentsline {section}{\numberline {D}Exemple d'applet à deux {\it panels}}{6}
+\contentsline {section}{\numberline {E}Sources des programmes}{11}

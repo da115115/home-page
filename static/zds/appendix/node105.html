@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.2.3 Other Factors</TITLE>
+<META NAME="description" CONTENT="4.2.3 Other Factors">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="previous" HREF="node104.html">
+<LINK REL="up" HREF="node102.html">
+<LINK REL="next" HREF="node106.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1360"
+ HREF="node106.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1358"
+ HREF="node102.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1354"
+ HREF="node104.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1361"
+ HREF="node106.html">4.3 Conclusion</A>
+<B> Up:</B> <A NAME="tex2html1359"
+ HREF="node102.html">4.2 Security Assessment of</A>
+<B> Previous:</B> <A NAME="tex2html1355"
+ HREF="node104.html">4.2.2 Security Service Requirements</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00423000000000000000">
+4.2.3 Other Factors</A>
+</H2>
+<P><DL>
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Proxy Operation</B>
+<DD>
+<P>
+SHTTP's selective security services and support for multiple
+  encapsulations provide some flexibility for accommodating proxy
+  environments. Most importantly, SHTTP allows for authentication (or other
+  security services) between multiple parties in a transaction path.
+  Consequently, a proxy may be authenticated along with the end client or
+  server. Such authentication may be performed either through a single
+  signature which can be checked by multiple parties or through multiple
+  encapsulations.
+<BR>
+<P>
+The interaction with proxies will depend on the peer relationships of
+  security services, especially with respect to encryption and key
+  management and the operation of the proxy itself. The compatibility with
+  proxies will depend upon the degree to which the proxy is SHTTP aware and
+  the nature of the processing performed at the proxy. If the proxy is not
+  SHTTP aware or if the HTTP transaction is encrypted and hidden from the
+  proxy, then the functions which can be performed are very limited (e.g.,
+  limited caching, no information based processing).
+<BR>
+<P>
+SHTTP does provide an ability to decouple the encryption and
+  authentication functions and to encapsulate these services in either
+  order so that a proxy may be capable of authenticating the source without
+  seeing the data or may examine the data while still preserving end-to-end
+  authentication.
+<BR>
+<P>
+These abilities will support some, but not all, proxy environments.
+  There are limitations using SHTTP with non-SHTTP aware proxies or in
+  situations where the proxy must access the information within an HTTP
+  transaction.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Performance impacts</B>
+<DD>
+<P>
+There are several dimensions to performance including connection
+  establishment latency, transaction overhead, and processing complexity.
+  For SHTTP the establishment latency is minimal with many situations
+  requiring no added exchanges. SHTTP does add a possibly significant
+  amount of overhead to a transaction depending on the security format and
+  services selected. This overhead is apparent in terms of both the
+  increased size of transactions (especially requests) and in the time to
+  process a transaction. Depending on the processing, a number of expensive
+  (i.e. private key) operations may be required to process a request and
+  response. In addition, certification path validation (possibly including
+  retrieving certificate validation data) is likely to be required for most
+  transactions. The significance of the performance impact must be assessed
+  for specific environments (formats, algorithms, and policies).
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Granularity of security services provided by protocol</B>
+<DD>
+<P>
+Security services are applied to individual HTTP transactions and apply
+  to the entire encapsulated data item (an HTTP or SHTTP transaction).  The
+  identity being used for security services will depend upon the naming
+  information in the client or server certificate (or other data) and on
+  local key management issues (outside of the scope of the specification).
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Associated key management and cryptography</B>
+<DD>
+<P>
+SHTTP provides for a large and extensible set of algorithms and key
+  management techniques. These algorithms may be grouped together to
+  support selectable suites or may be individually selected.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Negotiation of services, mechanisms, and formats</B>
+<DD>
+<P>
+The SHTTP negotiation process is based on each party making known
+  required and optional capabilities. These lists may be sent in HTTP
+  exchanges and may also be present in HTML anchors (this will determine,
+  in part, whether additional protocol exchanges are required). The sender
+  selects an appropriate choice from the list based on the sender's own
+  capabilities and policies. The information used to negotiate algorithms
+  and formats is not authenticated. This allows an active attacker to cause
+  two parties to use a particular selection common to both parties rather
+  than having a party's own selection logic invoked. So long as both the
+  client and server enforce a check that appropriate protection is applied
+  to all transactions, this is not a major issue. It may result in weaker
+  cryptographic protection being applied to an association than ``should''
+  have been used.
+<BR>
+<P>
+SHTTP provides a rich set of options in terms of services, formats, and
+  algorithms. Consequently, there is a significant possibility of having
+  independent, compliant implementations which are not capable of
+  interoperating. Definition of minimum essential requirements (MERs) or
+  standard profiles would enhance the likelihood of interoperability.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Ability to convey certificate and authorization
+    information</B>
+<DD>
+<P>
+The information which may be conveyed depends upon the format/domain
+  selected. Certification path information may always be sent while PKCS-7
+  encapsulation also supports transfer of CRLs. Authorization data is not
+  currently addressed. It is important that certificates used with SHTTP
+  provide identification information which can meaningfully be compared
+  with identity information used with HTTP.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Compromise
+    Recovery and Handling</B>
+<DD>
+<P>
+There is no explicit mechanism to deal with compromise recovery for
+  outband or shared secret keys managed externally. This should be dealt
+  with through whatever mechanism is used to manage such keys.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Susceptibility to active and passive attacks</B>
+<DD>
+<P>
+The security services provided by SHTTP appear to be robust in the
+  presence of active or passive attackers to the extent that robust
+  cryptographic algorithms are selected.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Time based issues</B>
+<DD>
+<P>
+Local clocks are used as one basis of ensuring freshness of transactions.
+  Based on the reliability and accuracy of local clocks, this is a weak
+  mechanism.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Longevity of mechanism</B>
+<DD>
+<P>
+There are no constraints in SHTTP which represent concerns about the
+  longevity of the protection, given the flexibility in algorithms.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Interoperability
+    considerations</B>
+<DD>
+<P>
+SHTTP provides a very rich set of options for applying security services.
+  The specification describes these tools, but is not clear in guiding the
+  use of these options. Additional explanation, and especially the
+  inclusion of examples, would enhance the ability to implement compatible
+  systems.
+<BR>
+<P>
+SHTTP does make use of other standard security encapsulations (PEM, PGP,
+  PKCS-7) to apply the security services and this should facilitate
+  interoperability and integration in client environments. SHTTP's
+  architectural placement requires integration with the HTTP processing
+  engine; however, the security processing may be performed by an external
+  filter (especially given the use of existing security protocol
+  encapsulations).
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Error handling and
+    recovery</B>
+<DD>
+<P>
+SHTTP relies on error codes and handling sent in HTTP. This allows
+  protection of the error information and makes use of defined processing
+  rules which provides a good basis for error handling.
+</DL></UL>
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1360"
+ HREF="node106.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1358"
+ HREF="node102.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1354"
+ HREF="node104.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1361"
+ HREF="node106.html">4.3 Conclusion</A>
+<B> Up:</B> <A NAME="tex2html1359"
+ HREF="node102.html">4.2 Security Assessment of</A>
+<B> Previous:</B> <A NAME="tex2html1355"
+ HREF="node104.html">4.2.2 Security Service Requirements</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

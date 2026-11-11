@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.3 How fast is RSA?</TITLE>
+<META NAME="description" CONTENT="3.2.3 How fast is RSA?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node15.html">
+<LINK REL="previous" HREF="node13.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node15.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html396"
+ HREF="node15.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html394"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html388"
+ HREF="node13.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html397"
+ HREF="node15.html">3.2.4 How much extra</A>
+<B> Up:</B> <A NAME="tex2html395"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html389"
+ HREF="node13.html">3.2.2 Why use RSA</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00323000000000000000">
+3.2.3 How fast is RSA?</A>
+</H2>
+<A NAME="how_fast_rsa">&#160;</A>
+An ``RSA operation,'' whether for encrypting or decrypting, signing or
+verifying, is essentially a modular exponentiation, which can be
+performed by a series of modular multiplications.
+<BR>
+<P>
+In practical applications, it is common to choose a small public
+exponent for the public key; in fact, entire groups of users can use
+the same public exponent. This makes encryption faster than decryption
+and verification faster than signing. Algorithmically, public-key
+operations take <I>O</I>(<I>k<SUP>2</SUP></I>) steps, private key operations take <I>O</I>(<I>k<SUP>3</SUP></I>) steps,
+and key generation takes <I>O</I>(<I>k<SUP>4</SUP></I>) steps, where k is the number of bits in
+the modulus; <I>O</I>-notation refers to the an upper bound on the asymptotic
+running time of an algorithm.
+<BR>
+<P>
+There are many commercially available hardware implementations of RSA,
+and there are frequent announcements of newer and faster chips. The
+fastest current RSA chip has a throughput greater than 600 Kbits per
+second with a 512-<I>bit</I> modulus, implying that it performs over 1000 RSA
+private-key operations per second. It is expected that RSA speeds will
+reach 1 <I>Mbit</I>/<I>second</I> within a year or so.
+<BR>
+<P>
+By comparison, DES is much faster than RSA. In software, DES is
+generally at least 100 times as fast as RSA. In hardware, DES is
+between 1,000 and 10,000 times as fast, depending on the
+implementations. RSA will probably narrow the gap a bit in coming
+years, as it finds growing commercial markets, but will never match the
+performance of DES.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html396"
+ HREF="node15.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html394"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html388"
+ HREF="node13.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html397"
+ HREF="node15.html">3.2.4 How much extra</A>
+<B> Up:</B> <A NAME="tex2html395"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html389"
+ HREF="node13.html">3.2.2 Why use RSA</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

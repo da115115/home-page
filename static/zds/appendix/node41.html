@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.3.9 Are certifying authorities susceptible to attack?</TITLE>
+<META NAME="description" CONTENT="3.3.9 Are certifying authorities susceptible to attack?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node42.html">
+<LINK REL="previous" HREF="node40.html">
+<LINK REL="up" HREF="node32.html">
+<LINK REL="next" HREF="node42.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html682"
+ HREF="node42.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html680"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html674"
+ HREF="node40.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html683"
+ HREF="node42.html">3.3.10 What if the</A>
+<B> Up:</B> <A NAME="tex2html681"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html675"
+ HREF="node40.html">3.3.8 What is a</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00339000000000000000">
+3.3.9 Are certifying authorities susceptible to attack?</A>
+</H2>
+<A NAME="cert_attac">&#160;</A>
+One can think of many attacks aimed at the certifying authority, which
+must be prepared against them.
+<BR>
+<P>
+Consider the following attack. Suppose Bob wishes to impersonate Alice.
+If Bob can convincingly sign messages as Alice, he can send a message
+to Alice's bank saying ``I wish to withdraw $10,000 from my account.
+Please send me the money.'' To carry out this attack, Bob generates a
+key pair and sends the public key to a certifying authority saying
+``I'm Alice. Here is my public key. Please send me a certificate.'' If
+the CA is fooled and sends him such a certificate, he can then fool the
+bank, and his attack will succeed. In order to prevent such an attack
+the CA must verify that a certificate request did indeed come from its
+purported author, i.e., it must require sufficient evidence that it is
+actually Alice who is requesting the certificate. The CA may, for
+example, require Alice to appear in person and show a birth
+certificate. Some CAs may require very little identification, but the
+bank should not honor messages authenticated with such low-assurance
+certificates. Every CA must publicly state its identification
+requirements and policies; others can then attach an appropriate level
+of confidence to the certificates.
+<BR>
+<P>
+An attacker who discovers the private key of a certifying authority could
+then forge certificates. For this reason, a certifying authority must take
+extreme precautions to prevent illegitimate access to its private key. The
+private key should be kept in a high-security box, known as a Certificate
+Signing Unit, or CSU (see Question&nbsp;<A HREF="node40.html#what_csu">3.3.8</A>).
+<BR>
+<P>
+The certifying authority's public key might be the target of an
+extensive factoring attack. For this reason, CAs should use very long
+keys, preferably 1000 bits or longer, and should also change keys
+regularly. Top-level certifying authorities are exceptions: it may not
+be practical for them to change keys frequently because the key may be
+written into software used by a large number of verifiers.
+<BR>
+<P>
+In another attack, Alice bribes Bob, who works for the certifying
+authority, to issue to her a certificate in the name of Fred. Now Alice
+can send messages signed in Fred's name and anyone receiving such a
+message will believe it authentic because a full and verifiable
+certificate chain will accompany the message. This attack can be
+hindered by requiring the cooperation of two (or more) employees to
+generate a certificate; the attacker now has to bribe two employees
+rather than one. For example, in some of today's CSUs, three employees
+must each insert a data key containing secret information in order to
+authorize the CSU to generate certificates. Unfortunately, there may be
+other ways to generate a forged certificate by bribing only one
+employee. If each certificate request is checked by only one employee,
+that one employee can be bribed and slip a false request into a stack
+of real certificate requests. Note that a corrupt employee cannot
+reveal the certifying authority's private key, as long as it is
+properly stored.
+<BR>
+<P>
+Another attack involves forging old documents. Alice tries to factor the
+modulus of the certifying authority. It takes her 15 years, but she finally
+succeeds, and she now has the old private key of the certifying authority.
+The key has long since expired, but she can forge a certificate dated 15
+years ago attesting to a phony public key of some other person, say Bob;
+she can now forge a document with a signature of Bob dated 15 year ago,
+perhaps a will leaving everything to Alice. The underlying issue raised by
+this attack is how to authenticate a signed document dated many years ago;
+this issue is discussed in Question&nbsp;<A HREF="node49.html#how_sig_old">3.3.17</A>.
+<BR>
+<P>
+Note that these attacks on certifying authorities do not threaten the
+privacy of messages between users, as might result from an attack on a
+secret-key distribution center.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html682"
+ HREF="node42.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html680"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html674"
+ HREF="node40.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html683"
+ HREF="node42.html">3.3.10 What if the</A>
+<B> Up:</B> <A NAME="tex2html681"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html675"
+ HREF="node40.html">3.3.8 What is a</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

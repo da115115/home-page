@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//FR">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.1 L'metteur</TITLE>
+<META NAME="description" CONTENT="3.1 L'metteur">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node12.html">
+<LINK REL="previous" HREF="node10.html">
+<LINK REL="up" HREF="node10.html">
+<LINK REL="next" HREF="node12.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html161"
+ HREF="node12.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html159"
+ HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html153"
+ HREF="node10.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html162"
+ HREF="node12.html">3.2 Le rcepteur</A>
+<B> Up:</B> <A NAME="tex2html160"
+ HREF="node10.html">3 Fonctionnalits</A>
+<B> Previous:</B> <A NAME="tex2html154"
+ HREF="node10.html">3 Fonctionnalits</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00041000000000000000">
+3.1 L'metteur</A>
+</H2>
+Du ct metteur, l'on  l'cran une fentre correspondant au panneau de commande de
+l'metteur (voir figure&nbsp;<A HREF="node11.html#fig:sendwin">2</A>).
+<BR>
+<P>
+<BR>
+<DIV ALIGN="CENTER"><A NAME="fig:sendwin">&#160;</A><A NAME="117">&#160;</A>
+<TABLE>
+<CAPTION><STRONG>Figure 2:</STRONG>
+Fentre de l'metteur</CAPTION>
+<TR><TD><IMG WIDTH="498" HEIGHT="292"
+ SRC="img3.gif"
+ ALT="\begin{figure}
+ \centering
+\includegraphics [width=11cm]{serverSenderWindow.ps}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+<BR>
+<P>
+Dans la fentre ci-dessus, certains fichiers sont disponibles. Cependant,
+au lancement de l'application, il n'y a aucun fichier et les paramtres de
+la transmission sont ceux par dfaut (<I>transmition rate</I> = 65536 <I>bit</I>/<I>s</I>
+et <I>TTL</I> = 16 (<I>TTL = Time To Live</I>, <I>i.e.</I>, la dure de vie du paquet sur
+le rseau)).
+<P><DL>
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Add File:</B>
+<DD>ce bouton permet de faire apparatre le nom d'un nouveau
+    fichier dans la liste. Au moment de l'insertion du fichier, une
+    bote de dialogue (voir figure&nbsp;<A HREF="node11.html#fig:pref">3</A>) apparat dans laquelle on
+    doit saisir un temps (en secondes), temps correspondant  la dure
+    d'affichage du transparent en mode automatique. Le fichier apparat
+    ensuite dans la fentre de commande avec sa dure d'affichage, et il
+    est dit dans Netscape.
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Change Time:</B>
+<DD>permet de changer la valeur de la dure d'affichage
+    d'un transparent (pour le mode automatique).
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Remove File:</B>
+<DD>c'est le bouton pendant de <I>Add File</I>. Il enlve le
+    fichier slectionn (dont le nom apparat en vido inverse) de la
+    fentre des fichiers disponibles.
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Send:</B>
+<DD>met le fichier slection et l'dite avec Netscape.
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Stop sending:</B>
+<DD>arrte l'mission en cours.
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Preference:</B>
+<DD>permet de modifier les paramtres de la transmission
+    (<TT>Transmission rate</TT> et <TT>TTL</TT>).
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Save Config:</B>
+<DD>permet d'enregistrer la configuration actuelle
+    (<I>i.e.</I>, les paramtres de transmission ainsi que les fichiers disponibles).
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>ImportConfig:</B>
+<DD>permet de remplacer la configuration
+    courante par une nouvelle configuration prcdemment enregistre
+    (fichier <TT>.cfg</TT>, en gnral).
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Forward:</B>
+<DD>permet la slection du fichier suivant de la liste, et
+    l'dition dans Netscape.
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Backward:</B>
+<DD>de mme, permet la slection du fichier prcedent de la
+    liste, et l'dite dans Netscape.
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Automatic:</B>
+<DD>passe en mode automatique. Dans ce mode, les fichiers
+    sont transmis l'un aprs l'autre,  partir du fichier slectionn. Par
+    exemple, si un fichier possde un temps transmission de 20 secondes, on
+    dmarre un compteur au dbut de la transmission du fichier: si la
+    transmission se termine avant les 20 secondes, on attend la fin des 20
+    secondes pour passer au fichier suivant; sinon on interrompt la
+    transmission (ce qui ne signifie pas forcment que le fichier n'a pas
+    t correctement re&#231;u) et on passe au fichier suivant. Si auncun
+    fichier n'est slectionn, on dmarre par le premier fichier de la liste.
+    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Exit:</B>
+<DD>sort du programme.
+</DL>
+<P>
+Remarques:
+<UL>
+<LI> dans la fentre ne sont affichs que les noms relatifs
+    des fichiers afin d'obtenir une meilleure lisibilit. Toutefois, c'est
+    le nom complet du fichier (avec son chemin d'accs) qui est connu du
+    programme.
+<LI> pour visualiser un fichier avec Netscape, il suffit de
+    double-cliquer sur son nom.
+<LI> les configurations sont enregistres dans des fichiers de type texte,
+    d'extension <TT>.cfg</TT>. Ces fichiers sont simples, ce qui permet 
+    l'utilisateur de les raliser ventuellement lui-mme  la main.
+</UL>
+<P>
+<BR>
+<DIV ALIGN="CENTER"><A NAME="fig:pref">&#160;</A><A NAME="134">&#160;</A>
+<TABLE>
+<CAPTION><STRONG>Figure 3:</STRONG>
+Bote de dialogue</CAPTION>
+<TR><TD><IMG WIDTH="724" HEIGHT="120"
+ SRC="img4.gif"
+ ALT="\begin{figure}
+ \centering
+\includegraphics [width=16cm]{serverPreferences.ps}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+<BR><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html161"
+ HREF="node12.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html159"
+ HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html153"
+ HREF="node10.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html162"
+ HREF="node12.html">3.2 Le rcepteur</A>
+<B> Up:</B> <A NAME="tex2html160"
+ HREF="node10.html">3 Fonctionnalits</A>
+<B> Previous:</B> <A NAME="tex2html154"
+ HREF="node10.html">3 Fonctionnalits</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

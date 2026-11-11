@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>7.4 Standards</TITLE>
+<META NAME="description" CONTENT="7.4 Standards">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node121.html">
+<LINK REL="previous" HREF="node115.html">
+<LINK REL="up" HREF="node112.html">
+<LINK REL="next" HREF="node121.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1523"
+ HREF="node121.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1521"
+ HREF="node112.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1515"
+ HREF="node119.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1524"
+ HREF="node121.html">7.5 Why Smart Cards</A>
+<B> Up:</B> <A NAME="tex2html1522"
+ HREF="node112.html">7 Appendix 7: Smart</A>
+<B> Previous:</B> <A NAME="tex2html1516"
+ HREF="node119.html">7.3.4 Life Cycle</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION00740000000000000000">
+7.4 Standards</A>
+</H1>
+<P>
+See ``The Smart Card - A Standardized Security Device Dedicated to
+Public Cryptology'' (by Louis Claude Guillou, Michel Ugon, and
+Jean-Jacques Quisquater, in Gustavus Simmons, ``Contemporary Cryptology
+- The Science of Information Integrity'', IEEE Press, pp.561-614,
+1992) for an excellent discussion of the international status of smart
+card standardization which is still fairly current. Several parallel,
+overlapping ISO standardization efforts exist:
+<DL COMPACT>
+<DT>1.
+<DD>ISO/IEC JTC1/SC17/WG4 (Information Systems -- Identification Cards
+-- Integrated Circuit Cards with Contacts) has produced specifications of
+the physical characteristics ISO 7816-1,2 and physical communication
+protocols ISO 7816-3 that are International Standards. The specification of
+the file system layer ISO 7816-4 is still a Committee Draft, but is
+currently undergoing balloting. Other standards are still in Working Draft
+stage.
+<BR>
+The following standards apply for ISO SC17/WG4 contact cards:
+<BR>
+<P>
+Standard        Scope
+<BR>
+<P>
+7816-6          Common Data Elements (unpublished)
+<BR>
+<P>
+IS 7816-5       Registration for Applications
+<BR>
+<P>
+CD 7816-4.2     Commands for Interchange
+<BR>
+<P>
+IS 7816-3       Transmission Protocol
+<BR>
+<P>
+IS 7816-2       Contact Location
+<BR>
+<P>
+IS 7816-1       Physical Characteristics
+<BR>
+<P>
+As long as the lower layers conform to ISO 7816-4 and the transmission
+protocol is T=0 (asynchronous, half-duplex character transmission
+protocol) or T=1 (asynchronous, half-duplex block transmission
+protocol), the link between the card reader and the host system can be
+implemented via RS232, PCMCIA, Infra-Red, etc.
+<P>  <DT>2.
+<DD>ISO TC68/SC6 (Banking - Financial Transaction Cards, Related
+Media and Operations) has two working groups: WG5 (Messages Exchanged
+with Integrated Circuit Cards) has produced a Draft International
+Standard and a Working Draft ISO 9992 dealing with messages and data
+elements. WG7 (Security Architecture of Banking Systems Using
+Integrated Circuit Cards) has produced a Draft International Standard
+and a Working Draft covering card life cycle, keys, and algorithms.
+<P>  <DT>3.
+<DD>ISO/IEC JTC1/SC17/WG8 (Information Systems -- Identification Cards
+-- Contactless Integrated Circuit Cards) has not produced standards to
+date in the ISO 10536 series.
+<P>  <DT>4.
+<DD>Specific ANSI X3B10.x groups cover contactless cards. The ANSI
+X3B10.1 group covers IC cards with contacts.ANSI is circulating a
+slightly modified version of ISO 7816-3.
+<P>  <DT>5.
+<DD>The FIPS on Security Requirements for Cryptographic Modules, which
+is in draft status, specifies general physical, functional, and process
+requirements for four increasing levels of security, but does not
+specify interfaces or protocols. This standard applies to government
+applications using cryptographic functions of smart cards.
+<P>  <DT>6.
+<DD>There are a few other standards bodies that have developed smart
+card standards for specific industry segments or applications.
+</DL>
+<P>
+Due to the state of standardization, it is not possible to specify a
+standard interface to smart cards or smart card devices except at the
+physical layer. The draft for the file system layer, however, at least
+provides us with a general picture. Based on this, it is possible to
+specify an abstract usage model and high-level interface that should be
+implementable with minimal software ``glue'' using cards from most
+vendors.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1523"
+ HREF="node121.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1521"
+ HREF="node112.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1515"
+ HREF="node119.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1524"
+ HREF="node121.html">7.5 Why Smart Cards</A>
+<B> Up:</B> <A NAME="tex2html1522"
+ HREF="node112.html">7 Appendix 7: Smart</A>
+<B> Previous:</B> <A NAME="tex2html1516"
+ HREF="node119.html">7.3.4 Life Cycle</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

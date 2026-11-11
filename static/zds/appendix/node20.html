@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.9 How does one find random numbers for keys?</TITLE>
+<META NAME="description" CONTENT="3.2.9 How does one find random numbers for keys?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node21.html">
+<LINK REL="previous" HREF="node19.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node21.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html456"
+ HREF="node21.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html454"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html448"
+ HREF="node19.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html457"
+ HREF="node21.html">3.2.10 What if users</A>
+<B> Up:</B> <A NAME="tex2html455"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html449"
+ HREF="node19.html">3.2.8 How large should</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00329000000000000000">
+3.2.9 How does one find random numbers for keys?</A>
+</H2>
+<P>
+One needs a source of random numbers in order to find two random primes
+to compose the modulus. If one used a predictable method of generating
+the primes, an adversary could mount an attack by trying to recreate
+the key generation process.
+<BR>
+<P>
+Random numbers obtained from a physical process are in principle the best.
+One could use a hardware device, such as a diode; some are sold
+commercially on computer add-in boards for this purpose. Another idea is to
+use physical movements of the computer user, such as keystroke timings
+measured in microseconds. By whichever method, the random numbers may still
+contain some correlations preventing sufficient statistical randomness.
+Therefore, it is best to run them through a good hash function (see
+Question&nbsp;<A HREF="node88.html#what_hash">3.8.2</A>) before actually using them.
+<BR>
+<P>
+Another approach is to use a pseudorandom number generator fed by a
+random seed. Since these are deterministic algorithms, it is important
+to find one that is very unpredictable and also to use a truly random
+seed. There is a wide literature on the subject of pseudorandom number
+generators. See Knuth for an introduction. Note that one does not need
+random numbers to determine the public and private exponents in RSA,
+after choosing the modulus. One can simply choose an arbitrary value
+for the public exponent, which then determines the private exponent, or
+vice versa.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html456"
+ HREF="node21.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html454"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html448"
+ HREF="node19.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html457"
+ HREF="node21.html">3.2.10 What if users</A>
+<B> Up:</B> <A NAME="tex2html455"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html449"
+ HREF="node19.html">3.2.8 How large should</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

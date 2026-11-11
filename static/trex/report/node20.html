@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.1 Introduction</TITLE>
+<META NAME="description" CONTENT="4.1 Introduction">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node21.html">
+<LINK REL="previous" HREF="node19.html">
+<LINK REL="up" HREF="node19.html">
+<LINK REL="next" HREF="node21.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html256"
+ HREF="node21.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html254"
+ HREF="node19.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html248"
+ HREF="node19.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html257"
+ HREF="node21.html">4.2 La modulation numrique</A>
+<B> Up:</B> <A NAME="tex2html255"
+ HREF="node19.html">4 La transmission hertzienne</A>
+<B> Previous:</B> <A NAME="tex2html249"
+ HREF="node19.html">4 La transmission hertzienne</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION00410000000000000000">
+4.1 Introduction</A>
+</H1>
+<P>
+Thoriquement, et mme en pratique dans le cadre des essais en laboratoire,
+le signal obtenu dans les tapes prcdentes pourrait tre transmis tel
+quel par la voie des airs.  Cependant, si l'on analyse le spectre (par
+transformation de Fourier) de ce signal numris &quot;brut&quot;, on obtient, pour
+le module, une courbe en sinus cardinal au carr (cf figure
+<A HREF="node20.html#fig:fourier">4.1</A>) qui montre notamment que 90% de la puissance du signal
+se concentre dans des composantes dont les frquences s'talent entre 0 et
+<I>F</I><SUB><I>max</I></SUB>=80<I>kHz</I> (en fait, de -<I>F</I><SUB><I>max</I></SUB>  +<I>F</I><SUB><I>max</I></SUB>, mais les frquences
+ngatives n'ont pas de signification physique).
+<P>
+<DIV ALIGN="CENTER"><IMG WIDTH="284" HEIGHT="252" ALIGN="BOTTOM" BORDER="0"
+ SRC="../transf-f.gif">
+<BR>
+</DIV>
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node20.html#fig:fourier">4.1</A>: Transforme de Fourier du
+    signal</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="fig:fourier">&#160;</A>Autrement dit, la bande defrquences occupe par ce signal est trs large
+(puisque (<I>F</I><SUB><I>max</I></SUB>- <I>F</I><SUB><I>min</I></SUB>)/<I>F</I><SUB><I>min</I></SUB> est infini...), et ne laisse donc pas
+de place pour la transmission simultane d'autres signaux, ce qui peut
+s'avrer bien entendu gnant pour des applications comme la tlphonie, o
+de nombreuses conversations doivent pouvoir avoir lieu en mme temps!
+<BR>
+<P>
+Aussi, il devient ncessaire de dplacer la zone occupe par les frquences
+du signal transmis, et si possible de rduire au minimum la largeur de
+cette zone. Lorsque l'on transmet un signal analogique, une des solutions
+consiste  moduler le signal initial avec un signal porteur, soit en
+amplitude, soit en frquence (soit, aussi, par codage d'impulsions). Dans
+notre cas, le signal  transmettre tant numrique, il n'est constitu que
+d'une srie de 0 et de 1, et l'on utilise alors une modulation de frquence
+adapte, la <EM>F.S.K.</EM> (<EM>Frequency Shift Keying</EM>).
+<BR>
+<P>
+Dans notre cas, cette mthode, que nous allons ci-aprs expliciter plus en
+dtails, requiert que nous utilisions des signaux, une fois moduls,
+possdant des frquences de l'ordre de 1<I>MHz</I>. Or, la thorie (cf Annexe
+<A HREF="node30.html#annexe:antenne">D</A>) nous dit que l'mission  travers les airs d'un tel
+signal ncessite une antenne d'une hauteur L donne par la relation 2<I>L</I> = <I>c</I>
+/ (2<I>f</I>), o <I>c</I> exprime la vitesse de la lumire (<IMG WIDTH="119" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img12.gif"
+ ALT="$c=3\cdot 10^8 m/s$">) et
+<I>f</I> la frquence du signal  transmettre. On voit donc qu'une hauteur de
+75<I>cm</I> serait suffisante pour transmettre un signal de frquence 100<I>MHz</I>,
+alors que pour une frquence de 1<I>MHz</I>, il faudrait une antenne de 75<I>m</I> de
+haut, ce qui est un peu gnant pour un radiotlphone!  Aussi, il devient
+ncessaire de dcaler les frquences du signal  transmettre, et c'est
+justement le rle de la transposition.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html256"
+ HREF="node21.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html254"
+ HREF="node19.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html248"
+ HREF="node19.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html257"
+ HREF="node21.html">4.2 La modulation numrique</A>
+<B> Up:</B> <A NAME="tex2html255"
+ HREF="node19.html">4 La transmission hertzienne</A>
+<B> Previous:</B> <A NAME="tex2html249"
+ HREF="node19.html">4 La transmission hertzienne</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/25/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

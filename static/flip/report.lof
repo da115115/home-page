@@ -1,0 +1,9 @@
+\contentsline {figure}{\numberline {1}{\ignorespaces Architecture Générale}}{4}
+\contentsline {figure}{\numberline {2}{\ignorespaces Fenêtre de l'émetteur}}{8}
+\contentsline {figure}{\numberline {3}{\ignorespaces Boîte de dialogue}}{10}
+\contentsline {figure}{\numberline {4}{\ignorespaces Fenêtre du récepteur}}{10}
+\contentsline {figure}{\numberline {5}{\ignorespaces Relations entre classes pour le côté serveur}}{12}
+\contentsline {figure}{\numberline {6}{\ignorespaces Relations entre classes pour le côté client}}{13}
+\contentsline {figure}{\numberline {7}{\ignorespaces Relations entre les différents {\it Threads} pour le serveur}}{14}
+\contentsline {figure}{\numberline {8}{\ignorespaces Relations entre les différents {\it Threads} pour le client}}{15}
+\contentsline {figure}{\numberline {9}{\ignorespaces Gestion des événements du côté émetteur}}{18}

@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.4.4 What is the significance of factoring in cryptography?</TITLE>
+<META NAME="description" CONTENT="3.4.4 What is the significance of factoring in cryptography?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node56.html">
+<LINK REL="previous" HREF="node54.html">
+<LINK REL="up" HREF="node51.html">
+<LINK REL="next" HREF="node56.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html830"
+ HREF="node56.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html828"
+ HREF="node51.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html822"
+ HREF="node54.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html831"
+ HREF="node56.html">3.4.5 Has factoring been</A>
+<B> Up:</B> <A NAME="tex2html829"
+ HREF="node51.html">3.4 Factoring and Discrete</A>
+<B> Previous:</B> <A NAME="tex2html823"
+ HREF="node54.html">3.4.3 What is the</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00344000000000000000">
+3.4.4 What is the significance of factoring in cryptography?</A>
+</H2>
+<A NAME="what_sig_factor">&#160;</A>
+Factoring is the underlying, presumably hard problem upon which several
+public-key cryptosystems are based, including RSA. Factoring an RSA modulus
+(see Question&nbsp;<A HREF="node12.html#what_rsa">3.2.1</A>) would allow an attacker to figure out the
+private key; thus, anyone who can factor the modulus can decrypt messages
+and forge signatures. The security of RSA therefore depends on the
+factoring problem being difficult. Unfortunately, it has not been proven
+that factoring must be difficult, and there remains a possibility that a
+quick and easy factoring method might be discovered (see Question
+<A HREF="node58.html#what_pros_fac">3.4.7</A>), although factoring researchers consider this
+possibility remote.
+<BR>
+<P>
+Factoring large numbers takes more time than factoring smaller numbers.
+This is why the size of the modulus in RSA determines how secure an
+actual use of RSA is; the larger the modulus, the longer it would take
+an attacker to factor, and thus the more resistant to attack the RSA
+implementation is.
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

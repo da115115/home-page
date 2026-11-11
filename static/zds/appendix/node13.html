@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.2 Why use RSA rather than DES?</TITLE>
+<META NAME="description" CONTENT="3.2.2 Why use RSA rather than DES?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node14.html">
+<LINK REL="previous" HREF="node12.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node14.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html386"
+ HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html384"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html378"
+ HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html387"
+ HREF="node14.html">3.2.3 How fast is</A>
+<B> Up:</B> <A NAME="tex2html385"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html379"
+ HREF="node12.html">3.2.1 What is RSA?</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00322000000000000000">
+3.2.2 Why use RSA rather than DES?</A>
+</H2>
+<P>
+RSA is not an alternative or replacement for DES; rather it supplements
+DES (or any other fast bulk encryption cipher) and is used together
+with DES in a secure communications environment. (Note: for an
+explanation of DES, see Question&nbsp;<A HREF="node63.html#what_des">3.5.1</A>)
+<BR>
+<P>
+RSA allows two important functions not provided by DES: secure key
+exchange without prior exchange of secrets, and digital signatures. For
+encrypting messages, RSA and DES are usually combined as follows: first
+the message is encrypted with a random DES key, and then, before being
+sent over an insecure communications channel, the DES key is encrypted
+with RSA. Together, the DES-encrypted message and the RSA-encrypted DES
+key are sent. This protocol is known as an RSA digital envelope.
+<BR>
+<P>
+One may wonder, why not just use RSA to encrypt the whole message and
+not use DES at all? Although this may be fine for small messages, DES
+(or another cipher) is preferable for larger messages because it is
+much faster than RSA (see Question&nbsp;<A HREF="node14.html#how_fast_rsa">3.2.3</A>).
+<BR>
+<P>
+In some situations, RSA is not necessary and DES alone is sufficient.
+This includes multi-user environments where secure DES-key agreement
+can take place, for example by the two parties meeting in private.
+Also, RSA is usually not necessary in a single-user environment; for
+example, if you want to keep your personal files encrypted, just do so
+with DES using, say, your personal password as the DES key. RSA, and
+public-key cryptography in general, is best suited for a multi-user
+environment. Also, any system in which digital signatures are desired
+needs RSA or some other public-key system.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html386"
+ HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html384"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html378"
+ HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html387"
+ HREF="node14.html">3.2.3 How fast is</A>
+<B> Up:</B> <A NAME="tex2html385"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html379"
+ HREF="node12.html">3.2.1 What is RSA?</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

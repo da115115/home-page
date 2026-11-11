@@ -1,0 +1,340 @@
+\section{Plates-formes}
+
+\subsection{Comparaison - Présentation des produits}
+Nous avons eu à comparer deux plates-formes, à savoir {\it TME~10 NetView}
+d'IBM/Tivoli et {\it Spectrum} de Cabletron. Plates-formes sur lesquelles
+nous devions étudier la pertinence d'ajouter le produit Optivity de Bay
+Networks.
+
+\subsubsection{Cabletron Spectrum}
+\begin{htmllist}
+  \htmlitemmark{RedBall}
+  
+  \latexhtml{\item {\bf Intégration - Développement}}{\item[Intégration -
+    Développement]}
+  
+  {\it Spectrum} est une plate-forme construite sur le modèle
+  client/serveur.  La plate-forme s'organise autour du {\it SpectroSERVER}
+  en modules clients s\'epar\'es. Le SpectroSERVER est lui-même organisé en
+  une {\it Virtual Network Machine (VNM)}, une base de données, des piles
+  de communication et une API de communication pour les clients.\\
+  
+  Les clients peuvent aussi bien être des modules de Spectrum, comme par
+  exemple {\it SpectroGRAPH} qui est la GUI de la plate-forme, que des
+  applications qui tournent sur une autre plate-forme (voir
+  figure~\ref{fig:spectrum}). L'adaptation entre les modules externes et le
+  c\oe{}ur de la plate-forme, le SpectroSERVER, est faite par des
+  {\it Spectrum Portable Management Applications (SPMA)}. Celles-ci permettent
+  de compléter la gamme des applications déjà fournies par Spectrum.\\
+  
+  Le SpectroSERVER supporte les piles SNMP, ICMP, EPI (un protocole
+  propriétaire de Cabletron) par l'intermédiaire du {\it Device
+    Communications Manager (DCM)}, mais la pile CMIP n'est encore qu'à
+  l'état de prototype.\\
+  
+  La base de données du SpectroSERVER est orientée objet et très riche,
+  puisqu'elle permet d'appréhender le réseau en considérant les liens et
+  interactions qui existent entre les éléments gérés grâce à l'{\it
+    Inductive Modeling Technology (IMT)}. Le défaut de cette base de
+  données est d'être propriétaire. Ce n'est que par une API supplémentaire
+  que les informations peuvent être exporter vers d'autres
+  systèmes de gestion de données.\\
+  
+  Cabletron fournit deux types d'outils pour le développement:
+  \begin{itemize}
+    \item Une boîte à outils de premier niveau qui permet d'étendre Spectrum à
+      de nouveaux éléments de réseau et de configurer le noyau de Spectrum.
+    \item Une boîte à outils de deuxième niveau qui contient des APIs et qui
+      sert à développer en C++ des extensions avancées aux applications de
+      management ou aux représentations des données. 
+  \end{itemize}
+  
+  Le large recours à des moyens de communication ou de représentation de
+  données propriétaires ne facilite pas l'intégration de cette plate-forme.
+  En fait, elle se limite à la possible interopérabilité avec des
+  applications externes par le moyen de SPMA et la fourniture d'APIs.  Bien
+  que certains outils de développement soient fournis, les possibilités
+  offertes demeurent restreintes.\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=14cm]{spectrum.ps}
+  \caption{Communications entre serveurs et avec les modules clients}
+  \label{fig:spectrum}
+\end{figure}
+
+  \latexhtml{\item {\bf Communication entre managers}}{\item[Communication
+    entre managers]}
+  
+  Le mécanisme de communication entre managers est propriétaire.\\
+
+  \latexhtml{\item {\bf Gestion distribuée}}{\item[Gestion distribuée]}
+  
+  Spectrum a été con\c cue pour la gestion distribu\'ee de r\'eseau. En
+  effet la gestion du r\'eseau peut v\'eritablement \^etre r\'epartie en
+  affectant \`a diff\'erents serveurs des t\^aches ou bien des
+  sous-r\'eseaux sp\'ecifiques. Les serveurs dédiés s'occupent alors du
+  polling sur certains éléments seulement et récupèrent les alarmes les
+  con\c cernant. Après analyse, seules les informations pertinentes sont
+  retransmises aux autres SpectroSERVERs. On peut accéder aux
+  SpectroSERVERs un par un ou de fa\c con regroupée depuis une console
+  client unique.\\
+  
+  La mod\'elisation interne du r\'eseau tient compte non seulement des
+  éléments qui le constituent, mais aussi des liens qu'il peut y avoir
+  entre eux. La plate-forme a ainsi une approche plus ``intelligente'' des
+  informations. En plus, ces informations sont traitées par une technologie
+  originale (IMT) qui permet de réduire le nombre
+  d'alarmes en cas d'avalanches en isolant la source du problème.\\
+\end{htmllist}
+
+\subsubsection{TME 10 NetView}
+
+\begin{htmllist}
+  \htmlitemmark{RedBall}
+  \latexhtml{\item {\bf Intégration - Développement}}{\item[Intégration -
+    Développement]}
+  
+  Cette plate-forme est née de la fusion entre IBM et Tivoli, et a repris
+  les points forts des produits de ces deux firmes, respectivement NetView
+  (aussi appelé SystemView) et TME~$3.0$. Alors que NetView se voyait
+  dévolu à la gestion de réseaux, TME~$3.0$ était spécialisé pour
+  l'administration système. La fusion entre les deux sociétés a permis
+  d'intégrer les deux types d'administration (système et réseaux) sur un
+  seul produit, nommé du coup {\it TME~10 NetView}.\\
+  
+  En fait, cette plate-forme reprend la base du produit de Tivoli ({\it
+    TME~10 Framework}), base sur laquelle vient s'intégrer le produit d'IBM
+  et d'autres applications Tivoli (distribution de logiciels, gestion des
+  utilisateurs, gestion distribuée des configurations, etc.). Certains
+  éléments de gestion de réseaux de NetView sont ou vont être directement
+  intégrés dans TME~10 Framework, permettant notamment à d'autres
+  applications d'inter-opérer avec NetView. Un des intérêts majeurs de
+  TME~10 Framework est justement que Tivoli fournit une API ({\it
+    Application Programming Interface}), la {\it TME~10 Framework API},
+  permettant d'intégrer différentes applications de différentes sociétés
+  (Tivoli délivre un label ``{\it Tivoli Ready}'' aux sociétés qui
+  développent des applications s'intégrant à TME~10 Framework, et les
+  développeurs bénéficient d'une boîte à outils d'intégration ({\it
+    Integration Toolkit}) ainsi que de l'environnement d'un club de
+  développeurs créé par Tivoli: la {\it Tivoli's 10/Plus Association}).\\
+  
+  Ainsi, non seulement il est possible de développer soi-même des
+  applications s'intégrant étroitement avec TME, mais l'on bénéficie aussi
+  des applications des autres plates-formes et des autres développeurs.\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=4in]{whitep1.ps}
+  \caption{TME~10 Framework: l'intégration simplifiée}
+\end{figure}
+
+  \latexhtml{\item {\bf Communication entre managers}}{\item[Communication
+    entre managers]}
+  
+  TME~10 Framework donne la base de communication entre managers, et permet
+  par exemple de configurer les traps SNMP ou les règles de corrélation
+  d'évenements, sur tous les composants NetView à la fois, et tout cela à
+  partir d'un seul site.\\
+  
+  Alors que les managers (les {\it Mid-Level Managers}) communiquent avec
+  les agents en utilisant le protocole SNMP, les managers utilisent entre
+  eux un protocole basé sur CORBA (comme le montre la
+  figure~\ref{fig:comm}), ce qui permet de sécuriser et de rendre robustes
+  les communications.\\
+  
+\begin{figure}[htbp]
+  \centering\includegraphics[height=4in,width=5.5in]{whitep9.ps}
+  \caption{Communications inter-applications basées sur des transactions CORBA}
+  \label{fig:comm}
+\end{figure}
+
+  D'autre part, les données relatives notamment aux événements, à la
+  topologie et à la configuration SNMP, sont stockées dans une base de
+  données qui s'interface avec les principaux produits du marché (Oracle,
+  Sybase, Informix et MS SQL).\\
+
+  \latexhtml{\item {\bf Gestion distribuée}}{\item[Gestion distribuée]}
+  
+  L'architecture répartie de l'implantation des différents éléments NetView
+  permet de positionner les managers, les MLMs ({\it Mid-Level Managers}),
+  au plus près des ressources réseaux. Comme les MLMs demandent peu de
+  ressources système (HP-UX et Sun/Solaris font partie des OS supportés par
+  les MLMs), et qu'ils communiquent avec la station principale NetView sur
+  le mode client/serveur, cette architecture peut facilement supporter la
+  croissance du réseau.\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=6.5in]{whitep3.ps}
+  \caption{Architecture distribuée}
+\end{figure}
+
+  D'autre part, dans notre étude, nous devons envisager deux types
+  d'installation:
+  \begin{itemize}
+    \item chaque site gère localement ses ressources,
+    \item l'ensemble des ressources est géré par un seul site avec délégation
+      sur les sites locaux.
+  \end{itemize}
+  
+  Or, TME~10 NetView permet justement d'envisager sereinement ces deux
+  types d'instal\-lation à partir d'une seule architecture.\\
+  
+  En effet, dans le cas d'une gestion locale, des MLMs gérés localement par
+  un système NetView suffit. Et si l'on souhaite alors passer à une
+  configurartion de gestion centralisée, il suffit d'ajouter sur le site
+  central la {\it TME~10 Enterprise Console (TEC)}, qui permet de fédérer
+  et de corréler les événements provenant de nombreuses sources, y compris
+  de managers SNMP autres que NetView (voir la figure~\ref{fig:tec}).\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=5.5in]{whitep5.ps}
+  \caption{Gestion centralisée - Intégration des événements}
+  \label{fig:tec}
+\end{figure}
+
+  Ainsi, les événements peuvent être filtrés et analysés à chacun des stades
+  (MLM, NetView, TEC), avec la possibilité de les faire suivre au stade
+  supérieur ou d'entreprendre des actions correctives. Aussi, seuls les
+  événements pertinents sont retenus à chacun des niveaux, et leur
+  corrélation permet de trouver et de traiter plus facilement leur source.\\
+  
+  De même, les sondages ({\it polling}) sont effectués par les MLMs, au
+  plus près des ressources, ce qui évite d'encombrer inutilement le réseau.\\
+
+  \latexhtml{\item {\bf Les plus}}{\item[Les plus]}
+  
+  En plus des caractéristiques énoncées répondant au cahier des charges,
+  TME~10 présente quelques avantages intéressants:
+  \begin{htmllist}
+    \htmlitemmark{WhiteBall}
+    \item[Robustesse:] Si un MLM ou un NetView tombe en panne, un autre peut
+      récupérer de manière automatique ses responsabilités (notamment de
+      sondages et de relais/analyse d'événements).
+    \item[Intégration système/réseau:] Cela résulte de la fusion entre
+      Tivoli et IBM, et donne donc un moyen de gérer d'un seul endroit à la
+      fois les systèmes ({\it hosts}) et les ressources réseau. Un clic de
+      souris sur la carte topologique permet par exemple d'accèder au
+      contenu du disque et des fichiers de configuration d'un système.
+    \item[Gestion par action unique:] Pouvoir regrouper les objets sous
+      formes de collections (par exemple, tous les switchs Fore, ou encore
+      les systèmes en panne) permet de distribuer de manière transparente
+      les configurations et autres logiciels à tous les membres du groupe
+      automatiquement, comme si l'on ne s'adressait qu'à une seule entité.
+  \end{htmllist}
+\end{htmllist}
+
+\subsubsection{Optivity}
+{\it Optivity} est un produit à part. On pourrait le qualifier de logiciel
+d'aide à l'optimisation. Cette plate-forme d'administration vient se placer
+au dessus d'une autre. Les plate-formes compatibles avec Optivity sont
+HPOpenView, Novell NMS, SunNet Manager, et Netview.\\
+
+Cette plate-forme offre de très nombreuses facilités en ce qui concerne la
+gestion des switchs, routeurs et sondes RMON; l'évaluation du trafic et de la
+configuration du réseau; l'évolution et l'optimisation du réseau grâce à un
+outil de simulation permettant le test à l'avance de ses solutions
+réseau; et l'administration distribuée.\\
+
+Optivity propose trois niveaux d'administration, un niveau local, un niveau
+Campus (réseau étendu sur un site) et un niveau Entreprise (réseau partagé
+sur plusieurs sites).\\
+
+Nous aurions pu opter pour l'achat de ce produit pour faciliter la gestion
+de nos switchs ATM et de notre sonde RMON. Mais l'achat d'une autre
+plate-forme, sa mise en place, et sa maintenance nous ont apparus comme un
+investissement superflu considérant la taille actuelle de notre réseau,
+qui nous semble pouvoir se passer d'Optivity pour son optimisation.
+
+\subsection{Choix retenu}
+Bien que les deux plates-formes, {\it Spectrum} et {\it TME~10 NetView},
+permettent de remplir le cahier des charges imposé dans des conditions
+sensiblement équivalentes, nous avons retenu pour notre étude le choix de
+la plate-forme d'IBM/Tivoli.\\
+
+Ce choix se justifie d'abord par la possibilité réduite, avec Spectrum, de
+développement et de personnalisation des applications. Ces possibilités
+existent, mais un manque d'API de développement se fait ressentir, alors
+que pour TME~10, la base d'intégration de Tivoli (TME~10 Framework) fournit
+tous les outils, APIs et supports (notamment avec la Tivoli's 10/Plus
+Association) pour le développement d'applications pouvant inter-opérer.\\
+
+Le label ``{\it Tivoli Ready}'', délivré par Tivoli en cas de conformance à
+l'API TME~10 Framework, permet de garantir l'inter-opérabilité entre les
+développements que l'on va effectuer et les applications de gestion de
+réseau déjà existantes. Dans le cas de Spectrum, l'intégration se fait par
+``le haut'', en ajoutant une surcouche aux applications existantes:
+Spectrum peut récupérer des objets sur d'autres plates-formes, mais les
+échanges dans l'autre sens sont plus limités.\\
+
+Ensuite, la communication entre managers est robuste, sécurisée et suit des
+standards (Corba) dans le cas de TME~10, alors qu'elle reste propriétaire pour
+Spectrum.\\
+
+De même, l'organisation des données et le recueil des objets s'interfacent
+facilement avec les produits de bases de données les plus répandus dans le
+cas de TME~10, alors que Spectrum utilise des systèmes propriétaires.\\
+
+Enfin, lors de notre recherche de documentation, nous avons pu nous rendre
+compte que la disponibilité des informations était assez inégale: autant il
+est facile de trouver des livres blancs, rouges et autres documentations
+techniques sur NetView, autant obtenir une description précise de Spectrum
+apparaît plus délicat. Si nous devions installer une plate-forme, nous nous
+sentirions ainsi beaucoup mieux épaulés avec NetView qu'avec Spectrum (l'on
+trouve par exemple sur Internet des documentations complètes et précises
+sur l'installation et l'utilisation de NetView pour tel ou tel OS, sur les
+changements dans les dernières versions, {\it etc.}).\\
+
+En ce qui concerne Otpivity, il est clair que cette plate-forme ne peut
+s'intégrer qu'à NetView, et non pas à Spectrum. Nous n'avons pas estimé
+devoir retenir Optivity, car la seule plate-forme d'IBM/Tivoli permet
+d'effectuer allégrement tout ce qu'exige le cahier des charges. Optivity
+apporterait un plus, mais de l'ordre de l'agrément et du confort, plus que
+de celui de la fonctionnalité. Ainsi, le plus d'Optivity vient surtout de la
+facilité de configuration par des aides graphiques évoluées, et d'effectuer
+des simulations/analyses sur le réseau. Cette plate-forme trouve toute sa
+justification dans le cas de réseaux hétérogènes construits par petits
+bouts indépendants sans planification véritablement centralisée. Mais,
+comme dans notre cas, le réseau est relativement homogène, cohérent et
+jeune, nous ne voyons pas d'atout indispensable que pourrait apporter
+Optivity.
+
+\subsection{Présentation}
+Nous avons donc retenu la mise en \oe{}uvre de la plate-forme TME~10
+NetView d'IBM/Ti\-voli uniquement. Il reste à expliciter l'architecture
+correspondante à notre cas, que nous explicitons sur la
+figure~\ref{fig:archi}.\\
+
+\begin{figure}[htbp]
+  \centering\includegraphics[width=14cm]{architecture.ps}
+  \caption{Architecture retenue}
+  \label{fig:archi}
+\end{figure}
+
+Les MLMs ({\it Mid-Level Managers}) sont des programmes qui nécessitent
+relativement peu de ressources systèmes (et pas de bases de données
+locales). Ils peuvent donc être placés directement sur une des machines
+déjà en place (host ou serveur). Dans notre architecture, nous avons placé
+un seul MLM par switch, et un sur le routeur. Si ces MLMs parviennent à
+saturation, {\it i.e.}, si la charge de travail (analyse des événements
+et actions correctives, sondages des ressources, détection de franchissement
+de seuils, rapports de modifications per\c cues, etc.) devient trop lourde
+pour un seul de ces MLMs par switch, l'on peut sans problème en ajouter
+d'autres sur les autres hosts ou serveurs. Par exemple, l'on pourra placer
+un MLM pour gérer les serveurs, et un pour les hosts. Ainsi, le MLM du
+routeur gère plus spécifiquement les tâches affairant au réseau extérieur.\\
+
+Cette gestion par un MLM sur chacun des switchs permet d'éviter une
+génération trop importante de trafic sur le réseau. Toutefois, si ce trafic
+s'avérait encore trop important (dans le cas d'ajouts de hosts et de
+serveurs, par exemple), l'on pourrait alors placer un système TME~10
+NetView par switch.\\
+
+Pour l'instant donc, un seul TME~10 NetView permet de gérer localement tous
+les MLMs, et dans le cas d'une gestion centralisée, l'on placera de plus
+une station avec TME~10 Enterprise Console. Cette structure hiérarchique de
+collection et de traitement de l'information permet d'étendre facilement le
+réseau en cas de croissance future, et surtout d'intégrer facilement
+l'architecture multi-sites de notre cas d'étude.
+
+
+
+

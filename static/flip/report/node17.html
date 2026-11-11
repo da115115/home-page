@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//FR">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.4 Couches de contrle et d'adaptation: dtail</TITLE>
+<META NAME="description" CONTENT="4.4 Couches de contrle et d'adaptation: dtail">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="previous" HREF="node16.html">
+<LINK REL="up" HREF="node13.html">
+<LINK REL="next" HREF="node18.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html221"
+ HREF="node18.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html219"
+ HREF="node13.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html215"
+ HREF="node16.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html222"
+ HREF="node18.html">5 Conclusion</A>
+<B> Up:</B> <A NAME="tex2html220"
+ HREF="node13.html">4 Composition - Structure</A>
+<B> Previous:</B> <A NAME="tex2html216"
+ HREF="node16.html">4.3 Relation entre ControlLayer</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00054000000000000000">
+4.4 Couches de contrle et d'adaptation: dtail</A>
+</H2>
+Nous avons vu que certains call-backs de <I>ControlLayer</I> appelaient 
+leur tour des mthodes de <I>FileList</I>. C'est notamment le cas de la
+mthode <TT>controlLayer.sendAction()</TT> qui appelle la mthode
+<TT>fileList.sendItem()</TT>, dclenchant l'envoi sur le rseau d'une page
+Html.
+<P><PRE>
+public class ControlLayer implements Runnable {
+  public FileList fileList;
+  // Implements the call-back of the SenderGUI's sendButton
+  public void sendAction () {
+    fileList.sendItem ();
+  }
+}
+
+public class FileList extends List {
+  public void sendItem () {
+    int fileListIndex = getSelectedIndex ();
+    send (fileListIndex);
+  }
+
+  public int send (int i) {
+    AMPThreadCarrier ampThreadCarrier = new AMPThreadCarrier (dbg);
+    // Kill all previously running AMP process (stop the previous transmission)
+    Executer.exec (AMPKillerCmd, dbg);
+    // Create the Unix tar file to store all the inlined files contained
+    // by the Html page
+    String tarFilename = tarBuilder (directory, filename);
+    // Send the Html page alltogether with its inlined files (images, etc.)
+    ampThreadCarrier.cmdExec = &quot;AMP &quot; + filename;
+    ampThreadCarrier.start ();
+    return displayTime;
+  }
+}
+</PRE>
+<P>
+Comme on le voit ci-dessus, la mthode <TT>sendItem()</TT> appelle  son tour
+la mthode <TT>send()</TT>, cette dernire implmentant effectivement l'envoi
+de la page Html sur le rseau. Pour cela, plusieurs tapes sont
+ncessaires, le but tant de regrouper dans un seul fichier <TT>.tar</TT> Unix
+le fichier <TT>.html</TT> lui-mme, ainsi que tous les fichiers inclus
+(images, sons, films et autres appelettes).
+<BR>
+<P>
+Le programme <TT>tar</TT> Unix respecte la hirarchie des rpertoires, et le
+rcepteur pourra donc retrouver la mme structure que celle de l'metteur.
+Cependant, comme le fichier <TT>.tar</TT> est stock sur le rpertoire
+<TT>/tmp</TT>, tous les noms de fichiers inclus commen&#231;ant par
+<TT>../</TT> (chemin relatif du rpertoire parent) ne pourront tre incorpors
+tel quels dans le <TT>.tar</TT>. Il faut donc trouver leur rpertoire, et les
+copier, au sein de <TT>/tmp</TT>, dans un autre rpertoire (intitul
+<TT>subDir</TT> dans notre cas). Dans le <TT>.html</TT> que re&#231;oit le
+rcepteur, il faut donc que les noms de fichiers inclus correspondants
+soient modifis pour commencer par quelque chose comme <TT>/tmp/subDir</TT>.
+<BR>
+<P><DL>
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Arrt de l'ventuelle transmission en cours:</B>
+<DD>on invoque pour cela
+    un script Unix (<TT>killer</TT>), crit pour l'occasion (voir
+    Annexe&nbsp;<A HREF="node21.html#ann:killer">B</A>), qui tue le processus Unix rpondant au nom
+    d'AMP. Cette mthode est brutale, mais l'interface d'AMP ne permet pas
+    d'tre plus fin.
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Extraction des noms des fichiers inclus:</B>
+<DD>on utilise une mthode de
+    la classe <I>Adapter</I>, qui extrait les noms de fichiers inclus dans
+    le <TT>.html</TT> original, et rcrit un autre <TT>.html</TT> avec les
+    ventuels nouveaux noms (ceux commen&#231;ant par <TT>/tmp/subDir</TT>).
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Excution de la commande Unix <TT>tar</TT>:</B>
+<DD>cette commande regroupe
+    sous un mme fichier tous les fichiers ncessaires  l'interprtation
+    de la page Html.
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Compression du fichier <TT>.tar</TT>:</B>
+<DD>on utilise la commande Unix
+    <TT>gzip</TT>.
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Nettoyage:</B>
+<DD>il faut effacer tous les sous-rpertoires et
+    fichiers qui ont servi  la construction du <TT>.tar</TT>.
+</DL>
+<P>
+Enfin, aprs avoir cr le <TT>.tar</TT>, il faut envoyer ce fichier sur le
+rseau en utilisant le protocole AMP. Or, l'appel au serveur AMP est
+bloquant, et l'on veut pouvoir stopper la transmission  tout moment: bref,
+l'on veut garder la main pendant la transmission. Aussi, il est ncessaire
+de lancer un <I>Thread</I>, qui va implmenter l'appel au serveur AMP.
+<BR>
+<P>
+Pour des raisons de clart, ce <I>Thread</I> est implment dans la classe
+<I>AMPThreadCarrier</I>, ce qui prsente l'avantage de fournir des moyens de
+communication entre le <I>Thread</I> et le processus appelant (par
+l'intermdiaire d'attributs <TT>static</TT>). Cela permet par exemple de faire
+excuter plusieurs fois le serveur AMP sur des noms de fichier diffrents,
+sans dtruire le <I>Thread</I>, mais simplement en le stoppant. Ici, donc,
+l'<I>AMPThreadCarrier</I> lance sous forme de commande Unix le serveur AMP.
+Pour stopper le <I>Thread</I>, il faudra tuer le processus AMP, ce qui
+permettra  <I>AMPThreadCarrier</I> de finir sa tche.
+<BR>
+<P>
+Pour finir, il est  noter que c'est la mthode <TT>send()</TT> de
+<I>FileList</I> qui lance <I>AMPThreadCarrier</I>:  chaque fois que l'on
+demandera d'envoyer un fichier sur le rseau, la mthode <TT>run()</TT>
+d'<I>AMPThreadCarrier</I> sera invoque avec le nom de fichier  transmettre
+correspondant. <I>AMPThreadCarrier</I> est diffrent du <I>Thread</I> lanc
+par <I>ControlLayer</I> pour grer le mode automatique. Dans le mode
+automatique, la mthode <TT>fileList.send()</TT> est invoque sur chacun des
+fichiers  transmettre, et cette dernire lance  son tour un
+<I>AMPThreadCarrier</I>. Le mode automatique est gr sous forme de
+<I>Thread</I> afin de pouvoir garder la main et, notamment, stopper ce mode.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html221"
+ HREF="node18.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html219"
+ HREF="node13.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html215"
+ HREF="node16.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html222"
+ HREF="node18.html">5 Conclusion</A>
+<B> Up:</B> <A NAME="tex2html220"
+ HREF="node13.html">4 Composition - Structure</A>
+<B> Previous:</B> <A NAME="tex2html216"
+ HREF="node16.html">4.3 Relation entre ControlLayer</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

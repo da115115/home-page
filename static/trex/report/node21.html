@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.2 La modulation numrique</TITLE>
+<META NAME="description" CONTENT="4.2 La modulation numrique">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node22.html">
+<LINK REL="previous" HREF="node20.html">
+<LINK REL="up" HREF="node19.html">
+<LINK REL="next" HREF="node22.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html266"
+ HREF="node22.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html264"
+ HREF="node19.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html258"
+ HREF="node20.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html267"
+ HREF="node22.html">4.3 La transposition en</A>
+<B> Up:</B> <A NAME="tex2html265"
+ HREF="node19.html">4 La transmission hertzienne</A>
+<B> Previous:</B> <A NAME="tex2html259"
+ HREF="node20.html">4.1 Introduction</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION00420000000000000000">
+4.2 La modulation numrique</A>
+</H1>
+<P>
+Cette mthode consiste  mettre un signal sinusodal, soit de frquence
+<I>f<SUB>0</SUB></I> lorsque le bit du signal numrique  transmettre vaut 0, soit de
+frquence <I>f<SUB>1</SUB></I> dans le cas contraire. Afin que la largeur de la bande de
+frquences soit aussi faible que possible, il faut que <I>f<SUB>0</SUB></I> et <I>f<SUB>1</SUB></I>
+soient proches l'une de l'autre. Typiquement, l'on retient que
+(<I>f<SUB>1</SUB></I>-<I>f<SUB>0</SUB></I>)/2 doit tre de l'ordre de 10% de (<I>f<SUB>0</SUB></I>+<I>f<SUB>1</SUB></I>)/2.
+<BR>
+<P>
+D'autre part, afin que le signal de frquence <I>f<SUB>0</SUB></I> ou <I>f<SUB>1</SUB></I> soit dfini
+sans ambigut (<EM>i.e.</EM> que ce signal soit mis suffisamment longtemps 
+cette frquence pour que le rcepteur puisse sans ambigut rcuprer un
+signal  cette frquence), il est ncessaire que la priode correspondant 
+<I>f<SUB>0</SUB></I> ou <I>f<SUB>1</SUB></I> soit nettement plus petite que la dure d'un tat lectrique
+stable du signal numrique initial (cf figure <A HREF="node21.html#fig:modulation">4.2</A>). Si
+<I>f</I><SUB><I>H</I></SUB> reprsente la frquence du signal numrique initial (ici,
+<I>f</I><SUB><I>H</I></SUB>=80<I>kHz</I>), on prendra donc <IMG WIDTH="83" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img13.gif"
+ ALT="$f_0\gg 2\, f_H$">, ce qui nous amne  prendre
+<I>f<SUB>0</SUB></I> et <I>f<SUB>1</SUB></I> de l'ordre de 1<I>MHz</I>.
+<P>
+<DIV ALIGN="CENTER"><IMG WIDTH="606" HEIGHT="325" ALIGN="BOTTOM" BORDER="0"
+ SRC="../modulati.gif">
+<BR>
+</DIV>
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node21.html#fig:modulation">4.2</A>: Modulation en frquence
+    du signal</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="fig:modulation">&#160;</A>
+  <DIV ALIGN="CENTER"><IMG WIDTH="375" HEIGHT="251" ALIGN="BOTTOM" BORDER="0"
+ SRC="../fourier.gif">
+<BR>
+</DIV>
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node21.html#fig:modul">4.3</A>: Portrait de phase d'une
+    modulation en frquence par FSK; Le 1 reprsente le portrait de phase
+    d'un signal &quot;porte&quot;, et le 2 reprsente le signal binaire aprs la
+    modulation</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="fig:modul">&#160;</A>En pratique, pour ne pas saturer les composants mis  notre disposition, et
+en tenant compte des deux remarques prcdentes, cela nous a amen  rgler
+notre montage sur les frquences <I>f<SUB>0</SUB></I> = 810<I>kHz</I> et <I>f<SUB>1</SUB></I> = 890<I>kHz</I>. La
+figure <A HREF="node21.html#fig:modul">4.3</A> nous montre le portrait de phase du signal modul.
+<BR>
+<P>
+Bien sr, si l'metteur module de la sorte le signal qu'il transmet, le
+rcepteur doit pouvoir effectuer l'opration inverse, c'est--dire la
+dmodulation. Mais cette opration n'est pas, <EM>a priori</EM>, vidente!
+Aussi une astuce permet-elle de s'en sortir trs avantageusement: il s'agit
+d'employer, l encore, une boucle de phase (cf figure <A HREF="node21.html#fig:mod_demod">4.4</A>).
+Le principe de ce montage est de prendre le mme circuit pour la
+dmodulation que celui qui a t employ pour la modulation (circuit  base
+de V.C.O.), puis d'asservir le circuit de dmodulation de telle sorte que
+sa sortie gale celle du circuit de modulation. Ds lors, puisque les
+circuits sont les mmes, on peut infrer que si leur sortie sont gales,
+leur entre le sont aussi: on retrouve ainsi  l'entre du circuit
+rcepteur le signal qui tait  l'entre du circuit metteur, c'est--dire
+le signal numrique, qui se retrouve ainsi dmodul!
+<P>
+<DIV ALIGN="CENTER"><IMG WIDTH="538" HEIGHT="276" ALIGN="BOTTOM" BORDER="0"
+ SRC="../moddmod.gif">
+<BR>
+</DIV>
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node21.html#fig:mod_demod">4.4</A>: Schma de principe du
+    modulateur/dmodulateur</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="fig:mod_demod">&#160;</A>Le montage dmodulateur comporte un oscillateur, rglable au moyen d'une
+inductance variable, donnant la frquence de rfrence  partir de laquelle
+il essaie d'galer celle du signal qu'il a  dmoduler. Ainsi, il faut que
+cette frquence de rfrence soit assez proche de <I>f<SUB>0</SUB></I> et <I>f<SUB>1</SUB></I>, <EM>i.e.</EM>
+environ 850<I>kHz</I>. En fait, cette valeur doit tre ajuste avec prcision,
+et on la rgle, dans la pratique, avec l'aide d'un oscilloscope affichant
+d'une part le signal numrique avant transmission, et d'autre part le
+signal recueilli  la sortie du dmodulateur. Lorsque la frquence de
+rfrence est correctement rgle, on dit qu'il y a accrochage de la boucle
+de phase sur le signal transmis.
+<BR>
+<P>
+A ce stade du montage, nous avons rencontr un petit problme qui, bien que
+n'ayant aucun rapport avec la thorie et les principes de fonctionnement,
+mrite toutefois quelque attention... En effet, une fois l'oscillateur du
+dmodulateur rgl, nous avons cbl la sortie de ce dernier circuit sur la
+maquette de conversion numrique/analogique.  Les rsultats taient
+probants pour les signaux analogiques (la voix passait correctement d'un
+poste tlphonique  l'autre), et pour tous les signaux numriques
+constitus de mots 8 bits (composs  l'aide des 8 touches de la maquette
+&quot;mettrice&quot;) sauf ceux qui correspondaient  une suite de huit 1. En fait,
+la maquette, en prsence de tels signaux, consommait une puissance
+importante et, comme tous les botiers taient relis  la mme
+alimentation, elle &quot;dcrochait&quot;... Ds lors, la solution a consist 
+soulager le travail de l'alimentation commune  tous les botiers en en
+mettant une autre en parallle; le rsultat ne s'est alors plus fait
+attendre; la communication tait pleinement rtablie!
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html266"
+ HREF="node22.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html264"
+ HREF="node19.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html258"
+ HREF="node20.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html267"
+ HREF="node22.html">4.3 La transposition en</A>
+<B> Up:</B> <A NAME="tex2html265"
+ HREF="node19.html">4 La transmission hertzienne</A>
+<B> Previous:</B> <A NAME="tex2html259"
+ HREF="node20.html">4.1 Introduction</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/25/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

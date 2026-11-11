@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.3.4 Should a public key or private key be shared among users?</TITLE>
+<META NAME="description" CONTENT="3.3.4 Should a public key or private key be shared among users?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node37.html">
+<LINK REL="previous" HREF="node35.html">
+<LINK REL="up" HREF="node32.html">
+<LINK REL="next" HREF="node37.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html632"
+ HREF="node37.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html630"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html624"
+ HREF="node35.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html633"
+ HREF="node37.html">3.3.5 What are certificates?</A>
+<B> Up:</B> <A NAME="tex2html631"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html625"
+ HREF="node35.html">3.3.3 How does one</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00334000000000000000">
+3.3.4 Should a public key or private key be shared among users?</A>
+</H2>
+<P>
+In RSA, each person should have a unique modulus and private exponent,
+i.e., a unique private key. The public exponent, on the other hand, can
+be common to a group of users without security being compromised. Some
+public exponents in common use today are 3 and 2<SUP>16</SUP>+1; because these
+numbers are small, the public-key operations (encryption and signature
+verification) are fast relative to the private key operations
+(decryption and signing). If one public exponent becomes a standard,
+software and hardware can be optimized for that value.
+<BR>
+<P>
+In public-key systems based on discrete logarithms, such as ElGamal,
+Diffie-Hellman, or DSS, it has often been suggested that a group of
+people should share a modulus. This would make breaking a key more
+attractive to an attacker, however, because one could break every key
+with only slightly more effort than it would take to break a single
+key. To an attacker, therefore, the average cost to break a key is much
+lower with a common modulus than if every key has a distinct modulus.
+Thus one should be very cautious about using a common modulus; if a
+common modulus is chosen, it should be very large.
+<BR>
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html632"
+ HREF="node37.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html630"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html624"
+ HREF="node35.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html633"
+ HREF="node37.html">3.3.5 What are certificates?</A>
+<B> Up:</B> <A NAME="tex2html631"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html625"
+ HREF="node35.html">3.3.3 How does one</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

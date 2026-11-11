@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>C Bouclage de phase</TITLE>
+<META NAME="description" CONTENT="C Bouclage de phase">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node30.html">
+<LINK REL="previous" HREF="node28.html">
+<LINK REL="up" HREF="report.html">
+<LINK REL="next" HREF="node30.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html344"
+ HREF="node30.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html342"
+ HREF="report.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html336"
+ HREF="node28.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html345"
+ HREF="node30.html">D Principe de l'antenne</A>
+<B> Up:</B> <A NAME="tex2html343"
+ HREF="report.html">Comment faire son propre</A>
+<B> Previous:</B> <A NAME="tex2html337"
+ HREF="node28.html">B Codage de Hamming</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION00900000000000000000">
+C Bouclage de phase</A>
+</H1>
+<A NAME="annexe:boucle_phase">&#160;</A>
+Dans notre montage, le bouclage de phase intervient deux fois; d'abord pour
+la restitution du signal d'horloge  partir du signal numrique transmis,
+puis pour la dmodulation FSK. Nous allons ici en montrer le principe et
+l'illustrer avec l'exemple de la dmodulation FSK.
+<P>
+<DIV ALIGN="CENTER"><IMG WIDTH="352" HEIGHT="117" ALIGN="BOTTOM" BORDER="0"
+ SRC="../boucle_p.gif">
+<BR>
+</DIV>
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node29.html#fig:annexe:boucle_phase">C.1</A>: Schma de
+    principe du bouclage de phase</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="fig:annexe:boucle_phase">&#160;</A>A l'entre du montage de la figure <A HREF="node29.html#fig:annexe:boucle_phase">C.1</A> arrive un
+signal sinusodal (le signal  dmoduler) de pulsation <IMG WIDTH="15" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img49.gif"
+ ALT="$\omega$">. Ce dernier
+est mlang (multipli)  celui <I>s</I>' de sortie du VCO (Voltage Controlled
+Oscillator), ce qui donne un signal de deux composantes sinusodales dont
+les pulsations sont la somme et la diffrence des pulsations des signaux
+d'entre.  A la suite du passage du filtre, seule la composante
+correspondant  la diffrence des pulsations <IMG WIDTH="55" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img50.gif"
+ ALT="$\omega - \omega '$"> est
+retenue, pour ensuite tre rinjecte  l'entre du VCO. Ainsi, c'est bien
+l'cart en frquences qui, par rtroaction, conduit le systme  un retour
+ l'quilibre, <EM>i.e.</EM>,  une galit entre la frquence du signal
+transmis <I>s</I> et celle du signal <I>e</I>'  l'entre du VCO, ce qui dtermine
+par consquent l'amplitude de ce dernier. Dans le cas de la dmodulation
+FSK, le signal transmis ne possde que deux frquences (<I>f<SUB>0</SUB></I> et <I>f<SUB>1</SUB></I>), ce
+qui dtermine donc pour le signal d'entre du VCO les deux amplitudes
+diffrentes (l'tat haut et l'tat bas) correspondant au signal binaire
+d'avant modulation.
+<BR>
+<P>
+Avec les notations de la figure <A HREF="node29.html#fig:annexe:boucle_phase">C.1</A>, on obtient:
+<P>
+<P ALIGN="CENTER"><IMG WIDTH="622" HEIGHT="74"
+ SRC="img51.gif"
+ ALT="\begin{displaymath}
+\begin{array}
+{c}
+s=s_0\cos \omega t\ s'=s_0'\cos (\omega '...
+ ...2\mbox{, }\beta \mbox{ tant le gain du multiplieur}\end{array}\end{displaymath}"></P>
+<P>
+L'quilibre se traduit par <IMG WIDTH="57" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img52.gif"
+ ALT="$ \omega=\omega'$">, ce qui implique:
+<P>
+<P ALIGN="CENTER"><IMG WIDTH="367" HEIGHT="62"
+ SRC="img53.gif"
+ ALT="\begin{displaymath}
+\left\{
+\begin{array}
+{lcr}
+e' & = & K \cos \phi \ \omega -...
+ ...\phi &=& \frac{\omega - \omega _0'}{\alpha K}\end{array}\right.\end{displaymath}"></P>
+<P><IMG WIDTH="295" HEIGHT="276" ALIGN="BOTTOM" BORDER="0"
+ SRC="../marche_q.gif">
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node29.html#annexe:fig:equilibre">C.2</A>: Marche vers
+    l'quilibre de la boucle de phase</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="annexe:fig:equilibre">&#160;</A>La figure <A HREF="node29.html#annexe:fig:equilibre">C.2</A> montre la marche vers l'quilibre de
+la boucle de phase.  Sans entrer dans les dtails d'une dmonstration
+rigoureuse, on peut toutefois avoir une comprhension intuitive de ce qu'il
+se passe. Sur la figure (dont l'abscisse est le temps et l'ordonne la
+pulsation <IMG WIDTH="19" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img54.gif"
+ ALT="$\omega'$">, <EM>i.e.</EM>,  une affinit prs, le signal d'entre
+<I>e</I>' du VCO) sont montres, d'une part une droite horizontale correspondant
+ la frquence constante du signal transmis <I>s</I>, d'autre part une sinusode
+reprsentant la pulsation du signal de sortie <I>s</I>' du VCO lorsque le signal
+d'entre <I>e</I>' de ce dernier est de frquence constante (et valant, sur le
+schma, <IMG WIDTH="22" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img55.gif"
+ ALT="$\omega_0'$">, c'est--dire la pulsation initiale de la sortie du
+VCO). Enfin, une dernire courbe reprsente la marche de la pulsation
+<IMG WIDTH="19" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img54.gif"
+ ALT="$\omega'$"> vers sa valeur d'quilibre <IMG WIDTH="15" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img49.gif"
+ ALT="$\omega$">.
+<BR>
+<P>
+Partons de l'instant <I>t</I>=0 et <IMG WIDTH="63" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img56.gif"
+ ALT="$\omega'=\omega_0'$">. On a donc
+<IMG WIDTH="235" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img57.gif"
+ ALT="$e'=K\cos\left[ \left(\omega -
+\omega '(0)\right) t-\phi\right]$">. Ds lors,
+comme <IMG WIDTH="112" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img58.gif"
+ ALT="$\omega
+'=\omega_0'+\alpha e'$">, <IMG WIDTH="19" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img54.gif"
+ ALT="$\omega'$"> va augmenter en suivant la
+sinusode. <I>e</I>' vaut donc maintenant <IMG WIDTH="233" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img59.gif"
+ ALT="$e'=K\cos\left[ \left(\omega -
+\omega '(t)\right) t-\phi\right]$">, ce qui correspond  une sinusode de
+priode plus grande que celle dessine, et c'est cette dernire sinusode
+que <IMG WIDTH="19" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img54.gif"
+ ALT="$\omega'$"> va maintenant suivre. Mais comme <IMG WIDTH="19" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img54.gif"
+ ALT="$\omega'$"> continue
+d'augmenter, la priode de la sinusode continue elle aussi de crotre, ce
+qui fait augmenter <IMG WIDTH="19" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img54.gif"
+ ALT="$\omega'$"> de moins en moins vite jusqu' sa valeur
+asymptotique, qui est sa valeur d'quilibre <IMG WIDTH="15" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img49.gif"
+ ALT="$\omega$">.
+<BR>
+<P>
+Remarquons que nous avons fait partir notre sinusode d'une valeur nulle,
+alors que ceci n'est absolument pas obligatoire. Le raisonnement resterait
+toutefois analogue, et l'on montrerait de mme qu'il y aurait convergence,
+quitte  passer par une brve phase transitoire de divergence (ce cas se
+prsente lorsque, par rapport  <IMG WIDTH="22" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img55.gif"
+ ALT="$\omega_0'$">, la sinusode ne part pas du
+ct de <IMG WIDTH="15" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img49.gif"
+ ALT="$\omega$">).
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html344"
+ HREF="node30.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html342"
+ HREF="report.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html336"
+ HREF="node28.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html345"
+ HREF="node30.html">D Principe de l'antenne</A>
+<B> Up:</B> <A NAME="tex2html343"
+ HREF="report.html">Comment faire son propre</A>
+<B> Previous:</B> <A NAME="tex2html337"
+ HREF="node28.html">B Codage de Hamming</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/25/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>7.2 Terminology</TITLE>
+<META NAME="description" CONTENT="7.2 Terminology">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node115.html">
+<LINK REL="previous" HREF="node113.html">
+<LINK REL="up" HREF="node112.html">
+<LINK REL="next" HREF="node115.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1461"
+ HREF="node115.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1459"
+ HREF="node112.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1453"
+ HREF="node113.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1462"
+ HREF="node115.html">7.3 Smart Card Technology</A>
+<B> Up:</B> <A NAME="tex2html1460"
+ HREF="node112.html">7 Appendix 7: Smart</A>
+<B> Previous:</B> <A NAME="tex2html1454"
+ HREF="node113.html">7.1 Introduction</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION00720000000000000000">
+7.2 Terminology</A>
+</H1>
+<P><DL>
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Account</B>
+<DD>A security database entry associating a principal with a key and other
+ security-related information such as privileges.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Issuer</B>
+<DD>In this RFC series, an organization that purchases smart cards and issues
+ them to its users for use in accessing the issuer's services or systems.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Dedicated file</B>
+<DD>A smart card file containing file control information and, optionally,
+ memory available for allocation. It may be the parent of elementary files
+ and/or dedicated files ISO 7816-4; roughly, a smart card ``file
+ directory''.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>EEPROM</B>
+<DD>Electrically Erasable Programmable Read-Only Memory.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Elementary file</B>
+<DD>A set of data units or records in the smart card that share the same
+ identifier ISO 7816-4; roughly, a smart card ``file''.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>File control information (FCI)</B>
+<DD>Logical, structural and security attributes of a file; a string of data
+ bytes available in response to a SELECT FILE command ISO 7816-4.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>FRAM</B>
+<DD>Ferro-Electric Random Access Memory.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>GSM</B>
+<DD>Groupe Special Mobile; European digital cellular telephone standard,
+ providing security services such as user authentication, traffic
+ confidentiality, and key distribution.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>IC</B>
+<DD>Integrated Circuit. A single circuit containing multiple transistors.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Interactive principal</B>
+<DD>A human user of a system. See ``principal''.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Key</B>
+<DD>A parameter used in conjunction with a cryptographic algorithm that
+ determines:
+<P> <UL>
+<LI> The transformation of plaintext data into ciphertext data,
+<LI> The transformation of ciphertext data into plaintext data,
+<LI> A digital signature, or
+<LI> A message authentication code.
+ </UL>
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Long-term key</B>
+<DD>A key that is used over a relatively long period of time. Compare with
+ ``session key''. Each principal can have a unique long-term key that is
+ used in authenticating a user or server claiming to be that principal.
+ For interactive principals, the long-term key is derived from the user's
+ password.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Master file</B>
+<DD>The mandatory unique dedicated file representing the root of the smart
+ card file structure ISO 7816-4.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Message authentication code (MAC)</B>
+<DD>A cryptographic checksum, based on DES.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Noninteractive principal</B>
+<DD>A principal that is an instance of a company server, an instance of a
+ company application server, a computer in a company cell, or a cell (more
+ correctly, ``an Authentication Service surrogate''). See ``principal''.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Passivation layer</B>
+<DD>A layer of dielectric material covering the circuitry on a smart card
+ that protects the chip from impurities and dust and prevents passage of
+ radiation associated with probes, such as electron-beam microscopy. Often
+ referred to as a ``seal''.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Password</B>
+<DD>A sequence of alphanumeric and punctuation characters entered by a user
+ to authenticate to a computer system (including to a smart card).
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>PIN</B>
+<DD>Personal Identification Number; a 4 to 12 character alphanumeric code or
+ password used to authenticate a person's identity, commonly used in
+ banking applications. In connection with smart cards, this document uses
+ the more general term ``password'' rather than ``PIN''.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Principal</B>
+<DD>An entity that is capable of believing that it can communicate securely
+ with another entity. In a company Security, principals are represented as
+ entries in the Registry database. See ``interactive principal'' and
+ ``noninteractive principal''.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Session key</B>
+<DD>A random number generated to serve as a key for a specific transaction or
+ set of transactions.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Smart card</B>
+<DD>A credit card-sized, tamper-resistant security device that relies on VLSI
+ chip technology for information storage and information processing.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>User</B>
+<DD>A person who attempts to access a computer system; a person who has been
+ issued a smart card.
+<P> <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>VLSI</B>
+<DD>Very Large Scale Integration; integration of thousands or more transitors
+ on a single chip, enabling single-chip implementations of CPU, RAM, ROM,
+ etc.
+</DL><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1461"
+ HREF="node115.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1459"
+ HREF="node112.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1453"
+ HREF="node113.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1462"
+ HREF="node115.html">7.3 Smart Card Technology</A>
+<B> Up:</B> <A NAME="tex2html1460"
+ HREF="node112.html">7 Appendix 7: Smart</A>
+<B> Previous:</B> <A NAME="tex2html1454"
+ HREF="node113.html">7.1 Introduction</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

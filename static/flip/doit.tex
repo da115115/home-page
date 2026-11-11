@@ -1,0 +1,45 @@
+\section{Procédures de création de clés, de certificats, et de signatures}
+\label{ann:doit}
+\begin{verbatim}
+#! /bin/csh
+
+# Step 1.  Create the Duke identity, as a trusted identity
+
+javakey -cs Duke true
+
+# Step 2.  Generate a keypair for Duke, and store the public key in a file named
+# Duke_pub and the private key in a file named Duke_priv
+
+javakey -gk Duke DSA 512 Duke_pub Duke_priv
+
+# Step 3.  Generate an x509 certificate for Duke, and store it in the file
+# named Duke.x509.   This output file name is given in the directive file
+# named cert_directive_Duke. 
+
+javakey -gc cert_directive_Duke 
+
+# Step 4.   Create the archive. 
+
+jar cf signedWriteFile.jar writeFile.class writeFile.html
+
+# Step 5.   Sign the archive, using the parameters given in sign_directive_Duke.
+ 
+
+javakey -gs sign_directive_Duke signedWriteFile.jar
+
+# Step 6.   Move the signed archive to a file suffixed in .jar. 
+
+mv signedWriteFile.jar.sig signedWriteFile.jar
+
+# Step 7.   Show the contents of the signed archive. 
+
+echo " "
+echo "Contents of the archive are: "
+jar tvf signedWriteFile.jar
+
+# Step 8 .   Show the contents of the identity database. 
+
+echo " "
+echo "Contents of the identity database are: "
+javakey -ld
+\end{verbatim}

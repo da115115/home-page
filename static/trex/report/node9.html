@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.1 Le convertisseur numrique</TITLE>
+<META NAME="description" CONTENT="3.2.1 Le convertisseur numrique">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node10.html">
+<LINK REL="previous" HREF="node8.html">
+<LINK REL="up" HREF="node8.html">
+<LINK REL="next" HREF="node10.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html145"
+ HREF="node10.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html143"
+ HREF="node8.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html137"
+ HREF="node8.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html146"
+ HREF="node10.html">3.2.2 Le codage protecteur</A>
+<B> Up:</B> <A NAME="tex2html144"
+ HREF="node8.html">3.2 L'ensemble &quot;metteur&quot;</A>
+<B> Previous:</B> <A NAME="tex2html138"
+ HREF="node8.html">3.2 L'ensemble &quot;metteur&quot;</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00321000000000000000">
+3.2.1 Le convertisseur numrique</A>
+</H2>
+<P>
+La thorie (thorme de Shannon) et l'exprience montrent que pour
+reconstituer correctement un signal form de frquences infrieures  <I>f</I>,
+il suffit de disposer de la valeur de ce signal  des instants suffisamment
+rapprochs (ces instants sont appels instants d'chantillonnage), carts
+au plus d'un temps <I>T</I> = 1/(2<I>f</I>), T tant la priode d'chantillonnage
+exprime en secondes. Si donc <I>f<SUB>0</SUB></I> est la frquence d'chantillonnage
+(<I>f<SUB>0</SUB></I> =1/<I>T</I>), il nous faut avoir dans notre cas <IMG WIDTH="96" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.gif"
+ ALT="$f_0 \gt 2\, F_{max}$">, o
+<I>F</I><SUB><I>max</I></SUB> est comme prcdemment la frquence maximale normalise du
+signal de parole,  savoir <I>F</I><SUB><I>max</I></SUB> = 3400<I>Hz</I>.
+<P>
+<DIV ALIGN="CENTER"><IMG WIDTH="491" HEIGHT="271" ALIGN="BOTTOM" BORDER="0"
+ SRC="../quantifi.gif">
+<BR>
+</DIV>
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node9.html#fig:quantification">3.1</A>: Quantification sur un
+    arc</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="fig:quantification">&#160;</A>Les botiers dont nous disposons ici chantillonnent en fait  <I>f<SUB>0</SUB></I> =
+10<I>kHz</I>, ce qui signifie que le signal analogique de parole est sond tous
+les 1/10000 de seconde, soit toutes les <IMG WIDTH="50" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img3.gif"
+ ALT="$100\mu s$">.  La valeur du
+rsultat de la mesure est ensuite traduite en informations susceptibles
+d'tre transmises en ligne et convenablement dtectes  l'arrive. Le
+procd utilis dans notre cas, dnomm M.I.C.  (modulation par impulsions
+codes), consiste  traduire le rsultat de la mesure en numration binaire
+(cf figure <A HREF="node9.html#fig:quantification">3.1</A>).  Avec, ici, une suite de 8 bits (donc
+0 ou 1), on dispose de 2<SUP>8</SUP>= 256 valeurs possibles d'amplitudes talons
+dont on retient celle qui se rapproche le plus possible de la valeur exacte
+mesure; une telle opration est ainsi appele quantification.
+<BR>
+<P>
+En rsum, le signal tlphonique analogique d'une voie fait l'objet,  la
+cadence de 10000 fois par seconde, de trois oprations: chantillonnage,
+quantification et codage, dont une est susceptible d'apporter une
+altration (bruit de quantification) du fait de l'approximation de la
+valeur relle par la valeur talon retenue pour l'amplitude (c'est
+d'ailleurs pour rduire cet inconvnient que le systme M.I.C. europen a
+t normalis avec 256 niveaux talons de quantification grce  8 bits de
+codage). La frquence de passage d'un mot de 8 bits  un autre tant de
+10<I>kHz</I> (frquence d'chantillonnage), celle de passage d'un bit  un autre
+est: <IMG WIDTH="163" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.gif"
+ ALT="$8\times 10000 = 80kHz$">, qui est donc la frquence d'horloge des
+botiers utiliss pour la maquette.
+<BR>
+<P>
+<DIV ALIGN="CENTER"><IMG WIDTH="568" HEIGHT="330" ALIGN="BOTTOM" BORDER="0"
+ SRC="../numrisat.gif">
+<BR>
+</DIV>
+<BR>
+  <DIV ALIGN="CENTER"><BIG>Figure <A HREF="node9.html#fig:echantillonage">3.2</A>: Numrisation d'un
+    signal analogique: 1-Signal analogique; 2-chantillonage;
+    3-Quantification; 4-Mise en srie</BIG>
+<BR>
+</DIV>
+<BR>
+  <A NAME="fig:echantillonage">&#160;</A>L'avantage de ce procd rside d'abord dans l'insensibilit du signal
+numrique aux bruits et aux distorsions puisqu'il suffit de dtecter
+correctement l'information numrique pour reconstituer le signal analogique
+dans son tat d'origine (un bruit de transmission modifiera lgrement
+l'amplitude du signal numrique, <EM>i.e.</EM> la succession de paliers hauts
+et bas correspondant  la suite de 0 et de 1, ce qui, si les amplitudes de
+ces paliers sont suffisamment cartes, ne modifiera pas l'tat des bits,
+donc aussi les valeurs correspondant  la succession de bits, et donc
+finalement l'amplitude du signal recueilli correspondant  la valeur
+quantifie). D'autre part, afin de bnficier d'une protection contre des
+perturbations plus importantes, on peut utiliser un systme permettant de
+corriger les erreurs de transmission; c'est l'objet du dispositif suivant.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html145"
+ HREF="node10.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html143"
+ HREF="node8.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html137"
+ HREF="node8.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html146"
+ HREF="node10.html">3.2.2 Le codage protecteur</A>
+<B> Up:</B> <A NAME="tex2html144"
+ HREF="node8.html">3.2 L'ensemble &quot;metteur&quot;</A>
+<B> Previous:</B> <A NAME="tex2html138"
+ HREF="node8.html">3.2 L'ensemble &quot;metteur&quot;</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/25/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

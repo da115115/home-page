@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.3.2 La reconnaissance du mot de synchronisation</TITLE>
+<META NAME="description" CONTENT="3.3.2 La reconnaissance du mot de synchronisation">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node17.html">
+<LINK REL="previous" HREF="node15.html">
+<LINK REL="up" HREF="node14.html">
+<LINK REL="next" HREF="node17.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html215"
+ HREF="node17.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html213"
+ HREF="node14.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html207"
+ HREF="node15.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html216"
+ HREF="node17.html">3.3.3 La dtection et</A>
+<B> Up:</B> <A NAME="tex2html214"
+ HREF="node14.html">3.3 L'ensemble &quot;rcepteur&quot;</A>
+<B> Previous:</B> <A NAME="tex2html208"
+ HREF="node15.html">3.3.1 La restitution d'horloge</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00332000000000000000">
+3.3.2 La reconnaissance du mot de synchronisation</A>
+</H2>
+<P>
+La maquette possde en mmoire les codages binaires du mot de
+synchronisation de 24 bits A, et de son complmentaire <IMG WIDTH="57" HEIGHT="19" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.gif"
+ ALT="$B = \overline{A}$">.Les bits qui arrivent sont copis dans un registre tournant de 24 bits, les
+uns aprs les autres, et ce registre est compar  chaque rception de
+nouveau bit au mot A puis au mot B. Si le mot A est reconnu, le prochain
+bit qui arrivera correspondra au dbut d'un mot, et le dispositif se recale
+donc en consquence afin de lire correctement les prochains mots de 8 bits.
+Il se peut, aussi, que le mot B soit reconnu, ce qui signifie que le signal
+effectivement reu est le complmentaire de celui initialement transmis, et
+le dispositif transforme alors le signal reu en son complmentaire afin de
+rtablir le signal numrique initial.
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/25/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

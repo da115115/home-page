@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//FR">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>1.2 La diffusion de transparents</TITLE>
+<META NAME="description" CONTENT="1.2 La diffusion de transparents">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="previous" HREF="node3.html">
+<LINK REL="up" HREF="node2.html">
+<LINK REL="next" HREF="node5.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html79"
+ HREF="node5.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html77"
+ HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html73"
+ HREF="node3.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html80"
+ HREF="node5.html">2 Le droulement du</A>
+<B> Up:</B> <A NAME="tex2html78"
+ HREF="node2.html">1 L'objectif du projet</A>
+<B> Previous:</B> <A NAME="tex2html74"
+ HREF="node3.html">1.1 La technologie PUSH</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00022000000000000000">
+1.2 La diffusion de transparents</A>
+</H2>
+L'&#233;metteur poss&#232;de le contr&#244;le du flux d'information, c'est-&#224;-dire
+qu'il s'abonne &#224; un canal Multicast. Il choisit les transparents et les
+diffuse sur le canal IP Multicast dans l'ordre qui lui convient, avec le
+rythme qu'il d&#233;sire (possibilit&#233; d'aller en avant ou en arri&#232;re, et
+de rendre la s&#233;quence automatique).
+<BR>
+<P>
+Le r&#233;cepteur, lui, ne peut que s'abonner &#224; un canal Multicast, sur
+lequel il recevra le flux d'information. Il ne peut pas exercer de
+contr&#244;le sur la r&#233;ception des transparents (si ce n'est dmarrer ou
+interrompre la rception).
+<BR>
+<P>
+Les transparents se pr&#233;sentent sous la forme de pages HTML
+classiques. Aussi, &#233;metteur comme r&#233;cepteur doivent disposer d'un
+navigateur pour les visualiser. Le transfert sur le canal Multicast, par
+contre, s'effectue sous la forme de blocs d'octets. Il y a donc conversion
+des donn&#233;es, entre leur utilisation et leur transport:
+<UL>
+<LI> L'metteur doit, avant mission, convertir la page HTML en
+    fichier binaire comprenant la page elle-mme et les images, appelettes, et
+    autres composants de la page.
+<LI> Le rcepteur, lui, doit reconstituer, avant de l'afficher, la page
+    HTML et les diffrents fichiers auxquels fait rfrence la page, tout
+    cela  partir du fichier binaire re&#231;u.
+</UL>
+<P>
+Le projet a t r&#233;alis&#233; dans le langage de programmation Java.
+Il se base sur le protocole de diffusion Multicast sur IP, <I>AMP
+Asynchronous Multicast Protocol</I>, implment par Stphan Kraus  l'Institut
+Eurcom.
+<BR>
+<P>
+De plus, il comporte plusieurs parties, correspondant aux trois couches
+logiques suivantes:
+<DL>
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Le contr&#244;le:</B>
+<DD>d&#233;filement de la s&#233;quence des
+    transparents, et abonnement &#224; Multicast,
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>La conversion des donn&#233;es:</B>
+<DD>HTML <IMG WIDTH="22" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.gif"
+ ALT="$\rightarrow$">    Fichier Binaire, et Fichier Binaire <IMG WIDTH="22" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.gif"
+ ALT="$\rightarrow$"> HTML, pour rendre
+    les pages HTML transportables sur Multicast,
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>L'interface graphique:</B>
+<DD><DL>
+      <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Pour l'&#233;metteur:</B>
+<DD>panel de contr&#244;le de d&#233;filement, gestion
+        du nom de canal Multicast,
+      <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Pour le r&#233;cepteur:</B>
+<DD>afficher les transparents, les enregistrer
+        (fonction que nous n'avons pas implmente pour l'instant puisque les
+        transparents sont visualiss avec Netscape, et qu'il suffit donc
+        d'effectuer un <I>Save As</I> pour enregister la page et ses composants
+        depuis Netscape mme) et les repasser ult&#233;rieurement (toujours en
+        utilisant Netscape ou un autre diteur de pages HTML).
+    </DL></DL>
+Bien sr, il y a aussi une quatrime couche, celle de transport des fichiers
+binaires: c'est celle qui implmente AMP.
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html79"
+ HREF="node5.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html77"
+ HREF="node2.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html73"
+ HREF="node3.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html80"
+ HREF="node5.html">2 Le droulement du</A>
+<B> Up:</B> <A NAME="tex2html78"
+ HREF="node2.html">1 L'objectif du projet</A>
+<B> Previous:</B> <A NAME="tex2html74"
+ HREF="node3.html">1.1 La technologie PUSH</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

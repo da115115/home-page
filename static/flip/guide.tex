@@ -1,0 +1,29 @@
+\section{Guide d'installation}
+\label{ann:guide}
+Dans cette annexe, nous décrivons comment lancer les deux applications, le
+serveur et l'émetteur.\\
+
+Notre application a été développée en Java version 1.1.\\
+
+Pour lancer l'application, il faut disposer des sources de l'implémentation
+d'AMP par S. Kraus, ainsi que les sources des couches que nous avons
+implémentées, \ie, le répertoire Multicast au complet (disponible dans le
+répertoire {\tt \~arnaud/projet/}).\\
+
+Une fois les sources récupérées (et compilées si besoin est), il faut avant
+tout (que ce soit du côté émetteur ou récepteur) lancer Netscape pour
+l'édition des transparents re\c cus ou à émettre.
+
+Enfin, il suffit d'exécuter les commandes suivantes:
+
+\begin{itemize}
+  \item pour lancer l'émetteur, depuis le répertoire {\tt
+      Multicast/Server}: {\tt java server.ControlLayer}.\\
+  \item pour lancer le récepteur, depuis le répertoire {\tt
+      Multicast/Client}: {\tt java client.NetworkLayer}.
+\end{itemize}
+
+Pour les fonctionnalités de chaque interface graphique, voir la
+section~\ref{sec:fonction}.
+
+

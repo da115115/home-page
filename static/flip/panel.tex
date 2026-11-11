@@ -1,0 +1,173 @@
+\section{Exemple d'applet à deux {\it panels}}
+\label{ann:panel}
+
+Dans cette applet, un {\it panel} lit la donnée saisie par l'utilisateur et
+l'autre l'affiche.\\
+
+\begin{verbatim}
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.lang.*;
+import java.util.*;
+
+
+public class hello extends Applet {
+  static final String message = "HelloWorld";
+
+  private Font font;
+  private Controler control = new Controler(this);
+  private Displayer display = new Displayer(this);
+
+  public void init() {
+    font = new Font("Helvetica", Font.BOLD, 37);
+
+    setLayout(new GridLayout(2,0,5,5));
+
+    add(control);
+    add(display);
+    
+    validate();
+
+    control.setBackground(Color.red);
+    display.setBackground(Color.yellow);
+        
+    System.out.println("Controler visible: " +control.isVisible());
+    System.out.println("Displayer visible: " +display.isVisible());
+    System.out.println("Controler valide: " +control.isValid());
+    System.out.println("Displayer valide: " +display.isValid());    
+  }
+
+  /* Draw a rectangle around the panel
+   */
+  public void paint( Graphics g){
+    Dimension d = size();
+    g.drawRect(0,0, d.width -1, d.height -1);
+  }
+
+  /* Insert a little breathing space between the panel and its contents,
+   * which lets us draw a box in the paint() method.
+   */
+  public Insets insets() {
+    return new Insets(5,5,5,5);
+  }
+
+  /* Only executed when this program runs as an application
+   */
+  /*public static void main(String[] args){
+    //Create a new window
+    MainFrame f = new MainFrame("Converter Applet/Application");
+    
+    //Create a hello instance
+    hello helloinst = new hello();
+
+    //instialisation
+    helloinst.init();
+
+    //add the hello to the window and display the window
+    f.add("Center", helloinst);
+    f.pack(); //resizes the window to its natural size
+    f.show();
+    }
+    */
+
+  /* Display the image
+   */
+  public void work (String image) {
+    display.view(image);
+  }
+    
+}
+
+
+class Controler extends Panel implements ActionListener{
+
+  String image = new String();
+  Label readerLabel = new Label("Entrer une nom d'image :", Label.RIGHT);
+  TextField reader = new TextField (25);
+
+  hello thebox;
+  
+  Controler( hello abox) {
+    
+    reader.addActionListener(this);
+    reader.requestFocus();
+    
+    add(readerLabel);
+    add(reader);
+
+    thebox = abox;
+  }
+
+  
+  public void paint(Graphics g) {
+    Dimension d =size();
+    g.drawRect(0,0, d.width -1, d.height -1);
+  }
+
+  public Insets insets() {
+    return new Insets(5,5,5,8);
+  }
+
+  private String getValue() {
+    String f = null;
+
+    try {
+      f = new String(reader.getText());
+    } catch(java.lang.NumberFormatException e) { }
+
+    return f;
+  }
+
+  public void actionPerformed(ActionEvent e) {
+      image = reader.getText() ;
+      thebox.work(image);
+      System.out.println("texte saisi : " + image);
+   }
+  
+}
+
+
+  
+class Displayer extends Panel {
+
+  private Font font;
+  private String image = new String();
+  private hello thebox;
+  
+  Displayer( hello abox) {
+    thebox = abox;
+    font = new Font("Helvetica", Font.BOLD,37);
+  }
+  
+  
+  public void paint(Graphics g) {
+    Dimension d =size();
+    g.setColor(Color.pink);
+    g.fillOval((d.width-330)/2,(d.height-100)/2,330,100);
+    g.setColor(Color.red);
+    g.drawOval((d.width-330)/2,(d.height-100)/2,330,100);
+    g.drawOval((d.width-332)/2,(d.height-102)/2,332,102);
+    g.drawOval((d.width-334)/2,(d.height-104)/2,334,104);
+    g.drawOval((d.width-336)/2,(d.height-106)/2,336,106);
+    g.drawRect(0,0, d.width -1, d.height -1);
+
+    g.setColor(Color.black);
+    g.setFont(font);
+    g.drawString(image,d.width/2 - 115,d.height/2 +13);
+  }
+
+  public Insets insets() {
+    return new Insets(5,5,5,8);
+  }
+
+  public void view(String imageIn) {
+    image = imageIn;
+    System.out.println(image);
+
+    Graphics g = getGraphics();
+    this.paint(g);
+  }
+
+}
+\end{verbatim}

@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.8.6 What are RC2 and RC4?</TITLE>
+<META NAME="description" CONTENT="3.8.6 What are RC2 and RC4?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node93.html">
+<LINK REL="previous" HREF="node91.html">
+<LINK REL="up" HREF="node86.html">
+<LINK REL="next" HREF="node93.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1221"
+ HREF="node93.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1219"
+ HREF="node86.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1213"
+ HREF="node91.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1222"
+ HREF="node93.html">3.8.7 What is PEM?</A>
+<B> Up:</B> <A NAME="tex2html1220"
+ HREF="node86.html">3.8 Misceallenous</A>
+<B> Previous:</B> <A NAME="tex2html1214"
+ HREF="node91.html">3.8.5 3..8..5. What is</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00386000000000000000">
+3.8.6 What are RC2 and RC4?</A>
+</H2>
+<A NAME="what_rc">&#160;</A>
+RC2 and RC4 are variable-key-size cipher functions designed by Ron Rivest
+for fast bulk encryption. They are alternatives to DES (see Question
+<A HREF="node63.html#what_des">3.5.1</A>) and are as fast or faster than DES. They can be more secure
+than DES because of their ability to use long key sizes; they can also be
+less secure than DES if short key sizes are used.
+<BR>
+<P>
+RC2 is a variable-key-size symmetric block cipher and can serve as a
+drop-in replacement for DES, for example in export versions of products
+otherwise using DES. RC2 can be used in the same modes as DES (see Question
+<A HREF="node65.html#how_des_sec">3.5.3</A>), including triple encryption. RC2 is approximately twice
+as fast as DES, at least in software. RC4 is a variable-key-size symmetric
+stream cipher and is 10 or more times as fast as DES in software. Both RC2
+and RC4 are very compact in terms of code size.
+<BR>
+<P>
+An agreement between the Software Publishers Association (SPA) and the
+U.S. government gives RC2 and RC4 special status by means of which the
+export approval process is simpler and quicker than the usual
+cryptographic export process. However, to qualify for quick export
+approval a product must limit the RC2 and RC4 key sizes to 40 bits; 56
+bits is allowed for foreign subsidiaries and overseas offices of U.S.
+companies. An additional 40-bit string, called a salt, can be used to
+thwart attackers who try to precompute a large look-up table of
+possible encryptions. The salt is appended to the encryption key, and
+this lengthened key is used to encrypt the message; the salt is then
+sent, unencrypted, with the message. RC2 and RC4 have been widely used
+by developers who want to export their products; DES is almost never
+approved for export. RC2 and RC4 are proprietary algorithms of RSA Data
+Security, Inc.; details have not been published.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1221"
+ HREF="node93.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1219"
+ HREF="node86.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1213"
+ HREF="node91.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1222"
+ HREF="node93.html">3.8.7 What is PEM?</A>
+<B> Up:</B> <A NAME="tex2html1220"
+ HREF="node86.html">3.8 Misceallenous</A>
+<B> Previous:</B> <A NAME="tex2html1214"
+ HREF="node91.html">3.8.5 3..8..5. What is</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

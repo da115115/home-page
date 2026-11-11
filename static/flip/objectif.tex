@@ -1,0 +1,83 @@
+\section{L'objectif du projet}
+\subsection{La technologie $PUSH$}
+Une nouvelle technologie appara\^{\i}t prometteuse pour Internet. Elle est
+dénommée {\it Push} et correspond \`a l'utilisation de son terminal
+comme d'un r\'ecepteur, en continu, d'un flux d'information provenant de
+diff\'erents serveurs. On ne va plus chercher l'information sur le serveur:
+cette derni\`ere est directement d\'elivr\'ee sur la console du
+r\'ecepteur. Cette technologie peut par exemple permettre de recevoir chez
+soi les cours de la bourse, des d\'ep\^eches AFP, le bulletin
+m\'et\'eo du lendemain, et surtout de suivre un cours ou une conférence.\\
+
+Actuellement, l'on trouve sur Internet des techniques permettant ce type
+d'applications, mais cela oblige les navigateurs \`a aller chercher, en
+permanence, l'information sur les serveurs, et \`a la rapatrier. Il s'agit
+donc en fait, \`a proprement parler, de {\it Pull} et non de {\it Push}.\\
+
+De plus, avec les techniques existantes, le récepteur est connecté à
+l'émetteur, ce qui du côté de ce dernier nécéssite la réservation de
+ressources, et limite donc le nombre de récepteurs.\\
+
+L'on se propose, dans ce projet, d'utiliser le r\'eseau Multicast afin de
+diffuser un flux d'information (en l'occurence, ici, une pr\'esentation de
+transparents) d'un \'emetteur vers plusieurs r\'ecepteurs. Avec le
+protocole que nous allons utiliser ({\it AMP: Asynchronous Multicast
+Protocol}), le nombre de récepteurs est illimité car il n'y a pas de
+connexion établie avec l'émetteur). Et cette mani\`ere 
+de proc\'eder correspond donc bien \`a la technologie {\it Push}.
+
+\subsection{La diffusion de transparents}
+L'\'emetteur poss\`ede le contr\^ole du flux d'information, c'est-\`a-dire
+qu'il s'abonne \`a un canal Multicast. Il choisit les transparents et les
+diffuse sur le canal IP Multicast dans l'ordre qui lui convient, avec le
+rythme qu'il d\'esire (possibilit\'e d'aller en avant ou en arri\`ere, et
+de rendre la s\'equence automatique).\\
+
+Le r\'ecepteur, lui, ne peut que s'abonner \`a un canal Multicast, sur
+lequel il recevra le flux d'information. Il ne peut pas exercer de
+contr\^ole sur la r\'eception des transparents (si ce n'est démarrer ou
+interrompre la réception).\\
+
+Les transparents se pr\'esentent sous la forme de pages HTML
+classiques. Aussi, \'emetteur comme r\'ecepteur doivent disposer d'un
+navigateur pour les visualiser. Le transfert sur le canal Multicast, par
+contre, s'effectue sous la forme de blocs d'octets. Il y a donc conversion
+des donn\'ees, entre leur utilisation et leur transport:
+\begin{itemize}
+  \item L'émetteur doit, avant émission, convertir la page HTML en
+    fichier binaire comprenant la page elle-même et les images, appelettes, et
+    autres composants de la page.
+  \item Le récepteur, lui, doit reconstituer, avant de l'afficher, la page
+    HTML et les différents fichiers auxquels fait référence la page, tout
+    cela à partir du fichier binaire re\c cu.
+\end{itemize}
+
+Le projet a été r\'ealis\'e dans le langage de programmation Java.
+Il se base sur le protocole de diffusion Multicast sur IP, {\it AMP
+Asynchronous Multicast Protocol}, implémenté par Stéphan Kraus à l'Institut
+Eurécom.\\
+
+De plus, il comporte plusieurs parties, correspondant aux trois couches
+logiques suivantes:
+\begin{htmllist}
+  \htmlitemmark{RedBall}
+  \item[Le contr\^ole:] d\'efilement de la s\'equence des
+    transparents, et abonnement \`a Multicast,
+  \item[La conversion des donn\'ees:] HTML $\rightarrow$
+    Fichier Binaire, et Fichier Binaire $\rightarrow$ HTML, pour rendre
+    les pages HTML transportables sur Multicast,
+  \item[L'interface graphique:]
+    \begin{htmllist}
+      \htmlitemmark{WhiteBall}
+      \item[Pour l'\'emetteur:] panel de contr\^ole de d\'efilement, gestion
+        du nom de canal Multicast,
+      \item[Pour le r\'ecepteur:] afficher les transparents, les enregistrer
+        (fonction que nous n'avons pas implémentée pour l'instant puisque les
+        transparents sont visualisés avec Netscape, et qu'il suffit donc
+        d'effectuer un {\it Save As} pour enregister la page et ses composants
+        depuis Netscape même) et les repasser ult\'erieurement (toujours en
+        utilisant Netscape ou un autre éditeur de pages HTML).
+    \end{htmllist}
+\end{htmllist}
+Bien sûr, il y a aussi une quatrième couche, celle de transport des fichiers
+binaires: c'est celle qui implémente AMP.

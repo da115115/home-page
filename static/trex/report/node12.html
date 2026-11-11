@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.4 La synchronisation</TITLE>
+<META NAME="description" CONTENT="3.2.4 La synchronisation">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node13.html">
+<LINK REL="previous" HREF="node11.html">
+<LINK REL="up" HREF="node8.html">
+<LINK REL="next" HREF="node13.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html175"
+ HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html173"
+ HREF="node8.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html167"
+ HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html176"
+ HREF="node13.html">3.2.5 Le codage</A>
+<B> Up:</B> <A NAME="tex2html174"
+ HREF="node8.html">3.2 L'ensemble &quot;metteur&quot;</A>
+<B> Previous:</B> <A NAME="tex2html168"
+ HREF="node11.html">3.2.3 Mise en srie</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00324000000000000000">
+3.2.4 La synchronisation</A>
+</H2>
+<P>
+Le dispositif d'insertion de synchronisation, ds lors, devient ncessaire,
+puisque l'on ne sait pas reconnatre, <EM>a priori</EM>, le dbut de chacun
+des mots 8 bits transmis. Une solution consisterait  ajouter, entre chacun
+des mots utiles, des sparateurs de composition connue.  Le problme serait
+videmment l'augmentation du nombre de bits transmis, pour un mme nombre
+de bits utiles (provenant de la quantification du signal analogique
+initial), et donc l'augmentation dans le mme rapport du dbit de
+transmission de ces bits (tous les 1/10000 de seconde, il ne faut plus
+transmettre 8 bits, mais 8 bits plus le nombre de bits ncessaires  la
+constitution du sparateur). La solution retenue est bien d'insrer des
+mots de reconnaissance, non pas entre tous les mots utiles, mais seulement
+priodiquement (ici, tous les 10000 mots de 8 bits ou, ventuellement, tous
+les 100 mots, ce qui donne des frquences d'mission de ces mots de
+reconnaissance, respectivement de 1<I>Hz</I> et de 100<I>Hz</I>).  Afin d'viter
+d'ventuelles concidences, les mots de synchronisation ont une longueur de
+24 (<IMG WIDTH="45" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img6.gif"
+ ALT="$3\times 8$">) bits, ce qui diminue notoirement la probabilit de fausse
+reconnaissance.  Lorsqu'effectu  la frquence de 1<I>Hz</I>, l'ajout du mot de
+reconnaissance est audible mais tout  fait tolrable; par contre, 
+100<I>Hz</I>, l'on a impression de ne plus recevoir que les tops de
+synchronisation!
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html175"
+ HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html173"
+ HREF="node8.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html167"
+ HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html176"
+ HREF="node13.html">3.2.5 Le codage</A>
+<B> Up:</B> <A NAME="tex2html174"
+ HREF="node8.html">3.2 L'ensemble &quot;metteur&quot;</A>
+<B> Previous:</B> <A NAME="tex2html168"
+ HREF="node11.html">3.2.3 Mise en srie</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/25/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

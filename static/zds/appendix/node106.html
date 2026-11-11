@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.3 Conclusion</TITLE>
+<META NAME="description" CONTENT="4.3 Conclusion">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="previous" HREF="node102.html">
+<LINK REL="up" HREF="node97.html">
+<LINK REL="next" HREF="node107.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1368"
+ HREF="node107.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1366"
+ HREF="node97.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1362"
+ HREF="node105.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1369"
+ HREF="node107.html">5 Appendix 5: Some</A>
+<B> Up:</B> <A NAME="tex2html1367"
+ HREF="node97.html">4 Appendix 4: More</A>
+<B> Previous:</B> <A NAME="tex2html1363"
+ HREF="node105.html">4.2.3 Other Factors</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION00430000000000000000">
+4.3 Conclusion</A>
+</H1>
+<P>
+The preceding sections have presented a description of requirements and
+other factors to be considered in assessing candidate protocols used to
+provide security for electronic commerce applications. The protocols
+evaluated here, SSL and SHTTP, represent two possible tools which might
+be used to build secure applications. These tools may well need to be
+combined with other security mechanisms, particularly secure payment
+schemes, to meet overall system security requirements. In addition,
+operational security elements beyond the scope of the protocol
+specification (e.g. key management, user actions, audit, platform
+issues) are critical to system security.
+<BR>
+<P>
+In general, SSL and SHTTP provide architecturally distinct, and
+possibly complementary, methods for supplying many similar security
+services. The main differences lie in four areas:
+<DL>
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Operation in proxy environments</B>
+<DD>SSL mostly requires a tradeoff between potentially compromising the
+    firewall by creating secure associations through the proxy and
+    terminating the security services at the proxy. SHTTP may also require
+    terminating services at the proxy depending on policy but supports
+    security services, especially authentication, between multiple parties
+    and provides greater flexibility in cases where the proxy is SHTTP
+    aware.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Nature of integration</B>
+<DD>SSL is essentially an added layer between the application and the
+    transport service and consequently should be simpler to integrate (and
+    may support multiple applications). SHTTP is HTTP specific and is
+    likely to require integration with the application package. For
+    providing secure system solutions, some degree of coupling between the
+    security service and the application will be needed regardless of the
+    choice of protocol.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Performance</B>
+<DD>SSL incurs a start up latency, especially for new associations and then
+    adds little performance penalty. SHTTP incurs little or no start up
+    delay but adds more per transaction overhead in terms of both size and
+    processing complexity.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Non-repudiation</B>
+<DD>SSL provides no facilities for non-repudiation while SHTTP provides
+    non-repudiation with proof of origin when digital signatures are
+    employed.
+</DL>
+<P>
+This document serves to provide information to system integrators and
+providers on the characteristics of the respective protocols. The
+selection of one or more as elements of a system solution will depend
+on the requirements of those particular systems and on a detailed
+analysis of customer, operational, and regulatory characteristics.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1368"
+ HREF="node107.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1366"
+ HREF="node97.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1362"
+ HREF="node105.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1369"
+ HREF="node107.html">5 Appendix 5: Some</A>
+<B> Up:</B> <A NAME="tex2html1367"
+ HREF="node97.html">4 Appendix 4: More</A>
+<B> Previous:</B> <A NAME="tex2html1363"
+ HREF="node105.html">4.2.3 Other Factors</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

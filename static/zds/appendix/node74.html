@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.6.5 What is Skipjack?</TITLE>
+<META NAME="description" CONTENT="3.6.5 What is Skipjack?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node75.html">
+<LINK REL="previous" HREF="node73.html">
+<LINK REL="up" HREF="node69.html">
+<LINK REL="next" HREF="node75.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1033"
+ HREF="node75.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1031"
+ HREF="node69.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1025"
+ HREF="node73.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1034"
+ HREF="node75.html">3.6.6 Why is Clipper</A>
+<B> Up:</B> <A NAME="tex2html1032"
+ HREF="node69.html">3.6 Capstone, Clipper and</A>
+<B> Previous:</B> <A NAME="tex2html1026"
+ HREF="node73.html">3.6.4 Who are the</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00365000000000000000">
+3.6.5 What is Skipjack?</A>
+</H2>
+<A NAME="what_skipj">&#160;</A>
+Skipjack is the encryption algorithm contained in the Clipper chip; it was
+designed by the NSA. It uses an 80-bit key to encrypt 64-bit blocks of
+data; the same key is used for the decryption. Skipjack can be used in the
+same modes as DES (see Question&nbsp;<A HREF="node65.html#how_des_sec">3.5.3</A>), and may be more secure
+than DES, since it uses 80-bit keys and scrambles the data for 32 steps, or
+``rounds''; by contrast, DES uses 56-bit keys and scrambles the data for
+only 16 rounds.
+<BR>
+<P>
+The details of Skipjack are classified. The decision not to make the
+details of the algorithm publicly available has been widely criticized.
+Many people are suspicious that Skipjack is not secure, either due to
+oversight by its designers, or by the deliberate introduction of a
+secret trapdoor. By contrast, there have been many attempts to find
+weaknesses in DES over the years, since its details are public. These
+numerous attempts (and the fact that they have failed) have made people
+confident in the security of DES. Since Skipjack is not public, the
+same scrutiny cannot be applied towards it, and thus a corresponding
+level of confidence may not arise.
+<BR>
+<P>
+Aware of such criticism, the government invited a small group of
+independent cryptographers to examine the Skipjack algorithm. They
+issued a report which stated that, although their study was too limited
+to reach a definitive conclusion, they nevertheless believe that
+Skipjack is secure.
+<BR>
+<P>
+Another consequence of Skipjack's classified status is that it cannot
+be implemented in software, but only in hardware by
+government-authorized chip manufacturers.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1033"
+ HREF="node75.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1031"
+ HREF="node69.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1025"
+ HREF="node73.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1034"
+ HREF="node75.html">3.6.6 Why is Clipper</A>
+<B> Up:</B> <A NAME="tex2html1032"
+ HREF="node69.html">3.6 Capstone, Clipper and</A>
+<B> Previous:</B> <A NAME="tex2html1026"
+ HREF="node73.html">3.6.4 Who are the</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

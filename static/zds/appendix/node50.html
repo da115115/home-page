@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.3.18 What is a digital time-stamping service?</TITLE>
+<META NAME="description" CONTENT="3.3.18 What is a digital time-stamping service?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="previous" HREF="node49.html">
+<LINK REL="up" HREF="node32.html">
+<LINK REL="next" HREF="node51.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html770"
+ HREF="node51.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html768"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html764"
+ HREF="node49.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html771"
+ HREF="node51.html">3.4 Factoring and Discrete</A>
+<B> Up:</B> <A NAME="tex2html769"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html765"
+ HREF="node49.html">3.3.17 How can signatures</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION003318000000000000000">
+3.3.18 What is a digital time-stamping service?</A>
+</H2>
+<A NAME="what_ts">&#160;</A>
+A digital time-stamping service (DTS) issues time-stamps which
+associate a date and time with a digital document in a
+cryptographically strong way. The digital time-stamp can be used at a
+later date to prove that an electronic document existed at the time
+stated on its time-stamp. For example, a physicist who has a brilliant
+idea can write about it with a word processor and have the document
+time-stamped. The time-stamp and document together can later prove that
+the scientist deserves the Nobel Prize, even though an arch rival may
+have been the first to publish.
+<BR>
+<P>
+Here's one way such a system could work. Suppose Alice signs a document and
+wants it time-stamped. She computes a message digest of the document using
+a secure hash function (see Question&nbsp;<A HREF="node88.html#what_hash">3.8.2</A>) and then sends the
+message digest (but not the document itself) to the DTS, which sends her in
+return a digital time-stamp consisting of the message digest, the date and
+time it was received at the DTS, and the signature of the DTS. Since the
+message digest does not reveal any information about the content of the
+document, the DTS cannot eavesdrop on the documents it time-stamps. Later,
+Alice can present the document and time-stamp together to prove when the
+document was written. A verifier computes the message digest of the
+document, makes sure it matches the digest in the time-stamp, and then
+verifies the signature of the DTS on the time-stamp.
+<BR>
+<P>
+To be reliable, the time-stamps must not be forgeable. Consider the
+requirements for a DTS of the type just described. First, the DTS
+itself must have a long key if we want the time-stamps to be reliable
+for, say, several decades. Second, the private key of the DTS must be
+stored with utmost security, as in a tamperproof box. Third, the date
+and time must come from a clock, also inside the tamperproof box, which
+cannot be reset and which will keep accurate time for years or perhaps
+for decades. Fourth, it must be infeasible to create time-stamps
+without using the apparatus in the tamperproof box.
+<BR>
+<P>
+A cryptographically strong DTS using only software has been implemented by
+Bellcore; it avoids many of the requirements just described, such as
+tamperproof hardware. The Bellcore DTS essentially combines hash values of
+documents into data structures called binary trees, whose ``root'' values
+are periodically published in the newspaper. A time-stamp consists of a set
+of hash values which allow a verifier to recompute the root of the tree.
+Since the hash functions are one-way (see Question&nbsp;<A HREF="node88.html#what_hash">3.8.2</A>), the
+set of validating hash values cannot be forged. The time associated with
+the document by the time-stamp is the date of publication.
+<BR>
+<P>
+The use of a DTS would appear to be extremely important, if not essential,
+for maintaining the validity of documents over many years (see Question
+<A HREF="node49.html#how_sig_old">3.3.17</A>). Suppose a landlord and tenant sign a twenty-year lease.
+The public keys used to sign the lease will expire after, say, two years;
+solutions such as recertifying the keys or resigning every two years with
+new keys require the cooperation of both parties several years after the
+original signing. If one party becomes dissatisfied with the lease, he or
+she may refuse to cooperate. The solution is to register the lease with the
+DTS at the time of the original signing; both parties would then receive a
+copy of the time-stamp, which can be used years later to enforce the
+integrity of the original lease.
+<BR>
+<P>
+In the future, it is likely that a DTS will be used for everything from
+long-term corporate contracts to personal diaries and letters. Today,
+if an historian discovers some lost letters of Mark Twain, their
+authenticity is checked by physical means. But a similar find 100 years
+from now may consist of an author's computer files; digital time-stamps
+may be the only way to authenticate the find.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html770"
+ HREF="node51.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html768"
+ HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html764"
+ HREF="node49.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html771"
+ HREF="node51.html">3.4 Factoring and Discrete</A>
+<B> Up:</B> <A NAME="tex2html769"
+ HREF="node32.html">3.3 Key Management</A>
+<B> Previous:</B> <A NAME="tex2html765"
+ HREF="node49.html">3.3.17 How can signatures</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

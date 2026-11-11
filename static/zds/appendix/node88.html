@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.8.2 What is a hash function? What is a message digest?</TITLE>
+<META NAME="description" CONTENT="3.8.2 What is a hash function? What is a message digest?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node89.html">
+<LINK REL="previous" HREF="node87.html">
+<LINK REL="up" HREF="node86.html">
+<LINK REL="next" HREF="node89.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html1181"
+ HREF="node89.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1179"
+ HREF="node86.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1173"
+ HREF="node87.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1182"
+ HREF="node89.html">3.8.3 What are MD2,</A>
+<B> Up:</B> <A NAME="tex2html1180"
+ HREF="node86.html">3.8 Misceallenous</A>
+<B> Previous:</B> <A NAME="tex2html1174"
+ HREF="node87.html">3.8.1 What is the</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00382000000000000000">
+3.8.2 What is a hash function? What is a message digest?</A>
+</H2>
+<A NAME="what_hash">&#160;</A>
+A hash function is a computation that takes a variable-size input and
+returns a fixed-size string, which is called the hash value. If the hash
+function is one-way, i.e., hard to invert, it is also called a
+message-digest function, and the result is called a message digest. The
+idea is that a digest represents concisely the longer message or document
+from which it was computed; one can think of a message digest as a
+``digital fingerprint'' of the larger document. Examples of well-known hash
+functions are MD4, MD5, and SHS (see Questions <A HREF="node89.html#what_mds">3.8.3</A> and
+<A HREF="node90.html#what_shs">3.8.4</A>).
+<BR>
+<P>
+Although hash functions in general have many uses in computer programs,
+in cryptography they are used to generate a small string (the message
+digest) that can represent securely a much larger string, such as a
+file or message. Since the hash functions are faster than the signing
+functions, it is much more efficient to compute a digital signature
+using a document's message digest, which is small, than using the
+arbitrarily large document itself. Additionally, a digest can be made
+public without revealing the contents of the document from which it
+derives. This is important in digital time-stamping, where, using hash
+functions, one can get a document time-stamped without revealing its
+contents to the time-stamping service (see Question&nbsp;<A HREF="node50.html#what_ts">3.3.18</A>).
+<BR>
+<P>
+A hash function used for digital authentication must have certain
+properties that make it secure enough for cryptographic use.
+Specifically, it must be infeasible to find a message that hashes to a
+given value and it must be infeasible to find two distinct messages
+that hash to the same value. The ability to find a message hashing to a
+given value would enable an attacker to substitute a fake message for a
+real message that was signed. It would also enable someone to falsely
+disown a message by claiming that he or she actually signed a different
+message hashing to the same value, thus violating the non-repudiation
+property of digital signatures. The ability to find two distinct
+messages hashing to the same value could enable an attack whereby
+someone is tricked into signing a message which hashes to the same
+value as another message with a quite different meaning. The digest
+must therefore be long enough to prevent an attacker from doing an
+exhaustive search for a collision. For example, if a hash function
+produces 100-bit strings, exhaustive search would take 2<SUP>100</SUP> attempts
+on average to match a given value, and approximately 2<SUP>50</SUP> attempts on
+average to find two inputs producing the same digest.
+<BR>
+<P>
+A digital signature system can be broken by attacking either the
+difficult mathematical problem on which the signature method is based
+or the hash function used to create the message digests. When choosing
+an authentication system, it is generally a good idea to choose a
+signature method and a hash function that require comparable efforts to
+break; any extra security in one of the two components is wasted, since
+attacks will be directed at the weaker component. Actually, attacking
+the hash function is harder in practice, since it requires a large
+amount of memory and the ability to trick the victim into signing a
+special message. With 2<SUP>64</SUP> operations, an attacker can find two
+messages that hash to the same digest under any of the MD hash
+functions; this effort is comparable to that necessary to break 512-bit
+RSA; thus MD5 is a good choice when using RSA with a 512-bit modulus.
+However, those with greater security needs, such as certifying
+authorities, should use a longer modulus and a hash function that
+produces a longer message digest; either SHS (160-bit digest) or a
+modified version of MD4 that produces a 256-bit digest would suffice.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html1181"
+ HREF="node89.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html1179"
+ HREF="node86.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html1173"
+ HREF="node87.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html1182"
+ HREF="node89.html">3.8.3 What are MD2,</A>
+<B> Up:</B> <A NAME="tex2html1180"
+ HREF="node86.html">3.8 Misceallenous</A>
+<B> Previous:</B> <A NAME="tex2html1174"
+ HREF="node87.html">3.8.1 What is the</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

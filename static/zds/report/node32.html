@@ -1,0 +1,502 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.4 Firewalls and their components</TITLE>
+<META NAME="description" CONTENT="3.2.4 Firewalls and their components">
+<META NAME="keywords" CONTENT="report">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="report.css">
+<LINK REL="next" HREF="node33.html">
+<LINK REL="previous" HREF="node31.html">
+<LINK REL="up" HREF="node28.html">
+<LINK REL="next" HREF="node33.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html486"
+ HREF="node33.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html484"
+ HREF="node28.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html478"
+ HREF="node31.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html487"
+ HREF="node33.html">3.2.5 Comments</A>
+<B> Up:</B> <A NAME="tex2html485"
+ HREF="node28.html">3.2 Access Security: Firewalls</A>
+<B> Previous:</B> <A NAME="tex2html479"
+ HREF="node31.html">3.2.3 Levels of threat</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00424000000000000000">
+3.2.4 Firewalls and their components</A>
+</H2>
+<P><DL>
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Overview</B>
+<DD>
+<P>
+In discussing firewalls there is often confusion of terminology since
+    firewalls all differ slightly in implementation if not in purpose.
+    Various discussions on Usenet indicate that the term ``firewall'' is
+    used to describe just about any inter-network security scheme. For the
+    sake of simplifying discussion, some terminology is proposed, to
+    provide a common ground:
+<BR>
+<P>    <DL>
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Screening Router (see
+    <A HREF="node32.html#scr_rout">3.2.4</A>)</B>
+<DD>
+<P>
+A screening router is a basic component of most firewalls. A screening
+    router can be a commercial router or a host-based router with some kind
+    of packet filtering capability.  Typical screening routers have the
+    ability to block traffic between networks or specific hosts, on an IP
+    port level. Some firewalls consist of nothing more than a screening
+    router between a private network and
+    the Internet.
+<BR>
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Bastion Host (see <A HREF="node32.html#dual_hom">3.2.4</A>)</B>
+<DD>
+<P>
+Bastions are the highly fortified parts of a medieval castle; points
+    that overlook critical areas of defense, usually having stronger walls,
+    room for extra troops, and the occasional useful tub of boiling hot oil
+    for discouraging attackers. A bastion host is a system identified by
+    the firewall administrator as a critical strong point in the network's
+    security. Generally, bastion hosts will have some degree of extra
+    attention paid to their security,
+    may undergo regular audits, and may have modified software.
+<BR>
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Dual Homed Gateway (see
+    <A HREF="node32.html#dual_hom">3.2.4</A>)</B>
+<DD>
+<P>
+Some firewalls are implemented without a screening router, by placing a
+    system on both the private network and the Internet, and disabling
+    TCP/IP forwarding.  Hosts on the private network can communicate with
+    the gateway, as can hosts on the Internet, but direct traffic between
+    the networks is blocked. A dual homed gateway is, by definition, a
+    bastion host.
+<BR>
+<P>
+<BR>
+<DIV ALIGN="CENTER"><A NAME="fig:dual_hom">&#160;</A><A NAME="138">&#160;</A>
+<TABLE>
+<CAPTION><STRONG>Figure 3.1:</STRONG>
+A typical Dual Homed Gateway</CAPTION>
+<TR><TD><IMG WIDTH="460" HEIGHT="132"
+ SRC="img1.gif"
+ ALT="\begin{figure}
+ \centering
+\includegraphics [width=4in]{dualhomed.ps}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+<BR>
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Screened Host Gateway
+    (see <A HREF="node32.html#scr_hst">3.2.4</A>)</B>
+<DD>
+<P>
+Possibly the most common firewall configuration is a screened host
+    gateway. This is implemented using a screening router and a bastion
+    host. Usually, the bastion host is on the private network, and the
+    screening router is configured such that the bastion host is the only
+    system on the private network that is reachable from the Internet.
+    Often the screening router is configured to block traffic to the
+    bastion host on specific ports, permitting only a small number of
+    services to communicate with it.
+<BR>
+<P>
+<BR>
+<DIV ALIGN="CENTER"><A NAME="fig:scr_hst">&#160;</A><A NAME="145">&#160;</A>
+<TABLE>
+<CAPTION><STRONG>Figure 3.2:</STRONG>
+A typical Screened Host Gateway</CAPTION>
+<TR><TD><IMG WIDTH="460" HEIGHT="187"
+ SRC="img2.gif"
+ ALT="\begin{figure}
+ \centering
+\includegraphics [width=4in]{screenhost.ps}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+<BR>
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Screened Subnet (see
+    <A HREF="node32.html#scr_sub">3.2.4</A>)</B>
+<DD>
+<P>
+In some firewall configurations, an isolated subnet is created,
+    situated between the Internet and the private network.  Typically, this
+    network is isolated using screening routers, which may implement
+    varying levels of filtering. Generally, a screened subnet is configured
+    such that both the Internet and the private network have access to
+    hosts on the screened subnet, but traffic across the screened subnet is
+    blocked.  Some configurations of screened subnets will have a bastion
+    host on the screened network, either to support interactive
+    terminal sessions or application level gateways.
+<BR>
+<P>
+<BR>
+<DIV ALIGN="CENTER"><A NAME="fig:scr_sub">&#160;</A><A NAME="152">&#160;</A>
+<TABLE>
+<CAPTION><STRONG>Figure 3.3:</STRONG>
+A typical Screened Subnet</CAPTION>
+<TR><TD><IMG WIDTH="460" HEIGHT="176"
+ SRC="img3.gif"
+ ALT="\begin{figure}
+ \centering
+\includegraphics [width=4in]{screensub.ps}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+<BR>
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Application Level Gateway (or ``Proxy Gateway'')</B>
+<DD>
+<P>
+Much of the software on the Internet works in a store-and-forward mode;
+    mailers and Usenet news collect input, examine it, and forward it.
+    Application level gateways are service-specific forwarders or
+    reflectors, which usually operate in user mode rather than at a
+    protocol level.  Generally, these forwarding services, when running on
+    a firewall, are important to the security of the whole. The famous
+    sendmail hole that was exploited by the Morris Internet worm is one
+    example of the kinds of security problems an application level gateway
+    can present. Other application level gateways are interactive, such as
+    the FTP and telnet gateways run on the Digital Equipment Corporation
+    firewalls. In general, the term ``application level gateway'' will be
+    used to describe some kind of forwarding service that runs across a
+    firewall, and is a potential security concern. In general, crucial
+    application
+    level gateways are run on some kind of bastion host.
+<BR>
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/whiteball.gif" ALT="*">
+<B>Hybrid Gateways (see
+    <A HREF="node32.html#hyb_gat">3.2.4</A>)</B>
+<DD>
+<P>
+Hybrid gateways are the ``something else'' category in this list.
+    Examples of such systems might be hosts connected to the Internet, but
+    accessible only through serial lines connected to an ethernet terminal
+    server on the private network. Such gateways might take advantage of
+    multiple protocols, or tunneling one protocol over another. Routers
+    might maintain and monitor the complete state of all TCP/IP
+    connections, or somehow examine traffic to try to detect and prevent an
+    attack. The AT&amp;T corporate
+    firewall is a hybrid gateway combined with a bastion host.
+<BR>
+<P>
+Taking the components described above, we can accurately describe most
+    of the forms that firewalls take, and can make some general statements
+    about the kinds of security problems each approach presents. Assuming
+    that a firewall fulfills its basic purpose of helping protect the
+    network, it is still important to examine each type of firewall with
+    respect to:
+<BR>
+<P>
+Damage control -- If the firewall is compromised or destroyed, to what
+    kinds of threats does it leave the private network open?
+<BR>
+<P>
+Zones of risk -- How large is the zone of risk during normal
+    operation?  A measure of this is the number of hosts or routers that
+    can be probed
+    from the outside network.
+<BR>
+<P>
+Failure mode -- If the firewall is broken into or destroyed, how easy
+    is this to detect? In a post mortem, how much information is retained
+    that can be used to diagnose the attack?
+<BR>
+<P>
+Ease of use -- How much of an inconvenience is the firewall?
+<BR>
+<P>
+Stance -- Is the basic design philosophy of the firewall ``That which
+    is not expressly permitted is prohibited'' or is it ``That which is not
+    expressly prohibited is permitted''?
+  </DL>
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Firewalls
+      using screening routers</B>
+<DD>
+    <A NAME="scr_rout">&#160;</A>    
+    Many networks are firewalled using only a screening router between the
+    private network and the Internet. This type of firewall is different
+    from a screened host gateway in that usually there is direct
+    communication permitted between multiple hosts on the private network,
+    and multiple hosts on the Internet. The zone of risk is equal to the
+    number of hosts on the private networks, and the number and type of
+    services to which the screening router permits traffic. For each
+    service provided via peer-to-peer connection the size of the zone of
+    risk increases sharply. Eventually it is impossible to quantify. Damage
+    control is difficult as well since the network administrator would need
+    to regularly examine every host for traces of a break-in. If there is
+    no regular audit one must hope to stumble on a clue such as a
+    mismatched system accounting record.
+<BR>
+<P>
+In the case of total destruction of the firewall, it tends to be very
+    hard to trace or even to discover. If a commercial router (which does
+    not maintain logging records) is used, and the router's administrative
+    password is compromised, the entire private network can be laid open to
+    attack very easily. Cases are known where commercial routers have been
+    configured with erroneous screening rules, or have come up in some
+    pass-through mode because of hardware or operator error. Generally,
+    this configuration is a case of ``That which is not expressly
+    prohibited is permitted'' as the ingenious user can fairly easily
+    piggyback protocols to achieve a higher level of access than the
+    administrator expects or wants.
+<BR>
+<P>
+Screening routers are not the most secure solution, but they are
+    popular since they permit fairly free Internet access from any point
+    within the private network. Many consultants and network service
+    providers offer screening routers in a ``firewall'' configuration. It
+    is uncertain if the various trade-offs involved are clear to the
+    customer; thus the use of a screening router to protect sensitive
+    information or trade secrets would not be recommended, since screening
+    routers are very permeable from the inside.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Dual homed gateways</B>
+<DD>
+    <A NAME="dual_hom">&#160;</A>    
+    An often used and easy to implement firewall is the dual homed gateway.
+    Since it doesn't forward TCP/IP traffic, it acts as a complete block
+    between the Internet and the private network. Its ease of use is
+    determined by how the systems manager chooses to set up access; either
+    by providing application gateways such as telnet forwarders or by
+    giving users logins on the gateway host. If the former approach is
+    taken, the stance of the firewall is clearly ``That which is not
+    expressly permitted is prohibited''; users can only access Internet
+    services for which there is an application gateway. If users are
+    permitted logins, the firewall's security is then seriously weakened.
+    During normal operation, the only zone of risk is the gateway host
+    itself, since it is the only host that is reachable from the Internet.
+    If there are user logins on the gateway host, and one of the users
+    chooses a weak password or has their account otherwise compromised, the
+    zone of risk expands to encompass the entire private network. From a
+    standpoint of damage control, the administrator may be able to track
+    the progress of an intruder, based on the access patterns of the
+    compromised login, but a skillful vandal can make this quite difficult.
+    If a dual homed gateway is configured without direct user access,
+    damage control can be somewhat easier, since the very fact that someone
+    has logged in to the gateway host becomes a noteworthy security event.
+    Dual homed gateways have an advantage over screening routers from the
+    standpoint that their system software is often easier to adapt to
+    maintain system logs, hard copy logs, or remote logs. This can make a
+    post-mortem easier for the gateway host itself, but may or may not help
+    the network administrator identify what other hosts on the private
+    network may have been compromised in an island-hopping attack.
+<BR>
+<P>
+Attacking a dual homed gateway leaves the attacker a fairly large array
+    of options. Since the attacker has what amounts to local network access
+    if a login can be obtained, all the usual attacks that can be made over
+    a local network are available. NFS-mounted file systems, weaknesses in
+    .rhosts files, automatic software distribution systems, network backup
+    programs and administrative shell scripts - all may provide a toehold
+    on systems on the internal network. Once a toehold is secured, it then
+    provides a base from which to launch attacks back at the gateway
+    itself. The weakest aspect of the dual homed gateway is its failure
+    mode. If the firewalll is destroyed it is possible that a skillful
+    attacker might re-enable routing and throw the entire private network
+    open to attack. In the usual Unix-based dual homed gateway, TCP/IP
+    routing is often disabled by modifying a kernel variable named
+    ipforwarding; if systems privileges can be obtained or stolen on the
+    gateway, this variable can be changed. Perhaps this seems far-fetched,
+    but unless great care is paid to monitoring the software revision
+    levels and configuration on the gateway host, it is not improbable that
+    a vandal with a copy of the release notes for the operating system
+    version and a login can compromise the system.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Screened host gateways</B>
+<DD>
+    <A NAME="scr_hst">&#160;</A>    
+    Several articles have described screened host gateways, and how to
+    construct them. Generally, the screened host gateway is very secure,
+    while remaining fairly easy to implement. Typically, a bastion host is
+    configured on the private network, with a screening router between the
+    Internet and the private network, which only permits Internet access to
+    the bastion host. Since the bastion host is on the private network,
+    connectivity for local users is very good, and problems presented by
+    exotic routing configurations do not present themselves. If the private
+    network is, as many are, a virtual extended local area network (e.g.:
+    no subnets or routing) the screened host gateway will work without
+    requiring any changes to the local network, as long as the local
+    network is using a legitimately assigned set of network addresses. The
+    zone of risk of a screened host gateway is restricted to the bastion
+    host, and the screening router, and the security stance of the screened
+    host gateway is determined by the software running on that system. If
+    an attacker gains login access to the bastion host, there is a fairly
+    wide range of options for attacking the rest of the private network. In
+    many ways, this approach is similar to the dual homed gateway, sharing
+    similar failure modes and design considerations with respect to the
+    software running on the bastion host.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Screened subnets</B>
+<DD>
+    <A NAME="scr_sub">&#160;</A>    
+    A screened subnet is usually configured with a bastion host as the sole
+    point of access on the subnet. The zone of risk is small, consisting of
+    that bastion host or hosts, and any screening routers that make up the
+    connections between the screened subnet, the Internet, and the private
+    network. The ease of use and basic stance of the screened subnet will
+    vary, but generally a screened subnet is appealing only for firewalls
+    that are taking advantage of routing to reinforce the existing
+    screening. This approach forces all services through the firewall to be
+    provided by application gateways, and places the stance strongly in the
+    ``That which is not expressly permitted is prohibited'' category.
+<BR>
+<P>
+If a screened subnet based firewall with inter-network routing blocked
+    is attacked with an intent to destroy it, the attacker must reconfigure
+    the routing on three networks, without disconnecting or locking himself
+    out, and without the routing changes being noticed. No doubt this is
+    possible, but it can be made very difficult by disabling network access
+    to the screening routers, or by configuring the screening routers to
+    only permit access from specific hosts on the private network. In this
+    case, an attacker would need to break into the bastion host, then into
+    one of the hosts on the private network, and then back out to the
+    screening router -- and would have to do it without setting off any
+    alarms.
+<BR>
+<P>
+Another advantage of screened subnets is that they can be put in place
+    in such a way that they hide any accidents of history that may linger
+    on the private network. Many sites that would like to connect to the
+    Internet are daunted by the prospect of re-addressing and re-subnetting
+    existing networks. With a screened subnet with blocked inter-network
+    routing, a private network can be connected to the Internet and changed
+    gradually to new subnet and network addresses. In fact, this approach
+    has been observed to significantly accelerate the adoption of new
+    network addresses on loosely controlled private networks. Users will be
+    more receptive to changing their host addresses if they can realize the
+    benefits of Internet connectivity thereby, since hosts that are not
+    correctly addressed cannot use the firewall properly. In most other
+    respects, the screened subnet is very much dependent on the suite of
+    software running on the bastion host. Screening a whole subnet provides
+    functionality similar to the dual homed gateway or screened host
+    gateway; it differs primarily in the extra level of complexity in
+    routing and configuration of the screening routers.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Hybrid gateways</B>
+<DD>
+    <A NAME="hyb_gat">&#160;</A>    
+    ``Security through obscurity'' is not sufficient in and of itself, but
+    there is no question that an unusual configuration, or one that is hard
+    to understand, is likely to give an attacker pause, or to make them
+    more likely to reveal themselves in the process of trying to figure out
+    what they are facing. On the other hand there is a real advantage to
+    having a security configuration that is easy to understand, and
+    therefore easier to evaluate and maintain. Since the hybrid gateway is
+    mentioned here in the category of ``something else'' no attempt will be
+    made to describe the indescribable. Some hypothetical hybrids may serve
+    to show how hybrid gateways might differ from and be similar to the
+    other types.
+<BR>
+<P>
+Let us postulate a hybrid gateway that consists of a box sitting on the
+    Internet, which is capable of routing traffic, but also maintains a
+    complete notion of the state of every TCP connection, how much data has
+    gone across it, where it originated, and its destination. Presumably,
+    connections can be filtered based on arbitrarily precise rules, such
+    as: ``permit traffic between host A on the private network and all
+    hosts on network B on the Internet via the telnet service if and only
+    if the connection originated from host A between the hours of 9:00 am
+    and 5:00 pm and log the traffic.'' This sounds terrific, providing
+    arbitrary control with great ease of use, but some problems simply
+    refuse to go away. Consider that someone wishing to circumvent the
+    firewall, who broke into the private network via an unguarded modem,
+    might very easily set up a service engine that was piggybacked over the
+    telnet port. This is actually a fairly easy firewall to destroy.
+<BR>
+<P>
+Another hybrid gateway might take advantage of various forms of
+    protocol tunneling. Suppose the requirement is to connect to the
+    Internet with very tight restrictions, but that a high degree of
+    connectivity is required between the private network and an external
+    network that is somewhat trusted (for example, a corporate R&amp;D
+    department needs to be able to run X-windows applications on a
+    supercomputer at another facility). The usual archetypal gateways
+    discussed here could provide general purpose e-mail connectivity, but
+    for secure point-to-point communications, an encrypted point-to-point
+    virtual TCP/IP connection might be set up with the remote system, after
+    users had authenticated themselves with a cryptographic smart card.
+    This would be extremely secure, and might be made fairly easy to use,
+    but has the disadvantage that the protocol driver needs to be added to
+    every system that wants to share communication. It is hard to make any
+    guesses about the failure mode of such a system, but the zone of risk
+    is neatly limited to all the hosts which are running the tunneling
+    protocol driver, and to which the individual user has smart card
+    access. Some of this might be implemented in hardware or in the routers
+    themselves. In the future, it is likely that the rapid growth of the
+    Internet will fuel more development in this area, and we will see
+    various hybrid gateways arise. The basic issues surrounding configuring
+    a firewall will probably remain the same as the ones discussed here.
+<P>    <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>Other
+      firewall-related tools</B>
+<DD>
+<P>
+There is active research and development on tools to aggressively seek
+    out and identify weaknesses in an entire network, or to detect the
+    patterns that might indicate when an attack is in progress. These tools
+    range from the simple checklist to complex ``expert systems'' with
+    inference engines and elaborate rule bases. Many firewalls today run
+    software that is designed to go forth and gather information relating
+    to possible attacks and their origins, often using and abusing tools
+    like finger and SNMP. Unless true artificial intelligence is developed,
+    however, these tools cannot guard against an unknown form of attack,
+    since they cannot possibly match the creativity of a network vandal.
+    While often billed as being ``proactive'' they are in fact reactive,
+    and generally will serve only to catch systems crackers armed with last
+    year's bag of tricks. Catching the small fry is still worth doing, but
+    it is likely that they are less of a threat than the fellow who is so
+    eager to break into your network that he is doing research and
+    development in new system cracking techniques.
+</DL><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html486"
+ HREF="node33.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html484"
+ HREF="node28.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html478"
+ HREF="node31.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html487"
+ HREF="node33.html">3.2.5 Comments</A>
+<B> Up:</B> <A NAME="tex2html485"
+ HREF="node28.html">3.2 Access Security: Firewalls</A>
+<B> Previous:</B> <A NAME="tex2html479"
+ HREF="node31.html">3.2.3 Levels of threat</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2.1 What is RSA?</TITLE>
+<META NAME="description" CONTENT="3.2.1 What is RSA?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node13.html">
+<LINK REL="previous" HREF="node11.html">
+<LINK REL="up" HREF="node11.html">
+<LINK REL="next" HREF="node13.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html376"
+ HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html374"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html368"
+ HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html377"
+ HREF="node13.html">3.2.2 Why use RSA</A>
+<B> Up:</B> <A NAME="tex2html375"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html369"
+ HREF="node11.html">3.2 RSA</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00321000000000000000">
+3.2.1 What is RSA?</A>
+</H2>
+<A NAME="what_rsa">&#160;</A>
+RSA is a public-key cryptosystem for both encryption and
+authentication; it was invented in 1977 by Ron Rivest, Adi Shamir, and
+Leonard Adleman. It works as follows: take two large primes, p and q,
+and find their product n = pq; n is called the modulus. Choose a
+number, e, less than n and relatively prime to (p-1)(q-1), and find its
+inverse, d, mod (p-1)(q-1), which means that ed = 1 mod (p-1)(q-1); e
+and d are called the public and private exponents, respectively. The
+public key is the pair (n,e); the private key is d. The factors p and q
+must be kept secret, or destroyed.
+<BR>
+<P>
+It is difficult (presumably) to obtain the private key d from the public
+key (n,e). If one could factor n into p and q, however, then one could
+obtain the private key d. Thus the entire security of RSA is predicated on
+the assumption that factoring is difficult; an easy factoring method would
+``break'' RSA (see Questions <A HREF="node16.html#what_break_rsa">3.2.5</A> and
+<A HREF="node55.html#what_sig_factor">3.4.4</A>).
+<BR>
+<P>
+Here is how RSA can be used for privacy and authentication (in practice,
+actual use is slightly different; see Questions <A HREF="node23.html#how_rsa_prac">3.2.12</A> and
+<A HREF="node24.html#how_rsa_auth_prac">3.2.13</A>):
+<P><DL>
+  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>RSA privacy (encryption):</B>
+<DD>suppose Alice wants to send a private message, <I>m</I>, to Bob. Alice
+    creates the ciphertext <I>c</I> by exponentiating: <I>c</I>=<I>m</I><SUP><I>e</I></SUP> <I>mod n</I>, where <I>e</I>
+    and <I>n</I> are Bob's public key. To decrypt, Bob also exponentiates:
+    <I>m</I>=<I>c</I><SUP><I>d</I></SUP> <I>mod n</I>, and recovers the original message <I>m</I>; the relationship
+    between <I>e</I> and <I>d</I> ensures that Bob correctly recovers <I>m</I>.  Since
+    only Bob knows <I>d</I>, only Bob can decrypt.
+<P>  <DT><IMG WIDTH="14" HEIGHT="14" SRC="/latex2html/icons.gif/redball.gif" ALT="*">
+<B>RSA authentication:</B>
+<DD>suppose Alice wants to send a signed document <I>m</I> to Bob. Alice creates
+    a digital signature s by exponentiating: <I>s</I> = <I>m</I><SUP><I>d</I></SUP> <I>mod n</I>, where <I>d</I> and
+    <I>n</I> belong to Alice's key pair. She sends <I>s</I> and <I>m</I> to Bob. To verify
+    the signature, Bob exponentiates and checks that the message <I>m</I> is
+    recovered: <I>m</I>=<I>s</I><SUP><I>e</I></SUP> <I>mod n</I>, where e and n belong to Alice's public key.
+</DL>
+<P>
+Thus, encryption and authentication take place without any sharing of
+private keys: each person uses only other people's public keys and his
+or her own private key. Anyone can send an encrypted message or verify
+a signed message, using only public keys, but only someone in
+possession of the correct private key can decrypt or sign a message.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html376"
+ HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html374"
+ HREF="node11.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html368"
+ HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html377"
+ HREF="node13.html">3.2.2 Why use RSA</A>
+<B> Up:</B> <A NAME="tex2html375"
+ HREF="node11.html">3.2 RSA</A>
+<B> Previous:</B> <A NAME="tex2html369"
+ HREF="node11.html">3.2 RSA</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

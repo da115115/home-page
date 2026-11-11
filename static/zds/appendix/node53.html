@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.4.2 What is the significance of one-way functions for
+cryptography?</TITLE>
+<META NAME="description" CONTENT="3.4.2 What is the significance of one-way functions for
+cryptography?">
+<META NAME="keywords" CONTENT="appendix">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="appendix.css">
+<LINK REL="next" HREF="node54.html">
+<LINK REL="previous" HREF="node52.html">
+<LINK REL="up" HREF="node51.html">
+<LINK REL="next" HREF="node54.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html810"
+ HREF="node54.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html808"
+ HREF="node51.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html802"
+ HREF="node52.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html811"
+ HREF="node54.html">3.4.3 What is the</A>
+<B> Up:</B> <A NAME="tex2html809"
+ HREF="node51.html">3.4 Factoring and Discrete</A>
+<B> Previous:</B> <A NAME="tex2html803"
+ HREF="node52.html">3.4.1 What is a</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00342000000000000000">
+3.4.2 What is the significance of one-way functions for
+cryptography?</A>
+</H2>
+<P>
+Public-key cryptosystems are based on (presumed) trap-door one-way
+functions. The public key gives information about the particular
+instance of the function; the private key gives information about the
+trap door. Whoever knows the trap door can perform the function easily
+in both directions, but anyone lacking the trap door can perform the
+function only in the forward direction. The forward direction is used
+for encryption and signature verification; the inverse direction is
+used for decryption and signature generation.
+<BR>
+<P>
+In almost all public-key systems, the size of the key corresponds to
+the size of the inputs to the one-way function; the larger the key, the
+greater the difference between the efforts necessary to compute the
+function in the forward and inverse directions (for someone lacking the
+trap door). For a digital signature to be secure for years, for
+example, it is necessary to use a trap-door one-way function with
+inputs large enough that someone without the trap door would need many
+years to compute the inverse function.
+<BR>
+<P>
+All practical public-key cryptosystems are based on functions that are
+believed to be one-way, but have not been proven to be so. This means
+that it is theoretically possible that an algorithm will be discovered
+that can compute the inverse function easily without a trap door; this
+development would render any cryptosystem based on that one-way
+function insecure and useless.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html810"
+ HREF="node54.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html808"
+ HREF="node51.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html802"
+ HREF="node52.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html811"
+ HREF="node54.html">3.4.3 What is the</A>
+<B> Up:</B> <A NAME="tex2html809"
+ HREF="node51.html">3.4 Factoring and Discrete</A>
+<B> Previous:</B> <A NAME="tex2html803"
+ HREF="node52.html">3.4.1 What is a</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>12/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>
