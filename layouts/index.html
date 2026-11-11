@@ -1,0 +1,83 @@
+{{ define "main" }}
+<div class="hero">
+  <h1>{{ .Site.Title }}</h1>
+  <p class="bio-tagline">{{ .Site.Params.bio }}</p>
+  <div class="hero-actions">
+    <a href="https://github.com/da115115" target="_blank" rel="noopener" class="badge">💻 GitHub</a>
+    <a href="https://www.linkedin.com/in/da115/" target="_blank" rel="noopener" class="badge">💼 LinkedIn</a>
+    <a href="https://substack.com/@denisarnaud" target="_blank" rel="noopener" class="badge">✍️ Substack</a>
+    <a href="https://x.com/da115115" target="_blank" rel="noopener" class="badge">🐦 X / Twitter</a>
+  </div>
+</div>
+
+<div class="prose">
+  {{ .Content }}
+</div>
+
+<h2 class="section-title">
+  {{ if eq .Site.Language.Lang "en" }}💻 Technology & Open Source{{ else }}💻 Sphère Technique & Pro{{ end }}
+</h2>
+<div class="card-grid">
+  <a href="{{ "tech/data-engineering/" | relLangURL }}" class="card">
+    <div>
+      <h3>{{ if eq .Site.Language.Lang "en" }}Data Architecture & Yield{{ else }}Architecture de données & Yield{{ end }}</h3>
+      <p>{{ if eq .Site.Language.Lang "en" }}Large scale distributed data platforms, revenue management and travel technology systems.{{ else }}Conception de plateformes de données distribuées, revenue management et technologies du voyage.{{ end }}</p>
+    </div>
+    <span class="meta">C++ • Python • Big Data</span>
+  </a>
+  <a href="{{ "tech/open-source/" | relLangURL }}" class="card">
+    <div>
+      <h3>{{ if eq .Site.Language.Lang "en" }}Open Source Ecosystem{{ else }}Écosystème Open Source{{ end }}</h3>
+      <p>{{ if eq .Site.Language.Lang "en" }}Fedora packaging, BerliOS, SourceForge, and open libraries for airline & travel data.{{ else }}Mainteneur Fedora Project, forges historiques BerliOS, SourceForge et librairies de calcul aérien.{{ end }}</p>
+    </div>
+    <span class="meta">Fedora • GitHub • C++</span>
+  </a>
+  <a href="{{ "tech/academic/" | relLangURL }}" class="card">
+    <div>
+      <h3>{{ if eq .Site.Language.Lang "en" }}Theses & Research{{ else }}Thèses & Recherches{{ end }}</h3>
+      <p>{{ if eq .Site.Language.Lang "en" }}Academic papers and professional thesis reports (Eurecom, Purdue University).{{ else }}Rapports de recherche et mémoires professionnels (Eurecom / Sema Group, Purdue University).{{ end }}</p>
+    </div>
+    <span class="meta">Eurecom • Purdue • Publications</span>
+  </a>
+</div>
+
+<h2 class="section-title">
+  {{ if eq .Site.Language.Lang "en" }}📖 Humanities & Essays{{ else }}📖 Humanités & Essais{{ end }}
+</h2>
+<div class="card-grid">
+  <a href="{{ "humanities/syracuse/" | relLangURL }}" class="card">
+    <div>
+      <h3>Syracuse</h3>
+      <p>{{ if eq .Site.Language.Lang "en" }}Philosophical essay and personal reflections. Available in French & English.{{ else }}Essai de réflexion et d'introspection. Disponible en version française et anglaise.{{ end }}</p>
+    </div>
+    <span class="meta">Essai • FR / EN</span>
+  </a>
+  <a href="{{ "humanities/mike/" | relLangURL }}" class="card">
+    <div>
+      <h3>Mike</h3>
+      <p>{{ if eq .Site.Language.Lang "en" }}Narrative and character study. Available in French & English.{{ else }}Récit et trajectoire humaine. Disponible en version française et anglaise.{{ end }}</p>
+    </div>
+    <span class="meta">Récit • FR / EN</span>
+  </a>
+  <a href="{{ "humanities/real/" | relLangURL }}" class="card">
+    <div>
+      <h3>{{ if eq .Site.Language.Lang "en" }}Real (Le Réel){{ else }}Le Réel{{ end }}</h3>
+      <p>{{ if eq .Site.Language.Lang "en" }}Short philosophical contemplation on reality and perception.{{ else }}Contemplation et réflexion philosophique sur la réalité et les perceptions.{{ end }}</p>
+    </div>
+    <span class="meta">Réflexion • FR / EN</span>
+  </a>
+</div>
+
+<h2 class="section-title">
+  {{ if eq .Site.Language.Lang "en" }}🌐 Digital Footprint & Hub{{ else }}🌐 Présence Numérique & Hub{{ end }}
+</h2>
+<div class="card-grid">
+  <a href="{{ "ecosystem/" | relLangURL }}" class="card">
+    <div>
+      <h3>{{ if eq .Site.Language.Lang "en" }}Explore All Public Profiles{{ else }}Tous les profils & forges{{ end }}</h3>
+      <p>{{ if eq .Site.Language.Lang "en" }}Direct access to over 30 verified profiles across code, publications, geo-mapping, and networks.{{ else }}Cartographie thématique de plus de 30 profils publics : code, écrits, cartographie et communautés.{{ end }}</p>
+    </div>
+    <span class="meta">GitHub • Substack • OSM • Strava</span>
+  </a>
+</div>
+{{ end }}

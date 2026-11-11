@@ -1,0 +1,18 @@
+<header class="site-header">
+  <div class="container nav-wrapper">
+    <a href="{{ .Site.Home.RelPermalink }}" class="site-title">{{ .Site.Title }}</a>
+    <nav class="main-nav">
+      <a href="{{ "tech/" | relLangURL }}">{{ if eq .Site.Language.Lang "en" }}Tech & OSS{{ else }}Tech & Pro{{ end }}</a>
+      <a href="{{ "humanities/" | relLangURL }}">{{ if eq .Site.Language.Lang "en" }}Humanities{{ else }}Humanités{{ end }}</a>
+      <a href="{{ "ecosystem/" | relLangURL }}">{{ if eq .Site.Language.Lang "en" }}Ecosystem{{ else }}Écosystème{{ end }}</a>
+    </nav>
+    <div class="nav-actions">
+      {{ if .IsTranslated }}
+        {{ range .Translations }}
+          <a href="{{ .RelPermalink }}" class="lang-toggle" title="{{ .Language.Label }}">{{ .Language.Label }}</a>
+        {{ end }}
+      {{ end }}
+      <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">🌙 Sombre</button>
+    </div>
+  </div>
+</header>

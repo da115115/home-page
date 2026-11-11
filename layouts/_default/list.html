@@ -1,0 +1,22 @@
+{{ define "main" }}
+<div class="article-header">
+  <h1>{{ .Title }}</h1>
+  {{ with .Description }}<p class="bio-tagline">{{ . }}</p>{{ end }}
+</div>
+
+<div class="prose">
+  {{ .Content }}
+</div>
+
+<div class="card-grid" style="margin-top: 2rem;">
+  {{ range .Pages }}
+    <a href="{{ .RelPermalink }}" class="card">
+      <div>
+        <h3>{{ .Title }}</h3>
+        <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | truncate 120 }}{{ end }}</p>
+      </div>
+      <span class="meta">{{ if .Params.tag }}{{ .Params.tag }}{{ else }}En savoir plus →{{ end }}</span>
+    </a>
+  {{ end }}
+</div>
+{{ end }}

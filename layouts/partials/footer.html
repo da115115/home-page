@@ -1,0 +1,14 @@
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      © {{ now.Year }} Denis Arnaud • <a href="http://denis.arnaud.free.fr">denis.arnaud.free.fr</a>
+    </div>
+    <div>
+      {{ if eq .Site.Language.Lang "en" }}
+        Generated with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> • Hosted on Free.fr
+      {{ else }}
+        Généré avec <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> • Hébergé sur Free.fr
+      {{ end }}
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,29 @@
+baseURL = 'https://denisarnaud.com/'
+defaultContentLanguage = 'fr'
+title = 'Denis Arnaud'
+enableRobotsTXT = true
+
+[languages]
+  [languages.fr]
+    label = 'Français'
+    locale = 'fr-FR'
+    weight = 1
+    title = 'Denis Arnaud'
+    [languages.fr.params]
+      bio = 'Architecte de données • Spécialiste Revenue Management & Travel Tech • Contributeur Open Source'
+      description = 'Site personnel de Denis Arnaud — Architecture de données, projets Open Source, essais littéraires et hub de présence web.'
+
+  [languages.en]
+    label = 'English'
+    locale = 'en-US'
+    weight = 2
+    title = 'Denis Arnaud'
+    [languages.en.params]
+      bio = 'Data Architect • Revenue Management & Travel Tech Specialist • Open Source Contributor'
+      description = 'Personal website of Denis Arnaud — Data architecture, open source projects, essays and web presence hub.'
+
+[params]
+  author = 'Denis Arnaud'
+  github = 'https://github.com/da115115'
+  linkedin = 'https://www.linkedin.com/in/da115/'
+  x = 'https://x.com/da115115'

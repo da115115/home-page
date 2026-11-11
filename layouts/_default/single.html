@@ -1,0 +1,18 @@
+{{ define "main" }}
+<article>
+  <header class="article-header">
+    <h1>{{ .Title }}</h1>
+    <div class="article-meta">
+      {{ if .Params.category }}<span>{{ .Params.category }}</span>{{ end }}
+      {{ if .IsTranslated }}
+        {{ range .Translations }}
+          <span>• Lire en <a href="{{ .RelPermalink }}">{{ .Language.Label }}</a></span>
+        {{ end }}
+      {{ end }}
+    </div>
+  </header>
+  <div class="prose">
+    {{ .Content }}
+  </div>
+</article>
+{{ end }}
