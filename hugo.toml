@@ -1,4 +1,4 @@
-baseURL = 'https://www.denisarnaud.com/'
+baseURL = 'https://denisarnaud.com/'
 defaultContentLanguage = 'fr'
 title = 'Denis Arnaud'
 enableRobotsTXT = true
