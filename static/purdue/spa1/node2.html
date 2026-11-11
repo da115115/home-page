@@ -1,0 +1,405 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2 Review of PMIC</TITLE>
+<META NAME="description" CONTENT="2 Review of PMIC">
+<META NAME="keywords" CONTENT="spa1">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="spa1.css">
+<LINK REL="next" HREF="node3.html">
+<LINK REL="previous" HREF="node1.html">
+<LINK REL="up" HREF="spa1.html">
+<LINK REL="next" HREF="node3.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html33"
+ HREF="node3.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html31"
+ HREF="spa1.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html25"
+ HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html34"
+ HREF="node3.html">3 Review of DPCM</A>
+<B> Up:</B> <A NAME="tex2html32"
+ HREF="spa1.html">PATTERN MATCHING IMAGE COMPRESSION</A>
+<B> Previous:</B> <A NAME="tex2html26"
+ HREF="node1.html">1 Introduction</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION00020000000000000000">
+2 Review of PMIC</A>
+</H1>
+<P>
+This section is based on Atallah <I>et al.</I> [<A
+ HREF="node5.html#ags">2</A>].  The reader might
+also want to consult [<A
+ HREF="node5.html#lus1">8</A>,<A
+ HREF="node5.html#lus2">9</A>,<A
+ HREF="node5.html#sg">13</A>,<A
+ HREF="node5.html#yk">16</A>].
+<BR>
+<P>
+The detection of the above-mentioned approximate repetitiveness is done by
+approximate pattern matching, whence the name <I>Pattern Matching Image
+  Compression</I> (PMIC).  The main idea behind it is a lossy extension of the
+Lempel-Ziv data compression scheme in which one searches for the longest
+prefix of an uncompressed file that <I>approximately</I> occurs in the
+already processed file.  The distance measure subtending the notion of
+approximate occurrence can be the <I>Hamming distance</I>, or of the <I>
+  square error distortion</I>, or the <EM>string edit</EM> distance, or any of
+the other distances considered in the distortion theory (cf.
+[<A
+ HREF="node5.html#berger">3</A>]).
+<BR>
+<P>
+In short, let us consider a stationary and ergodic sequence
+<IMG WIDTH="68" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.gif"
+ ALT="$\{X_k\}_{k=1}^\infty$"> taking values in a finite alphabet <IMG WIDTH="16" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.gif"
+ ALT="${\cal A}$"> (think of <IMG WIDTH="42" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.gif"
+ ALT="$\{X_k\}$"> as
+an image scanned row by row). For image compression the alphabet <IMG WIDTH="16" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.gif"
+ ALT="${\cal A}$"> has
+size <IMG WIDTH="75" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.gif"
+ ALT="$\vert{\cal A}\vert=256$">.  We write <I>X</I><SUB><I>m</I></SUB><SUP><I>n</I></SUP> to denote <IMG WIDTH="124" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img6.gif"
+ ALT="$X_mX_{m+1}\ldots X_n$">, and
+for simplicity <IMG WIDTH="122" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img7.gif"
+ ALT="$X^n = X_1 \ldots X_n$">. The substring <I>X<SUB>1</SUB></I><SUP><I>n</I></SUP> will be called
+<I>database sequence</I> or <I>training sequence</I>.  We encode <I>X<SUB>1</SUB></I><SUP><I>n</I></SUP> into
+a compression code <I>C</I><SUB><I>n</I></SUB>, and the decoder produces an estimate <IMG WIDTH="27" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img8.gif"
+ ALT="$\hat{X}_1^n$"> of
+<I>X<SUB>1</SUB></I><SUP><I>n</I></SUP>.  As a fidelity measure, we consider any distortion function
+<IMG WIDTH="42" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img9.gif"
+ ALT="$d(\cdot, \cdot)$"> that is subadditive, and that is a <I>single-letter
+  fidelity</I> measures, that is, such that <IMG WIDTH="213" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img10.gif"
+ ALT="$ d(x^n,\hat{x}^n)=\frac 1n
+\sum_{i=1}^n d(x_i,\hat{x}_i)$">. Examples of fidelity measures satisfying the
+above conditions are: <I>Hamming distance</I>, and the <I>square error
+  distortion</I> where <IMG WIDTH="160" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img11.gif"
+ ALT="$d( x_i , \hat{x}_i ) = (x_i -\hat{x}_i)^2$">.  As in <IMG WIDTH="10" HEIGHT="12" ALIGN="BOTTOM" BORDER="0"
+ SRC="img1.gif"
+ ALT="\L 
+">uczak
+and Szpankowski [<A
+ HREF="node5.html#lus1">8</A>,<A
+ HREF="node5.html#lus2">9</A>] we define the depth <I>L</I><SUB><I>n</I></SUB> as the length of
+the longest prefix of <IMG WIDTH="43" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img12.gif"
+ ALT="$X_{n+1}^\infty$"> (i.e., uncompressed image) that
+approximately occurs in the database (i.e., already compressed image).
+More precisely, for a given <IMG WIDTH="81" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img13.gif"
+ ALT="$0\leq D\leq 1$"> we define: <I>Let <I>L</I><SUB><I>n</I></SUB> be
+  the length <I>k</I> of the longest prefix of <IMG WIDTH="43" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img12.gif"
+ ALT="$X_{n+1}^\infty$"> for which there
+  exists <I>i</I>, <IMG WIDTH="135" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img14.gif"
+ ALT="$1\leq i\leq n-k+1$">, such that
+  <IMG WIDTH="170" HEIGHT="36" ALIGN="MIDDLE" BORDER="0"
+ SRC="img15.gif"
+ ALT="$d(X_i^{i-1+k},X_{n+1}^{n+k})\leq D$"></I> where <I>D</I> is the maximum distortion
+level.
+<BR>
+<P>
+A variable-length compression code can be designed based on <I>L</I><SUB><I>n</I></SUB>.  The
+code is a pair (<TT>pointer to a position</TT> <I>i</I>, <TT>length of</TT> <I>L</I><SUB><I>n</I></SUB>), if
+a sufficiently long <I>L</I><SUB><I>n</I></SUB> is found. Otherwise we leave the next <I>L</I><SUB><I>n</I></SUB>
+symbols uncompressed. We clearly need <IMG WIDTH="106" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img16.gif"
+ ALT="$\log n + \log L_n$"> bits for the
+above code.  The compression ratio <I>r</I> can be approximated by
+<P><A NAME="e2">&#160;</A>
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD></TD><TD ALIGN="CENTER" NOWRAP><A NAME="e2">&#160;</A><IMG WIDTH="392" HEIGHT="47"
+ SRC="img17.gif"
+ ALT="\begin{displaymath}
+r={{\mathrm overhead~ information} \over {\mathrm
+length ~of~repeated ~subword}}= {{\log n + \log L_n} \over L_n} ~,\end{displaymath}"></TD>
+<TD ALIGN="CENTER">(1)</TD></TR>
+</TABLE>
+<P>
+and to estimate it one needs to find out probabilistic behavior of <I>L</I><SUB><I>n</I></SUB>.
+In [<A
+ HREF="node5.html#lus1">8</A>,<A
+ HREF="node5.html#lus2">9</A>] it is proved that <IMG WIDTH="124" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img18.gif"
+ ALT="$L_n \sim {1\over r_0(D)} \log n$">where <I>r<SUB>0</SUB></I>(<I>D</I>) is the so called generalized R&#233;nyi entropy (which could
+be views as follows: the probability of a typical ball in <IMG WIDTH="26" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img19.gif"
+ ALT="${\cal A}^n$"> of radius
+<I>D</I> is approximately 2<SUP>-<I>n r<SUB>0</SUB></I>(<I>D</I>)</SUP>). From (<A HREF="node2.html#e2">1</A>) we conclude that the
+compression ratio <I>r</I> is asymptotically equal to <I>r<SUB>0</SUB></I>(<I>D</I>).
+<BR>
+<P>
+The above main idea is enhanced by several observations that constitute
+PMIC scheme. They are:
+<BR>
+<P><B>Additive Shift</B>. It is reasonable to expect that in an image there are
+several substrings, say <I>x</I><SUP><I>m</I></SUP>, <I>y</I><SUP><I>m</I></SUP>, that differ only by <I>almost</I>
+constant pattern, that is, <I>y</I><SUB><I>i</I></SUB>=<I>x</I><SUB><I>i</I></SUB> +<I>c</I> for <IMG WIDTH="79" HEIGHT="27" ALIGN="MIDDLE" BORDER="0"
+ SRC="img20.gif"
+ ALT="$1\leq i \leq m$"> where <I>c</I> is
+not necessary a constant, but whose variation is rather small.
+<BR>
+<P>
+In such a case we store the average difference <I>c</I> as well as a
+(<I>pointer</I>,<I>length</I>) pair, which enables us to recover <I>y</I><SUB><I>i</I></SUB> from <I>x</I><SUB><I>i</I></SUB>
+(instead of storing <I>y</I><SUB><I>i</I></SUB> explicitly).  In general, we determine the
+additive shift <I>c</I> by checking whether the following condition is fulfilled
+or not
+<P>
+<P ALIGN="CENTER"><IMG WIDTH="348" HEIGHT="62"
+ SRC="img21.gif"
+ ALT="\begin{displaymath}
+{1\over m} \left(\sum_{i=1}^m (x_i-y_i)^2 -{1\over m} \left(\sum_{i=1}^m
+(x_i-y_i)\right)^2 \right) \leq D'\end{displaymath}"></P>
+<P>
+where <I>D</I>' is a constant. If the above holds, we compute the shift <I>c</I> as <IMG WIDTH="155" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img22.gif"
+ ALT="$
+c={1\over m} \sum_{i=1}^m (x_i-y_i) $">.  It can be easily verified that for
+<I>x</I><SUB><I>i</I></SUB>=<I>y</I><SUB><I>i</I></SUB>+<I>c</I>, and <I>c</I> a constant, the above procedure returns <I>c</I>. In
+passing, we should observe that this enhancement improves even <I>
+  lossless</I> (<I>D</I>=0) image compression based on the Lempel-Ziv scheme.
+<BR>
+<P><B>Reverse Prefix</B>. We check for similarities between a substring in the
+uncompressed file and a <I>reversed</I> (i.e., read backward) substring in
+the database.
+<BR>
+<P><B>Variable Maximum Distortion</B>.  It is well known that human vision can
+easily distinguish an ``undesired'' pattern in a low frequency (constant)
+background while the same pattern might be almost invisible to humans in
+high frequency (quickly varying) background.
+<BR>
+<P>
+Therefore, we used a low value of maximum distortion, say <I>D<SUB>1</SUB></I>, for slowly
+varying background, and a high value, say <I>D<SUB>2</SUB></I>, for quickly varying
+background. We automatically recognize these two different situations by
+using the derivative <IMG WIDTH="27" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img23.gif"
+ ALT="${\cal D}_{ij}$"> of the image that is defined as
+<P>
+<P ALIGN="CENTER"><IMG WIDTH="270" HEIGHT="44"
+ SRC="img24.gif"
+ ALT="\begin{displaymath}
+{\cal D}_{ij} ={(x_{i+1,j}-x_{ij})+(x_{i,j+1}-x_{ij}) \over 2}\end{displaymath}"></P>
+<P>
+where <I>x</I><SUB><I>ij</I></SUB> is the value of (<I>i</I>,<I>j</I>) pixel.  In our implementation, we
+used the lower value of <I>D</I> whenever <IMG WIDTH="60" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img25.gif"
+ ALT="${\cal D}_{ij}\leq 3$"> and the higher value
+of <I>D</I> otherwise.
+<BR>
+<P><B>Max-Difference Constraint</B>.  Our code will also satisfy the additional
+constraint that <IMG WIDTH="117" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img26.gif"
+ ALT="$\vert x_i - \hat{x}_i \vert \leq DD$"> where <I>DD</I> is a suitably chosen
+value. This additional constraint, which we call <I>max-difference</I>
+constraint, ensures that visually noticeable ``spikes'' are not averaged
+out of existence by the smoothing effect of the square error distortion
+constraint.  We incorporate this max-difference constraint in the function
+<IMG WIDTH="42" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img9.gif"
+ ALT="$d(\cdot, \cdot)$"> by adopting the convention that <IMG WIDTH="118" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img27.gif"
+ ALT="$d( x_i , \hat{x}_i ) = +
+\infty$"> if <IMG WIDTH="117" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img28.gif"
+ ALT="$\vert x_i - \hat{x}_i \vert \gt DD$">, otherwise <IMG WIDTH="63" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img29.gif"
+ ALT="$d( x_i , \hat{x}_i )$"> is the
+standard distortion as defined above (i.e., Hamming or square of
+difference).
+<BR>
+<P><B>Small Prefix</B>. It does not make too much sense to
+store a (<I>pointer</I>,<I>position</I>) when the longest prefix is small.
+In this case, we store the original pixels of the image.
+<BR>
+<P><B>Run-Length Coding</B>. For those parts of the
+picture that do not vary at all, or vary little,
+we used run-length coding: if the next pixels vary little,
+we store a pixel value and the number of repetitions.
+<P>
+<DIV ALIGN="CENTER">
+    <IMG WIDTH="230" HEIGHT="230" ALIGN="BOTTOM" BORDER="0"
+ SRC="img30.gif"
+ ALT="\psfig {file=lena_vR.ps,width=2in}
+">    <IMG WIDTH="230" HEIGHT="230" ALIGN="BOTTOM" BORDER="0"
+ SRC="img31.gif"
+ ALT="\psfig {file=lena_jpg.ps,width=2in}
+">    <BR>
+</DIV>
+  <DIV ALIGN="CENTER">(a) (b)
+<BR>
+</DIV>
+  <DIV ALIGN="CENTER">
+    <IMG WIDTH="230" HEIGHT="230" ALIGN="BOTTOM" BORDER="0"
+ SRC="img32.gif"
+ ALT="\psfig {file=lena_2b2.ps,width=2in}
+">    <IMG WIDTH="230" HEIGHT="230" ALIGN="BOTTOM" BORDER="0"
+ SRC="img33.gif"
+ ALT="\psfig {file=lena_trans.ps,width=2in}
+">    <BR>
+</DIV>
+  <DIV ALIGN="CENTER">(c) (d)
+<BR>
+</DIV>
+  <DIV ALIGN="CENTER"><BIG>Figure 1: Different flavors of PMIC on the ``Lena'' image</BIG>
+<BR>
+</DIV>
+Comparisons of different flavors of PMIC on the ``Lena'' image:
+(a) Classical PMIC (compression ratio equal to 4.3);
+(b) JPEG (compression ratio equal to 7.9);
+(c) PMIC with simple predictive coding (compression ratio equal to 7.9);
+(d) PMIC with column compression (compression equal to 5.3).
+As mentioned above, in this paper we investigate an impact of
+prediction algorithms on PMIC. A simple prediction enhancement can
+work as follows (prediction loop - our main contribution of
+this paper - is described in depth in next sections):
+<BR>
+<P><B>Prediction</B>. A significant speed up in compression without major
+deterioration in quality can be obtained by using prediction. It works as
+follows: we compressed only every second row of an image, and when
+decompressed we restore the missing row by using a prediction (cf.
+[<A
+ HREF="node5.html#rj">11</A>], and next sections).  For high quality image compression, one can
+design a two-rounds approach where in the second round one sends the
+missing rows.  Figure&nbsp;<A HREF="#comp_lena_flavors">1</A> shows two versions of the
+compressed Lena picture: one with PMIC, and the other with PMIC and
+predictive ``reduction/expansion''.
+<BR>
+<P>
+Finally, we also explore in this paper one more feature, namely:
+<BR>
+<P><B>Column compression</B>. PMIC is performed on rows. 
+In order to have it performed on columns,
+one simple way to proceed is to ``transpose'' the original image before
+compression. Indeed, the rows of the compressed ``transposed''
+image are the columns of the original one. This algorithm has been
+performed on several different images, and this feature can sometimes
+increase either the compression ratio or the quality level, as shown in
+Figure&nbsp;<A HREF="#comp_lena_flavors">1</A>.
+<BR>
+<P>
+Let us discuss algorithmic challenges of PMIC. It boils down to
+an efficient implementation of finding the longest prefix of length <I>L</I><SUB><I>n</I></SUB>
+in yet uncompressed file. 
+We present below one possible implementation (for others the
+reader is refereed to [<A
+ HREF="node5.html#ags">2</A>].
+Let <I>x<SUB>1</SUB></I><SUP><I>n</I></SUP> denote the database, <I>y<SUB>1</SUB></I><SUP><I>m</I></SUP>=<I>x</I><SUB><I>n</I>+1</SUB><SUP><I>n</I>+<I>m</I></SUP> denote the
+yet uncompressed file.
+As before, we write <I>d</I>(<I>x</I><SUB><I>i</I></SUB>,<I>y</I><SUB><I>j</I></SUB>) for a distortion measure between two
+symbols, where <IMG WIDTH="42" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img9.gif"
+ ALT="$d(\cdot, \cdot)$"> is understood to incorporate
+the max-difference criterion discussed earlier.
+<BR>
+<P><B>Algorithm</B> <TT>PREFIX</TT>
+<BR>
+<B>Input:</B> <I>x<SUB>1</SUB></I><SUP><I>n</I></SUP> and <I>y<SUB>1</SUB></I><SUP><I>m</I></SUP>
+<BR>
+<B>Output:</B> Largest integer <I>k</I> such that, for some index <I>t</I> (<IMG WIDTH="111" HEIGHT="26" ALIGN="MIDDLE" BORDER="0"
+ SRC="img34.gif"
+ ALT="$1
+\leq t \leq n-m$">),
+<IMG WIDTH="139" HEIGHT="36" ALIGN="MIDDLE" BORDER="0"
+ SRC="img35.gif"
+ ALT="$d ( x_t^{t+k-1} , y_1^k ) \leq D$">.  The algorithm outputs both <I>k</I>
+and <I>t</I>.
+<BR>
+<B>Method:</B> We compute, for all <I>i</I>,<I>j</I> <I>S</I><SUB><I>ij</I></SUB> = total distortion
+measure between <I>x</I><SUB><I>i</I></SUB><SUP><I>i</I>+<I>j</I>-1</SUP> and <I>y<SUB>1</SUB></I><SUP><I>j</I></SUP>.
+<BR>
+<P><PRE><TT>
+<B>begin</B>
+		 Initialize all <I>S</I><SUB><I>ij</I></SUB> := 0.
+		 <B>for</B> <I>i</I>=1 <B>to</B> <I>n</I>-<I>m</I> <B>do</B>
+		 		 <B>for</B> <I>j</I>=1 <B>to</B> <I>m</I> <B>do</B>
+		 		 		 Compute <I>S</I><SUB><I>ij</I></SUB> := <I>S</I><SUB><I>i</I>,<I>j</I>-1</SUB> + <I>d</I>(<I>x</I><SUB><I>i</I>+<I>j</I>-1</SUB>, <I>y</I><SUB><I>j</I></SUB>)
+		 		 <B>doend</B>
+		  <B>doend</B>
+		  Let <I>k</I> be the largest <I>j</I> such that <IMG WIDTH="71" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img36.gif"
+ ALT="$S_{ij} \leq j D$">,         and let <I>t</I> be the corresponding <I>i</I>
+		  <B>Output</B> <I>k</I> and <I>t</I>
+<B>end</B>
+</TT></PRE>
+<P>
+The above can easily be modified to incorporate the enhancements
+discussed above (additive shift, etc.) and to use <I>O</I>(1) variables
+rather than the <I>S</I><SUB><I>ij</I></SUB> array.
+<BR>
+<P>
+In order to compress an <IMG WIDTH="55" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img37.gif"
+ ALT="$N\times N$"> image we apply <TT>PREFIX</TT> several
+times to compress a row, which we call <TT>COMPRESS_ROW</TT> algorithm,
+and this is further use to compress a whole image in either
+<TT>COMPRESS_LONG_DATABASE</TT> (where the database sequence is of
+multiplicity of <I>N</I>, i.e., <I>f N</I> where <I>f</I> is a small integer)
+or <TT>COMPRESS_SHORT_DATABASE</TT> (where the database sequence is
+of length <I>O</I>(1) but located just above the ``point'' of compression). 
+In the former case the algorithmic complexity of
+compression is <I>O</I>(<I>N<SUP>4</SUP></I>) while in the latter case it is <IMG WIDTH="92" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img38.gif"
+ ALT="$O(n^2\log N)$"> which
+is only <IMG WIDTH="44" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img39.gif"
+ ALT="$\log N$"> away from the optimal complexity <I>O</I>(<I>N<SUP>2</SUP></I>). 
+In this paper we only use <TT>COMPRESS_SHORT_DATABASE</TT> algorithm.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html33"
+ HREF="node3.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html31"
+ HREF="spa1.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html25"
+ HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html34"
+ HREF="node3.html">3 Review of DPCM</A>
+<B> Up:</B> <A NAME="tex2html32"
+ HREF="spa1.html">PATTERN MATCHING IMAGE COMPRESSION</A>
+<B> Previous:</B> <A NAME="tex2html26"
+ HREF="node1.html">1 Introduction</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

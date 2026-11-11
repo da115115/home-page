@@ -1,0 +1,352 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3 Review of DPCM</TITLE>
+<META NAME="description" CONTENT="3 Review of DPCM">
+<META NAME="keywords" CONTENT="spa1">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="spa1.css">
+<LINK REL="next" HREF="node4.html">
+<LINK REL="previous" HREF="node2.html">
+<LINK REL="up" HREF="spa1.html">
+<LINK REL="next" HREF="node4.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html43"
+ HREF="node4.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html41"
+ HREF="spa1.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html35"
+ HREF="node2.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html44"
+ HREF="node4.html">4 New Algorithm: PMIC</A>
+<B> Up:</B> <A NAME="tex2html42"
+ HREF="spa1.html">PATTERN MATCHING IMAGE COMPRESSION</A>
+<B> Previous:</B> <A NAME="tex2html36"
+ HREF="node2.html">2 Review of PMIC</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION00030000000000000000">
+3 Review of DPCM</A>
+</H1>
+<P>
+In the following, <I>x</I><SUB><I>i</I>,<I>j</I></SUB> = <I>x</I><SUB><I>m</I></SUB> stands for the color value of the pixel
+currently in position (<I>i</I>,<I>j</I>) = <I>m</I> in the <IMG WIDTH="55" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img37.gif"
+ ALT="$N\times N$"> pixels original
+image, and <IMG WIDTH="74" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img40.gif"
+ ALT="$\hat{x}_{i,j} = \hat{x}_m$"> is the color value of the ``predicted''
+(reconstructed) pixel of the reconstructed image. As seen in [<A
+ HREF="node5.html#rj">11</A>]
+and accordingly to Fig.&nbsp;<A HREF="node3.html#pred_cfg">2</A>, the configuration of the 2-D
+predictor is as following:
+<P>
+<BR>
+<DIV ALIGN="CENTER"><A NAME="pred_cfg">&#160;</A><A NAME="215">&#160;</A>
+<TABLE>
+<CAPTION><STRONG>Figure 2:</STRONG>
+DPCM predictor configuration.</CAPTION>
+<TR><TD><IMG WIDTH="459" HEIGHT="135"
+ SRC="img41.gif"
+ ALT="\begin{figure}
+ \centerline{
+ 
+\psfig {file=DPCM_predictor_config.epsi,width=4in,angle=-90}
+}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+<BR>
+<P><A NAME="x_def">&#160;</A>
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD></TD><TD ALIGN="CENTER" NOWRAP><A NAME="x_def">&#160;</A><IMG WIDTH="227" HEIGHT="27"
+ SRC="img42.gif"
+ ALT="\begin{displaymath}
+\hat{x}_m= 0.75A - 0.50B + 0.75C.\end{displaymath}"></TD>
+<TD ALIGN="CENTER">(2)</TD></TR>
+</TABLE>
+<P>
+where <I>x</I><SUB><I>m</I></SUB>= <I>x</I><SUB><I>i</I>,<I>j</I></SUB>, <IMG WIDTH="82" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img43.gif"
+ ALT="$A = \hat{x}_{i,j-1}$">, <IMG WIDTH="100" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img44.gif"
+ ALT="$B = \hat{x}_{i-1,j-1}$">, and
+<IMG WIDTH="82" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img45.gif"
+ ALT="$C = \hat{x}_{i-1,j}$">.
+<BR>
+<P>
+In the above, <I>e</I><SUB><I>m</I></SUB> stands for the error value between the original and the
+reconstructed pixels:
+<P>
+<TABLE WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE"><TD></TD><TD ALIGN="CENTER" NOWRAP><IMG WIDTH="115" HEIGHT="27"
+ SRC="img46.gif"
+ ALT="\begin{displaymath}
+e_m = x_m- \hat{x}_m.\end{displaymath}"></TD>
+<TD ALIGN="CENTER">(3)</TD></TR>
+</TABLE>
+<P>
+Finally, <IMG WIDTH="23" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img47.gif"
+ ALT="$e^{\star}_m$"> is the quantized value of <I>e</I><SUB><I>m</I></SUB>, as described in
+[<A
+ HREF="node5.html#rj">11</A>] from which Table&nbsp;<A HREF="node3.html#8_level_quantizer_t">1</A> is drawn.
+Then:
+<BR>
+<P><B>Algorithm</B> <TT>PREDICTION</TT>
+<BR>
+<B>Input:</B> <I>x</I><SUB><I>i</I>,<I>j</I></SUB> = <I>x</I><SUB><I>m</I></SUB>, <IMG WIDTH="82" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img48.gif"
+ ALT="$\hat{x}_{i,j-1} = A$">, <IMG WIDTH="100" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img49.gif"
+ ALT="$\hat{x}_{i-1,j-1} = B$">, and
+<IMG WIDTH="82" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img50.gif"
+ ALT="$\hat{x}_{i-1,j} = C$"> (see Fig.&nbsp;<A HREF="node3.html#pred_cfg">2</A>).
+<BR>
+<B>Output:</B> <IMG WIDTH="23" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img47.gif"
+ ALT="$e^{\star}_m$">.
+<BR>
+<B>Method:</B> We compute a first <IMG WIDTH="25" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img51.gif"
+ ALT="$\hat{x}_m$">, then <I>e</I><SUB><I>m</I></SUB> and
+<IMG WIDTH="23" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img47.gif"
+ ALT="$e^{\star}_m$">. Eventually, we update the value of <IMG WIDTH="25" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img51.gif"
+ ALT="$\hat{x}_m$">.
+<BR>
+<P><PRE><TT>
+<B>begin</B>
+		 Compute <IMG WIDTH="25" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img51.gif"
+ ALT="$\hat{x}_m$"> accordingly to Eq.&nbsp;<A HREF="node3.html#x_def">2</A>
+		 Clip <IMG WIDTH="25" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img51.gif"
+ ALT="$\hat{x}_m$"> to the range [0,255]
+		 Compute <IMG WIDTH="118" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img52.gif"
+ ALT="$e_m := x_m - \hat{x}_m$"> 
+		 Compute <IMG WIDTH="159" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img53.gif"
+ ALT="$e^{\star}_m:= Quantize (e_m)$"> 
+		 Upgrade <IMG WIDTH="25" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img51.gif"
+ ALT="$\hat{x}_m$"> by computing <IMG WIDTH="25" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img51.gif"
+ ALT="$\hat{x}_m$"> := <IMG WIDTH="67" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img54.gif"
+ ALT="$\hat{x}_m+ e^{\star}_m$"> 
+		 Clip <IMG WIDTH="25" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img51.gif"
+ ALT="$\hat{x}_m$"> to the range [0,255] 
+<B>end</B>
+</TT></PRE>
+<P>
+<BR>
+<DIV ALIGN="CENTER"><A NAME="8_level_quantizer_t">&#160;</A>
+<A NAME="249">&#160;</A>
+<TABLE CELLPADDING=3 BORDER="1" ALIGN="CENTER">
+<CAPTION><STRONG>Table 1:</STRONG>
+8-level Lloyd-Max quantizer for the ``Lena'' image.</CAPTION>
+<TR VALIGN="TOP"><TD ALIGN="CENTER" NOWRAP>i</TD>
+<TD ALIGN="CENTER" NOWRAP><IMG WIDTH="110" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img55.gif"
+ ALT="$(d_i,d_{i+1}) \rightarrow r_i$"></TD>
+<TD ALIGN="CENTER" NOWRAP>Probability</TD>
+<TD ALIGN="CENTER" NOWRAP>Huffman Code</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="CENTER" NOWRAP>&nbsp;</TD>
+<TD ALIGN="CENTER" NOWRAP>(-255,-16) <IMG WIDTH="20" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img56.gif"
+ ALT="$\rightarrow$"> -20</TD>
+<TD ALIGN="CENTER" NOWRAP>0.025</TD>
+<TD ALIGN="CENTER" NOWRAP>111111</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="CENTER" NOWRAP>1</TD>
+<TD ALIGN="CENTER" NOWRAP>(-16,-8) <IMG WIDTH="20" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img56.gif"
+ ALT="$\rightarrow$"> -11</TD>
+<TD ALIGN="CENTER" NOWRAP>0.047</TD>
+<TD ALIGN="CENTER" NOWRAP>11110</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="CENTER" NOWRAP>2</TD>
+<TD ALIGN="CENTER" NOWRAP>(-8,-4) <IMG WIDTH="20" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img56.gif"
+ ALT="$\rightarrow$"> -6</TD>
+<TD ALIGN="CENTER" NOWRAP>0.145</TD>
+<TD ALIGN="CENTER" NOWRAP>110</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="CENTER" NOWRAP>3</TD>
+<TD ALIGN="CENTER" NOWRAP>(-4,0) <IMG WIDTH="20" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img56.gif"
+ ALT="$\rightarrow$"> -2</TD>
+<TD ALIGN="CENTER" NOWRAP>0.278</TD>
+<TD ALIGN="CENTER" NOWRAP>00</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="CENTER" NOWRAP>4</TD>
+<TD ALIGN="CENTER" NOWRAP>(0,4) <IMG WIDTH="20" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img56.gif"
+ ALT="$\rightarrow$"> 2</TD>
+<TD ALIGN="CENTER" NOWRAP>0.283</TD>
+<TD ALIGN="CENTER" NOWRAP>10</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="CENTER" NOWRAP>5</TD>
+<TD ALIGN="CENTER" NOWRAP>(4,8) <IMG WIDTH="20" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img56.gif"
+ ALT="$\rightarrow$"> 6</TD>
+<TD ALIGN="CENTER" NOWRAP>0.151</TD>
+<TD ALIGN="CENTER" NOWRAP>01</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="CENTER" NOWRAP>6</TD>
+<TD ALIGN="CENTER" NOWRAP>(8,16) <IMG WIDTH="20" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img56.gif"
+ ALT="$\rightarrow$"> 11</TD>
+<TD ALIGN="CENTER" NOWRAP>0.049</TD>
+<TD ALIGN="CENTER" NOWRAP>1110</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="CENTER" NOWRAP>7</TD>
+<TD ALIGN="CENTER" NOWRAP>(16,255) <IMG WIDTH="20" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img56.gif"
+ ALT="$\rightarrow$"> 20</TD>
+<TD ALIGN="CENTER" NOWRAP>0.022</TD>
+<TD ALIGN="CENTER" NOWRAP>111110</TD>
+</TR>
+</TABLE>
+<BR>
+</DIV>
+<BR>
+<P>
+In fact, we add an offset of 128 to <IMG WIDTH="23" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img47.gif"
+ ALT="$e^{\star}_m$">, making all of the error
+values positive (for an 8-bit original) so that they can be printed on
+a output device. The error image for a perfectly reconstructed image
+is thus uniform gray field with a code value of 128.
+<P>
+<BR>
+<DIV ALIGN="CENTER"><A NAME="DPCM_block_diagram">&#160;</A><A NAME="254">&#160;</A>
+<TABLE>
+<CAPTION><STRONG>Figure 3:</STRONG>
+DPCM block diagram.</CAPTION>
+<TR><TD><IMG WIDTH="576" HEIGHT="339"
+ SRC="img57.gif"
+ ALT="\begin{figure}
+
+\psfig {file=DPCM_block_diagram.epsi,width=5in,angle=-90}\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+<BR>
+<P>
+The DPCM algorithm is summarized in Figure&nbsp;<A HREF="node3.html#DPCM_block_diagram">3</A>. We
+observe that it applies to every pixel of the image. That leads to the
+following algorithm:
+<BR>
+<P><B>Algorithm</B> <TT>PREDICTION_LOOP</TT>
+<BR>
+<B>Input:</B> <I>x</I><SUB><I>i</I>,<I>j</I></SUB> = <I>x</I><SUB><I>m</I></SUB>, for all <IMG WIDTH="123" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img58.gif"
+ ALT="$(0\leq i\leq N-1)$"> and <IMG WIDTH="125" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img59.gif"
+ ALT="$(0\leq
+j\leq N-1)$">.
+<BR>
+<B>Output:</B> <IMG WIDTH="23" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img47.gif"
+ ALT="$e^{\star}_m$">, for all <IMG WIDTH="123" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img58.gif"
+ ALT="$(0\leq i\leq N-1)$"> and <IMG WIDTH="125" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img59.gif"
+ ALT="$(0\leq
+j\leq N-1)$">.
+<BR>
+<B>Method:</B> We use <TT>PREDICTION</TT> to compute <IMG WIDTH="23" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img47.gif"
+ ALT="$e^{\star}_m$"> for each
+pixel.
+<PRE><TT>
+<B>begin</B>
+		 Initialize <IMG WIDTH="71" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img60.gif"
+ ALT="$\hat{x}_m= x_m$"> and <IMG WIDTH="69" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img61.gif"
+ ALT="$e^{\star}_m= x_m$"> for all <IMG WIDTH="123" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img58.gif"
+ ALT="$(0\leq i\leq N-1)$"> and <I>j</I>=0.
+		 <B>for</B> <I>j</I>=1 <B>to</B> <I>N</I>-1 <B>do</B>
+		 		 <B>for</B> <I>i</I>=0 <B>to</B> <I>N</I>-1 <B>do</B>
+		 		 		 <B>Call</B> <TT>PREDICTION</TT> on <I>x</I><SUB><I>i</I>,<I>j</I></SUB> = <I>x</I><SUB><I>m</I></SUB>, <IMG WIDTH="82" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img48.gif"
+ ALT="$\hat{x}_{i,j-1} = A$">, <IMG WIDTH="100" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img49.gif"
+ ALT="$\hat{x}_{i-1,j-1} = B$">, and
+		 		 		 <IMG WIDTH="82" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img50.gif"
+ ALT="$\hat{x}_{i-1,j} = C$"> (see Fig.&nbsp;<A HREF="node3.html#pred_cfg">2</A>).
+		 		 <B>doend</B>
+		  <B>doend</B> 
+<B>end</B>
+</TT></PRE>
+<P>
+From Figure &nbsp;<A HREF="node3.html#DPCM_block_diagram">3</A> one concludes that the prediction
+(reconstructed pixel) <IMG WIDTH="25" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img51.gif"
+ ALT="$\hat{x}_m$"> for the transmitter is exactly the same as the
+one used by the receiver. They both need, and only need, the quantized
+difference <IMG WIDTH="23" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img47.gif"
+ ALT="$e^{\star}_m$">. The transmitter puts this difference in a file, whereas
+the receiver reads this difference from the file.
+<BR>
+<P>
+Finally, <IMG WIDTH="23" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img47.gif"
+ ALT="$e^{\star}_m$">, which is the quantized difference for each pixel, and the
+whole picture (formed with these quantized differences) is compressed with
+Huffman code.
+<P><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html43"
+ HREF="node4.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html41"
+ HREF="spa1.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html35"
+ HREF="node2.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html44"
+ HREF="node4.html">4 New Algorithm: PMIC</A>
+<B> Up:</B> <A NAME="tex2html42"
+ HREF="spa1.html">PATTERN MATCHING IMAGE COMPRESSION</A>
+<B> Previous:</B> <A NAME="tex2html36"
+ HREF="node2.html">2 Review of PMIC</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

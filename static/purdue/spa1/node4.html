@@ -1,0 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4 New Algorithm: PMIC with DPCM</TITLE>
+<META NAME="description" CONTENT="4 New Algorithm: PMIC with DPCM">
+<META NAME="keywords" CONTENT="spa1">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="spa1.css">
+<LINK REL="next" HREF="node5.html">
+<LINK REL="previous" HREF="node3.html">
+<LINK REL="up" HREF="spa1.html">
+<LINK REL="next" HREF="node5.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html53"
+ HREF="node5.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html51"
+ HREF="spa1.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html45"
+ HREF="node3.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html54"
+ HREF="node5.html">References</A>
+<B> Up:</B> <A NAME="tex2html52"
+ HREF="spa1.html">PATTERN MATCHING IMAGE COMPRESSION</A>
+<B> Previous:</B> <A NAME="tex2html46"
+ HREF="node3.html">3 Review of DPCM</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION00040000000000000000">
+4 New Algorithm: PMIC with DPCM</A>
+</H1>
+<P>
+Like in Huffman compression (the compression part of DPCM), the PMIC
+compression algorithm should be performed on the quantized differential
+image. However, the algorithms seen above are well adapted to Huffman
+coding, because they deal on a pixel-by-pixel basis. Unfortunately, the
+PMIC algorithm, proceeds several pixels at a time (i.e., the longest prefix
+found in the database). Besides, we do not know in advance what the length
+of this prefix will be. But, there is a way around all of those problems.
+In fact, if we consider the <TT>PREDICTION</TT> algorithm to be performed, not
+on a pixel basis, but on a cell (which is, in the case of DPCM, one single
+pixel) basis, then this algorithm needs just a few adaptations in order to
+be suited for PMIC: in this latter, the cell becomes naturally the longest
+prefix found in the database.
+<BR>
+<P>
+These considerations lead to the algorithms given below, which should
+replace the <TT>PREFIX</TT> and <TT>COMPRESS_ROW</TT> algorithms 
+for more detail) respectively:
+<BR>
+<P><B>Algorithm</B> <TT>DIFFERENTIAL_PREFIX</TT>
+<BR>
+<B>Input:</B> <IMG WIDTH="21" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img62.gif"
+ ALT="$\hat{x}_1^n$">, <I>ex<SUB>1</SUB></I><SUP><I>n</I></SUP> (where <I>n</I>=<I>fN</I>), and <I>y<SUB>1</SUB></I><SUP><I>N</I></SUP>
+<BR>
+<B>Output:</B> Largest integer <I>k</I> such that, for some index <I>t</I> (<IMG WIDTH="112" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img63.gif"
+ ALT="$1
+\leq t \leq n-N$">), <IMG WIDTH="155" HEIGHT="36" ALIGN="MIDDLE" BORDER="0"
+ SRC="img64.gif"
+ ALT="$d ( ex_t^{t+k-1} , ey_1^k ) \leq D$">. The algorithm
+outputs both <I>k</I> and <I>t</I>, as well as <IMG WIDTH="24" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img65.gif"
+ ALT="$\hat{y}_1^N$"> and <I>ey<SUB>1</SUB></I><SUP><I>N</I></SUP>, both
+returned by the call to the <TT>PREDICTION_LOOP</TT> algorithm.
+<BR>
+<B>Method:</B> We first use <TT>PREDICTION_LOOP</TT> to form a
+differential row, then we compute, for all <I>i</I>,<I>j</I>, <I>S</I><SUB><I>ij</I></SUB> = total
+distortion measure between <I>ex</I><SUB><I>i</I></SUB><SUP><I>i</I>+<I>j</I>-1</SUP> and <I>ey<SUB>1</SUB></I><SUP><I>j</I></SUP>.
+<PRE><TT>
+<B>begin</B>
+		 <B>Call</B> <TT>PREDICTION_LOOP</TT> on <I>x<SUB>1</SUB></I><SUP><I>N</I></SUP>
+		 Let <IMG WIDTH="24" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img65.gif"
+ ALT="$\hat{y}_1^N$"> and <I>ey<SUB>1</SUB></I><SUP><I>N</I></SUP> be returned by this call to <TT>PREDICTION_LOOP</TT>.
+		 Initialize all <I>S</I><SUB><I>ij</I></SUB> := 0.
+		 <B>for</B> <I>i</I>=1 <B>to</B> <I>n</I>-<I>N</I> <B>do</B>
+		 		 <B>for</B> <I>j</I>=1 <B>to</B> <I>N</I> <B>do</B>
+		 		 		 Compute <I>S</I><SUB><I>ij</I></SUB> := <I>S</I><SUB><I>i</I>,<I>j</I>-1</SUB> + <I>d</I>(<I>ex</I><SUB><I>i</I>+<I>j</I>-1</SUB>, <I>ey</I><SUB><I>j</I></SUB>)
+		 		 <B>doend</B>
+		  <B>doend</B>
+		  Let <I>k</I> be the largest <I>j</I> such that <IMG WIDTH="71" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img36.gif"
+ ALT="$S_{ij} \leq j D$">, and let <I>t</I> be the corresponding <I>i</I>
+		  <B>Output</B> <I>k</I> and <I>t</I>
+<B>end</B>
+</TT></PRE>
+<P>
+One should note that the <TT>PREDICTION_LOOP</TT> algorithm is here used
+on generally more pixels than needed, since it is used on <I>N</I> pixels,
+and that the longest prefix will have a size <IMG WIDTH="37" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img66.gif"
+ ALT="$\leq N$">.
+<BR>
+<P><B>Algorithm</B> <TT>COMPRESS_DIFFERENTIAL_ROW</TT>
+<BR>
+<B>Input:</B> <IMG WIDTH="21" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img62.gif"
+ ALT="$\hat{x}_1^n$">, <I>ex<SUB>1</SUB></I><SUP><I>n</I></SUP> (where <I>n</I>=<I>fN</I>), <I>y<SUB>1</SUB></I><SUP><I>N</I></SUP>.
+<BR>
+<B>Output:</B> A compressed version of <I>ey<SUB>1</SUB></I><SUP><I>N</I></SUP>, in the form of
+(<I>pointer</I>,<I>length</I>) pairs, and the new reconstructed portion,
+<IMG WIDTH="24" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img65.gif"
+ ALT="$\hat{y}_1^N$">, of the database.
+<BR>
+<B>Method:</B> We use <TT>PREFIX</TT> to ``peel off'' a prefix
+of the row being compressed, and repeat on the remaining
+portion of that row until we use it all up.
+<PRE><TT>
+<B>begin</B>
+		 Initialize <I>i</I> := 0.
+		 <B>Repeat</B> the following <B>until</B> <IMG WIDTH="48" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img67.gif"
+ ALT="$i \geq N$"> 
+		 		 <B>Call</B> <TT>PREFIX</TT> on <IMG WIDTH="21" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img62.gif"
+ ALT="$\hat{x}_1^n$">, <I>ex<SUB>1</SUB></I><SUP><I>n</I></SUP> and <I>y</I><SUB><I>i</I>+1</SUB><SUP><I>N</I></SUP> 
+		 		 Let <I>k</I> and <I>t</I>, <IMG WIDTH="34" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img68.gif"
+ ALT="$\hat{y}_{i+1}^N$"> and <I>ey</I><SUB><I>i</I>+1</SUB><SUP><I>N</I></SUP>, be returned by this call to <TT>PREFIX</TT>
+		 		 <B>If</B> <I>k</I> is small (say, <IMG WIDTH="30" HEIGHT="26" ALIGN="MIDDLE" BORDER="0"
+ SRC="img69.gif"
+ ALT="$\leq 4$">)		 		 <B>then</B> <I>ey</I><SUB><I>i</I>+1</SUB><SUP><I>i</I>+<I>k</I></SUP> is stored explicitly,
+		 		 <B>else</B> <I>ey</I><SUB><I>i</I>+1</SUB><SUP><I>i</I>+<I>k</I></SUP> is stored as a (<I>pointer</I>,<I>length</I>) pair,
+		 		 Compute <IMG WIDTH="157" HEIGHT="36" ALIGN="MIDDLE" BORDER="0"
+ SRC="img70.gif"
+ ALT="$\hat{y}_{i+1}^{i+k} := \hat{y}_{i+1}^{i+k} +
+ ey_{i+1}^{i+k}$"> (addition of vectors).
+		 		 Set <I>i</I> := <I>i</I>+<I>k</I>
+<B>end</B>
+</TT></PRE>
+<P>
+We have used here the notation <I>ex</I> and <I>ey</I> for <I>x</I> and <I>y</I>, as they
+are understood in the <TT>COMPRESS_ROW</TT> algorithm of [<A
+ HREF="node5.html#ags">2</A>] and
+discussed briefly above, except that what
+is now compressed is the quantized differential image, whence the <I>e</I>
+before <I>x</I> and <I>y</I>. Therefore, <IMG WIDTH="21" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img62.gif"
+ ALT="$\hat{x}_1^n$"> represents the reconstructed
+(``predicted'') database (and is, in fact, the image as it will be
+again after decompression); <I>ex<SUB>1</SUB></I><SUP><I>n</I></SUP> means the database of the
+differential image (image actually being compressed); <I>y<SUB>1</SUB></I><SUP><I>N</I></SUP> is the
+currently processed row of the original image; <I>ey<SUB>1</SUB></I><SUP><I>N</I></SUP> is the
+``differential'' row currently being compressed, that is, the
+differential pendant of <I>y<SUB>1</SUB></I><SUP><I>N</I></SUP>; and <IMG WIDTH="24" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img65.gif"
+ ALT="$\hat{y}_1^N$"> is the new portion of
+the reconstructed (``predicted'') database. Thus, <IMG WIDTH="12" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img71.gif"
+ ALT="$\hat{y}$"> leads to
+<IMG WIDTH="13" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img72.gif"
+ ALT="$\hat{x}$">, and <I>ey</I> gives <I>ex</I>.
+<P>
+<BR>
+<DIV ALIGN="CENTER">
+<A NAME="355">&#160;</A>
+<TABLE CELLPADDING=3 BORDER="1" ALIGN="CENTER">
+<CAPTION><STRONG>Table 2:</STRONG>
+``Lena'' image compressed by JPEG (quality=57), PMIC with
+constant <I>D</I> (D = 155, DD = 20), PMIC with variable <I>D</I>
+(D1 = 500, D2 = 55, DD = 22), and PMIC-PL (D1 = 600, D2 = 50, DD = 16).</CAPTION>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>&nbsp;</TD>
+<TD ALIGN="CENTER" NOWRAP>JPEG</TD>
+<TD ALIGN="CENTER" NOWRAP>Const D</TD>
+<TD ALIGN="CENTER" NOWRAP>Var D</TD>
+<TD ALIGN="CENTER" NOWRAP>PMIC-PL</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>Compression ratio</TD>
+<TD ALIGN="CENTER" NOWRAP>10.03</TD>
+<TD ALIGN="CENTER" NOWRAP>9.99</TD>
+<TD ALIGN="CENTER" NOWRAP>10.01</TD>
+<TD ALIGN="CENTER" NOWRAP>10.04</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>Bit rate (bits/pixel)</TD>
+<TD ALIGN="CENTER" NOWRAP>0.8</TD>
+<TD ALIGN="CENTER" NOWRAP>0.8</TD>
+<TD ALIGN="CENTER" NOWRAP>0.8</TD>
+<TD ALIGN="CENTER" NOWRAP>0.8</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>RMSE (0-255)</TD>
+<TD ALIGN="CENTER" NOWRAP>4.65</TD>
+<TD ALIGN="CENTER" NOWRAP>8.90</TD>
+<TD ALIGN="CENTER" NOWRAP>8.44</TD>
+<TD ALIGN="CENTER" NOWRAP>15.97</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>PSNR (dB)</TD>
+<TD ALIGN="CENTER" NOWRAP>34.78</TD>
+<TD ALIGN="CENTER" NOWRAP>29.14</TD>
+<TD ALIGN="CENTER" NOWRAP>29.61</TD>
+<TD ALIGN="CENTER" NOWRAP>24.06</TD>
+</TR>
+</TABLE></DIV>
+<BR>
+<P>
+<BR>
+<DIV ALIGN="CENTER">
+<A NAME="363">&#160;</A>
+<TABLE CELLPADDING=3 BORDER="1" ALIGN="CENTER">
+<CAPTION><STRONG>Table 3:</STRONG>
+``Basselope'' image compressed by JPEG (quality=57), PMIC with
+constant <I>D</I> (D = 800, DD = 38), PMIC with variable <I>D</I>
+(D1 = 800, D2 = 100, DD = 39), and PMIC-PL (D1 = 1000, D2 = 45, DD = 15).</CAPTION>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>&nbsp;</TD>
+<TD ALIGN="CENTER" NOWRAP>JPEG</TD>
+<TD ALIGN="CENTER" NOWRAP>Const D</TD>
+<TD ALIGN="CENTER" NOWRAP>Var D</TD>
+<TD ALIGN="CENTER" NOWRAP>PMIC-PL</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>Compression ratio</TD>
+<TD ALIGN="CENTER" NOWRAP>9.96</TD>
+<TD ALIGN="CENTER" NOWRAP>10.04</TD>
+<TD ALIGN="CENTER" NOWRAP>10.04</TD>
+<TD ALIGN="CENTER" NOWRAP>9.96</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>Bit rate (bits/pixel)</TD>
+<TD ALIGN="CENTER" NOWRAP>0.8</TD>
+<TD ALIGN="CENTER" NOWRAP>0.8</TD>
+<TD ALIGN="CENTER" NOWRAP>0.8</TD>
+<TD ALIGN="CENTER" NOWRAP>0.8</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>RMSE (0-255)</TD>
+<TD ALIGN="CENTER" NOWRAP>9.07</TD>
+<TD ALIGN="CENTER" NOWRAP>12.22</TD>
+<TD ALIGN="CENTER" NOWRAP>8.44</TD>
+<TD ALIGN="CENTER" NOWRAP>78.89</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>PSNR (dB)</TD>
+<TD ALIGN="CENTER" NOWRAP>28.97</TD>
+<TD ALIGN="CENTER" NOWRAP>26.39</TD>
+<TD ALIGN="CENTER" NOWRAP>29.61</TD>
+<TD ALIGN="CENTER" NOWRAP>10.19</TD>
+</TR>
+</TABLE></DIV>
+<BR>
+<P>
+<BR>
+<P>
+<P>
+<DIV ALIGN="CENTER">
+<A NAME="371">&#160;</A>
+<TABLE CELLPADDING=3 BORDER="1" ALIGN="CENTER">
+<CAPTION><STRONG>Table 4:</STRONG>
+``Lena'' image compressed by JPEG (quality=21), PMIC with
+constant <I>D</I> (D = 400, DD = 38), PMIC with variable <I>D</I> 
+( D1 = 500, D2 = 55, DD = 22), and PMIC-PL (D1 = 600, D2 = 50, DD = 16).</CAPTION>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>&nbsp;</TD>
+<TD ALIGN="CENTER" NOWRAP>JPEG</TD>
+<TD ALIGN="CENTER" NOWRAP>Const D</TD>
+<TD ALIGN="CENTER" NOWRAP>Var D</TD>
+<TD ALIGN="CENTER" NOWRAP>PMIC-PL</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>Compression ratio</TD>
+<TD ALIGN="CENTER" NOWRAP>10.03</TD>
+<TD ALIGN="CENTER" NOWRAP>10.00</TD>
+<TD ALIGN="CENTER" NOWRAP>9.95</TD>
+<TD ALIGN="CENTER" NOWRAP>10.02</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>Bit rate (bits/pixel)</TD>
+<TD ALIGN="CENTER" NOWRAP>0.8</TD>
+<TD ALIGN="CENTER" NOWRAP>0.8</TD>
+<TD ALIGN="CENTER" NOWRAP>0.8</TD>
+<TD ALIGN="CENTER" NOWRAP>0.8</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>RMSE (0-255)</TD>
+<TD ALIGN="CENTER" NOWRAP>7.96</TD>
+<TD ALIGN="CENTER" NOWRAP>13.92</TD>
+<TD ALIGN="CENTER" NOWRAP>12.87</TD>
+<TD ALIGN="CENTER" NOWRAP>20.41</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>PSNR (dB)</TD>
+<TD ALIGN="CENTER" NOWRAP>30.11</TD>
+<TD ALIGN="CENTER" NOWRAP>25.26</TD>
+<TD ALIGN="CENTER" NOWRAP>25.94</TD>
+<TD ALIGN="CENTER" NOWRAP>21.94</TD>
+</TR>
+</TABLE></DIV>
+<BR>
+<P>
+Finally, we present some experimental results. We summarize them in Tables
+2--4 where JPEG, PMIC with constant and variable <I>D</I>, and PMIC-PL (PMIC
+with Prediction Loop) are compared for three images, namely: ``Lena''
+image, ``Basselope'' image (a graphic image) and ``San Francisco'' image (a
+photographic image).  We conclude that prediction, as discussed in Section
+2, can lead to substantial speed up of compression time, butter compression
+time without significant deterioration of image quality. More sophisticated
+PMIC-PL cna lead to further improvements, as our preliminary results
+suggest. However, results in Tables 2-4 are, in fact, worse than
+expected. We believe they originate from the fact that we use variable-D
+scheme which seems to be unsuited for the predictive loop (the derivative
+is actually done on the original image, and not on the differential image,
+as it should be). This might be an interesting point further research
+(<EM>i.e.</EM>, to implement a good derivative scheme on the differential image).
+Then, we believe we can achieve much more substantial improvements. This
+will be reported in our journal version of this paper.
+<P><SMALL>
+<P></SMALL><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html53"
+ HREF="node5.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<A NAME="tex2html51"
+ HREF="spa1.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif.gif"></A> 
+<A NAME="tex2html45"
+ HREF="node3.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif.gif"></A>   
+<BR>
+<B> Next:</B> <A NAME="tex2html54"
+ HREF="node5.html">References</A>
+<B> Up:</B> <A NAME="tex2html52"
+ HREF="spa1.html">PATTERN MATCHING IMAGE COMPRESSION</A>
+<B> Previous:</B> <A NAME="tex2html46"
+ HREF="node3.html">3 Review of DPCM</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

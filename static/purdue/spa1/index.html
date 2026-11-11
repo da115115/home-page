@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>PATTERN MATCHING IMAGE COMPRESSION (PMIC)</TITLE>
+<META NAME="description" CONTENT="PATTERN MATCHING IMAGE COMPRESSION (PMIC)">
+<META NAME="keywords" CONTENT="spa1">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="spa1.css">
+<LINK REL="next" HREF="node1.html">
+</HEAD>
+<BODY BODY BGCOLOR="#FFFFE8" LINK="#7B68EE" VLINK="#A9A9A9">
+<!--Navigation Panel-->
+<A NAME="tex2html8"
+ HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif_gr.gif"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif_gr.gif">   
+<BR>
+<B> Next:</B> <A NAME="tex2html9"
+ HREF="node1.html">1 Introduction</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<P>
+<DIV ALIGN="CENTER">
+<B>PATTERN MATCHING IMAGE COMPRESSION <BR>
+WITH PREDICATION LOOP:
+<BR>
+Preliminary Experimental Results</B>
+</DIV>
+<P><TABLE CELLPADDING=3>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>Denis Arnaud</TD>
+<TD></TD>
+<TD ALIGN="LEFT" NOWRAP>Wojciech Szpankowski<A NAME="tex2html1"
+HREF="footnode.html#fnm"><SUP><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="/latex2html/icons.gif/foot_motif.gif"></SUP></A></TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>ENST</TD>
+<TD></TD>
+<TD ALIGN="LEFT" NOWRAP>Department of Computer Science</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>46 Rue Barrault</TD>
+<TD></TD>
+<TD ALIGN="LEFT" NOWRAP>Purdue University</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>75013 Paris</TD>
+<TD></TD>
+<TD ALIGN="LEFT" NOWRAP>W. Lafayette, IN 47907</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP>France</TD>
+<TD></TD>
+<TD ALIGN="LEFT" NOWRAP>U.S.A.</TD>
+</TR>
+<TR VALIGN="TOP"><TD ALIGN="LEFT" NOWRAP><TT>darnaud@email.enst.fr</TT></TD>
+<TD></TD>
+<TD ALIGN="LEFT" NOWRAP><TT>spa@cs.purdue.edu</TT></TD>
+</TR>
+</TABLE>
+<P>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<P>
+<DIV ALIGN="CENTER"><B>Abstract</B>
+<BR>
+</DIV>
+<P>
+Recently, a novel image compression technique based on pattern matching was
+proposed, namely <I>Pattern Matching Image Compression</I> (PMIC).
+Basically, it is a lossy extension of the well known Lempel-Ziv scheme. It
+was proved that such an extension leads to a suboptimal compression, and
+that the compression ratio can as low as the so called R&#233;nyi entropy.
+Success of PMIC crucially depends on several enhancements such as searching
+for reverse approximate matching, recognizing substrings in images that are
+additively shifted versions of each other, introducing a variable and
+adaptive maximum distortion level, and so forth. In this paper, we
+introduce another enhancement, namely, predictive coding.  More precisely,
+we implement <I>Differential Predictive Code Modulation</I> (DPCM) within
+PMIC scheme. We report here some preliminary experimental results which
+show that PMIC enhanced by DPCM can improve compression ratio for good
+quality images as well as speed of compression for PMIC.
+<P><A NAME="tex2html1"
+ HREF="http://denis.arnaud.free.fr/purdue/spa1.ps.gz">A Postscript version is also
+  available here.</A>
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS">&#160;</A>
+<UL>
+<LI><A NAME="tex2html10"
+ HREF="node1.html#SECTION00010000000000000000">
+1 Introduction</A>
+<LI><A NAME="tex2html11"
+ HREF="node2.html#SECTION00020000000000000000">
+2 Review of PMIC</A>
+<LI><A NAME="tex2html12"
+ HREF="node3.html#SECTION00030000000000000000">
+3 Review of DPCM</A>
+<LI><A NAME="tex2html13"
+ HREF="node4.html#SECTION00040000000000000000">
+4 New Algorithm: PMIC with DPCM</A>
+<LI><A NAME="tex2html14"
+ HREF="node5.html#SECTION00050000000000000000">
+References</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html8"
+ HREF="node1.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/latex2html/icons.gif/next_motif.gif"></A> 
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/latex2html/icons.gif/up_motif_gr.gif"> 
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/latex2html/icons.gif/previous_motif_gr.gif">   
+<BR>
+<B> Next:</B> <A NAME="tex2html9"
+ HREF="node1.html">1 Introduction</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Denis Arnaud</I>
+<BR><I>11/19/1997</I>
+</ADDRESS>
+</BODY>
+</HTML>

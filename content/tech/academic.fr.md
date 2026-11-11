@@ -13,9 +13,11 @@ Archives et publications de mes travaux académiques et mémoires de recherche :
 - **Domaine** : Systèmes distribués, traitement transactionnel, intergiciels CORBA et intégration Java d'entreprise.
 - [Consulter le document d'archive original (Texte intégral)](/cotransit/RapportStageEurecom.txt)
 
-### 2. Purdue University
-- Travaux de recherche et modélisation en optimisation et traitement du signal.
-- [Consulter le rapport de recherche](/purdue/)
+### 2. Purdue University (1996)
+- **Sujet** : *Pattern Matching Image Compression with Prediction Loop*
+- **Auteurs** : Denis Arnaud, Wojciech Szpankowski (Department of Computer Science, Purdue University)
+- **Domaine** : Compression d'images par appariement de motifs (PMIC / Lempel-Ziv), modulation différentielle DPCM, théorie de l'information (Travaux soutenus par la NSF).
+- [Consulter le rapport de recherche (PDF)](/purdue/spa1.pdf) • [Version Web interactive](/purdue/spa1/) • [Dossier complet & sources](/purdue/)
 
 ### 3. Autres publications & rapports techniques
 - Documents historiques, benchmarks et monographies de projets accessibles dans l'archive du site :

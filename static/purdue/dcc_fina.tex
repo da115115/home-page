@@ -1,0 +1,156 @@
+\documentstyle[11pt]{article}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewcommand{\baselinestretch}{1.0}
+\newenvironment{comment}{\setbox0=\vbox\bgroup}{\egroup}
+\newcommand{\con}{\rightarrow}
+\newcommand{\cd}{\mbox{$\stackrel{d}{\rightarrow}$}}
+\newcommand{\ep}{\varepsilon}
+\newenvironment{singlespace}{\def\baselinestretch{1.0}\large\normalsize}{\par}
+\pagestyle{empty}
+\setlength{\textheight}{9.2in}
+\setlength{\textwidth}{6.15in}
+\def\basswidth{3.413in}
+\def\gutter{0.5in}
+\def\noi{\noindent}
+\def\eod{\vrule height 6pt width 5pt depth 0pt}
+\def\parsec{\par\noindent}
+\def\big{\bigskip\parsec}
+\def\med{\medskip\parsec}
+\def\pr{{\rm Pr}}
+\def\l{\ell}
+\def\A{{\cal A}}
+\def\kk{\kappa}
+\def\W{\A}
+\def\X{\{X_k\}}
+\def\Wk{{\A_{k}}}
+\def\eps{\varepsilon}
+\def\B{{\cal B}}
+\def\TB{\widetilde{\B}}
+\def\F{{\cal F}}
+\def\S{{\cal S}}
+\def\G{{\cal G}}
+\def\TG{\widetilde{\G}}
+\def\P{{\cal P}}
+\def\tx{\hat{x}}
+\def\HX{\hat{X}}
+\def\tb{\widetilde{B}}
+\def\tw{\widetilde{\W}}
+\def\TX{\widetilde{X}}
+\def\pmin{P_{\min}}
+\def\lf{\lfloor}
+\def\rf{\rfloor}
+\def\lb{L_n^{(b)}}
+\def\hb{H_n^{(b)}}
+\def\sb{s_n^{(b)}}
+\def\O{{\cal O}}
+\def\var{{\rm Var~}}
+\def\cov{{\rm Cov}}
+\def\J{{\cal J}}
+\def\I{{\cal I}}
+\def\ow{\overline{w}}
+\def\ta{{\widetilde{a}}}
+\def\real{{I \!\! R}}
+\def\h{\hat}
+\def\D{{\cal D}}
+
+\vsize=9.05in
+\voffset=-0.9in
+\hoffset=-0.35in
+
+
+\begin{document}
+\noi
+{\bf PATTERN~MATCHING~IMAGE~COMPRESSION~WITH~PREDICATION~LOOP}
+\med
+%\begin{tabular}{l@{\hspace{2.2in}}l}
+\begin{tabular}{ll}
+Denis Arnaud&Wojciech Szpankowski\footnotemark\\
+%ENST& Department of Computer Science\\
+Ecole Nationale Sup\'{e}rieure des T\'{e}l\'{e}communications&Department of Computer Science\\
+46 Rue Barrault&Purdue University\\
+75013 Paris&W. Lafayette, IN 47907\\
+France&U.S.A.\\
+%{\tt darnaud@email.enst.fr}& {\tt spa@cs.purdue.edu}
+\end{tabular}
+\footnotetext{ This work was supported by NSF Grants NCR-9415491
+and CCR-9201078.}
+\par
+\bigskip
+Recently, Atallah, Genin and Szpankowski \cite{ags} (cf. also \cite{cs})
+introduced a novel image compression technique based on
+pattern matching, namely {\it Pattern Matching Image Compression}
+(PMIC). Basically, it is a lossy extension of the  well known
+Lempel-Ziv scheme in which one searches for the
+longest prefix of an uncompressed image that {\it approximately}
+occurs in the already processed image.
+It was proved
+that such an extension leads to a suboptimal compression. 
+Success of PMIC crucially depends on several enhancements such as
+searching for reverse approximate matching, recognizing substrings in
+images that are additively shifted versions of each other, introducing
+a variable and adaptive maximum distortion level, and so forth.
+Here, we introduce another enhancement, namely, predictive coding.
+More importantly, we implement {\it Differential Predictive Code Modulation}
+(DPCM) within PMIC. 
+
+More precisely, the PMIC compression algorithm with prediction loop 
+should be performed on the quantized differential image on a 
+pixel-by-pixel basis. 
+Unfortunately, the PMIC algorithm,
+proceeds several pixels at a time (i.e., the longest prefix
+found in the database). 
+But, we can consider a prediction loop algorithm that works
+on a cell where the cell in PMIC becomes naturally the longest prefix 
+found in the database.
+
+The table below presents a comparison between JPEG, PMIC with constant and
+variable distortion level $D$, and PMIC-PL (with prediction loop).
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|} \hline
+``{\bf Lena}''& JPEG & Const D & Var D & PMIC-PL\\ \hline
+Compression ratio & 10.03 & 9.99 & 10.01 & 10.04\\ \hline
+Bit rate (bits/pixel) & 0.8 & 0.8 & 0.8 & 0.8\\ \hline
+RMSE (0-255) & 4.65 & 8.90 & 8.44 & 15.97\\ \hline
+PSNR (dB) & 34.78 & 29.14 & 29.61 & 24.06\\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+We conclude that prediction gives
+some speed up in compression time, better compression ratio  
+without significant deterioration of image quality, while a more
+sophisticated PMIC-PL has the same time complexity as the original PMIC and
+should lead to further improvements in compression. 
+However,  the above results
+are worse than expected. We believe they originate from
+the fact that we use variable-D scheme which seems to be unsuited
+for the predictive loop
+(the derivative is actually done on the original image, and not
+on the differential image). 
+For details see \cite{as}.
+
+\footnotesize
+
+\begin{thebibliography}{99}
+\bibitem{as}
+D. Arnaud and W. Szpankowski,
+Pattern Matching Image Compression with Prediction Loop,
+%Preliminary Experimental Results,
+Purdue University, CSD-TR-96-069, 1996;
+also {\tt http://www.cs.purdue.edu/people/spa}.
+\bibitem{ags}
+M. Atallah, Y. Genin, and W. Szpankowski,
+A Pattern Matching Approach to Image Compression,
+{\it Proc. International Conference on Image Processing}, vol. II,  349-352,
+Lausanne (1996). 
+%full version Purdue University, CSD-TR-95-083 (1995) or
+%also {\tt http://www.cs.purdue.edu/people/spa}.
+\bibitem{cs}
+C. Constantinescu and J. Storer,
+Improved Techniques for Single-Pass Adaptive Vector
+Quantization, {\it Proc. of the IEEE}, 82, 933-939 (1994).
+\end{thebibliography}
+
+\end{document}
+
