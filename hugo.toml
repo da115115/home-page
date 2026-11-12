@@ -24,6 +24,7 @@ enableRobotsTXT = true
 
 [params]
   author = 'Denis Arnaud'
+  googleTag = 'GTM-53FZNFBB'
   github = 'https://github.com/da115115'
   linkedin = 'https://www.linkedin.com/in/da115/'
   x = 'https://x.com/da115115'
