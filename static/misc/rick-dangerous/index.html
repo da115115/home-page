@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-53FZNFBB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+</script>
+  <meta charset="utf-8">
+  <title>Rick Dangerous (1989) — Denis Arnaud</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .game-container {
+      max-width: 740px;
+      margin: 1.5rem auto;
+      padding: 1.25rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+    .header-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    canvas {
+      background: #000;
+      border: 3px solid #64748b;
+      border-radius: 6px;
+      max-width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+    }
+    .controls-panel {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      justify-content: center;
+      width: 100%;
+    }
+    .btn {
+      background: #d97706;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #f59e0b; transform: translateY(-1px); }
+    .btn.secondary { background: #334155; color: #f8fafc; }
+    .btn.secondary:hover { background: #475569; }
+    .help-box {
+      margin-top: 1rem;
+      padding: 0.85rem 1.2rem;
+      background: #0f172a;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      width: 100%;
+    }
+    .help-box strong { color: #f8fafc; }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="header-row">
+      <div>
+        <h1 style="margin: 0; font-size: 1.5rem; color: #f59e0b; letter-spacing: 1px;">Rick Dangerous (1989)</h1>
+        <p style="margin: 0.25rem 0 0 0; color: #94a3b8; font-size: 0.85rem;">Temple aztèque, rocher géant & pièges mortels • Hommage Core Design</p>
+      </div>
+    </div>
+
+    <canvas id="rickCanvas" width="560" height="420"></canvas>
+
+    <div class="controls-panel">
+      <button class="btn" onclick="togglePause()" id="pauseBtn">⏸ Pause</button>
+      <button class="btn secondary" onclick="restartGame()">🔄 Nouvelle Partie</button>
+      <a href="/misc/" class="btn secondary">🎮 Hub Jeux</a>
+    </div>
+
+    <div class="help-box">
+      <strong>Contrôles :</strong>
+      <span style="margin-left: 0.5rem;">[← / → / Q / D] Marcher • [↑ / Z / ESPACE] Sauter • [↓ / S] S'accroupir • [X] Tirer au pistolet • [C] Poser un bâton de dynamite</span>
+    </div>
+  </div>
+
+  <script>
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let actx = null;
+    function initAudio() { if (!actx) actx = new AudioCtx(); }
+
+    function playTone(type) {
+      if (!actx) return;
+      const now = actx.currentTime;
+      const osc = actx.createOscillator();
+      const gain = actx.createGain();
+      osc.connect(gain);
+      gain.connect(actx.destination);
+
+      if (type === 'jump') {
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(150, now);
+        osc.frequency.linearRampToValueAtTime(320, now + 0.12);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
+        osc.start(now);
+        osc.stop(now + 0.12);
+      } else if (type === 'gun') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(500, now);
+        osc.frequency.exponentialRampToValueAtTime(50, now + 0.15);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
+        osc.start(now);
+        osc.stop(now + 0.15);
+      } else if (type === 'dynamite') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(100, now);
+        osc.frequency.exponentialRampToValueAtTime(20, now + 0.45);
+        gain.gain.setValueAtTime(0.5, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.45);
+        osc.start(now);
+        osc.stop(now + 0.45);
+      } else if (type === 'death') {
+        // "WAAAAAH!" classic Rick death sound
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(450, now);
+        osc.frequency.linearRampToValueAtTime(120, now + 0.4);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.4);
+        osc.start(now);
+        osc.stop(now + 0.4);
+      } else if (type === 'gem') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(587, now);
+        osc.frequency.setValueAtTime(880, now + 0.08);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.18);
+        osc.start(now);
+        osc.stop(now + 0.18);
+      }
+    }
+
+    const canvas = document.getElementById('rickCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width;
+    const H = canvas.height;
+
+    let score = 0;
+    let lives = 3;
+    let bullets = 6;
+    let dynamites = 6;
+    let paused = false;
+    let gameOver = false;
+    let levelWon = false;
+
+    // Rick Player
+    const rick = {
+      x: 30,
+      y: 320,
+      w: 18,
+      h: 28,
+      vx: 0,
+      vy: 0,
+      onGround: false,
+      crouch: false,
+      facing: 1 // 1: right, -1: left
+    };
+
+    // Rolling Boulder Trap
+    const boulder = {
+      x: 20,
+      y: 80,
+      r: 22,
+      vx: 0,
+      active: false
+    };
+
+    // Dynamite sticks
+    let activeDynamites = [];
+    let activeBullets = [];
+
+    // Platforms and Temple Walls
+    const platforms = [
+      { x: 0, y: 380, w: W, h: 40, type: 'ground' }, // bottom floor
+      { x: 0, y: 280, w: 220, h: 20 },
+      { x: 280, y: 280, w: 280, h: 20 },
+      { x: 120, y: 190, w: 320, h: 20 },
+      { x: 0, y: 110, w: 260, h: 20 },
+      { x: 320, y: 110, w: 240, h: 20 }
+    ];
+
+    // Spikes
+    const spikes = [
+      { x: 230, y: 365, w: 50, h: 15 }
+    ];
+
+    // Collectibles (Aztec Gold Idols)
+    let idols = [
+      { x: 180, y: 160, collected: false },
+      { x: 500, y: 80, collected: false },
+      { x: 510, y: 250, collected: false },
+      { x: 340, y: 350, collected: false }
+    ];
+
+    // Enemies (Temple Guardians)
+    let enemies = [
+      { x: 320, y: 252, w: 16, h: 28, minX: 300, maxX: 460, vx: 1.2, dead: false },
+      { x: 220, y: 162, w: 16, h: 28, minX: 140, maxX: 380, vx: -1.2, dead: false },
+      { x: 380, y: 82, w: 16, h: 28, minX: 330, maxX: 500, vx: 1.2, dead: false }
+    ];
+
+    const keys = {};
+    window.addEventListener('keydown', e => {
+      initAudio();
+      keys[e.key.toLowerCase()] = true;
+      if (e.key.toLowerCase() === 'x') {
+        shootBullet();
+      }
+      if (e.key.toLowerCase() === 'c') {
+        layDynamite();
+      }
+    });
+    window.addEventListener('keyup', e => {
+      keys[e.key.toLowerCase()] = false;
+    });
+
+    function togglePause() {
+      paused = !paused;
+      document.getElementById('pauseBtn').textContent = paused ? '▶ Reprendre' : '⏸ Pause';
+    }
+
+    function restartGame() {
+      score = 0;
+      lives = 3;
+      bullets = 6;
+      dynamites = 6;
+      paused = false;
+      gameOver = false;
+      levelWon = false;
+      resetRick();
+      boulder.x = 20;
+      boulder.y = 80;
+      boulder.vx = 0;
+      boulder.active = false;
+      for (const id of idols) id.collected = false;
+      for (const en of enemies) en.dead = false;
+      document.getElementById('pauseBtn').textContent = '⏸ Pause';
+    }
+
+    function resetRick() {
+      rick.x = 30;
+      rick.y = 340;
+      rick.vx = 0;
+      rick.vy = 0;
+      rick.crouch = false;
+    }
+
+    function shootBullet() {
+      if (bullets <= 0 || gameOver || paused) return;
+      bullets--;
+      playTone('gun');
+      activeBullets.push({
+        x: rick.x + (rick.facing === 1 ? rick.w + 2 : -4),
+        y: rick.y + 12,
+        vx: rick.facing * 7
+      });
+    }
+
+    function layDynamite() {
+      if (dynamites <= 0 || gameOver || paused) return;
+      dynamites--;
+      activeDynamites.push({
+        x: rick.x,
+        y: rick.y + rick.h - 8,
+        timer: 120 // ~2s at 60fps
+      });
+    }
+
+    function killRick() {
+      playTone('death');
+      lives--;
+      if (lives <= 0) {
+        gameOver = true;
+      } else {
+        resetRick();
+      }
+    }
+
+    function update() {
+      if (paused || gameOver || levelWon) return;
+
+      // Rick Controls
+      const left = keys['arrowleft'] || keys['q'];
+      const right = keys['arrowright'] || keys['d'];
+      const jump = keys['arrowup'] || keys['z'] || keys[' '];
+      const down = keys['arrowdown'] || keys['s'];
+
+      rick.crouch = down && rick.onGround;
+
+      if (left && !rick.crouch) {
+        rick.vx = -2.5;
+        rick.facing = -1;
+      } else if (right && !rick.crouch) {
+        rick.vx = 2.5;
+        rick.facing = 1;
+      } else {
+        rick.vx = 0;
+      }
+
+      if (jump && rick.onGround && !rick.crouch) {
+        rick.vy = -6.8;
+        rick.onGround = false;
+        playTone('jump');
+      }
+
+      // Gravity
+      rick.vy += 0.32;
+      rick.x += rick.vx;
+      rick.y += rick.vy;
+
+      // Trigger Boulder Trap when Rick moves past x=140 on top platform
+      if (rick.y < 120 && rick.x > 80 && !boulder.active) {
+        boulder.active = true;
+        boulder.vx = 3.2;
+      }
+
+      // Boulder Movement
+      if (boulder.active) {
+        boulder.x += boulder.vx;
+        // Check collision with Rick
+        if (Math.hypot((rick.x + rick.w / 2) - boulder.x, (rick.y + rick.h / 2) - boulder.y) < boulder.r + 10) {
+          killRick();
+        }
+      }
+
+      // Platform Collisions
+      rick.onGround = false;
+      const currentH = rick.crouch ? 16 : rick.h;
+      for (const p of platforms) {
+        if (rick.x + rick.w > p.x && rick.x < p.x + p.w) {
+          // Landing on top
+          if (rick.y + currentH >= p.y && rick.y + currentH - rick.vy <= p.y + 10) {
+            rick.y = p.y - currentH;
+            rick.vy = 0;
+            rick.onGround = true;
+          }
+        }
+      }
+
+      // Check Spikes
+      for (const s of spikes) {
+        if (rick.x + rick.w > s.x && rick.x < s.x + s.w &&
+            rick.y + currentH >= s.y) {
+          killRick();
+          break;
+        }
+      }
+
+      // Check Idols
+      for (const id of idols) {
+        if (!id.collected && Math.hypot(rick.x - id.x, rick.y - id.y) < 22) {
+          id.collected = true;
+          score += 500;
+          playTone('gem');
+        }
+      }
+
+      // Bullets Update
+      for (let i = activeBullets.length - 1; i >= 0; i--) {
+        const b = activeBullets[i];
+        b.x += b.vx;
+        let hit = false;
+        for (const en of enemies) {
+          if (!en.dead && b.x > en.x && b.x < en.x + en.w && b.y > en.y && b.y < en.y + en.h) {
+            en.dead = true;
+            hit = true;
+            score += 200;
+            break;
+          }
+        }
+        if (hit || b.x < 0 || b.x > W) activeBullets.splice(i, 1);
+      }
+
+      // Dynamite Update
+      for (let i = activeDynamites.length - 1; i >= 0; i--) {
+        const d = activeDynamites[i];
+        d.timer--;
+        if (d.timer <= 0) {
+          playTone('dynamite');
+          // Explode
+          for (const en of enemies) {
+            if (!en.dead && Math.hypot(d.x - en.x, d.y - en.y) < 60) {
+              en.dead = true;
+              score += 300;
+            }
+          }
+          // Rick hurt if too close
+          if (Math.hypot(d.x - rick.x, d.y - rick.y) < 45) {
+            killRick();
+          }
+          activeDynamites.splice(i, 1);
+        }
+      }
+
+      // Enemies Update
+      for (const en of enemies) {
+        if (en.dead) continue;
+        en.x += en.vx;
+        if (en.x <= en.minX || en.x >= en.maxX) en.vx *= -1;
+        // Collision with Rick
+        if (rick.x + rick.w > en.x && rick.x < en.x + en.w &&
+            rick.y + currentH > en.y && rick.y < en.y + en.h) {
+          killRick();
+          break;
+        }
+      }
+
+      // Level Exit Check (door at top right x=530, y=70)
+      if (rick.x > 520 && rick.y < 110) {
+        levelWon = true;
+        score += 2000;
+      }
+    }
+
+    function render() {
+      // Ancient stone temple background
+      ctx.fillStyle = '#1c1917';
+      ctx.fillRect(0, 0, W, H);
+
+      // Stone brick background texture
+      ctx.strokeStyle = '#292524';
+      ctx.lineWidth = 1;
+      for (let y = 0; y < H; y += 30) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(W, y);
+        ctx.stroke();
+      }
+
+      // Draw Platforms (Aztec Carved Stone)
+      for (const p of platforms) {
+        ctx.fillStyle = '#78350f'; // brown stone
+        ctx.fillRect(p.x, p.y, p.w, p.h);
+        ctx.fillStyle = '#92400e';
+        ctx.fillRect(p.x, p.y, p.w, 4); // top highlight
+        // Inscriptions
+        ctx.fillStyle = '#451a03';
+        for (let bx = p.x + 10; bx < p.x + p.w - 10; bx += 25) {
+          ctx.fillRect(bx, p.y + 8, 8, p.h - 12);
+        }
+      }
+
+      // Draw Spikes
+      ctx.fillStyle = '#cbd5e1';
+      for (const s of spikes) {
+        for (let sx = s.x; sx < s.x + s.w; sx += 12) {
+          ctx.beginPath();
+          ctx.moveTo(sx, s.y + s.h);
+          ctx.lineTo(sx + 6, s.y);
+          ctx.lineTo(sx + 12, s.y + s.h);
+          ctx.fill();
+        }
+      }
+
+      // Draw Boulder
+      if (boulder.active) {
+        ctx.fillStyle = '#78716c';
+        ctx.beginPath();
+        ctx.arc(boulder.x, boulder.y, boulder.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#44403c';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+
+      // Draw Idols
+      for (const id of idols) {
+        if (id.collected) continue;
+        ctx.fillStyle = '#f59e0b';
+        ctx.fillRect(id.x - 6, id.y - 12, 12, 16);
+        ctx.fillStyle = '#fef08a';
+        ctx.fillRect(id.x - 3, id.y - 8, 6, 6);
+      }
+
+      // Exit Portal
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillRect(525, 75, 25, 35);
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 9px monospace';
+      ctx.fillText('EXIT', 526, 95);
+
+      // Draw Enemies (Aztec Guards)
+      for (const en of enemies) {
+        if (en.dead) continue;
+        ctx.fillStyle = '#b91c1c'; // Guard robe
+        ctx.fillRect(en.x, en.y, en.w, en.h);
+        ctx.fillStyle = '#fef08a'; // Headdress
+        ctx.fillRect(en.x - 2, en.y - 6, en.w + 4, 6);
+      }
+
+      // Draw Dynamites
+      for (const d of activeDynamites) {
+        ctx.fillStyle = '#dc2626';
+        ctx.fillRect(d.x, d.y, 14, 6);
+        // Spark
+        if (Math.floor(d.timer / 4) % 2 === 0) {
+          ctx.fillStyle = '#fef08a';
+          ctx.fillRect(d.x + 14, d.y - 2, 4, 4);
+        }
+      }
+
+      // Draw Bullets
+      ctx.fillStyle = '#fef08a';
+      for (const b of activeBullets) {
+        ctx.fillRect(b.x, b.y, 5, 3);
+      }
+
+      // Draw Rick Dangerous
+      const rh = rick.crouch ? 16 : rick.h;
+      // Hat (Fedora / Safari Hat)
+      ctx.fillStyle = '#d97706';
+      ctx.fillRect(rick.x - 4, rick.y, rick.w + 8, 6);
+      ctx.fillRect(rick.x, rick.y - 5, rick.w, 6);
+      // Face
+      ctx.fillStyle = '#fed7aa';
+      ctx.fillRect(rick.x + (rick.facing === 1 ? 4 : 0), rick.y + 6, 12, 8);
+      // Jacket
+      ctx.fillStyle = '#78350f';
+      ctx.fillRect(rick.x, rick.y + 14, rick.w, rh - 14);
+
+      // HUD Bar
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      ctx.fillRect(0, 0, W, 35);
+      ctx.strokeStyle = '#334155';
+      ctx.strokeRect(0, 0, W, 35);
+
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = 'bold 15px monospace';
+      ctx.fillText('SCORE: ' + score, 20, 22);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '12px monospace';
+      ctx.fillText('VIES: ' + lives, 180, 22);
+      ctx.fillText('BALLES: ' + bullets, 260, 22);
+      ctx.fillText('DYNAMITES: ' + dynamites, 360, 22);
+
+      // Overlays
+      if (gameOver) {
+        ctx.fillStyle = 'rgba(0,0,0,0.75)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#dc2626';
+        ctx.font = 'bold 36px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('GAME OVER', W / 2, H / 2 - 10);
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '15px monospace';
+        ctx.fillText('Cliquez sur Nouvelle Partie pour retenter le temple', W / 2, H / 2 + 25);
+        ctx.textAlign = 'start';
+      } else if (levelWon) {
+        ctx.fillStyle = 'rgba(0,0,0,0.75)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#22c55e';
+        ctx.font = 'bold 36px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('NIVEAU RÉUSSI !', W / 2, H / 2 - 10);
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '16px monospace';
+        ctx.fillText(`Score : ${score} pts • Rick s'échappe sain et sauf !`, W / 2, H / 2 + 25);
+        ctx.textAlign = 'start';
+      }
+    }
+
+    function loop() {
+      update();
+      render();
+      requestAnimationFrame(loop);
+    }
+
+    loop();
+  </script>
+</body>
+</html>

@@ -159,6 +159,10 @@
       border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
       transition: all 0.2s;
     }
     .btn-action:hover {
@@ -238,7 +242,8 @@
     <div class="action-bar">
       <button class="btn-action" onclick="scrambleCube()">🎲 Mélanger (20 coups)</button>
       <button class="btn-action secondary" onclick="resetCube()">🔄 Réinitialiser</button>
-      <button class="btn-action secondary" onclick="resetView()">👁 Vue normale</button>
+      <button class="btn-action secondary" onclick="resetView()">👁 Recadrer vue</button>
+      <a href="/misc/" class="btn-action secondary">🎮 Hub Jeux</a>
     </div>
 
     <div class="help-box">

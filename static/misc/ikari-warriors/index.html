@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-53FZNFBB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+</script>
+  <meta charset="utf-8">
+  <title>Ikari Warriors (1986) — Denis Arnaud</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .game-container {
+      max-width: 680px;
+      margin: 1.5rem auto;
+      padding: 1.25rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+    .header-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    canvas {
+      background: #000;
+      border: 3px solid #64748b;
+      border-radius: 6px;
+      max-width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+    }
+    .controls-panel {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      justify-content: center;
+      width: 100%;
+    }
+    .btn {
+      background: #eab308;
+      color: #0f172a;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #fde047; transform: translateY(-1px); }
+    .btn.secondary { background: #334155; color: #f8fafc; }
+    .btn.secondary:hover { background: #475569; }
+    .help-box {
+      margin-top: 1rem;
+      padding: 0.85rem 1.2rem;
+      background: #0f172a;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      width: 100%;
+    }
+    .help-box strong { color: #f8fafc; }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="header-row">
+      <div>
+        <h1 style="margin: 0; font-size: 1.5rem; color: #eab308; letter-spacing: 1px;">Ikari Warriors (1986)</h1>
+        <p style="margin: 0.25rem 0 0 0; color: #94a3b8; font-size: 0.85rem;">Run & Gun militaire à défilement vertical • Hommage SNK</p>
+      </div>
+    </div>
+
+    <canvas id="ikariCanvas" width="480" height="540"></canvas>
+
+    <div class="controls-panel">
+      <button class="btn" onclick="togglePause()" id="pauseBtn">⏸ Pause</button>
+      <button class="btn secondary" onclick="restartGame()">🔄 Nouvelle Partie</button>
+      <a href="/misc/" class="btn secondary">🎮 Hub Jeux</a>
+    </div>
+
+    <div class="help-box">
+      <strong>Contrôles :</strong>
+      <span style="margin-left: 0.5rem;">[Flèches / ZQSD] Déplacement du commando • [ESPACE] Tirer à la mitrailleuse • [G / Clic] Lancer une grenade explosive • Montez dans les tanks alliés !</span>
+    </div>
+  </div>
+
+  <script>
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let actx = null;
+    function initAudio() { if (!actx) actx = new AudioCtx(); }
+
+    function playSfx(type) {
+      if (!actx) return;
+      const now = actx.currentTime;
+      const osc = actx.createOscillator();
+      const gain = actx.createGain();
+      osc.connect(gain);
+      gain.connect(actx.destination);
+
+      if (type === 'gun') {
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(450, now);
+        osc.frequency.exponentialRampToValueAtTime(100, now + 0.08);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
+        osc.start(now);
+        osc.stop(now + 0.08);
+      } else if (type === 'grenade') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(180, now);
+        osc.frequency.exponentialRampToValueAtTime(30, now + 0.35);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.35);
+        osc.start(now);
+        osc.stop(now + 0.35);
+      } else if (type === 'hit') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(120, now);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
+        osc.start(now);
+        osc.stop(now + 0.12);
+      }
+    }
+
+    const canvas = document.getElementById('ikariCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width;
+    const H = canvas.height;
+
+    let score = 0;
+    let lives = 3;
+    let grenades = 50;
+    let scrollY = 0;
+    let paused = false;
+    let gameOver = false;
+
+    // Player Commando (Paul)
+    const player = {
+      x: W / 2,
+      y: H - 80,
+      r: 12,
+      speed: 3.2,
+      dirX: 0,
+      dirY: -1,
+      inTank: false,
+      tankFuel: 100
+    };
+
+    let bullets = [];
+    let thrownGrenades = [];
+    let explosions = [];
+
+    // Enemies
+    let enemies = [];
+    let tanks = [
+      { x: W / 2 - 40, y: -200, active: true, driven: false },
+      { x: W / 2 + 60, y: -900, active: true, driven: false }
+    ];
+
+    function spawnEnemies() {
+      if (Math.random() < 0.04 && enemies.length < 12) {
+        enemies.push({
+          x: Math.random() * (W - 80) + 40,
+          y: -20,
+          vy: 1.5 + Math.random() * 1.5,
+          hp: 1,
+          type: Math.random() < 0.25 ? 'bunker' : 'soldier'
+        });
+      }
+    }
+
+    const keys = {};
+    window.addEventListener('keydown', e => {
+      initAudio();
+      keys[e.key.toLowerCase()] = true;
+      if (e.code === 'Space') {
+        e.preventDefault();
+        fireGun();
+      }
+      if (e.key.toLowerCase() === 'g') {
+        throwGrenade();
+      }
+    });
+    window.addEventListener('keyup', e => {
+      keys[e.key.toLowerCase()] = false;
+    });
+
+    canvas.addEventListener('click', () => {
+      initAudio();
+      throwGrenade();
+    });
+
+    function togglePause() {
+      paused = !paused;
+      document.getElementById('pauseBtn').textContent = paused ? '▶ Reprendre' : '⏸ Pause';
+    }
+
+    function restartGame() {
+      score = 0;
+      lives = 3;
+      grenades = 50;
+      scrollY = 0;
+      paused = false;
+      gameOver = false;
+      player.x = W / 2;
+      player.y = H - 80;
+      player.inTank = false;
+      player.tankFuel = 100;
+      bullets = [];
+      thrownGrenades = [];
+      explosions = [];
+      enemies = [];
+      tanks = [
+        { x: W / 2 - 40, y: -200, active: true, driven: false },
+        { x: W / 2 + 60, y: -900, active: true, driven: false }
+      ];
+      document.getElementById('pauseBtn').textContent = '⏸ Pause';
+    }
+
+    function fireGun() {
+      if (gameOver || paused) return;
+      playSfx('gun');
+      bullets.push({
+        x: player.x,
+        y: player.y - 12,
+        vx: player.dirX * 8 || 0,
+        vy: player.dirY * 8 || -8
+      });
+    }
+
+    function throwGrenade() {
+      if (gameOver || paused || grenades <= 0) return;
+      grenades--;
+      playSfx('gun');
+      thrownGrenades.push({
+        x: player.x,
+        y: player.y - 10,
+        tx: player.x + (player.dirX * 120 || 0),
+        ty: player.y + (player.dirY * 120 || -120),
+        progress: 0
+      });
+    }
+
+    function update() {
+      if (paused || gameOver) return;
+
+      scrollY += 0.8;
+      score += 1;
+
+      // Player Movement
+      let dx = 0, dy = 0;
+      if (keys['arrowleft'] || keys['q'] || keys['a']) dx -= 1;
+      if (keys['arrowright'] || keys['d']) dx += 1;
+      if (keys['arrowup'] || keys['z'] || keys['w']) dy -= 1;
+      if (keys['arrowdown'] || keys['s']) dy += 1;
+
+      if (dx !== 0 || dy !== 0) {
+        const len = Math.hypot(dx, dy);
+        player.dirX = dx / len;
+        player.dirY = dy / len;
+        player.x = Math.max(20, Math.min(W - 20, player.x + player.dirX * player.speed));
+        player.y = Math.max(30, Math.min(H - 40, player.y + player.dirY * player.speed));
+      }
+
+      // Check entering tank
+      for (const t of tanks) {
+        if (!t.driven && t.active) {
+          const dist = Math.hypot(player.x - t.x, player.y - (t.y + scrollY));
+          if (dist < 28) {
+            t.driven = true;
+            player.inTank = true;
+            player.tankFuel = 100;
+          }
+        }
+      }
+
+      if (player.inTank) {
+        player.tankFuel -= 0.05;
+        if (player.tankFuel <= 0) player.inTank = false;
+      }
+
+      // Bullets
+      for (let i = bullets.length - 1; i >= 0; i--) {
+        const b = bullets[i];
+        b.x += b.vx;
+        b.y += b.vy;
+        let hit = false;
+        for (let j = enemies.length - 1; j >= 0; j--) {
+          const e = enemies[j];
+          if (Math.hypot(b.x - e.x, b.y - e.y) < 18) {
+            e.hp--;
+            hit = true;
+            if (e.hp <= 0) {
+              score += e.type === 'bunker' ? 250 : 100;
+              explosions.push({ x: e.x, y: e.y, r: 5, maxR: 25, life: 1 });
+              enemies.splice(j, 1);
+              playSfx('hit');
+            }
+            break;
+          }
+        }
+        if (hit || b.x < 0 || b.x > W || b.y < 0 || b.y > H) bullets.splice(i, 1);
+      }
+
+      // Thrown Grenades
+      for (let i = thrownGrenades.length - 1; i >= 0; i--) {
+        const g = thrownGrenades[i];
+        g.progress += 0.045;
+        g.x += (g.tx - g.x) * 0.12;
+        g.y += (g.ty - g.y) * 0.12;
+        if (g.progress >= 1) {
+          // Explode
+          playSfx('grenade');
+          explosions.push({ x: g.x, y: g.y, r: 8, maxR: 45, life: 1 });
+          // Destroy all nearby enemies
+          for (let j = enemies.length - 1; j >= 0; j--) {
+            const e = enemies[j];
+            if (Math.hypot(g.x - e.x, g.y - e.y) < 48) {
+              score += 200;
+              enemies.splice(j, 1);
+            }
+          }
+          thrownGrenades.splice(i, 1);
+        }
+      }
+
+      // Explosions
+      for (let i = explosions.length - 1; i >= 0; i--) {
+        const ex = explosions[i];
+        ex.life -= 0.06;
+        ex.r += 2;
+        if (ex.life <= 0) explosions.splice(i, 1);
+      }
+
+      // Spawn & Update Enemies
+      spawnEnemies();
+      for (let i = enemies.length - 1; i >= 0; i--) {
+        const e = enemies[i];
+        e.y += e.vy;
+        // Collision with player
+        if (Math.hypot(player.x - e.x, player.y - e.y) < 18) {
+          if (player.inTank) {
+            // Crush enemy
+            score += 150;
+            enemies.splice(i, 1);
+            playSfx('hit');
+            continue;
+          } else {
+            lives--;
+            playSfx('grenade');
+            explosions.push({ x: player.x, y: player.y, r: 8, maxR: 40, life: 1 });
+            if (lives <= 0) gameOver = true;
+            enemies.splice(i, 1);
+            continue;
+          }
+        }
+        if (e.y > H + 30) enemies.splice(i, 1);
+      }
+    }
+
+    function render() {
+      // Jungle & River terrain with vertical scrolling
+      ctx.fillStyle = '#14532d'; // Dark jungle green
+      ctx.fillRect(0, 0, W, H);
+
+      // Sand paths & rivers
+      const offset = (scrollY * 1.5) % 80;
+      ctx.fillStyle = '#1e3a8a'; // River
+      ctx.fillRect(W * 0.75, 0, 45, H);
+
+      // Dirt road
+      ctx.fillStyle = '#78350f';
+      ctx.fillRect(W * 0.2, 0, 70, H);
+
+      // Jungle foliage dots
+      ctx.fillStyle = '#166534';
+      for (let y = -80; y < H + 80; y += 40) {
+        ctx.fillRect(20, (y + offset) % H, 35, 30);
+        ctx.fillRect(W - 60, (y + offset * 0.8) % H, 35, 30);
+      }
+
+      // Draw Abandoned Tanks
+      for (const t of tanks) {
+        const ty = t.y + scrollY;
+        if (ty > -50 && ty < H + 50 && !t.driven) {
+          drawTank(t.x, ty, false);
+        }
+      }
+
+      // Draw Enemies
+      for (const e of enemies) {
+        if (e.type === 'bunker') {
+          // Pillbox bunker
+          ctx.fillStyle = '#475569';
+          ctx.beginPath();
+          ctx.arc(e.x, e.y, 16, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#0f172a';
+          ctx.fillRect(e.x - 4, e.y - 12, 8, 8);
+        } else {
+          // Enemy soldier (Grey/Blue uniform)
+          ctx.fillStyle = '#3b82f6';
+          ctx.beginPath();
+          ctx.arc(e.x, e.y, 8, 0, Math.PI * 2);
+          ctx.fill();
+          // Gun
+          ctx.fillStyle = '#0f172a';
+          ctx.fillRect(e.x - 2, e.y + 4, 4, 8);
+        }
+      }
+
+      // Draw Player Bullets
+      ctx.fillStyle = '#fef08a';
+      for (const b of bullets) {
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Draw Thrown Grenades
+      ctx.fillStyle = '#ea580c';
+      for (const g of thrownGrenades) {
+        ctx.beginPath();
+        ctx.arc(g.x, g.y, 4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Draw Explosions
+      for (const ex of explosions) {
+        ctx.fillStyle = `rgba(249, 115, 22, ${ex.life})`;
+        ctx.beginPath();
+        ctx.arc(ex.x, ex.y, ex.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = `rgba(254, 240, 138, ${ex.life})`;
+        ctx.beginPath();
+        ctx.arc(ex.x, ex.y, ex.r * 0.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Draw Player
+      if (player.inTank) {
+        drawTank(player.x, player.y, true);
+      } else {
+        // Commando Paul with Red Headband
+        ctx.fillStyle = '#ea580c'; // Tan skin
+        ctx.beginPath();
+        ctx.arc(player.x, player.y, player.r, 0, Math.PI * 2);
+        ctx.fill();
+        // Red headband
+        ctx.fillStyle = '#dc2626';
+        ctx.fillRect(player.x - player.r, player.y - player.r * 0.6, player.r * 2, 5);
+        // Rifle pointing
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(player.x + player.dirX * 10 - 3, player.y + player.dirY * 10 - 3, 6, 6);
+      }
+
+      // Top Arcade HUD
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      ctx.fillRect(0, 0, W, 40);
+      ctx.strokeStyle = '#334155';
+      ctx.strokeRect(0, 0, W, 40);
+
+      ctx.fillStyle = '#eab308';
+      ctx.font = 'bold 16px monospace';
+      ctx.fillText('1P ' + score, 20, 25);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '12px monospace';
+      ctx.fillText('VIES: ' + lives, 180, 25);
+      ctx.fillText('GRENADES: ' + grenades, 270, 25);
+
+      if (player.inTank) {
+        ctx.fillStyle = '#22c55e';
+        ctx.fillText('TANK: ' + Math.floor(player.tankFuel) + '%', 390, 25);
+      }
+
+      // Game Over Overlay
+      if (gameOver) {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#dc2626';
+        ctx.font = 'bold 36px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('GAME OVER', W / 2, H / 2 - 10);
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '15px monospace';
+        ctx.fillText(`Score : ${score} pts • Cliquez Nouvelle Partie pour rejouer`, W / 2, H / 2 + 25);
+        ctx.textAlign = 'start';
+      }
+    }
+
+    function drawTank(x, y, active) {
+      // Tank Body
+      ctx.fillStyle = active ? '#15803d' : '#475569';
+      ctx.fillRect(x - 16, y - 20, 32, 40);
+      // Tracks
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(x - 20, y - 22, 5, 44);
+      ctx.fillRect(x + 15, y - 22, 5, 44);
+      // Turret
+      ctx.fillStyle = active ? '#166534' : '#334155';
+      ctx.beginPath();
+      ctx.arc(x, y, 10, 0, Math.PI * 2);
+      ctx.fill();
+      // Cannon
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(x - 3, y - 26, 6, 16);
+    }
+
+    function loop() {
+      update();
+      render();
+      requestAnimationFrame(loop);
+    }
+
+    loop();
+  </script>
+</body>
+</html>

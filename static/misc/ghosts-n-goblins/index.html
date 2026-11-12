@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-53FZNFBB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+</script>
+  <meta charset="utf-8">
+  <title>Ghosts 'n Goblins (1985) — Denis Arnaud</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .game-container {
+      max-width: 760px;
+      margin: 1.5rem auto;
+      padding: 1.25rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+    .header-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    canvas {
+      background: #000;
+      border: 3px solid #64748b;
+      border-radius: 6px;
+      max-width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+    }
+    .controls-panel {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      justify-content: center;
+      width: 100%;
+    }
+    .btn {
+      background: #8b5cf6;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #a78bfa; transform: translateY(-1px); }
+    .btn.secondary { background: #334155; color: #f8fafc; }
+    .btn.secondary:hover { background: #475569; }
+    .help-box {
+      margin-top: 1rem;
+      padding: 0.85rem 1.2rem;
+      background: #0f172a;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      width: 100%;
+    }
+    .help-box strong { color: #f8fafc; }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="header-row">
+      <div>
+        <h1 style="margin: 0; font-size: 1.5rem; color: #a78bfa; letter-spacing: 1px;">Ghosts 'n Goblins (1985)</h1>
+        <p style="margin: 0.25rem 0 0 0; color: #94a3b8; font-size: 0.85rem;">Sir Arthur au cimetière hanté • Armure d'acier & caleçon à cœurs (Capcom)</p>
+      </div>
+    </div>
+
+    <canvas id="gngCanvas" width="560" height="400"></canvas>
+
+    <div class="controls-panel">
+      <button class="btn" onclick="togglePause()" id="pauseBtn">⏸ Pause</button>
+      <button class="btn secondary" onclick="restartGame()">🔄 Nouvelle Partie</button>
+      <a href="/misc/" class="btn secondary">🎮 Hub Jeux</a>
+    </div>
+
+    <div class="help-box">
+      <strong>Contrôles :</strong>
+      <span style="margin-left: 0.5rem;">[← / → / Q / D] Marcher • [↑ / Z / ESPACE] Sauter • [↓ / S] S'accroupir • [X / Clic gauche] Lancer une lance • Attention au premier coup qui détruit votre armure !</span>
+    </div>
+  </div>
+
+  <script>
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let actx = null;
+    function initAudio() { if (!actx) actx = new AudioCtx(); }
+
+    function playTone(type) {
+      if (!actx) return;
+      const now = actx.currentTime;
+      const osc = actx.createOscillator();
+      const gain = actx.createGain();
+      osc.connect(gain);
+      gain.connect(actx.destination);
+
+      if (type === 'lance') {
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.exponentialRampToValueAtTime(150, now + 0.12);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
+        osc.start(now);
+        osc.stop(now + 0.12);
+      } else if (type === 'armorBreak') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.linearRampToValueAtTime(60, now + 0.25);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      } else if (type === 'zombie') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(100, now);
+        osc.frequency.linearRampToValueAtTime(160, now + 0.2);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
+        osc.start(now);
+        osc.stop(now + 0.2);
+      } else if (type === 'jump') {
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(200, now);
+        osc.frequency.linearRampToValueAtTime(380, now + 0.12);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.12);
+        osc.start(now);
+        osc.stop(now + 0.12);
+      }
+    }
+
+    const canvas = document.getElementById('gngCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width;
+    const H = canvas.height;
+
+    let score = 0;
+    let lives = 3;
+    let paused = false;
+    let gameOver = false;
+    let victory = false;
+
+    // Arthur Player
+    const arthur = {
+      x: 40,
+      y: 300,
+      w: 18,
+      h: 28,
+      vx: 0,
+      vy: 0,
+      facing: 1, // 1: right, -1: left
+      hasArmor: true, // true = shining armor, false = boxer shorts!
+      onGround: false,
+      crouch: false,
+      invulnTimer: 0
+    };
+
+    let lances = [];
+    let zombies = [];
+    let gargoyles = [
+      { x: 380, y: 120, vx: -1.5, vy: 0.8, type: 'arremer' }
+    ];
+
+    // Platforms (Cemetery ground & ruined castle ledges)
+    const platforms = [
+      { x: 0, y: 350, w: W, h: 50 }, // Cemetery ground
+      { x: 120, y: 260, w: 100, h: 14 },
+      { x: 280, y: 220, w: 120, h: 14 },
+      { x: 440, y: 160, w: 100, h: 14 }
+    ];
+
+    // Tombstones on ground
+    const tombstones = [80, 190, 260, 420];
+
+    const keys = {};
+    window.addEventListener('keydown', e => {
+      initAudio();
+      keys[e.key.toLowerCase()] = true;
+      if (e.code === 'Space' || e.key.toLowerCase() === 'x') {
+        e.preventDefault();
+        throwLance();
+      }
+    });
+    window.addEventListener('keyup', e => {
+      keys[e.key.toLowerCase()] = false;
+    });
+
+    canvas.addEventListener('click', () => {
+      initAudio();
+      throwLance();
+    });
+
+    function togglePause() {
+      paused = !paused;
+      document.getElementById('pauseBtn').textContent = paused ? '▶ Reprendre' : '⏸ Pause';
+    }
+
+    function restartGame() {
+      score = 0;
+      lives = 3;
+      paused = false;
+      gameOver = false;
+      victory = false;
+      resetArthur();
+      lances = [];
+      zombies = [];
+      gargoyles = [{ x: 380, y: 120, vx: -1.5, vy: 0.8, type: 'arremer' }];
+      document.getElementById('pauseBtn').textContent = '⏸ Pause';
+    }
+
+    function resetArthur() {
+      arthur.x = 40;
+      arthur.y = 300;
+      arthur.vx = 0;
+      arthur.vy = 0;
+      arthur.hasArmor = true;
+      arthur.crouch = false;
+      arthur.invulnTimer = 0;
+    }
+
+    function throwLance() {
+      if (gameOver || paused) return;
+      playTone('lance');
+      lances.push({
+        x: arthur.x + (arthur.facing === 1 ? arthur.w + 2 : -16),
+        y: arthur.crouch ? arthur.y + 16 : arthur.y + 8,
+        vx: arthur.facing * 7.5
+      });
+    }
+
+    function hitArthur() {
+      if (arthur.invulnTimer > 0) return;
+      if (arthur.hasArmor) {
+        // Lose armor down to boxers!
+        arthur.hasArmor = false;
+        arthur.invulnTimer = 90; // 1.5s invulnerability flash
+        playTone('armorBreak');
+      } else {
+        // Lose life
+        playTone('armorBreak');
+        lives--;
+        if (lives <= 0) {
+          gameOver = true;
+        } else {
+          resetArthur();
+        }
+      }
+    }
+
+    function update() {
+      if (paused || gameOver || victory) return;
+
+      if (arthur.invulnTimer > 0) arthur.invulnTimer--;
+
+      // Movement
+      const left = keys['arrowleft'] || keys['q'];
+      const right = keys['arrowright'] || keys['d'];
+      const jump = keys['arrowup'] || keys['z'] || keys['w'];
+      const down = keys['arrowdown'] || keys['s'];
+
+      arthur.crouch = down && arthur.onGround;
+
+      if (left && !arthur.crouch) {
+        arthur.vx = -2.6;
+        arthur.facing = -1;
+      } else if (right && !arthur.crouch) {
+        arthur.vx = 2.6;
+        arthur.facing = 1;
+      } else {
+        arthur.vx = 0;
+      }
+
+      if (jump && arthur.onGround && !arthur.crouch) {
+        arthur.vy = -7.4;
+        arthur.onGround = false;
+        playTone('jump');
+      }
+
+      // Gravity
+      arthur.vy += 0.36;
+      arthur.x += arthur.vx;
+      arthur.y += arthur.vy;
+
+      // Platform collisions
+      arthur.onGround = false;
+      const ah = arthur.crouch ? 16 : arthur.h;
+      for (const p of platforms) {
+        if (arthur.x + arthur.w > p.x && arthur.x < p.x + p.w) {
+          if (arthur.y + ah >= p.y && arthur.y + ah - arthur.vy <= p.y + 12) {
+            arthur.y = p.y - ah;
+            arthur.vy = 0;
+            arthur.onGround = true;
+          }
+        }
+      }
+
+      // Spawn Zombies rising from cemetery ground
+      if (Math.random() < 0.025 && zombies.length < 5) {
+        const spawnX = Math.random() < 0.5 ? Math.random() * 100 : W - 80 - Math.random() * 120;
+        zombies.push({
+          x: spawnX,
+          y: 350 - 24,
+          w: 16,
+          h: 24,
+          vx: spawnX < arthur.x ? 1.0 : -1.0,
+          rise: 0
+        });
+        playTone('zombie');
+      }
+
+      // Update Zombies
+      for (let i = zombies.length - 1; i >= 0; i--) {
+        const z = zombies[i];
+        if (z.rise < 1) {
+          z.rise += 0.05;
+        } else {
+          z.x += z.vx;
+        }
+        // Collision with Arthur
+        if (z.rise >= 0.8 &&
+            arthur.x + arthur.w > z.x && arthur.x < z.x + z.w &&
+            arthur.y + ah > z.y && arthur.y < z.y + z.h) {
+          hitArthur();
+        }
+        if (z.x < -30 || z.x > W + 30) zombies.splice(i, 1);
+      }
+
+      // Update Gargoyles (Red Arremer)
+      for (const g of gargoyles) {
+        g.x += g.vx;
+        g.y += g.vy;
+        if (g.x < 100 || g.x > W - 60) g.vx *= -1;
+        if (g.y < 80 || g.y > 240) g.vy *= -1;
+
+        if (arthur.x + arthur.w > g.x && arthur.x < g.x + 20 &&
+            arthur.y + ah > g.y && arthur.y < g.y + 20) {
+          hitArthur();
+        }
+      }
+
+      // Update Lances
+      for (let i = lances.length - 1; i >= 0; i--) {
+        const l = lances[i];
+        l.x += l.vx;
+        let hit = false;
+        // Check zombie hit
+        for (let j = zombies.length - 1; j >= 0; j--) {
+          const z = zombies[j];
+          if (l.x > z.x && l.x < z.x + z.w && l.y > z.y && l.y < z.y + z.h) {
+            zombies.splice(j, 1);
+            score += 100;
+            hit = true;
+            break;
+          }
+        }
+        // Check gargoyle hit
+        for (const g of gargoyles) {
+          if (l.x > g.x && l.x < g.x + 24 && l.y > g.y && l.y < g.y + 24) {
+            score += 500;
+            g.x = W + 100; // banish
+            hit = true;
+            break;
+          }
+        }
+        if (hit || l.x < 0 || l.x > W) lances.splice(i, 1);
+      }
+
+      // Win condition: reach right edge past x=520
+      if (arthur.x > 510) {
+        victory = true;
+        score += 2500;
+      }
+    }
+
+    function render() {
+      // Dark gothic sky with pale full moon
+      ctx.fillStyle = '#090d16';
+      ctx.fillRect(0, 0, W, H);
+
+      // Pale Moon
+      ctx.fillStyle = '#f8fafc';
+      ctx.beginPath();
+      ctx.arc(420, 80, 36, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Dead crooked trees in background
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(80, 200, 8, 150);
+      ctx.fillRect(60, 230, 30, 6);
+      ctx.fillRect(340, 180, 8, 170);
+      ctx.fillRect(330, 220, 35, 6);
+
+      // Draw Platforms
+      for (const p of platforms) {
+        ctx.fillStyle = '#1e1b4b'; // Haunted purple-grey stone
+        ctx.fillRect(p.x, p.y, p.w, p.h);
+        ctx.fillStyle = '#15803d'; // Gloomy grass tufts
+        ctx.fillRect(p.x, p.y, p.w, 4);
+      }
+
+      // Draw Tombstones
+      ctx.fillStyle = '#64748b';
+      for (const tx of tombstones) {
+        ctx.fillRect(tx, 320, 16, 30);
+        ctx.fillRect(tx - 4, 328, 24, 6); // Cross
+      }
+
+      // Exit Castle Gate
+      ctx.fillStyle = '#f59e0b';
+      ctx.fillRect(525, 300, 25, 50);
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(529, 310, 17, 40);
+
+      // Draw Zombies
+      for (const z of zombies) {
+        const visibleH = z.h * z.rise;
+        ctx.fillStyle = '#15803d'; // Rotten green flesh
+        ctx.fillRect(z.x, 350 - visibleH, z.w, visibleH);
+        // Eyes
+        ctx.fillStyle = '#ef4444';
+        ctx.fillRect(z.x + 3, 350 - visibleH + 4, 3, 3);
+      }
+
+      // Draw Gargoyles (Red Arremer)
+      for (const g of gargoyles) {
+        ctx.fillStyle = '#dc2626'; // Red demon body
+        ctx.beginPath();
+        ctx.arc(g.x + 10, g.y + 10, 12, 0, Math.PI * 2);
+        ctx.fill();
+        // Wings
+        ctx.fillStyle = '#991b1b';
+        ctx.fillRect(g.x - 4, g.y + 4, 6, 12);
+        ctx.fillRect(g.x + 18, g.y + 4, 6, 12);
+      }
+
+      // Draw Lances
+      ctx.fillStyle = '#cbd5e1';
+      for (const l of lances) {
+        ctx.fillRect(l.x, l.y, 16, 3);
+        ctx.fillStyle = '#f8fafc'; // tip
+        ctx.fillRect(l.vx > 0 ? l.x + 12 : l.x, l.y - 1, 4, 5);
+      }
+
+      // Draw Sir Arthur
+      if (arthur.invulnTimer === 0 || Math.floor(arthur.invulnTimer / 4) % 2 === 0) {
+        const ah = arthur.crouch ? 16 : arthur.h;
+
+        if (arthur.hasArmor) {
+          // Steel Silver Armor & Knight Helmet
+          ctx.fillStyle = '#94a3b8'; // Steel armor
+          ctx.fillRect(arthur.x, arthur.y + 8, arthur.w, ah - 8);
+          // Helmet
+          ctx.fillStyle = '#cbd5e1';
+          ctx.fillRect(arthur.x, arthur.y, arthur.w, 10);
+          // Red crest feather
+          ctx.fillStyle = '#dc2626';
+          ctx.fillRect(arthur.x + 4, arthur.y - 4, 8, 4);
+          // Visor slit
+          ctx.fillStyle = '#0f172a';
+          ctx.fillRect(arthur.x + (arthur.facing === 1 ? 6 : 2), arthur.y + 4, 8, 2);
+        } else {
+          // Boxer Shorts Arthur! (Bare skin + white boxers with red dots)
+          ctx.fillStyle = '#fed7aa'; // Bare skin
+          ctx.fillRect(arthur.x, arthur.y, arthur.w, ah);
+          // Hair & beard
+          ctx.fillStyle = '#78350f';
+          ctx.fillRect(arthur.x + 2, arthur.y, arthur.w - 4, 6);
+          // Boxer shorts
+          ctx.fillStyle = '#f8fafc';
+          ctx.fillRect(arthur.x, arthur.y + 14, arthur.w, ah - 14);
+          // Red hearts/dots on boxers
+          ctx.fillStyle = '#ef4444';
+          ctx.fillRect(arthur.x + 4, arthur.y + 18, 3, 3);
+          ctx.fillRect(arthur.x + 11, arthur.y + 18, 3, 3);
+        }
+      }
+
+      // Top HUD
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      ctx.fillRect(0, 0, W, 35);
+      ctx.strokeStyle = '#334155';
+      ctx.strokeRect(0, 0, W, 35);
+
+      ctx.fillStyle = '#a78bfa';
+      ctx.font = 'bold 15px monospace';
+      ctx.fillText('1P ' + score, 20, 22);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '12px monospace';
+      ctx.fillText('VIES: ' + lives, 180, 22);
+      ctx.fillText('ARMURE: ' + (arthur.hasArmor ? 'ACIER 🛡️' : 'CALEÇON 🩳'), 270, 22);
+
+      // Overlays
+      if (gameOver) {
+        ctx.fillStyle = 'rgba(0,0,0,0.75)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#dc2626';
+        ctx.font = 'bold 36px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('GAME OVER', W / 2, H / 2 - 10);
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '15px monospace';
+        ctx.fillText('Sir Arthur a succombé aux créatures de la nuit', W / 2, H / 2 + 25);
+        ctx.textAlign = 'start';
+      } else if (victory) {
+        ctx.fillStyle = 'rgba(0,0,0,0.75)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#22c55e';
+        ctx.font = 'bold 36px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('CIMETIÈRE TRAVERSÉ !', W / 2, H / 2 - 10);
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '16px monospace';
+        ctx.fillText(`Score : ${score} pts • Vers le château de Lucifer !`, W / 2, H / 2 + 25);
+        ctx.textAlign = 'start';
+      }
+    }
+
+    function loop() {
+      update();
+      render();
+      requestAnimationFrame(loop);
+    }
+
+    loop();
+  </script>
+</body>
+</html>

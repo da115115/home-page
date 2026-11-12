@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-53FZNFBB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+</script>
+  <meta charset="utf-8">
+  <title>DOOM Mini (1993) — Denis Arnaud</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .game-container {
+      max-width: 840px;
+      margin: 1.5rem auto;
+      padding: 1.25rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+    .header-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    canvas {
+      background: #000;
+      border: 2px solid #475569;
+      border-radius: 8px;
+      max-width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+      cursor: crosshair;
+    }
+    .controls-panel {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      justify-content: center;
+      width: 100%;
+    }
+    .btn {
+      background: #dc2626;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #ef4444; transform: translateY(-1px); }
+    .btn.secondary { background: #334155; color: #f8fafc; }
+    .btn.secondary:hover { background: #475569; }
+    .help-box {
+      margin-top: 1rem;
+      padding: 0.85rem 1.2rem;
+      background: #0f172a;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      width: 100%;
+    }
+    .help-box strong { color: #f8fafc; }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="header-row">
+      <div>
+        <h1 style="margin: 0; font-size: 1.5rem; color: #f87171; letter-spacing: 2px; font-family: monospace;">DOOM (E1M1 Tribute)</h1>
+        <p style="margin: 0.25rem 0 0 0; color: #94a3b8; font-size: 0.85rem;">Moteur Raycasting 3D pur JavaScript • Hommage id Software (1993)</p>
+      </div>
+    </div>
+
+    <canvas id="doomCanvas" width="640" height="400"></canvas>
+
+    <div class="controls-panel">
+      <button class="btn" onclick="togglePause()" id="pauseBtn">⏸ Pause</button>
+      <button class="btn secondary" onclick="restartGame()">🔄 Nouvelle Partie</button>
+      <a href="/misc/" class="btn secondary">🎮 Hub Jeux</a>
+    </div>
+
+    <div class="help-box">
+      <strong>Contrôles :</strong>
+      <span style="margin-left: 0.5rem;">[Z / W / ↑] Avancer • [S / ↓] Reculer • [Q / A / ←] Tourner gauche • [D / →] Tourner droite • [ESPACE / Clic gauche] Tirer • [E] Ouvrir portes / Interagir</span>
+    </div>
+  </div>
+
+  <script>
+    // Audio synthesizer
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let actx = null;
+    function initAudio() { if (!actx) actx = new AudioCtx(); }
+
+    function playSound(type) {
+      if (!actx) return;
+      const now = actx.currentTime;
+      const osc = actx.createOscillator();
+      const gain = actx.createGain();
+      osc.connect(gain);
+      gain.connect(actx.destination);
+
+      if (type === 'shoot') {
+        // Double shotgun blast
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(120, now);
+        osc.frequency.exponentialRampToValueAtTime(30, now + 0.25);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.28);
+        osc.start(now);
+        osc.stop(now + 0.28);
+      } else if (type === 'hit') {
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(150, now);
+        osc.frequency.linearRampToValueAtTime(70, now + 0.15);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
+        osc.start(now);
+        osc.stop(now + 0.15);
+      } else if (type === 'item') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.setValueAtTime(660, now + 0.08);
+        osc.frequency.setValueAtTime(880, now + 0.16);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.24);
+        osc.start(now);
+        osc.stop(now + 0.24);
+      } else if (type === 'door') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(90, now);
+        osc.frequency.linearRampToValueAtTime(140, now + 0.3);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.3);
+        osc.start(now);
+        osc.stop(now + 0.3);
+      }
+    }
+
+    const canvas = document.getElementById('doomCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width;
+    const H = 320; // 3D viewport height, remaining 80px for Doom HUD bar
+
+    // Map definition (16x16)
+    // 0: empty, 1: blue tech wall, 2: green stone, 3: red hazard, 4: door, 5: exit
+    const MAP_W = 16, MAP_H = 16;
+    const MAP = [
+      1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+      1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,
+      1,0,1,1,0,1,0,2,2,2,0,2,2,0,0,1,
+      1,0,1,0,0,0,0,2,0,0,0,0,2,0,0,1,
+      1,0,1,0,0,1,0,2,0,0,0,0,2,0,0,1,
+      1,0,0,0,0,1,0,2,2,4,2,2,2,0,0,1,
+      1,1,4,1,1,1,0,0,0,0,0,0,0,0,0,1,
+      1,0,0,0,0,0,0,3,3,0,3,3,0,0,0,1,
+      1,0,0,0,0,0,0,3,0,0,0,3,0,0,0,1,
+      1,0,2,2,0,0,0,3,0,0,0,3,0,0,0,1,
+      1,0,2,2,0,0,0,3,3,4,3,3,0,0,0,1,
+      1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+      1,0,0,1,1,0,0,0,0,0,0,0,5,5,0,1,
+      1,0,0,1,1,0,0,0,0,0,0,0,5,5,0,1,
+      1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+      1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+    ];
+
+    // Player state
+    const player = {
+      x: 2.5, y: 2.5,
+      dirX: 1, dirY: 0,
+      planeX: 0, planeY: 0.66,
+      rotSpeed: 0.05,
+      moveSpeed: 0.06,
+      hp: 100,
+      armor: 50,
+      ammo: 30,
+      kills: 0,
+      weaponState: 0, // 0: idle, 1..6: firing recoil
+      painFlash: 0
+    };
+
+    // Enemies and Items
+    let sprites = [
+      { x: 3.5, y: 3.5, type: 'imp', hp: 40, maxHp: 40, dead: false, alert: false },
+      { x: 9.5, y: 3.5, type: 'imp', hp: 40, maxHp: 40, dead: false, alert: false },
+      { x: 10.5, y: 8.5, type: 'imp', hp: 40, maxHp: 40, dead: false, alert: false },
+      { x: 4.5, y: 11.5, type: 'imp', hp: 40, maxHp: 40, dead: false, alert: false },
+      { x: 13.5, y: 13.5, type: 'boss', hp: 100, maxHp: 100, dead: false, alert: false },
+      { x: 3.5, y: 1.5, type: 'medkit', collected: false },
+      { x: 8.5, y: 1.5, type: 'ammo', collected: false },
+      { x: 1.5, y: 9.5, type: 'armor', collected: false },
+      { x: 12.5, y: 8.5, type: 'medkit', collected: false }
+    ];
+
+    const keys = {};
+    window.addEventListener('keydown', e => {
+      initAudio();
+      keys[e.key.toLowerCase()] = true;
+      if (e.code === 'Space') {
+        e.preventDefault();
+        fireShotgun();
+      }
+      if (e.key.toLowerCase() === 'e') {
+        tryOpenDoor();
+      }
+    });
+    window.addEventListener('keyup', e => {
+      keys[e.key.toLowerCase()] = false;
+    });
+
+    canvas.addEventListener('click', () => {
+      initAudio();
+      fireShotgun();
+    });
+
+    let paused = false;
+    function togglePause() {
+      paused = !paused;
+      document.getElementById('pauseBtn').textContent = paused ? '▶ Reprendre' : '⏸ Pause';
+    }
+
+    function restartGame() {
+      player.x = 2.5; player.y = 2.5;
+      player.dirX = 1; player.dirY = 0;
+      player.planeX = 0; player.planeY = 0.66;
+      player.hp = 100; player.armor = 50; player.ammo = 30;
+      player.kills = 0; player.weaponState = 0; player.painFlash = 0;
+      sprites = [
+        { x: 3.5, y: 3.5, type: 'imp', hp: 40, maxHp: 40, dead: false, alert: false },
+        { x: 9.5, y: 3.5, type: 'imp', hp: 40, maxHp: 40, dead: false, alert: false },
+        { x: 10.5, y: 8.5, type: 'imp', hp: 40, maxHp: 40, dead: false, alert: false },
+        { x: 4.5, y: 11.5, type: 'imp', hp: 40, maxHp: 40, dead: false, alert: false },
+        { x: 13.5, y: 13.5, type: 'boss', hp: 100, maxHp: 100, dead: false, alert: false },
+        { x: 3.5, y: 1.5, type: 'medkit', collected: false },
+        { x: 8.5, y: 1.5, type: 'ammo', collected: false },
+        { x: 1.5, y: 9.5, type: 'armor', collected: false },
+        { x: 12.5, y: 8.5, type: 'medkit', collected: false }
+      ];
+      paused = false;
+      document.getElementById('pauseBtn').textContent = '⏸ Pause';
+    }
+
+    function fireShotgun() {
+      if (player.weaponState > 0 || player.ammo <= 0 || player.hp <= 0) return;
+      player.ammo--;
+      player.weaponState = 6;
+      playSound('shoot');
+
+      // Hitscan check enemies in center cone
+      for (const s of sprites) {
+        if (s.dead || s.collected) continue;
+        if (s.type !== 'imp' && s.type !== 'boss') continue;
+        const dx = s.x - player.x;
+        const dy = s.y - player.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist > 8) continue;
+        // Dot product with player direction
+        const dot = (dx * player.dirX + dy * player.dirY) / dist;
+        if (dot > 0.92) {
+          // Raycast clear line of sight
+          if (hasLineOfSight(player.x, player.y, s.x, s.y)) {
+            const dmg = Math.floor(25 + Math.random() * 20);
+            s.hp -= dmg;
+            s.alert = true;
+            playSound('hit');
+            if (s.hp <= 0) {
+              s.dead = true;
+              player.kills++;
+            }
+            break;
+          }
+        }
+      }
+    }
+
+    function hasLineOfSight(x0, y0, x1, y1) {
+      const steps = 30;
+      for (let i = 1; i < steps; i++) {
+        const cx = Math.floor(x0 + (x1 - x0) * (i / steps));
+        const cy = Math.floor(y0 + (y1 - y0) * (i / steps));
+        if (MAP[cy * MAP_W + cx] > 0 && MAP[cy * MAP_W + cx] !== 4) return false;
+      }
+      return true;
+    }
+
+    function tryOpenDoor() {
+      const frontX = Math.floor(player.x + player.dirX * 1.2);
+      const frontY = Math.floor(player.y + player.dirY * 1.2);
+      if (MAP[frontY * MAP_W + frontX] === 4) {
+        MAP[frontY * MAP_W + frontX] = 0; // open door
+        playSound('door');
+      }
+    }
+
+    // Depth buffer for sprites
+    const zBuffer = new Float32Array(W);
+
+    function update() {
+      if (paused || player.hp <= 0) return;
+
+      if (player.painFlash > 0) player.painFlash -= 0.05;
+      if (player.weaponState > 0) player.weaponState--;
+
+      // Movement
+      let moveStep = 0;
+      if (keys['z'] || keys['w'] || keys['arrowup']) moveStep = player.moveSpeed;
+      if (keys['s'] || keys['arrowdown']) moveStep = -player.moveSpeed;
+
+      if (moveStep !== 0) {
+        const newX = player.x + player.dirX * moveStep;
+        const newY = player.y + player.dirY * moveStep;
+        if (MAP[Math.floor(player.y) * MAP_W + Math.floor(newX)] === 0) player.x = newX;
+        if (MAP[Math.floor(newY) * MAP_W + Math.floor(player.x)] === 0) player.y = newY;
+      }
+
+      // Rotation
+      let rot = 0;
+      if (keys['q'] || keys['a'] || keys['arrowleft']) rot = player.rotSpeed;
+      if (keys['d'] || keys['arrowright']) rot = -player.rotSpeed;
+
+      if (rot !== 0) {
+        const oldDirX = player.dirX;
+        player.dirX = player.dirX * Math.cos(rot) - player.dirY * Math.sin(rot);
+        player.dirY = oldDirX * Math.sin(rot) + player.dirY * Math.cos(rot);
+        const oldPlaneX = player.planeX;
+        player.planeX = player.planeX * Math.cos(rot) - player.planeY * Math.sin(rot);
+        player.planeY = oldPlaneX * Math.sin(rot) + player.planeY * Math.cos(rot);
+      }
+
+      // Check item collisions
+      for (const s of sprites) {
+        if (s.collected) continue;
+        const dist = Math.hypot(s.x - player.x, s.y - player.y);
+        if (dist < 0.6) {
+          if (s.type === 'medkit' && player.hp < 100) {
+            player.hp = Math.min(100, player.hp + 25);
+            s.collected = true;
+            playSound('item');
+          } else if (s.type === 'armor' && player.armor < 100) {
+            player.armor = Math.min(100, player.armor + 50);
+            s.collected = true;
+            playSound('item');
+          } else if (s.type === 'ammo') {
+            player.ammo += 15;
+            s.collected = true;
+            playSound('item');
+          }
+        }
+      }
+
+      // Enemy AI
+      for (const s of sprites) {
+        if (s.dead || s.collected) continue;
+        if (s.type !== 'imp' && s.type !== 'boss') continue;
+
+        const dx = player.x - s.x;
+        const dy = player.y - s.y;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < 8) s.alert = true;
+
+        if (s.alert && dist > 1.2) {
+          const spd = s.type === 'boss' ? 0.02 : 0.025;
+          const nx = s.x + (dx / dist) * spd;
+          const ny = s.y + (dy / dist) * spd;
+          if (MAP[Math.floor(ny) * MAP_W + Math.floor(nx)] === 0) {
+            s.x = nx;
+            s.y = ny;
+          }
+        } else if (s.alert && dist <= 1.2) {
+          // Attack player
+          if (Math.random() < 0.04) {
+            const dmg = s.type === 'boss' ? 15 : 8;
+            if (player.armor > 0) {
+              player.armor = Math.max(0, player.armor - dmg * 0.6);
+              player.hp = Math.max(0, player.hp - dmg * 0.4);
+            } else {
+              player.hp = Math.max(0, player.hp - dmg);
+            }
+            player.painFlash = 0.6;
+            playSound('hit');
+          }
+        }
+      }
+    }
+
+    // Wall color palettes
+    const wallColors = {
+      1: ['#1e3a8a', '#172554'], // Blue tech
+      2: ['#15803d', '#14532d'], // Green slime stone
+      3: ['#b91c1c', '#7f1d1d'], // Red hazard
+      4: ['#94a3b8', '#64748b'], // Silver door
+      5: ['#f59e0b', '#b45309']  // Gold exit
+    };
+
+    function render() {
+      // Ceiling & floor
+      ctx.fillStyle = '#1c1917';
+      ctx.fillRect(0, 0, W, H / 2);
+      ctx.fillStyle = '#292524';
+      ctx.fillRect(0, H / 2, W, H / 2);
+
+      // Raycasting walls
+      for (let x = 0; x < W; x++) {
+        const cameraX = (2 * x) / W - 1;
+        const rayDirX = player.dirX + player.planeX * cameraX;
+        const rayDirY = player.dirY + player.planeY * cameraX;
+
+        let mapX = Math.floor(player.x);
+        let mapY = Math.floor(player.y);
+
+        const deltaDistX = Math.abs(1 / (rayDirX || 1e-6));
+        const deltaDistY = Math.abs(1 / (rayDirY || 1e-6));
+
+        let stepX, stepY, sideDistX, sideDistY;
+        if (rayDirX < 0) { stepX = -1; sideDistX = (player.x - mapX) * deltaDistX; }
+        else { stepX = 1; sideDistX = (mapX + 1 - player.x) * deltaDistX; }
+
+        if (rayDirY < 0) { stepY = -1; sideDistY = (player.y - mapY) * deltaDistY; }
+        else { stepY = 1; sideDistY = (mapY + 1 - player.y) * deltaDistY; }
+
+        let hit = 0, side = 0, wallType = 0;
+        while (hit === 0) {
+          if (sideDistX < sideDistY) {
+            sideDistX += deltaDistX;
+            mapX += stepX;
+            side = 0;
+          } else {
+            sideDistY += deltaDistY;
+            mapY += stepY;
+            side = 1;
+          }
+          if (mapX >= 0 && mapX < MAP_W && mapY >= 0 && mapY < MAP_H) {
+            wallType = MAP[mapY * MAP_W + mapX];
+            if (wallType > 0) hit = 1;
+          } else {
+            hit = 1;
+            wallType = 1;
+          }
+        }
+
+        let perpWallDist;
+        if (side === 0) perpWallDist = (mapX - player.x + (1 - stepX) / 2) / rayDirX;
+        else perpWallDist = (mapY - player.y + (1 - stepY) / 2) / rayDirY;
+
+        perpWallDist = Math.max(0.1, perpWallDist);
+        zBuffer[x] = perpWallDist;
+
+        const lineHeight = Math.floor(H / perpWallDist);
+        const drawStart = Math.max(0, -lineHeight / 2 + H / 2);
+        const drawEnd = Math.min(H - 1, lineHeight / 2 + H / 2);
+
+        const colors = wallColors[wallType] || ['#475569', '#334155'];
+        ctx.fillStyle = side === 1 ? colors[1] : colors[0];
+        ctx.fillRect(x, drawStart, 1, drawEnd - drawStart);
+      }
+
+      // Render Sprites
+      const sortedSprites = sprites
+        .map(s => ({
+          ...s,
+          dist: Math.hypot(s.x - player.x, s.y - player.y)
+        }))
+        .filter(s => !s.collected)
+        .sort((a, b) => b.dist - a.dist);
+
+      for (const s of sortedSprites) {
+        const spriteX = s.x - player.x;
+        const spriteY = s.y - player.y;
+
+        const invDet = 1.0 / (player.planeX * player.dirY - player.dirX * player.planeY);
+        const transformX = invDet * (player.dirY * spriteX - player.dirX * spriteY);
+        const transformY = invDet * (-player.planeY * spriteX + player.planeX * spriteY);
+
+        if (transformY <= 0.2) continue;
+
+        const spriteScreenX = Math.floor((W / 2) * (1 + transformX / transformY));
+        const spriteH = Math.abs(Math.floor(H / transformY));
+        const spriteW = Math.abs(Math.floor(H / transformY));
+
+        const drawStartY = Math.max(0, -spriteH / 2 + H / 2);
+        const drawEndY = Math.min(H - 1, spriteH / 2 + H / 2);
+        const drawStartX = Math.max(0, -spriteW / 2 + spriteScreenX);
+        const drawEndX = Math.min(W - 1, spriteW / 2 + spriteScreenX);
+
+        if (drawStartX < W && drawEndX >= 0) {
+          // Check zBuffer
+          const midX = Math.floor((drawStartX + drawEndX) / 2);
+          if (midX >= 0 && midX < W && transformY < zBuffer[midX]) {
+            // Draw sprite shape
+            if (s.type === 'imp') {
+              ctx.fillStyle = s.dead ? '#7f1d1d' : (s.alert ? '#dc2626' : '#ea580c');
+              ctx.beginPath();
+              ctx.arc(spriteScreenX, H / 2 + (s.dead ? spriteH * 0.3 : 0), spriteW * 0.35, 0, Math.PI * 2);
+              ctx.fill();
+              if (!s.dead) {
+                // glowing red eyes
+                ctx.fillStyle = '#fef08a';
+                ctx.fillRect(spriteScreenX - spriteW * 0.15, H / 2 - spriteH * 0.1, spriteW * 0.08, spriteH * 0.08);
+                ctx.fillRect(spriteScreenX + spriteW * 0.07, H / 2 - spriteH * 0.1, spriteW * 0.08, spriteH * 0.08);
+              }
+            } else if (s.type === 'boss') {
+              ctx.fillStyle = s.dead ? '#450a0a' : '#7c2d12';
+              ctx.beginPath();
+              ctx.arc(spriteScreenX, H / 2 + (s.dead ? spriteH * 0.3 : 0), spriteW * 0.48, 0, Math.PI * 2);
+              ctx.fill();
+              if (!s.dead) {
+                // Horns & big one-eye
+                ctx.fillStyle = '#38bdf8';
+                ctx.beginPath();
+                ctx.arc(spriteScreenX, H / 2 - spriteH * 0.05, spriteW * 0.15, 0, Math.PI * 2);
+                ctx.fill();
+              }
+            } else if (s.type === 'medkit') {
+              ctx.fillStyle = '#f8fafc';
+              ctx.fillRect(spriteScreenX - spriteW * 0.2, H / 2 + spriteH * 0.1, spriteW * 0.4, spriteH * 0.3);
+              ctx.fillStyle = '#dc2626';
+              ctx.fillRect(spriteScreenX - spriteW * 0.05, H / 2 + spriteH * 0.15, spriteW * 0.1, spriteH * 0.2);
+              ctx.fillRect(spriteScreenX - spriteW * 0.15, H / 2 + spriteH * 0.2, spriteW * 0.3, spriteH * 0.1);
+            } else if (s.type === 'armor') {
+              ctx.fillStyle = '#38bdf8';
+              ctx.beginPath();
+              ctx.arc(spriteScreenX, H / 2 + spriteH * 0.2, spriteW * 0.2, 0, Math.PI * 2);
+              ctx.fill();
+            } else if (s.type === 'ammo') {
+              ctx.fillStyle = '#ca8a04';
+              ctx.fillRect(spriteScreenX - spriteW * 0.15, H / 2 + spriteH * 0.15, spriteW * 0.3, spriteH * 0.25);
+            }
+          }
+        }
+      }
+
+      // Pain flash
+      if (player.painFlash > 0) {
+        ctx.fillStyle = `rgba(220, 38, 38, ${player.painFlash})`;
+        ctx.fillRect(0, 0, W, H);
+      }
+
+      // Double Shotgun overlay
+      const gunX = W / 2;
+      const gunY = H;
+      const recoil = player.weaponState * 6;
+
+      ctx.save();
+      // Gun barrels
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(gunX - 35, gunY - 100 + recoil, 30, 100);
+      ctx.fillRect(gunX + 5, gunY - 100 + recoil, 30, 100);
+      ctx.fillStyle = '#475569';
+      ctx.fillRect(gunX - 30, gunY - 95 + recoil, 20, 15);
+      ctx.fillRect(gunX + 10, gunY - 95 + recoil, 20, 15);
+      // Wood stock
+      ctx.fillStyle = '#78350f';
+      ctx.fillRect(gunX - 40, gunY - 45 + recoil, 80, 50);
+
+      // Muzzle Flash when firing
+      if (player.weaponState >= 4) {
+        ctx.fillStyle = '#fef08a';
+        ctx.beginPath();
+        ctx.arc(gunX, gunY - 110, 45, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#f97316';
+        ctx.beginPath();
+        ctx.arc(gunX, gunY - 110, 25, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+
+      // Minimap (top right)
+      const mmSize = 80;
+      const mmX = W - mmSize - 10;
+      const mmY = 10;
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.75)';
+      ctx.fillRect(mmX, mmY, mmSize, mmSize);
+      ctx.strokeStyle = '#334155';
+      ctx.strokeRect(mmX, mmY, mmSize, mmSize);
+
+      const cell = mmSize / MAP_W;
+      for (let my = 0; my < MAP_H; my++) {
+        for (let mx = 0; mx < MAP_W; mx++) {
+          if (MAP[my * MAP_W + mx] > 0) {
+            ctx.fillStyle = '#475569';
+            ctx.fillRect(mmX + mx * cell, mmY + my * cell, cell, cell);
+          }
+        }
+      }
+      // Player on minimap
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath();
+      ctx.arc(mmX + player.x * cell, mmY + player.y * cell, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Bottom DOOM HUD Status Bar
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(0, H, W, 80);
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(0, H, W, 80);
+
+      // HUD Stats
+      function drawStat(label, val, x, color) {
+        ctx.fillStyle = '#64748b';
+        ctx.font = '11px monospace';
+        ctx.fillText(label, x, H + 25);
+        ctx.fillStyle = color;
+        ctx.font = 'bold 24px monospace';
+        ctx.fillText(val, x, H + 55);
+      }
+
+      drawStat('SANTÉ', Math.max(0, Math.floor(player.hp)) + '%', 30, player.hp > 25 ? '#22c55e' : '#ef4444');
+      drawStat('ARMURE', Math.floor(player.armor) + '%', 160, '#38bdf8');
+      drawStat('MUNITIONS', player.ammo, 290, player.ammo > 5 ? '#f59e0b' : '#ef4444');
+      drawStat('FRAGS', player.kills, 430, '#f8fafc');
+
+      // Doom Guy Face Box
+      const faceX = W - 100;
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(faceX, H + 10, 60, 60);
+      ctx.strokeStyle = '#475569';
+      ctx.strokeRect(faceX, H + 10, 60, 60);
+
+      // Pixel face
+      ctx.fillStyle = '#fed7aa'; // skin
+      ctx.fillRect(faceX + 12, H + 20, 36, 40);
+      ctx.fillStyle = '#78350f'; // hair
+      ctx.fillRect(faceX + 12, H + 18, 36, 10);
+      // eyes
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(faceX + 20, H + 32, 6, 6);
+      ctx.fillRect(faceX + 34, H + 32, 6, 6);
+      // smile / grit / hurt
+      if (player.hp > 60) {
+        ctx.fillStyle = '#dc2626';
+        ctx.fillRect(faceX + 22, H + 46, 16, 4); // grin
+      } else if (player.hp > 25) {
+        ctx.fillStyle = '#991b1b';
+        ctx.fillRect(faceX + 22, H + 48, 16, 3);
+        ctx.fillStyle = '#dc2626'; // blood scratch
+        ctx.fillRect(faceX + 15, H + 25, 4, 12);
+      } else {
+        // bloody & grimacing
+        ctx.fillStyle = '#dc2626';
+        ctx.fillRect(faceX + 15, H + 25, 8, 20);
+        ctx.fillStyle = '#7f1d1d';
+        ctx.fillRect(faceX + 20, H + 50, 20, 6);
+      }
+
+      // Game Over / Win overlays
+      if (player.hp <= 0) {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#dc2626';
+        ctx.font = 'bold 42px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('VOUS ÊTES MORT', W / 2, H / 2 - 10);
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '16px monospace';
+        ctx.fillText('Cliquez sur Nouvelle Partie pour retenter votre chance', W / 2, H / 2 + 30);
+        ctx.textAlign = 'start';
+      }
+    }
+
+    function gameLoop() {
+      update();
+      render();
+      requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();
+  </script>
+</body>
+</html>

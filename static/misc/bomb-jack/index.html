@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-53FZNFBB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+</script>
+  <meta charset="utf-8">
+  <title>Bomb Jack (1984) — Denis Arnaud</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .game-container {
+      max-width: 680px;
+      margin: 1.5rem auto;
+      padding: 1.25rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+    .header-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    canvas {
+      background: #000;
+      border: 3px solid #64748b;
+      border-radius: 6px;
+      max-width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+    }
+    .controls-panel {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      justify-content: center;
+      width: 100%;
+    }
+    .btn {
+      background: #ec4899;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #f472b6; transform: translateY(-1px); }
+    .btn.secondary { background: #334155; color: #f8fafc; }
+    .btn.secondary:hover { background: #475569; }
+    .help-box {
+      margin-top: 1rem;
+      padding: 0.85rem 1.2rem;
+      background: #0f172a;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      width: 100%;
+    }
+    .help-box strong { color: #f8fafc; }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="header-row">
+      <div>
+        <h1 style="margin: 0; font-size: 1.5rem; color: #f472b6; letter-spacing: 1px;">Bomb Jack (1984)</h1>
+        <p style="margin: 0.25rem 0 0 0; color: #94a3b8; font-size: 0.85rem;">Grand bond & vol plané au pied des Pyramides • Hommage Tehkan</p>
+      </div>
+    </div>
+
+    <canvas id="bombJackCanvas" width="480" height="540"></canvas>
+
+    <div class="controls-panel">
+      <button class="btn" onclick="togglePause()" id="pauseBtn">⏸ Pause</button>
+      <button class="btn secondary" onclick="restartGame()">🔄 Nouvelle Partie</button>
+      <a href="/misc/" class="btn secondary">🎮 Hub Jeux</a>
+    </div>
+
+    <div class="help-box">
+      <strong>Contrôles :</strong>
+      <span style="margin-left: 0.5rem;">[← / → / Q / D] Déplacement • [↑ / Z / ESPACE] Sauter • <strong>Appuyez plusieurs fois en l'air pour planer !</strong> • Collectez les bombes allumées pour le multiplicateur bonus.</span>
+    </div>
+  </div>
+
+  <script>
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let actx = null;
+    function initAudio() { if (!actx) actx = new AudioCtx(); }
+
+    function playTone(type) {
+      if (!actx) return;
+      const now = actx.currentTime;
+      const osc = actx.createOscillator();
+      const gain = actx.createGain();
+      osc.connect(gain);
+      gain.connect(actx.destination);
+
+      if (type === 'jump') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(300, now);
+        osc.frequency.exponentialRampToValueAtTime(700, now + 0.15);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
+        osc.start(now);
+        osc.stop(now + 0.15);
+      } else if (type === 'glide') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(450, now);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
+        osc.start(now);
+        osc.stop(now + 0.08);
+      } else if (type === 'bomb') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523, now);
+        osc.frequency.setValueAtTime(659, now + 0.06);
+        osc.frequency.setValueAtTime(783, now + 0.12);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
+        osc.start(now);
+        osc.stop(now + 0.2);
+      } else if (type === 'power') {
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.setValueAtTime(880, now + 0.15);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.3);
+        osc.start(now);
+        osc.stop(now + 0.3);
+      } else if (type === 'death') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(250, now);
+        osc.frequency.linearRampToValueAtTime(60, now + 0.35);
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.35);
+        osc.start(now);
+        osc.stop(now + 0.35);
+      }
+    }
+
+    const canvas = document.getElementById('bombJackCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width;
+    const H = canvas.height;
+
+    let score = 0;
+    let lives = 3;
+    let paused = false;
+    let gameOver = false;
+    let victory = false;
+
+    // Jack Player
+    const jack = {
+      x: W / 2,
+      y: H - 60,
+      w: 16,
+      h: 24,
+      vx: 0,
+      vy: 0,
+      onGround: false,
+      gliding: false
+    };
+
+    // Platforms (Classic layout)
+    const platforms = [
+      { x: 0, y: H - 20, w: W, h: 20 }, // Bottom floor
+      { x: 40, y: 420, w: 100, h: 12 },
+      { x: 340, y: 420, w: 100, h: 12 },
+      { x: 190, y: 340, w: 100, h: 12 },
+      { x: 60, y: 240, w: 110, h: 12 },
+      { x: 310, y: 240, w: 110, h: 12 },
+      { x: 180, y: 140, w: 120, h: 12 }
+    ];
+
+    // Bombs (20 bombs scattered)
+    let bombs = [];
+    let litIndex = 0;
+
+    function initBombs() {
+      bombs = [];
+      const coords = [
+        [60, 390], [90, 390], [120, 390],
+        [360, 390], [390, 390], [420, 390],
+        [210, 310], [240, 310], [270, 310],
+        [80, 210], [110, 210], [140, 210],
+        [330, 210], [360, 210], [390, 210],
+        [200, 110], [240, 110], [280, 110],
+        [80, 480], [400, 480]
+      ];
+      coords.forEach(([bx, by]) => {
+        bombs.push({ x: bx, y: by, r: 9, collected: false });
+      });
+      litIndex = 0;
+    }
+
+    initBombs();
+
+    // Enemies (Mummy & Birds)
+    let enemies = [
+      { x: 50, y: 400, vx: 1.5, vy: 0, type: 'mummy', minX: 40, maxX: 130 },
+      { x: 350, y: 400, vx: -1.5, vy: 0, type: 'mummy', minX: 340, maxX: 430 },
+      { x: 200, y: 80, vx: 2, vy: 1.2, type: 'bird' },
+      { x: 280, y: 200, vx: -1.8, vy: 1.5, type: 'bird' }
+    ];
+
+    // Power Coin ('P' ball)
+    let powerCoin = { x: 240, y: 80, vx: 2, vy: 2, r: 12, active: false };
+    let powerTimer = 0;
+
+    const keys = {};
+    window.addEventListener('keydown', e => {
+      initAudio();
+      keys[e.key.toLowerCase()] = true;
+      if (e.code === 'Space' || e.key === 'ArrowUp') {
+        if (!jack.onGround) {
+          // Glide toggle / flap
+          jack.vy = Math.max(-1.5, jack.vy * 0.4);
+          playTone('glide');
+        }
+      }
+    });
+    window.addEventListener('keyup', e => {
+      keys[e.key.toLowerCase()] = false;
+    });
+
+    function togglePause() {
+      paused = !paused;
+      document.getElementById('pauseBtn').textContent = paused ? '▶ Reprendre' : '⏸ Pause';
+    }
+
+    function restartGame() {
+      score = 0;
+      lives = 3;
+      paused = false;
+      gameOver = false;
+      victory = false;
+      powerTimer = 0;
+      powerCoin.active = false;
+      jack.x = W / 2;
+      jack.y = H - 60;
+      jack.vx = 0;
+      jack.vy = 0;
+      initBombs();
+      document.getElementById('pauseBtn').textContent = '⏸ Pause';
+    }
+
+    function killJack() {
+      playTone('death');
+      lives--;
+      if (lives <= 0) {
+        gameOver = true;
+      } else {
+        jack.x = W / 2;
+        jack.y = H - 60;
+        jack.vx = 0;
+        jack.vy = 0;
+      }
+    }
+
+    function update() {
+      if (paused || gameOver || victory) return;
+
+      // Controls
+      const left = keys['arrowleft'] || keys['q'] || keys['a'];
+      const right = keys['arrowright'] || keys['d'];
+      const jump = keys['arrowup'] || keys['z'] || keys['w'] || keys[' '];
+
+      if (left) jack.vx = -3.2;
+      else if (right) jack.vx = 3.2;
+      else jack.vx = 0;
+
+      // High Jump
+      if (jump && jack.onGround) {
+        jack.vy = -11.5;
+        jack.onGround = false;
+        playTone('jump');
+      }
+
+      // Gravity (lighter if jump key held down to glide)
+      const grav = (jump && jack.vy > 0) ? 0.16 : 0.42;
+      jack.vy = Math.min(8, jack.vy + grav);
+
+      jack.x += jack.vx;
+      jack.y += jack.vy;
+
+      // Screen Wrap Horizontal
+      if (jack.x < 0) jack.x = W - jack.w;
+      if (jack.x + jack.w > W) jack.x = 0;
+
+      // Platform Collisions (landing from top)
+      jack.onGround = false;
+      for (const p of platforms) {
+        if (jack.x + jack.w > p.x && jack.x < p.x + p.w) {
+          if (jack.y + jack.h >= p.y && jack.y + jack.h - jack.vy <= p.y + 12) {
+            jack.y = p.y - jack.h;
+            jack.vy = 0;
+            jack.onGround = true;
+          }
+        }
+      }
+
+      // Collect Bombs
+      for (let i = 0; i < bombs.length; i++) {
+        const b = bombs[i];
+        if (b.collected) continue;
+        if (Math.hypot((jack.x + jack.w / 2) - b.x, (jack.y + jack.h / 2) - b.y) < b.r + 10) {
+          b.collected = true;
+          playTone('bomb');
+          if (i === litIndex) {
+            score += 200;
+            // Advance lit index to next uncollected
+            findNextLitBomb();
+          } else {
+            score += 100;
+          }
+          // Chance to spawn power coin
+          if (Math.random() < 0.25 && !powerCoin.active) {
+            powerCoin.active = true;
+            powerCoin.x = b.x;
+            powerCoin.y = b.y;
+          }
+        }
+      }
+
+      // Check Victory
+      if (bombs.every(b => b.collected)) {
+        victory = true;
+        score += 3000;
+      }
+
+      // Power Coin update
+      if (powerCoin.active) {
+        powerCoin.x += powerCoin.vx;
+        powerCoin.y += powerCoin.vy;
+        if (powerCoin.x < 15 || powerCoin.x > W - 15) powerCoin.vx *= -1;
+        if (powerCoin.y < 30 || powerCoin.y > H - 30) powerCoin.vy *= -1;
+
+        if (Math.hypot((jack.x + jack.w / 2) - powerCoin.x, (jack.y + jack.h / 2) - powerCoin.y) < powerCoin.r + 10) {
+          powerCoin.active = false;
+          powerTimer = 360; // 6s of invulnerability
+          playTone('power');
+          score += 1000;
+        }
+      }
+
+      if (powerTimer > 0) powerTimer--;
+
+      // Enemies Update
+      for (const en of enemies) {
+        if (en.type === 'mummy') {
+          en.x += en.vx;
+          if (en.x <= en.minX || en.x >= en.maxX) en.vx *= -1;
+        } else if (en.type === 'bird') {
+          en.x += en.vx;
+          en.y += en.vy;
+          if (en.x < 20 || en.x > W - 20) en.vx *= -1;
+          if (en.y < 40 || en.y > H - 60) en.vy *= -1;
+        }
+
+        // Collision with Jack
+        if (Math.hypot((jack.x + jack.w / 2) - en.x, (jack.y + jack.h / 2) - en.y) < 16) {
+          if (powerTimer > 0) {
+            // Defeat enemy
+            score += 500;
+            en.x = Math.random() * (W - 80) + 40;
+            en.y = 80;
+            playTone('power');
+          } else {
+            killJack();
+            break;
+          }
+        }
+      }
+    }
+
+    function findNextLitBomb() {
+      for (let i = 0; i < bombs.length; i++) {
+        if (!bombs[i].collected) {
+          litIndex = i;
+          return;
+        }
+      }
+    }
+
+    function render() {
+      // Egyptian Pyramids & Sunset Background
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, H);
+      skyGrad.addColorStop(0, '#0284c7');
+      skyGrad.addColorStop(0.4, '#f59e0b');
+      skyGrad.addColorStop(0.8, '#78350f');
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, W, H);
+
+      // Great Pyramid Silhouette
+      ctx.fillStyle = '#b45309';
+      ctx.beginPath();
+      ctx.moveTo(40, H - 20);
+      ctx.lineTo(240, 160);
+      ctx.lineTo(440, H - 20);
+      ctx.fill();
+
+      // Shadow side of Pyramid
+      ctx.fillStyle = '#78350f';
+      ctx.beginPath();
+      ctx.moveTo(240, 160);
+      ctx.lineTo(440, H - 20);
+      ctx.lineTo(240, H - 20);
+      ctx.fill();
+
+      // Draw Platforms
+      for (const p of platforms) {
+        ctx.fillStyle = '#065f46'; // Teal/green arcade ledges
+        ctx.fillRect(p.x, p.y, p.w, p.h);
+        ctx.fillStyle = '#34d399';
+        ctx.fillRect(p.x, p.y, p.w, 3);
+      }
+
+      // Draw Bombs
+      for (let i = 0; i < bombs.length; i++) {
+        const b = bombs[i];
+        if (b.collected) continue;
+        const isLit = (i === litIndex);
+
+        // Bomb Body
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Fuse
+        ctx.strokeStyle = '#d97706';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(b.x, b.y - b.r);
+        ctx.quadraticCurveTo(b.x + 4, b.y - b.r - 6, b.x + 8, b.y - b.r - 4);
+        ctx.stroke();
+
+        // Spark if lit
+        if (isLit) {
+          ctx.fillStyle = (Math.floor(Date.now() / 80) % 2 === 0) ? '#fef08a' : '#ef4444';
+          ctx.beginPath();
+          ctx.arc(b.x + 8, b.y - b.r - 4, 5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Draw Power Coin ('P')
+      if (powerCoin.active) {
+        ctx.fillStyle = '#eab308';
+        ctx.beginPath();
+        ctx.arc(powerCoin.x, powerCoin.y, powerCoin.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 14px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('P', powerCoin.x, powerCoin.y + 5);
+        ctx.textAlign = 'start';
+      }
+
+      // Draw Enemies
+      for (const en of enemies) {
+        if (powerTimer > 0) {
+          // Helpless smiley face
+          ctx.fillStyle = '#38bdf8';
+          ctx.beginPath();
+          ctx.arc(en.x, en.y, 10, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#0f172a';
+          ctx.fillRect(en.x - 4, en.y - 3, 2, 2);
+          ctx.fillRect(en.x + 2, en.y - 3, 2, 2);
+        } else if (en.type === 'mummy') {
+          // White wrapping mummy
+          ctx.fillStyle = '#e2e8f0';
+          ctx.fillRect(en.x - 7, en.y - 12, 14, 20);
+          ctx.fillStyle = '#ef4444'; // Red eyes
+          ctx.fillRect(en.x - 4, en.y - 8, 3, 3);
+          ctx.fillRect(en.x + 1, en.y - 8, 3, 3);
+        } else if (en.type === 'bird') {
+          // Mechanical bird
+          ctx.fillStyle = '#f97316';
+          ctx.beginPath();
+          ctx.arc(en.x, en.y, 8, 0, Math.PI * 2);
+          ctx.fill();
+          // Wings
+          ctx.fillStyle = '#ea580c';
+          ctx.fillRect(en.x - 14, en.y - 2, 8, 4);
+          ctx.fillRect(en.x + 6, en.y - 2, 8, 4);
+        }
+      }
+
+      // Draw Bomb Jack Superhero
+      // Blue body, red cape & boots
+      ctx.fillStyle = '#ef4444'; // Red cape
+      ctx.fillRect(jack.x - 4, jack.y + 4, jack.w + 8, jack.h - 6);
+      ctx.fillStyle = '#3b82f6'; // Blue suit
+      ctx.fillRect(jack.x, jack.y + 4, jack.w, jack.h - 8);
+      // Face
+      ctx.fillStyle = '#fed7aa';
+      ctx.fillRect(jack.x + 2, jack.y - 2, jack.w - 4, 8);
+      // Mask / helmet
+      ctx.fillStyle = '#1d4ed8';
+      ctx.fillRect(jack.x + 2, jack.y - 4, jack.w - 4, 4);
+
+      // Top HUD
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      ctx.fillRect(0, 0, W, 35);
+      ctx.strokeStyle = '#334155';
+      ctx.strokeRect(0, 0, W, 35);
+
+      ctx.fillStyle = '#f472b6';
+      ctx.font = 'bold 15px monospace';
+      ctx.fillText('1P ' + score, 20, 22);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '12px monospace';
+      ctx.fillText('VIES: ' + lives, 180, 22);
+
+      if (powerTimer > 0) {
+        ctx.fillStyle = '#eab308';
+        ctx.fillText('POWER ! ' + Math.ceil(powerTimer / 60) + 's', 300, 22);
+      }
+
+      // Overlays
+      if (gameOver) {
+        ctx.fillStyle = 'rgba(0,0,0,0.75)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#ef4444';
+        ctx.font = 'bold 36px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('GAME OVER', W / 2, H / 2 - 10);
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '15px monospace';
+        ctx.fillText('Cliquez Nouvelle Partie pour rejouer', W / 2, H / 2 + 25);
+        ctx.textAlign = 'start';
+      } else if (victory) {
+        ctx.fillStyle = 'rgba(0,0,0,0.75)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#22c55e';
+        ctx.font = 'bold 36px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('TOUTES LES BOMBES DÉSAMORCÉES !', W / 2, H / 2 - 10);
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '16px monospace';
+        ctx.fillText(`Score : ${score} pts • Félicitations Jack !`, W / 2, H / 2 + 25);
+        ctx.textAlign = 'start';
+      }
+    }
+
+    function loop() {
+      update();
+      render();
+      requestAnimationFrame(loop);
+    }
+
+    loop();
+  </script>
+</body>
+</html>
