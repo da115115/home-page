@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Rubik's Cube 3D — Denis Arnaud</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+    .game-container {
+      max-width: 960px;
+      margin: 1.5rem auto;
+      padding: 1.5rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .stats-bar {
+      display: flex;
+      gap: 1.5rem;
+      background: #0f172a;
+      padding: 0.5rem 1.25rem;
+      border-radius: 10px;
+      border: 1px solid #334155;
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+    }
+    .stat-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #38bdf8;
+      font-family: monospace;
+    }
+    .viewport-scene {
+      width: 320px;
+      height: 320px;
+      perspective: 1000px;
+      margin: 1.5rem 0;
+      cursor: grab;
+      touch-action: none;
+    }
+    .viewport-scene:active {
+      cursor: grabbing;
+    }
+    .cube-pivot {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateX(-25deg) rotateY(-35deg);
+      transition: transform 0.05s ease-out;
+    }
+    .cubelet {
+      position: absolute;
+      width: 58px;
+      height: 58px;
+      left: 131px;
+      top: 131px;
+      transform-style: preserve-3d;
+      transition: transform 0.25s ease-in-out;
+    }
+    .face {
+      position: absolute;
+      width: 58px;
+      height: 58px;
+      box-sizing: border-box;
+      border: 3px solid #111827;
+      border-radius: 6px;
+      backface-visibility: hidden;
+    }
+    /* Couleurs officielles Rubik */
+    .face.up    { transform: rotateX(90deg) translateZ(29px); background: #ffffff; }
+    .face.down  { transform: rotateX(-90deg) translateZ(29px); background: #ffd500; }
+    .face.front { transform: translateZ(29px); background: #009b48; }
+    .face.back  { transform: rotateY(180deg) translateZ(29px); background: #0046ad; }
+    .face.left  { transform: rotateY(-90deg) translateZ(29px); background: #ff5800; }
+    .face.right { transform: rotateY(90deg) translateZ(29px); background: #b71234; }
+    .face.core  { background: #111827; }
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.5rem;
+      width: 100%;
+      max-width: 600px;
+      margin-top: 1rem;
+    }
+    @media (max-width: 640px) {
+      .controls-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .btn-move {
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      padding: 0.5rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.15s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .btn-move small {
+      font-size: 0.65rem;
+      color: #94a3b8;
+      font-weight: 400;
+    }
+    .btn-move:hover {
+      background: #334155;
+      border-color: #38bdf8;
+      transform: translateY(-1px);
+    }
+    .btn-action {
+      background: #38bdf8;
+      color: #0f172a;
+      border: none;
+      padding: 0.6rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-action:hover {
+      background: #7dd3fc;
+      transform: translateY(-1px);
+    }
+    .btn-action.secondary {
+      background: #334155;
+      color: #f8fafc;
+    }
+    .btn-action.secondary:hover {
+      background: #475569;
+    }
+    .action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      margin-top: 1.25rem;
+    }
+    .help-box {
+      margin-top: 1.5rem;
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      border: 1px solid #334155;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      width: 100%;
+      max-width: 650px;
+    }
+    .help-box strong { color: #f8fafc; }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="header-row">
+      <div>
+        <h1 style="margin: 0; font-size: 1.5rem; color: #f8fafc;">Rubik's Cube 3D (3×3×3)</h1>
+        <p style="margin: 0.25rem 0 0 0; color: #94a3b8; font-size: 0.85rem;">
+          Jeu interactif rétro en pur HTML5/CSS 3D & JavaScript
+        </p>
+      </div>
+      <div class="stats-bar">
+        <div class="stat-item">
+          <div class="stat-label">Mouvements</div>
+          <div class="stat-value" id="moveCount">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Temps</div>
+          <div class="stat-value" id="timer">00:00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3D Scene -->
+    <div class="viewport-scene" id="scene">
+      <div class="cube-pivot" id="cube"></div>
+    </div>
+
+    <!-- Face rotation buttons -->
+    <div class="controls-grid">
+      <button class="btn-move" onclick="playMove('U')"><span>U</span><small>Haut ⟳</small></button>
+      <button class="btn-move" onclick="playMove('U\'')"><span>U'</span><small>Haut ⟲</small></button>
+      <button class="btn-move" onclick="playMove('D')"><span>D</span><small>Bas ⟳</small></button>
+      <button class="btn-move" onclick="playMove('D\'')"><span>D'</span><small>Bas ⟲</small></button>
+      <button class="btn-move" onclick="playMove('F')"><span>F</span><small>Face ⟳</small></button>
+      <button class="btn-move" onclick="playMove('F\'')"><span>F'</span><small>Face ⟲</small></button>
+      <button class="btn-move" onclick="playMove('B')"><span>B</span><small>Arrière ⟳</small></button>
+      <button class="btn-move" onclick="playMove('B\'')"><span>B'</span><small>Arrière ⟲</small></button>
+      <button class="btn-move" onclick="playMove('L')"><span>L</span><small>Gauche ⟳</small></button>
+      <button class="btn-move" onclick="playMove('L\'')"><span>L'</span><small>Gauche ⟲</small></button>
+      <button class="btn-move" onclick="playMove('R')"><span>R</span><small>Droite ⟳</small></button>
+      <button class="btn-move" onclick="playMove('R\'')"><span>R'</span><small>Droite ⟲</small></button>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn-action" onclick="scrambleCube()">🎲 Mélanger (20 coups)</button>
+      <button class="btn-action secondary" onclick="resetCube()">🔄 Réinitialiser</button>
+      <button class="btn-action secondary" onclick="resetView()">👁 Vue normale</button>
+    </div>
+
+    <div class="help-box">
+      <strong>Contrôles :</strong>
+      <ul style="margin: 0.5rem 0 0 1.25rem; padding: 0;">
+        <li><strong>Faire pivoter la vue :</strong> Glisser avec la souris ou au doigt sur le cube.</li>
+        <li><strong>Tourner une face :</strong> Cliquez sur les boutons ci-dessus ou utilisez les touches du clavier (<code>U, D, F, B, L, R</code>, et Shift pour le sens anti-horaire).</li>
+        <li><strong>Applet Java historique (1999) :</strong> Retrouvez l'originale sur <a href="/rubik.html" style="color: #38bdf8;">/rubik.html</a>.</li>
+        <li><strong>Hub Jeux :</strong> Retour à la sélection arcade sur <a href="/misc/" style="color: #38bdf8;">/misc/</a>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Audio FX via Web Audio API
+    let audioCtx = null;
+    function playClickSound() {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(320, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(140, audioCtx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.08);
+      } catch (e) {}
+    }
+
+    const cubeEl = document.getElementById('cube');
+    const SPACING = 60;
+    const pieces = [];
+
+    // Create 27 cubelets
+    for (let x = -1; x <= 1; x++) {
+      for (let y = -1; y <= 1; y++) {
+        for (let z = -1; z <= 1; z++) {
+          const el = document.createElement('div');
+          el.className = 'cubelet';
+          
+          ['up', 'down', 'front', 'back', 'left', 'right'].forEach(face => {
+            const faceEl = document.createElement('div');
+            faceEl.className = 'face ' + face;
+            // hide inner faces
+            if (face === 'up' && y !== -1) faceEl.className = 'face core';
+            if (face === 'down' && y !== 1) faceEl.className = 'face core';
+            if (face === 'front' && z !== 1) faceEl.className = 'face core';
+            if (face === 'back' && z !== -1) faceEl.className = 'face core';
+            if (face === 'left' && x !== -1) faceEl.className = 'face core';
+            if (face === 'right' && x !== 1) faceEl.className = 'face core';
+            el.appendChild(faceEl);
+          });
+
+          cubeEl.appendChild(el);
+          const p = { el, x, y, z, matrix: [1,0,0, 0,1,0, 0,0,1] };
+          pieces.push(p);
+          updatePieceTransform(p);
+        }
+      }
+    }
+
+    function updatePieceTransform(p) {
+      const tx = p.x * SPACING;
+      const ty = p.y * SPACING;
+      const tz = p.z * SPACING;
+      const m = p.matrix;
+      p.el.style.transform = `translate3d(${tx}px, ${ty}px, ${tz}px) matrix3d(${m[0]},${m[3]},${m[6]},0, ${m[1]},${m[4]},${m[7]},0, ${m[2]},${m[5]},${m[8]},0, 0,0,0,1)`;
+    }
+
+    function multMatrix(m1, m2) {
+      return [
+        m1[0]*m2[0] + m1[1]*m2[3] + m1[2]*m2[6],
+        m1[0]*m2[1] + m1[1]*m2[4] + m1[2]*m2[7],
+        m1[0]*m2[2] + m1[1]*m2[5] + m1[2]*m2[8],
+
+        m1[3]*m2[0] + m1[4]*m2[3] + m1[5]*m2[6],
+        m1[3]*m2[1] + m1[4]*m2[4] + m1[5]*m2[7],
+        m1[3]*m2[2] + m1[4]*m2[5] + m1[5]*m2[8],
+
+        m1[6]*m2[0] + m1[7]*m2[3] + m1[8]*m2[6],
+        m1[6]*m2[1] + m1[7]*m2[4] + m1[8]*m2[7],
+        m1[6]*m2[2] + m1[7]*m2[5] + m1[8]*m2[8]
+      ];
+    }
+
+    let isAnimating = false;
+    let moves = 0;
+    let timerStarted = false;
+    let startTime = 0;
+    let timerInterval = null;
+
+    function applyMove(moveName, animate = true) {
+      if (isAnimating) return;
+      playClickSound();
+
+      if (!timerStarted) {
+        timerStarted = true;
+        startTime = Date.now();
+        timerInterval = setInterval(() => {
+          const s = Math.floor((Date.now() - startTime) / 1000);
+          const mins = String(Math.floor(s / 60)).padStart(2, '0');
+          const secs = String(s % 60).padStart(2, '0');
+          document.getElementById('timer').textContent = `${mins}:${secs}`;
+        }, 1000);
+      }
+
+      moves++;
+      document.getElementById('moveCount').textContent = moves;
+
+      // Axis, slice selector, rotation angle
+      let axis = 'y', val = 0, dir = 1;
+      const base = moveName[0];
+      const isPrime = moveName.includes('\'');
+
+      if (base === 'U') { axis = 'y'; val = -1; dir = isPrime ? 1 : -1; }
+      if (base === 'D') { axis = 'y'; val =  1; dir = isPrime ? -1 : 1; }
+      if (base === 'L') { axis = 'x'; val = -1; dir = isPrime ? -1 : 1; }
+      if (base === 'R') { axis = 'x'; val =  1; dir = isPrime ? 1 : -1; }
+      if (base === 'F') { axis = 'z'; val =  1; dir = isPrime ? -1 : 1; }
+      if (base === 'B') { axis = 'z'; val = -1; dir = isPrime ? 1 : -1; }
+
+      // Matrice de rotation 90 deg
+      let rotM;
+      if (axis === 'x') {
+        const c = 0, s = dir; // cos(90)=0, sin(90)=dir
+        rotM = [1, 0, 0,  0, c, -s,  0, s, c];
+      } else if (axis === 'y') {
+        const c = 0, s = dir;
+        rotM = [c, 0, s,  0, 1, 0,  -s, 0, c];
+      } else { // z
+        const c = 0, s = dir;
+        rotM = [c, -s, 0,  s, c, 0,  0, 0, 1];
+      }
+
+      pieces.forEach(p => {
+        if (p[axis] === val) {
+          // Update position coordinates
+          const nx = rotM[0]*p.x + rotM[1]*p.y + rotM[2]*p.z;
+          const ny = rotM[3]*p.x + rotM[4]*p.y + rotM[5]*p.z;
+          const nz = rotM[6]*p.x + rotM[7]*p.y + rotM[8]*p.z;
+          p.x = Math.round(nx);
+          p.y = Math.round(ny);
+          p.z = Math.round(nz);
+
+          // Update rotation matrix
+          p.matrix = multMatrix(rotM, p.matrix);
+          updatePieceTransform(p);
+        }
+      });
+    }
+
+    window.playMove = function(move) {
+      applyMove(move);
+    };
+
+    window.scrambleCube = async function() {
+      const movesPool = ['U', 'U\'', 'D', 'D\'', 'L', 'L\'', 'R', 'R\'', 'F', 'F\'', 'B', 'B\''];
+      for (let i = 0; i < 20; i++) {
+        const m = movesPool[Math.floor(Math.random() * movesPool.length)];
+        applyMove(m);
+        await new Promise(r => setTimeout(r, 60));
+      }
+      moves = 0;
+      document.getElementById('moveCount').textContent = moves;
+    };
+
+    window.resetCube = function() {
+      pieces.forEach(p => {
+        p.matrix = [1,0,0, 0,1,0, 0,0,1];
+        // reset to original grid index
+      });
+      // Re-init positions
+      let idx = 0;
+      for (let x = -1; x <= 1; x++) {
+        for (let y = -1; y <= 1; y++) {
+          for (let z = -1; z <= 1; z++) {
+            const p = pieces[idx++];
+            p.x = x; p.y = y; p.z = z;
+            p.matrix = [1,0,0, 0,1,0, 0,0,1];
+            updatePieceTransform(p);
+          }
+        }
+      }
+      moves = 0;
+      document.getElementById('moveCount').textContent = moves;
+      if (timerInterval) clearInterval(timerInterval);
+      timerStarted = false;
+      document.getElementById('timer').textContent = "00:00";
+    };
+
+    // Viewport drag rotation
+    let rotX = -25;
+    let rotY = -35;
+    let isDragging = false;
+    let startPointerX = 0;
+    let startPointerY = 0;
+
+    const sceneEl = document.getElementById('scene');
+    sceneEl.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      startPointerX = e.clientX;
+      startPointerY = e.clientY;
+      sceneEl.setPointerCapture(e.pointerId);
+    });
+
+    sceneEl.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - startPointerX;
+      const dy = e.clientY - startPointerY;
+      rotY += dx * 0.7;
+      rotX -= dy * 0.7;
+      startPointerX = e.clientX;
+      startPointerY = e.clientY;
+      cubeEl.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    });
+
+    sceneEl.addEventListener('pointerup', () => { isDragging = false; });
+    sceneEl.addEventListener('pointercancel', () => { isDragging = false; });
+
+    window.resetView = function() {
+      rotX = -25;
+      rotY = -35;
+      cubeEl.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    };
+
+    // Keyboard controls
+    window.addEventListener('keydown', (e) => {
+      const key = e.key.toUpperCase();
+      if (['U', 'D', 'L', 'R', 'F', 'B'].includes(key)) {
+        const move = e.shiftKey ? key + "'" : key;
+        applyMove(move);
+      }
+    });
+  </script>
+</body>
+</html>

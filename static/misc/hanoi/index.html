@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Tours de Hanoï — Jeu Rétro & Algorithme</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .game-container {
+      max-width: 860px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .stats-bar {
+      display: flex;
+      gap: 1.5rem;
+      background: #0f172a;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+    }
+    .stat-val {
+      color: #38bdf8;
+      font-weight: bold;
+    }
+    .board {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      height: 320px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 20px 10px 0 10px;
+      position: relative;
+      cursor: pointer;
+    }
+    .peg-col {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      position: relative;
+      padding-bottom: 12px;
+    }
+    .peg-rod {
+      position: absolute;
+      bottom: 12px;
+      width: 14px;
+      height: 240px;
+      background: linear-gradient(90deg, #64748b, #94a3b8, #475569);
+      border-radius: 7px 7px 0 0;
+      z-index: 1;
+    }
+    .peg-base {
+      position: absolute;
+      bottom: 0;
+      width: 85%;
+      height: 12px;
+      background: #334155;
+      border-radius: 6px;
+      border: 1px solid #475569;
+    }
+    .peg-label {
+      position: absolute;
+      top: 10px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #94a3b8;
+    }
+    .disks-container {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      width: 100%;
+      z-index: 2;
+    }
+    .disk {
+      height: 26px;
+      border-radius: 8px;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.85rem;
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s;
+      cursor: grab;
+      user-select: none;
+    }
+    .disk.selected {
+      transform: translateY(-25px);
+      box-shadow: 0 10px 20px rgba(56, 189, 248, 0.4);
+      outline: 2px solid #38bdf8;
+    }
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid #334155;
+    }
+    .btn {
+      padding: 0.6rem 1.2rem;
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn:hover { background: #0369a1; }
+    .btn:active { transform: scale(0.97); }
+    .btn-secondary { background: #334155; }
+    .btn-secondary:hover { background: #475569; }
+    .btn-solve { background: #8b5cf6; }
+    .btn-solve:hover { background: #7c3aed; }
+    select {
+      background: #0f172a;
+      color: #f1f5f9;
+      border: 1px solid #334155;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+    .win-overlay {
+      display: none;
+      text-align: center;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid #38bdf8;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body>
+  <div class="container" style="flex: 1;">
+    <div class="game-container">
+      <div class="header-row">
+        <div>
+          <h1 style="font-size: 1.7rem; margin: 0; color: #38bdf8;">Tours de Hanoï</h1>
+          <p style="color: #94a3b8; margin: 0.3rem 0 0 0; font-size: 0.9rem;">
+            Déplacez tous les disques de la tour <strong>A</strong> vers la tour <strong>C</strong> sans jamais placer un grand disque sur un plus petit.
+          </p>
+        </div>
+        <div class="stats-bar">
+          <div>Coups : <span id="moves" class="stat-val">0</span> / <span id="minMoves" title="Coups minimums optimaux (2^n - 1)">7</span></div>
+          <div>Temps : <span id="timer" class="stat-val">00:00</span></div>
+        </div>
+      </div>
+
+      <div class="board" id="board">
+        <div class="peg-col" onclick="pegClick(0)" id="peg-0">
+          <div class="peg-label">A</div>
+          <div class="peg-rod"></div>
+          <div class="disks-container" id="disks-0"></div>
+          <div class="peg-base"></div>
+        </div>
+        <div class="peg-col" onclick="pegClick(1)" id="peg-1">
+          <div class="peg-label">B</div>
+          <div class="peg-rod"></div>
+          <div class="disks-container" id="disks-1"></div>
+          <div class="peg-base"></div>
+        </div>
+        <div class="peg-col" onclick="pegClick(2)" id="peg-2">
+          <div class="peg-label">C</div>
+          <div class="peg-rod"></div>
+          <div class="disks-container" id="disks-2"></div>
+          <div class="peg-base"></div>
+        </div>
+      </div>
+
+      <div id="winMsg" class="win-overlay">
+        <h2 style="color: #34d399; margin: 0 0 0.5rem 0;">🎉 Bravo, tour terminée !</h2>
+        <p id="winStats" style="margin: 0 0 1rem 0; color: #cbd5e1;"></p>
+        <button class="btn" onclick="resetGame()">Rejouer</button>
+      </div>
+
+      <div class="controls">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <label for="diskCount" style="color: #94a3b8; font-size: 0.9rem;">Disques :</label>
+          <select id="diskCount" onchange="changeDiskCount()">
+            <option value="3" selected>3 disques (7 coups)</option>
+            <option value="4">4 disques (15 coups)</option>
+            <option value="5">5 disques (31 coups)</option>
+            <option value="6">6 disques (63 coups)</option>
+            <option value="7">7 disques (127 coups)</option>
+            <option value="8">8 disques (255 coups)</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem;">
+          <button class="btn btn-secondary" onclick="resetGame()">Réinitialiser</button>
+          <button id="solveBtn" class="btn btn-solve" onclick="toggleAutoSolve()">Résolution Auto</button>
+        </div>
+      </div>
+
+      <div style="margin-top: 1.5rem; font-size: 0.85rem; color: #64748b; display: flex; justify-content: space-between;">
+        <span>🎮 Contrôles : Cliquez sur la tour source puis sur la destination.</span>
+        <a href="/misc/" style="color: #38bdf8;">← Retour à la salle d'arcade</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const COLORS = [
+      'linear-gradient(135deg, #f43f5e, #be123c)',
+      'linear-gradient(135deg, #fb923c, #c2410c)',
+      'linear-gradient(135deg, #facc15, #ca8a04)',
+      'linear-gradient(135deg, #4ade80, #15803d)',
+      'linear-gradient(135deg, #38bdf8, #0369a1)',
+      'linear-gradient(135deg, #818cf8, #4338ca)',
+      'linear-gradient(135deg, #c084fc, #7e22ce)',
+      'linear-gradient(135deg, #f472b6, #be185d)'
+    ];
+
+    let numDisks = 3;
+    let pegs = [[], [], []];
+    let selectedPeg = null;
+    let moves = 0;
+    let timerInterval = null;
+    let secondsElapsed = 0;
+    let isSolving = false;
+    let solveTimeout = null;
+
+    // Web Audio Sound FX
+    const audioCtx = (window.AudioContext || window.webkitAudioContext) ? new (window.AudioContext || window.webkitAudioContext)() : null;
+    function playBeep(freq, type='sine', duration=0.08) {
+      if (!audioCtx) return;
+      try {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    function initGame() {
+      pegs = [[], [], []];
+      selectedPeg = null;
+      moves = 0;
+      secondsElapsed = 0;
+      clearInterval(timerInterval);
+      timerInterval = null;
+      document.getElementById('moves').innerText = '0';
+      document.getElementById('timer').innerText = '00:00';
+      document.getElementById('winMsg').style.display = 'none';
+      document.getElementById('minMoves').innerText = Math.pow(2, numDisks) - 1;
+
+      for (let i = numDisks; i >= 1; i--) {
+        pegs[0].push(i);
+      }
+      renderBoard();
+    }
+
+    function renderBoard() {
+      for (let p = 0; p < 3; p++) {
+        const container = document.getElementById('disks-' + p);
+        container.innerHTML = '';
+        pegs[p].forEach((diskVal, idx) => {
+          const diskEl = document.createElement('div');
+          diskEl.className = 'disk';
+          const isTop = (idx === pegs[p].length - 1);
+          if (p === selectedPeg && isTop) {
+            diskEl.classList.add('selected');
+          }
+          // Width based on disk size
+          const minW = 28;
+          const maxW = 90;
+          const pct = minW + ((diskVal - 1) / (numDisks - 1 || 1)) * (maxW - minW);
+          diskEl.style.width = pct + '%';
+          diskEl.style.background = COLORS[(diskVal - 1) % COLORS.length];
+          diskEl.innerText = diskVal;
+          container.appendChild(diskEl);
+        });
+      }
+    }
+
+    function startTimer() {
+      if (!timerInterval) {
+        timerInterval = setInterval(() => {
+          secondsElapsed++;
+          const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+          const secs = String(secondsElapsed % 60).padStart(2, '0');
+          document.getElementById('timer').innerText = `${mins}:${secs}`;
+        }, 1000);
+      }
+    }
+
+    function pegClick(pIdx) {
+      if (isSolving) return;
+      if (selectedPeg === null) {
+        if (pegs[pIdx].length > 0) {
+          selectedPeg = pIdx;
+          playBeep(440, 'triangle', 0.05);
+          renderBoard();
+        }
+      } else {
+        if (selectedPeg === pIdx) {
+          selectedPeg = null;
+          renderBoard();
+        } else {
+          tryMove(selectedPeg, pIdx);
+          selectedPeg = null;
+          renderBoard();
+        }
+      }
+    }
+
+    function tryMove(from, to) {
+      if (pegs[from].length === 0) return false;
+      const disk = pegs[from][pegs[from].length - 1];
+      if (pegs[to].length > 0 && pegs[to][pegs[to].length - 1] < disk) {
+        playBeep(180, 'sawtooth', 0.15); // Erreur
+        return false;
+      }
+      pegs[from].pop();
+      pegs[to].push(disk);
+      moves++;
+      document.getElementById('moves').innerText = moves;
+      startTimer();
+      playBeep(520 + disk * 40, 'sine', 0.08);
+
+      checkWin();
+      return true;
+    }
+
+    function checkWin() {
+      if (pegs[2].length === numDisks) {
+        clearInterval(timerInterval);
+        playBeep(659, 'sine', 0.15);
+        setTimeout(() => playBeep(880, 'sine', 0.3), 150);
+        const minMoves = Math.pow(2, numDisks) - 1;
+        const msg = (moves === minMoves)
+          ? `Score parfait ! Terminé en exactement ${moves} coups optimaux en ${document.getElementById('timer').innerText}.`
+          : `Terminé en ${moves} coups (optimal : ${minMoves}) en ${document.getElementById('timer').innerText}.`;
+        document.getElementById('winStats').innerText = msg;
+        document.getElementById('winMsg').style.display = 'block';
+      }
+    }
+
+    function changeDiskCount() {
+      numDisks = parseInt(document.getElementById('diskCount').value, 10);
+      stopAutoSolve();
+      initGame();
+    }
+
+    function resetGame() {
+      stopAutoSolve();
+      initGame();
+    }
+
+    // Algorithme récursif de résolution
+    function generateSolution(n, source, target, aux) {
+      let movesList = [];
+      function solve(k, s, t, a) {
+        if (k === 1) {
+          movesList.push([s, t]);
+        } else {
+          solve(k - 1, s, a, t);
+          movesList.push([s, t]);
+          solve(k - 1, a, t, s);
+        }
+      }
+      solve(n, source, target, aux);
+      return movesList;
+    }
+
+    function toggleAutoSolve() {
+      if (isSolving) {
+        stopAutoSolve();
+      } else {
+        startAutoSolve();
+      }
+    }
+
+    function startAutoSolve() {
+      initGame();
+      isSolving = true;
+      document.getElementById('solveBtn').innerText = 'Arrêter Auto';
+      document.getElementById('solveBtn').style.background = '#ef4444';
+      const steps = generateSolution(numDisks, 0, 2, 1);
+      let stepIdx = 0;
+
+      const delay = Math.max(120, 1000 / (steps.length > 30 ? 25 : 6));
+
+      function doStep() {
+        if (!isSolving || stepIdx >= steps.length) {
+          stopAutoSolve();
+          return;
+        }
+        const [from, to] = steps[stepIdx++];
+        tryMove(from, to);
+        renderBoard();
+        solveTimeout = setTimeout(doStep, delay);
+      }
+      solveTimeout = setTimeout(doStep, 300);
+    }
+
+    function stopAutoSolve() {
+      isSolving = false;
+      clearTimeout(solveTimeout);
+      const btn = document.getElementById('solveBtn');
+      if (btn) {
+        btn.innerText = 'Résolution Auto';
+        btn.style.background = '#8b5cf6';
+      }
+    }
+
+    initGame();
+  </script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Salle Rétro-Arcade — Denis Arnaud</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .hub-container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+    }
+    .hub-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .hub-badge {
+      display: inline-block;
+      padding: 0.35rem 0.9rem;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
+    }
+    .hub-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #f8fafc;
+      margin: 0;
+      background: linear-gradient(135deg, #f8fafc 40%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hub-subtitle {
+      color: #94a3b8;
+      margin-top: 0.75rem;
+      font-size: 1.05rem;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .game-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .game-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--card-accent, #38bdf8);
+      opacity: 0.8;
+    }
+    .game-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.5);
+      border-color: var(--card-accent, #38bdf8);
+    }
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .game-icon {
+      font-size: 2.2rem;
+      background: #0f172a;
+      width: 58px;
+      height: 58px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #334155;
+    }
+    .game-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #f8fafc;
+      margin: 0;
+    }
+    .game-year {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-top: 2px;
+      font-family: monospace;
+    }
+    .game-desc {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid #334155;
+    }
+    .tech-tags {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .tag {
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      font-size: 0.72rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      font-family: monospace;
+    }
+    .btn-play {
+      background: var(--card-accent, #38bdf8);
+      color: #0f172a;
+      text-decoration: none;
+      padding: 0.5rem 1.1rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-play:hover {
+      filter: brightness(1.15);
+      transform: scale(1.03);
+    }
+    .footer-note {
+      text-align: center;
+      margin-top: 3rem;
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+    .footer-note a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="hub-container">
+    <div class="hub-header">
+      <div class="hub-badge">Espace Récréatif & Algorithmes</div>
+      <h1 class="hub-title">Salle Rétro-Arcade</h1>
+      <p class="hub-subtitle">
+        Une collection de classiques de l'arcade et de puzzles mathématiques, recréés en pur HTML5, Canvas & Web Audio API — sans dépendances externes.
+      </p>
+    </div>
+
+    <div class="games-grid">
+      <!-- Rubik's Cube 3D -->
+      <div class="game-card" style="--card-accent: #f59e0b;">
+        <div>
+          <div class="card-top">
+            <div class="game-icon">🧊</div>
+            <div>
+              <h2 class="game-name">Rubik's Cube 3D</h2>
+              <div class="game-year">3×3×3 — Ernő Rubik (1974)</div>
+            </div>
+          </div>
+          <p class="game-desc">
+            Cube 3D interactif avec rotation orbitale tactile/souris, rotation complète des 6 faces (U, D, L, R, F, B), générateur de mélange aléatoire, chronomètre et compteur de mouvements.
+          </p>
+        </div>
+        <div class="card-footer">
+          <div class="tech-tags">
+            <span class="tag">CSS 3D</span>
+            <span class="tag">Web Audio</span>
+          </div>
+          <a href="/misc/rubik/" class="btn-play">Jouer ➔</a>
+        </div>
+      </div>
+
+      <!-- Tours de Hanoï -->
+      <div class="game-card" style="--card-accent: #38bdf8;">
+        <div>
+          <div class="card-top">
+            <div class="game-icon">🗼</div>
+            <div>
+              <h2 class="game-name">Tours de Hanoï</h2>
+              <div class="game-year">Édouard Lucas (1883)</div>
+            </div>
+          </div>
+          <p class="game-desc">
+            Le grand classique combinatoire et récursif : 3 à 8 disques, détection de coups valides, calcul du minimum théorique de mouvements (\(2^n - 1\)) et résolveur automatique pas à pas.
+          </p>
+        </div>
+        <div class="card-footer">
+          <div class="tech-tags">
+            <span class="tag">Canvas</span>
+            <span class="tag">Récursion</span>
+          </div>
+          <a href="/misc/hanoi/" class="btn-play">Jouer ➔</a>
+        </div>
+      </div>
+
+      <!-- Space Invaders -->
+      <div class="game-card" style="--card-accent: #10b981;">
+        <div>
+          <div class="card-top">
+            <div class="game-icon">👾</div>
+            <div>
+              <h2 class="game-name">Space Invaders</h2>
+              <div class="game-year">Taito (1978) — Tomohiro Nishikado</div>
+            </div>
+          </div>
+          <p class="game-desc">
+            Défendez la Terre contre les vagues d'extraterrestres ! Bunkers destructibles, soucoupe mystère rouge bonus, accélération de la cadence d'assaut et bruitages synthétisés rétro.
+          </p>
+        </div>
+        <div class="card-footer">
+          <div class="tech-tags">
+            <span class="tag">Canvas 2D</span>
+            <span class="tag">Pixel Art</span>
+          </div>
+          <a href="/misc/invaders/" class="btn-play">Jouer ➔</a>
+        </div>
+      </div>
+
+      <!-- Asteroids -->
+      <div class="game-card" style="--card-accent: #8b5cf6;">
+        <div>
+          <div class="card-top">
+            <div class="game-icon">🚀</div>
+            <div>
+              <h2 class="game-name">Asteroids</h2>
+              <div class="game-year">Atari (1979) — Lyle Rains & Ed Logg</div>
+            </div>
+          </div>
+          <p class="game-desc">
+            Pilotez votre vaisseau dans un champ d'astéroïdes avec physique inertielle newtonienne pure, tir laser, division des roches et saut d'urgence en hyperespace.
+          </p>
+        </div>
+        <div class="card-footer">
+          <div class="tech-tags">
+            <span class="tag">Vector Graphics</span>
+            <span class="tag">Physics</span>
+          </div>
+          <a href="/misc/asteroids/" class="btn-play">Jouer ➔</a>
+        </div>
+      </div>
+
+      <!-- Atari Pong -->
+      <div class="game-card" style="--card-accent: #f43f5e;">
+        <div>
+          <div class="card-top">
+            <div class="game-icon">🏓</div>
+            <div>
+              <h2 class="game-name">Atari Pong</h2>
+              <div class="game-year">Atari (1972) — Allan Alcorn</div>
+            </div>
+          </div>
+          <p class="game-desc">
+            Le pionnier absolu du jeu vidéo d'arcade. Jouez contre l'ordinateur avec 3 niveaux d'intelligence artificielle ou à deux joueurs sur le même clavier, avec rendu CRT scanlines.
+          </p>
+        </div>
+        <div class="card-footer">
+          <div class="tech-tags">
+            <span class="tag">IA</span>
+            <span class="tag">2 Joueurs</span>
+          </div>
+          <a href="/misc/pong/" class="btn-play">Jouer ➔</a>
+        </div>
+      </div>
+
+      <!-- Archive Historique Rubik 1999 -->
+      <div class="game-card" style="--card-accent: #64748b;">
+        <div>
+          <div class="card-top">
+            <div class="game-icon">📜</div>
+            <div>
+              <h2 class="game-name">Applet Java Rubik</h2>
+              <div class="game-year">Archive Web (1999) — Sema Group / Free.fr</div>
+            </div>
+          </div>
+          <p class="game-desc">
+            L'applet Java originale de 1999 conservée dans son état d'époque avec son fichier <code>rubik.class</code> et l'affiche historique sur la présidence luxembourgeoise.
+          </p>
+        </div>
+        <div class="card-footer">
+          <div class="tech-tags">
+            <span class="tag">Java Bytecode</span>
+            <span class="tag">Archive</span>
+          </div>
+          <a href="/rubik.html" class="btn-play">Voir ➔</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <p>
+        Projet hébergé sur <a href="https://denisarnaud.com">denisarnaud.com</a> — Code source ouvert géré dans le dépôt principal.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

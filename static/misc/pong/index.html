@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Pong 1972 Rétro — Denis Arnaud</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+    .game-container {
+      max-width: 860px;
+      margin: 1.5rem auto;
+      padding: 1.5rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .canvas-wrapper {
+      position: relative;
+      border: 4px solid #334155;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+    }
+    /* CRT Scanline overlay */
+    .canvas-wrapper::after {
+      content: " ";
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
+      pointer-events: none;
+    }
+    canvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+    .controls-panel {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      align-items: center;
+    }
+    .btn {
+      background: #38bdf8;
+      color: #0f172a;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .btn:hover {
+      background: #7dd3fc;
+      transform: translateY(-1px);
+    }
+    .btn.secondary {
+      background: #334155;
+      color: #f8fafc;
+    }
+    .btn.secondary:hover {
+      background: #475569;
+    }
+    select {
+      background: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .mobile-controls {
+      display: none;
+      width: 100%;
+      justify-content: space-between;
+      margin-top: 0.75rem;
+    }
+    @media (max-width: 768px) {
+      .mobile-controls {
+        display: flex;
+      }
+    }
+    .touch-btn {
+      background: #334155;
+      color: white;
+      border: 1px solid #475569;
+      font-size: 1.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      touch-action: manipulation;
+    }
+    .help-box {
+      margin-top: 1.5rem;
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      border: 1px solid #334155;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="header-row">
+      <div>
+        <h1 style="margin: 0; font-size: 1.5rem; color: #f8fafc;">Atari Pong (1972)</h1>
+        <p style="margin: 0.25rem 0 0 0; color: #94a3b8; font-size: 0.85rem;">
+          Le classique du jeu vidéo rétro en pur HTML5 Canvas & Web Audio
+        </p>
+      </div>
+      <div>
+        <select id="modeSelect" onchange="changeMode()">
+          <option value="1p-easy">1 Joueur vs IA (Facile)</option>
+          <option value="1p-med" selected>1 Joueur vs IA (Moyen)</option>
+          <option value="1p-hard">1 Joueur vs IA (Difficile)</option>
+          <option value="2p">2 Joueurs (Clavier partagé)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="canvas-wrapper">
+      <canvas id="pongCanvas" width="800" height="500"></canvas>
+    </div>
+
+    <!-- Mobile touch buttons -->
+    <div class="mobile-controls">
+      <div style="display: flex; gap: 0.5rem;">
+        <button class="touch-btn" id="btnUp">▲</button>
+        <button class="touch-btn" id="btnDown">▼</button>
+      </div>
+      <div style="font-size: 0.8rem; color: #94a3b8; align-self: center;">
+        Tactile : boutons ou glisser sur le canvas
+      </div>
+    </div>
+
+    <div class="controls-panel">
+      <button class="btn" onclick="togglePause()" id="pauseBtn">⏸ Pause</button>
+      <button class="btn secondary" onclick="resetMatch()">🔄 Recommencer</button>
+      <a href="/misc/" class="btn secondary" style="text-decoration: none;">🎮 Hub Jeux</a>
+    </div>
+
+    <div class="help-box">
+      <strong style="color: #f8fafc;">Contrôles :</strong>
+      <ul style="margin: 0.5rem 0 0 1.25rem; padding: 0;">
+        <li><strong>Joueur 1 (Gauche) :</strong> Touches <kbd style="background:#334155; padding:2px 6px; border-radius:4px;">W</kbd> / <kbd style="background:#334155; padding:2px 6px; border-radius:4px;">S</kbd> ou <kbd style="background:#334155; padding:2px 6px; border-radius:4px;">▲</kbd> / <kbd style="background:#334155; padding:2px 6px; border-radius:4px;">▼</kbd> (ou souris / tactile).</li>
+        <li><strong>Joueur 2 (Droite, mode 2J) :</strong> Touches <kbd style="background:#334155; padding:2px 6px; border-radius:4px;">▲</kbd> / <kbd style="background:#334155; padding:2px 6px; border-radius:4px;">▼</kbd>.</li>
+        <li><strong>Règle :</strong> Premier à 7 points gagne le match !</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('pongCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Web Audio Sound FX
+    let audioCtx = null;
+    function playBeep(freq, duration = 0.08) {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    const PADDLE_WIDTH = 12;
+    const PADDLE_HEIGHT = 80;
+    const BALL_SIZE = 12;
+    const WIN_SCORE = 7;
+
+    let p1 = { y: 210, score: 0, speed: 7 };
+    let p2 = { y: 210, score: 0, speed: 7 };
+    let ball = { x: 400, y: 250, vx: 5, vy: 3, speed: 6 };
+
+    let isPaused = false;
+    let gameOver = false;
+    let winner = null;
+    let mode = '1p-med';
+
+    const keys = {};
+    window.addEventListener('keydown', e => { keys[e.key] = true; });
+    window.addEventListener('keyup', e => { keys[e.key] = false; });
+
+    // Touch support on canvas
+    canvas.addEventListener('touchmove', e => {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const touchY = (e.touches[0].clientY - rect.top) * (canvas.height / rect.height);
+      p1.y = Math.max(0, Math.min(canvas.height - PADDLE_HEIGHT, touchY - PADDLE_HEIGHT / 2));
+    }, { passive: false });
+
+    // Mobile buttons
+    const btnUp = document.getElementById('btnUp');
+    const btnDown = document.getElementById('btnDown');
+    let touchUp = false, touchDown = false;
+    btnUp.addEventListener('touchstart', e => { e.preventDefault(); touchUp = true; });
+    btnUp.addEventListener('touchend', e => { e.preventDefault(); touchUp = false; });
+    btnDown.addEventListener('touchstart', e => { e.preventDefault(); touchDown = true; });
+    btnDown.addEventListener('touchend', e => { e.preventDefault(); touchDown = false; });
+
+    function resetBall(servingPlayer = 1) {
+      ball.x = canvas.width / 2;
+      ball.y = canvas.height / 2;
+      ball.speed = 6;
+      const angle = (Math.random() * 0.6 - 0.3) * Math.PI; // -54 to +54 deg
+      const dir = servingPlayer === 1 ? 1 : -1;
+      ball.vx = dir * ball.speed * Math.cos(angle);
+      ball.vy = ball.speed * Math.sin(angle);
+    }
+
+    function changeMode() {
+      mode = document.getElementById('modeSelect').value;
+      resetMatch();
+    }
+
+    function resetMatch() {
+      p1.score = 0;
+      p2.score = 0;
+      p1.y = (canvas.height - PADDLE_HEIGHT) / 2;
+      p2.y = (canvas.height - PADDLE_HEIGHT) / 2;
+      gameOver = false;
+      winner = null;
+      isPaused = false;
+      document.getElementById('pauseBtn').textContent = "⏸ Pause";
+      resetBall();
+    }
+
+    function togglePause() {
+      if (gameOver) return;
+      isPaused = !isPaused;
+      document.getElementById('pauseBtn').textContent = isPaused ? "▶ Reprendre" : "⏸ Pause";
+    }
+
+    function update() {
+      if (isPaused || gameOver) return;
+
+      // P1 movement
+      if (keys['w'] || keys['W'] || (mode !== '2p' && (keys['ArrowUp'] || touchUp))) {
+        p1.y -= p1.speed;
+      }
+      if (keys['s'] || keys['S'] || (mode !== '2p' && (keys['ArrowDown'] || touchDown))) {
+        p1.y += p1.speed;
+      }
+      p1.y = Math.max(0, Math.min(canvas.height - PADDLE_HEIGHT, p1.y));
+
+      // P2 movement
+      if (mode === '2p') {
+        if (keys['ArrowUp']) p2.y -= p2.speed;
+        if (keys['ArrowDown']) p2.y += p2.speed;
+      } else {
+        // AI logic
+        let aiSpeed = 4.5;
+        let aiReaction = 0.85;
+        if (mode === '1p-easy') { aiSpeed = 3.2; aiReaction = 0.6; }
+        if (mode === '1p-hard') { aiSpeed = 6.2; aiReaction = 0.95; }
+
+        const targetY = ball.y - PADDLE_HEIGHT / 2;
+        if (Math.random() < aiReaction) {
+          if (p2.y < targetY - 10) p2.y += aiSpeed;
+          else if (p2.y > targetY + 10) p2.y -= aiSpeed;
+        }
+      }
+      p2.y = Math.max(0, Math.min(canvas.height - PADDLE_HEIGHT, p2.y));
+
+      // Move ball
+      ball.x += ball.vx;
+      ball.y += ball.vy;
+
+      // Wall bounce top/bottom
+      if (ball.y <= 0) {
+        ball.y = 0;
+        ball.vy = -ball.vy;
+        playBeep(240);
+      } else if (ball.y + BALL_SIZE >= canvas.height) {
+        ball.y = canvas.height - BALL_SIZE;
+        ball.vy = -ball.vy;
+        playBeep(240);
+      }
+
+      // Paddle P1 collision
+      if (ball.x <= 20 + PADDLE_WIDTH && ball.x >= 20) {
+        if (ball.y + BALL_SIZE >= p1.y && ball.y <= p1.y + PADDLE_HEIGHT) {
+          ball.x = 20 + PADDLE_WIDTH;
+          ball.speed = Math.min(13, ball.speed + 0.35);
+          const hitRel = (ball.y + BALL_SIZE / 2 - (p1.y + PADDLE_HEIGHT / 2)) / (PADDLE_HEIGHT / 2);
+          const maxAngle = (5 * Math.PI) / 12; // 75 deg max
+          const bounceAngle = hitRel * maxAngle;
+          ball.vx = ball.speed * Math.cos(bounceAngle);
+          ball.vy = ball.speed * Math.sin(bounceAngle);
+          playBeep(480);
+        }
+      }
+
+      // Paddle P2 collision
+      const p2X = canvas.width - 20 - PADDLE_WIDTH;
+      if (ball.x + BALL_SIZE >= p2X && ball.x <= p2X + PADDLE_WIDTH) {
+        if (ball.y + BALL_SIZE >= p2.y && ball.y <= p2.y + PADDLE_HEIGHT) {
+          ball.x = p2X - BALL_SIZE;
+          ball.speed = Math.min(13, ball.speed + 0.35);
+          const hitRel = (ball.y + BALL_SIZE / 2 - (p2.y + PADDLE_HEIGHT / 2)) / (PADDLE_HEIGHT / 2);
+          const maxAngle = (5 * Math.PI) / 12;
+          const bounceAngle = hitRel * maxAngle;
+          ball.vx = -ball.speed * Math.cos(bounceAngle);
+          ball.vy = ball.speed * Math.sin(bounceAngle);
+          playBeep(480);
+        }
+      }
+
+      // Point scoring
+      if (ball.x < 0) {
+        p2.score++;
+        playBeep(180, 0.25);
+        checkWinner();
+        if (!gameOver) resetBall(1);
+      } else if (ball.x > canvas.width) {
+        p1.score++;
+        playBeep(720, 0.25);
+        checkWinner();
+        if (!gameOver) resetBall(2);
+      }
+    }
+
+    function checkWinner() {
+      if (p1.score >= WIN_SCORE) {
+        gameOver = true;
+        winner = mode === '2p' ? "Joueur 1 gagne !" : "Victoire du Joueur !";
+      } else if (p2.score >= WIN_SCORE) {
+        gameOver = true;
+        winner = mode === '2p' ? "Joueur 2 gagne !" : "Victoire de l'Ordinateur !";
+      }
+    }
+
+    function render() {
+      // Clear
+      ctx.fillStyle = '#050811';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Center dashed net
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 4;
+      ctx.setLineDash([12, 12]);
+      ctx.beginPath();
+      ctx.moveTo(canvas.width / 2, 0);
+      ctx.lineTo(canvas.width / 2, canvas.height);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Scores
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = 'bold 54px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(p1.score, canvas.width / 4, 70);
+      ctx.fillText(p2.score, (canvas.width * 3) / 4, 70);
+
+      // Paddles
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillRect(20, p1.y, PADDLE_WIDTH, PADDLE_HEIGHT);
+      ctx.fillStyle = '#f43f5e';
+      ctx.fillRect(canvas.width - 20 - PADDLE_WIDTH, p2.y, PADDLE_WIDTH, PADDLE_HEIGHT);
+
+      // Ball
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(ball.x, ball.y, BALL_SIZE, BALL_SIZE);
+
+      // Overlays
+      if (isPaused) {
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.75)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = 'bold 36px monospace';
+        ctx.fillText("PAUSE", canvas.width / 2, canvas.height / 2);
+      } else if (gameOver) {
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = 'bold 36px monospace';
+        ctx.fillText(winner, canvas.width / 2, canvas.height / 2 - 20);
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '18px monospace';
+        ctx.fillText("Cliquez sur Recommencer pour une nouvelle partie", canvas.width / 2, canvas.height / 2 + 30);
+      }
+    }
+
+    function loop() {
+      update();
+      render();
+      requestAnimationFrame(loop);
+    }
+
+    resetMatch();
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>
