@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Manic Miner (1983) — Denis Arnaud</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+    .game-container {
+      max-width: 840px;
+      margin: 1.5rem auto;
+      padding: 1.5rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .stats-bar {
+      display: flex;
+      gap: 1.5rem;
+      background: #0f172a;
+      padding: 0.5rem 1.25rem;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      font-family: monospace;
+    }
+    .stat-label { font-size: 0.75rem; color: #94a3b8; }
+    .stat-value { font-size: 1.25rem; font-weight: 700; color: #facc15; }
+    .canvas-wrapper {
+      position: relative;
+      border: 4px solid #334155;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 0 25px rgba(250, 204, 21, 0.2);
+    }
+    .canvas-wrapper::after {
+      content: " ";
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
+      pointer-events: none;
+    }
+    canvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+    .controls-panel {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      align-items: center;
+    }
+    .btn {
+      background: #facc15;
+      color: #0f172a;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #fde047; transform: translateY(-1px); }
+    .btn.secondary { background: #334155; color: #f8fafc; font-weight: 600; }
+    .btn.secondary:hover { background: #475569; }
+    .mobile-controls {
+      display: none;
+      width: 100%;
+      justify-content: space-between;
+      margin-top: 0.75rem;
+      gap: 0.5rem;
+    }
+    @media (max-width: 768px) {
+      .mobile-controls { display: flex; }
+    }
+    .touch-btn {
+      background: #334155;
+      color: white;
+      border: 1px solid #475569;
+      font-size: 1.15rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      touch-action: manipulation;
+    }
+    .help-box {
+      margin-top: 1.5rem;
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      border: 1px solid #334155;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div class="header-row">
+      <div>
+        <h1 style="margin: 0; font-size: 1.5rem; color: #f8fafc;">Manic Miner (1983)</h1>
+        <p style="margin: 0.25rem 0 0 0; color: #94a3b8; font-size: 0.85rem;">
+          Légende du ZX Spectrum par Matthew Smith — Caverne Centrale
+        </p>
+      </div>
+      <div class="stats-bar">
+        <div>
+          <div class="stat-label">SCORE</div>
+          <div class="stat-value" id="scoreVal">00000</div>
+        </div>
+        <div>
+          <div class="stat-label">CLÉS</div>
+          <div class="stat-value" id="keysVal">0 / 5</div>
+        </div>
+        <div>
+          <div class="stat-label">VIES</div>
+          <div class="stat-value" id="livesVal">3</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="canvas-wrapper">
+      <canvas id="minerCanvas" width="760" height="480"></canvas>
+    </div>
+
+    <!-- Mobile touch buttons -->
+    <div class="mobile-controls">
+      <div style="display: flex; gap: 0.5rem;">
+        <button class="touch-btn" id="mLeft">◀ GAUCHE</button>
+        <button class="touch-btn" id="mRight">DROITE ▶</button>
+      </div>
+      <button class="touch-btn" id="mJump" style="background:#facc15; color:#0f172a; font-weight:bold; padding: 0.75rem 2rem;">SAUT ⬆</button>
+    </div>
+
+    <div class="controls-panel">
+      <button class="btn" onclick="togglePause()" id="pauseBtn">⏸ Pause</button>
+      <button class="btn secondary" onclick="restartGame()">🔄 Nouvelle Partie</button>
+      <a href="/misc/" class="btn secondary" style="text-decoration: none;">🎮 Hub Jeux</a>
+    </div>
+
+    <div class="help-box">
+      <strong style="color: #f8fafc;">Règles & Astuces de la Caverne Centrale :</strong>
+      <ul style="margin: 0.5rem 0 0 1.25rem; padding: 0;">
+        <li><strong>Déplacement :</strong> Touches Flèches <kbd style="background:#334155; padding:2px 6px; border-radius:4px;">◀</kbd> / <kbd style="background:#334155; padding:2px 6px; border-radius:4px;">▶</kbd> ou <kbd style="background:#334155; padding:2px 6px; border-radius:4px;">A</kbd> / <kbd style="background:#334155; padding:2px 6px; border-radius:4px;">D</kbd>.</li>
+        <li><strong>Saut :</strong> Barre <kbd style="background:#334155; padding:2px 6px; border-radius:4px;">Espace</kbd> ou Flèche <kbd style="background:#334155; padding:2px 6px; border-radius:4px;">▲</kbd>.</li>
+        <li><strong>Objectif :</strong> Récupérez les 5 clés dorées scintillantes pour ouvrir le portail de sortie clignotant !</li>
+        <li><strong>Dangers :</strong> Ne chutez pas de trop haut, évitez les stalagmites au sol, le tapis roulant qui vous entraîne et le robot gardien qui patrouille !</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('minerCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Web Audio ZX Spectrum Beeper synth
+    let audioCtx = null;
+    function getAudio() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+    function playBeep(freq, duration = 0.06, type = 'square') {
+      try {
+        const actx = getAudio();
+        const osc = actx.createOscillator();
+        const gain = actx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, actx.currentTime);
+        gain.gain.setValueAtTime(0.08, actx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, actx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(actx.destination);
+        osc.start();
+        osc.stop(actx.currentTime + duration);
+      } catch (e) {}
+    }
+    function playJump() {
+      try {
+        const actx = getAudio();
+        const osc = actx.createOscillator();
+        const gain = actx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(220, actx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, actx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.09, actx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, actx.currentTime + 0.12);
+        osc.connect(gain);
+        gain.connect(actx.destination);
+        osc.start();
+        osc.stop(actx.currentTime + 0.12);
+      } catch (e) {}
+    }
+    function playKeyChime() {
+      [523, 659, 783, 1046].forEach((f, i) => {
+        setTimeout(() => playBeep(f, 0.08, 'triangle'), i * 60);
+      });
+    }
+    function playDieSound() {
+      [300, 240, 180, 120, 80].forEach((f, i) => {
+        setTimeout(() => playBeep(f, 0.08, 'sawtooth'), i * 80);
+      });
+    }
+
+    // Game state
+    let score = 0;
+    let lives = 3;
+    let oxygen = 100;
+    let isPaused = false;
+    let gameOver = false;
+    let victory = false;
+    let frameCount = 0;
+
+    // Willy Player
+    const player = {
+      x: 60,
+      y: 380,
+      w: 22,
+      h: 30,
+      vx: 0,
+      vy: 0,
+      speed: 3.2,
+      isGrounded: false,
+      fallStartY: 0,
+      isJumping: false,
+      facing: 1, // 1 right, -1 left
+      stepAnim: 0
+    };
+
+    // Guardian robot
+    const guardian = {
+      x: 250,
+      y: 202,
+      w: 26,
+      h: 28,
+      minX: 200,
+      maxX: 500,
+      vx: 2
+    };
+
+    // Platforms (Cavern)
+    // type: 'solid', 'crumble', 'conveyor'
+    const platforms = [
+      // Ground
+      { x: 0, y: 440, w: 760, h: 40, type: 'solid', color: '#06b6d4' },
+      // Conveyor on floor left
+      { x: 120, y: 432, w: 180, h: 10, type: 'conveyor', dir: -1.8, color: '#eab308' },
+      // Crumble bridge
+      { x: 420, y: 432, w: 120, h: 10, type: 'crumble', hp: 30, color: '#22c55e' },
+
+      // Tier 1 ledges
+      { x: 50, y: 350, w: 140, h: 14, type: 'solid', color: '#06b6d4' },
+      { x: 260, y: 330, w: 160, h: 14, type: 'solid', color: '#06b6d4' },
+      { x: 520, y: 340, w: 180, h: 14, type: 'solid', color: '#06b6d4' },
+
+      // Tier 2 ledges
+      { x: 120, y: 240, w: 120, h: 14, type: 'solid', color: '#06b6d4' },
+      { x: 300, y: 230, w: 220, h: 14, type: 'solid', color: '#06b6d4' }, // guardian path
+      { x: 590, y: 230, w: 130, h: 14, type: 'crumble', hp: 30, color: '#22c55e' },
+
+      // Top Tier
+      { x: 40, y: 140, w: 150, h: 14, type: 'solid', color: '#06b6d4' },
+      { x: 280, y: 130, w: 180, h: 14, type: 'solid', color: '#06b6d4' },
+      { x: 540, y: 130, w: 160, h: 14, type: 'solid', color: '#06b6d4' }
+    ];
+
+    // Hazards (stalagmites on ground)
+    const hazards = [
+      { x: 340, y: 418, w: 30, h: 22 },
+      { x: 570, y: 418, w: 35, h: 22 }
+    ];
+
+    // 5 Collectible Keys
+    let keysItems = [
+      { x: 70, y: 105, w: 16, h: 16, collected: false },
+      { x: 620, y: 95, w: 16, h: 16, collected: false },
+      { x: 370, y: 95, w: 16, h: 16, collected: false },
+      { x: 640, y: 305, w: 16, h: 16, collected: false },
+      { x: 290, y: 295, w: 16, h: 16, collected: false }
+    ];
+
+    // Exit portal
+    const portal = {
+      x: 670,
+      y: 385,
+      w: 40,
+      h: 55,
+      isOpen: false
+    };
+
+    // Keyboard controls
+    const keys = {};
+    window.addEventListener('keydown', e => {
+      keys[e.key] = true;
+      if ((e.code === 'Space' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') && player.isGrounded) {
+        e.preventDefault();
+        doJump();
+      }
+    });
+    window.addEventListener('keyup', e => { keys[e.key] = false; });
+
+    let tLeft = false, tRight = false;
+    document.getElementById('mLeft').addEventListener('touchstart', e => { e.preventDefault(); tLeft = true; });
+    document.getElementById('mLeft').addEventListener('touchend', e => { e.preventDefault(); tLeft = false; });
+    document.getElementById('mRight').addEventListener('touchstart', e => { e.preventDefault(); tRight = true; });
+    document.getElementById('mRight').addEventListener('touchend', e => { e.preventDefault(); tRight = false; });
+    document.getElementById('mJump').addEventListener('touchstart', e => {
+      e.preventDefault();
+      if (player.isGrounded) doJump();
+    });
+
+    function doJump() {
+      player.vy = -8.2;
+      player.isGrounded = false;
+      player.fallStartY = player.y;
+      playJump();
+    }
+
+    function togglePause() {
+      if (gameOver || victory) return;
+      isPaused = !isPaused;
+      document.getElementById('pauseBtn').textContent = isPaused ? "▶ Reprendre" : "⏸ Pause";
+    }
+
+    function restartGame() {
+      score = 0;
+      lives = 3;
+      oxygen = 100;
+      gameOver = false;
+      victory = false;
+      isPaused = false;
+      resetWilly();
+      keysItems.forEach(k => k.collected = false);
+      portal.isOpen = false;
+      // restore crumble blocks
+      platforms.forEach(p => { if (p.type === 'crumble') p.hp = 30; });
+      updateUI();
+      document.getElementById('pauseBtn').textContent = "⏸ Pause";
+    }
+
+    function resetWilly() {
+      player.x = 60;
+      player.y = 380;
+      player.vx = 0;
+      player.vy = 0;
+      player.isGrounded = false;
+      player.fallStartY = player.y;
+    }
+
+    function killWilly() {
+      lives--;
+      playDieSound();
+      updateUI();
+      if (lives <= 0) {
+        gameOver = true;
+      } else {
+        resetWilly();
+      }
+    }
+
+    function updateUI() {
+      document.getElementById('scoreVal').textContent = String(score).padStart(5, '0');
+      const collectedCount = keysItems.filter(k => k.collected).length;
+      document.getElementById('keysVal').textContent = `${collectedCount} / ${keysItems.length}`;
+      document.getElementById('livesVal').textContent = lives;
+    }
+
+    function update() {
+      if (isPaused || gameOver || victory) return;
+
+      frameCount++;
+
+      // Drain Oxygen slowly
+      if (frameCount % 60 === 0) {
+        oxygen -= 0.8;
+        if (oxygen <= 0) killWilly();
+      }
+
+      // Horizontal movement
+      player.vx = 0;
+      if (keys['ArrowLeft'] || keys['a'] || keys['A'] || tLeft) {
+        player.vx = -player.speed;
+        player.facing = -1;
+        player.stepAnim += 0.2;
+      }
+      if (keys['ArrowRight'] || keys['d'] || keys['D'] || tRight) {
+        player.vx = player.speed;
+        player.facing = 1;
+        player.stepAnim += 0.2;
+      }
+
+      // Move Guardian robot
+      guardian.x += guardian.vx;
+      if (guardian.x < guardian.minX || guardian.x > guardian.maxX) {
+        guardian.vx = -guardian.vx;
+      }
+
+      // Apply Gravity
+      player.vy += 0.45;
+      if (player.vy > 10) player.vy = 10;
+
+      // Update positions
+      player.x += player.vx;
+      if (player.x < 10) player.x = 10;
+      if (player.x > canvas.width - player.w - 10) player.x = canvas.width - player.w - 10;
+
+      const prevY = player.y;
+      player.y += player.vy;
+
+      // Platform Collisions
+      player.isGrounded = false;
+      platforms.forEach(p => {
+        if (p.type === 'crumble' && p.hp <= 0) return; // crumbled away
+
+        // Check feet landing on top of platform
+        if (player.x + player.w > p.x && player.x < p.x + p.w) {
+          if (prevY + player.h <= p.y && player.y + player.h >= p.y) {
+            // Check fatal fall distance (> 140px fall)
+            if (p.y - player.fallStartY > 145) {
+              killWilly();
+              return;
+            }
+            player.y = p.y - player.h;
+            player.vy = 0;
+            player.isGrounded = true;
+            player.fallStartY = player.y;
+
+            // Conveyor effect
+            if (p.type === 'conveyor') {
+              player.x += p.dir;
+            }
+            // Crumble floor effect
+            if (p.type === 'crumble') {
+              p.hp--;
+            }
+          }
+        }
+      });
+
+      if (!player.isGrounded && player.vy < 0) {
+        player.fallStartY = player.y;
+      }
+
+      // Hazards collision (Stalagmites)
+      hazards.forEach(h => {
+        if (player.x + player.w > h.x && player.x < h.x + h.w &&
+            player.y + player.h > h.y) {
+          killWilly();
+        }
+      });
+
+      // Guardian collision
+      if (player.x + player.w > guardian.x && player.x < guardian.x + guardian.w &&
+          player.y + player.h > guardian.y && player.y < guardian.y + guardian.h) {
+        killWilly();
+      }
+
+      // Collect Keys
+      keysItems.forEach(k => {
+        if (!k.collected &&
+            player.x + player.w > k.x && player.x < k.x + k.w &&
+            player.y + player.h > k.y && player.y < k.y + k.h) {
+          k.collected = true;
+          score += 100;
+          playKeyChime();
+          updateUI();
+        }
+      });
+
+      // Check if all keys collected -> open exit portal
+      const allKeys = keysItems.every(k => k.collected);
+      if (allKeys && !portal.isOpen) {
+        portal.isOpen = true;
+        playBeep(980, 0.3, 'sine');
+      }
+
+      // Victory if Willy touches open portal
+      if (portal.isOpen &&
+          player.x + player.w > portal.x + 10 && player.x < portal.x + portal.w - 10 &&
+          player.y + player.h > portal.y + 10) {
+        victory = true;
+        score += Math.round(oxygen * 10);
+        updateUI();
+        playKeyChime();
+      }
+    }
+
+    function render() {
+      // Clear
+      ctx.fillStyle = '#050811';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw Platforms
+      platforms.forEach(p => {
+        if (p.type === 'crumble' && p.hp <= 0) return;
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x, p.y, p.w, p.h);
+
+        // Brick texture lines
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(p.x, p.y, p.w, p.h);
+        if (p.type === 'conveyor') {
+          // Yellow chevron arrows
+          ctx.fillStyle = '#000000';
+          for (let ax = p.x + 10; ax < p.x + p.w; ax += 20) {
+            ctx.beginPath();
+            ctx.moveTo(ax, p.y + 2);
+            ctx.lineTo(ax - 5, p.y + 5);
+            ctx.lineTo(ax, p.y + 8);
+            ctx.stroke();
+          }
+        }
+      });
+
+      // Draw Hazards (Stalagmites)
+      ctx.fillStyle = '#ef4444';
+      hazards.forEach(h => {
+        ctx.beginPath();
+        ctx.moveTo(h.x, h.y + h.h);
+        ctx.lineTo(h.x + h.w / 2, h.y);
+        ctx.lineTo(h.x + h.w, h.y + h.h);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.stroke();
+      });
+
+      // Draw Keys (Flashing gold/cyan)
+      keysItems.forEach(k => {
+        if (!k.collected) {
+          const flash = Math.floor(frameCount / 10) % 2 === 0;
+          ctx.fillStyle = flash ? '#facc15' : '#38bdf8';
+          ctx.fillRect(k.x + 4, k.y, 8, 8);
+          ctx.fillRect(k.x + 6, k.y + 8, 4, 8);
+          ctx.fillRect(k.x + 10, k.y + 12, 4, 3);
+        }
+      });
+
+      // Draw Exit Portal
+      if (portal.isOpen) {
+        const pColors = ['#ec4899', '#8b5cf6', '#06b6d4', '#10b981', '#facc15'];
+        ctx.fillStyle = pColors[Math.floor(frameCount / 4) % pColors.length];
+      } else {
+        ctx.fillStyle = '#334155';
+      }
+      ctx.fillRect(portal.x, portal.y, portal.w, portal.h);
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(portal.x, portal.y, portal.w, portal.h);
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(portal.x + 10, portal.y + 10, portal.w - 20, portal.h - 10);
+
+      // Draw Guardian Robot
+      ctx.fillStyle = '#f43f5e';
+      ctx.fillRect(guardian.x, guardian.y, guardian.w, guardian.h);
+      ctx.fillStyle = '#ffffff';
+      // eyes
+      ctx.fillRect(guardian.x + 4, guardian.y + 5, 6, 6);
+      ctx.fillRect(guardian.x + 16, guardian.y + 5, 6, 6);
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(guardian.x + (guardian.vx > 0 ? 7 : 4), guardian.y + 7, 3, 3);
+      ctx.fillRect(guardian.x + (guardian.vx > 0 ? 19 : 16), guardian.y + 7, 3, 3);
+
+      // Draw Miner Willy
+      const legOffset = Math.sin(player.stepAnim) * 3;
+      // Hard hat
+      ctx.fillStyle = '#facc15';
+      ctx.fillRect(player.x + 3, player.y, 16, 7);
+      ctx.fillRect(player.x + (player.facing > 0 ? 12 : 2), player.y + 1, 6, 4); // lamp
+      // Head/face
+      ctx.fillStyle = '#fed7aa';
+      ctx.fillRect(player.x + 4, player.y + 7, 14, 8);
+      // Eye
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(player.x + (player.facing > 0 ? 13 : 6), player.y + 9, 3, 3);
+      // Shirt (white)
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(player.x + 2, player.y + 15, 18, 9);
+      // Trousers/legs (blue)
+      ctx.fillStyle = '#2563eb';
+      ctx.fillRect(player.x + 3, player.y + 24, 7, 6 + (player.isGrounded ? legOffset : 0));
+      ctx.fillRect(player.x + 12, player.y + 24, 7, 6 - (player.isGrounded ? legOffset : 0));
+
+      // Draw Oxygen Gauge at bottom
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(20, canvas.height - 22, canvas.width - 40, 12);
+      ctx.fillStyle = oxygen > 25 ? '#22c55e' : '#ef4444';
+      ctx.fillRect(20, canvas.height - 22, (canvas.width - 40) * Math.max(0, oxygen / 100), 12);
+      ctx.strokeStyle = '#475569';
+      ctx.strokeRect(20, canvas.height - 22, canvas.width - 40, 12);
+
+      // Overlay text
+      if (isPaused) {
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.75)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = 'bold 36px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText("PAUSE", canvas.width / 2, canvas.height / 2);
+      } else if (victory) {
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#facc15';
+        ctx.font = 'bold 38px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText("VICTOIRE !", canvas.width / 2, canvas.height / 2 - 20);
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '20px monospace';
+        ctx.fillText(`Score Total : ${score}`, canvas.width / 2, canvas.height / 2 + 25);
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '16px monospace';
+        ctx.fillText("Vous avez conquis la Caverne Centrale !", canvas.width / 2, canvas.height / 2 + 65);
+      } else if (gameOver) {
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#ef4444';
+        ctx.font = 'bold 38px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2 - 20);
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = '20px monospace';
+        ctx.fillText(`Score Final : ${score}`, canvas.width / 2, canvas.height / 2 + 25);
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '16px monospace';
+        ctx.fillText("Cliquez sur Nouvelle Partie pour retenter la caverne", canvas.width / 2, canvas.height / 2 + 65);
+      }
+    }
+
+    function loop() {
+      update();
+      render();
+      requestAnimationFrame(loop);
+    }
+
+    restartGame();
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>

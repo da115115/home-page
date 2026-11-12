@@ -15,7 +15,7 @@
       flex-direction: column;
     }
     .hub-container {
-      max-width: 1100px;
+      max-width: 1160px;
       margin: 2rem auto;
       padding: 1.5rem;
     }
@@ -37,7 +37,7 @@
       margin-bottom: 1rem;
     }
     .hub-title {
-      font-size: 2.5rem;
+      font-size: 2.6rem;
       font-weight: 800;
       color: #f8fafc;
       margin: 0;
@@ -49,9 +49,10 @@
       color: #94a3b8;
       margin-top: 0.75rem;
       font-size: 1.05rem;
-      max-width: 650px;
+      max-width: 700px;
       margin-left: auto;
       margin-right: auto;
+      line-height: 1.6;
     }
     .games-grid {
       display: grid;
@@ -76,7 +77,7 @@
       top: 0; left: 0; right: 0;
       height: 4px;
       background: var(--card-accent, #38bdf8);
-      opacity: 0.8;
+      opacity: 0.85;
     }
     .game-card:hover {
       transform: translateY(-4px);
@@ -99,9 +100,10 @@
       align-items: center;
       justify-content: center;
       border: 1px solid #334155;
+      flex-shrink: 0;
     }
     .game-name {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: #f8fafc;
       margin: 0;
@@ -114,9 +116,9 @@
     }
     .game-desc {
       color: #cbd5e1;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       line-height: 1.5;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
       flex-grow: 1;
     }
     .card-footer {
@@ -174,11 +176,57 @@
       <div class="hub-badge">Espace Récréatif & Algorithmes</div>
       <h1 class="hub-title">Salle Rétro-Arcade</h1>
       <p class="hub-subtitle">
-        Une collection de classiques de l'arcade et de puzzles mathématiques, recréés en pur HTML5, Canvas & Web Audio API — sans dépendances externes.
+        Une collection de légendes du jeu vidéo et de casse-têtes algorithmiques, programmés en pur <strong>HTML5 Canvas, CSS 3D & Web Audio API</strong> — autonomes, ultra-réactifs et sans dépendances externes.
       </p>
     </div>
 
     <div class="games-grid">
+      <!-- Donkey Kong -->
+      <div class="game-card" style="--card-accent: #ef4444;">
+        <div>
+          <div class="card-top">
+            <div class="game-icon">🦍</div>
+            <div>
+              <h2 class="game-name">Donkey Kong</h2>
+              <div class="game-year">Nintendo (1981) — Shigeru Miyamoto</div>
+            </div>
+          </div>
+          <p class="game-desc">
+            Le chef-d'œuvre arcade fondateur : grimpez le chantier de poutrelles métalliques 25m, montez aux échelles, sautez au-dessus des tonneaux roulants et délivrez Pauline du sommet !
+          </p>
+        </div>
+        <div class="card-footer">
+          <div class="tech-tags">
+            <span class="tag">Platformer</span>
+            <span class="tag">Arcade 1981</span>
+          </div>
+          <a href="/misc/donkey-kong/" class="btn-play">Jouer ➔</a>
+        </div>
+      </div>
+
+      <!-- Manic Miner -->
+      <div class="game-card" style="--card-accent: #facc15;">
+        <div>
+          <div class="card-top">
+            <div class="game-icon">⛏️</div>
+            <div>
+              <h2 class="game-name">Manic Miner</h2>
+              <div class="game-year">Bug-Byte (1983) — Matthew Smith</div>
+            </div>
+          </div>
+          <p class="game-desc">
+            Le joyau du ZX Spectrum 8-bit : explorez la redoutable Caverne Centrale avec Miner Willy, collectez les 5 clés dorées, esquivez les stalagmites et le robot gardien avant que l'oxygène ne s'épuise.
+          </p>
+        </div>
+        <div class="card-footer">
+          <div class="tech-tags">
+            <span class="tag">ZX Spectrum</span>
+            <span class="tag">Caverne</span>
+          </div>
+          <a href="/misc/manic-miner/" class="btn-play">Jouer ➔</a>
+        </div>
+      </div>
+
       <!-- Rubik's Cube 3D -->
       <div class="game-card" style="--card-accent: #f59e0b;">
         <div>
@@ -190,7 +238,7 @@
             </div>
           </div>
           <p class="game-desc">
-            Cube 3D interactif avec rotation orbitale tactile/souris, rotation complète des 6 faces (U, D, L, R, F, B), générateur de mélange aléatoire, chronomètre et compteur de mouvements.
+            Cube 3D interactif avec rotation orbitale tactile/souris, rotation complète des 6 faces (U, D, L, R, F, B), générateur de mélange aléatoire (*scramble*), chronomètre et compteur de mouvements.
           </p>
         </div>
         <div class="card-footer">
@@ -213,7 +261,7 @@
             </div>
           </div>
           <p class="game-desc">
-            Le grand classique combinatoire et récursif : 3 à 8 disques, détection de coups valides, calcul du minimum théorique de mouvements (\(2^n - 1\)) et résolveur automatique pas à pas.
+            Le grand classique combinatoire et récursif : 3 à 8 disques, détection de coups valides, calcul du minimum théorique de mouvements (\(2^n - 1\)) et résolveur automatique pas-à-pas.
           </p>
         </div>
         <div class="card-footer">
@@ -236,7 +284,7 @@
             </div>
           </div>
           <p class="game-desc">
-            Défendez la Terre contre les vagues d'extraterrestres ! Bunkers destructibles, soucoupe mystère rouge bonus, accélération de la cadence d'assaut et bruitages synthétisés rétro.
+            Défendez la Terre contre les vagues d'extraterrestres ! Bunkers destructibles, soucoupe mystère rouge bonus, cadence d'assaut accélérée et bruitages de marche synthétisés.
           </p>
         </div>
         <div class="card-footer">
@@ -294,26 +342,26 @@
         </div>
       </div>
 
-      <!-- Archive Historique Rubik 1999 -->
+      <!-- Archive Historique Rubik 1996/1999 -->
       <div class="game-card" style="--card-accent: #64748b;">
         <div>
           <div class="card-top">
             <div class="game-icon">📜</div>
             <div>
               <h2 class="game-name">Applet Java Rubik</h2>
-              <div class="game-year">Archive Web (1999) — Sema Group / Free.fr</div>
+              <div class="game-year">Archive Web (1996/1999) — Karl Hörnell</div>
             </div>
           </div>
           <p class="game-desc">
-            L'applet Java originale de 1999 conservée dans son état d'époque avec son fichier <code>rubik.class</code> et l'affiche historique sur la présidence luxembourgeoise.
+            L'applet originale <em>Rubik Unbound</em> conservée dans son état d'époque avec son bytecode Java <code>rubik.class</code>, capture Netscape Navigator 3.0 vintage et bannière FFII.
           </p>
         </div>
         <div class="card-footer">
           <div class="tech-tags">
             <span class="tag">Java Bytecode</span>
-            <span class="tag">Archive</span>
+            <span class="tag">Capture 1996</span>
           </div>
-          <a href="/rubik.html" class="btn-play">Voir ➔</a>
+          <a href="/misc/rubik-legacy/" class="btn-play" style="color: #ffffff;">Voir l'archive ➔</a>
         </div>
       </div>
     </div>
